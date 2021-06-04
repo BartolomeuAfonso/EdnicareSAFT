@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioMedico" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c258fb9b-3882-43fc-8e46-00213b968eea">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="383"/>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     year(curdate())-year(pacientes.`dataNascimento`) AS idade,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     pacientes.`morada` AS pacientes_morada,
+     pacientes.`genero` AS pacientes_genero,
+     medicos.`idMedico` AS medicos_idMedico,
+     medicos.`nomeCompleto` AS medicos_nomeCompleto,
+     medicos.`numeroOrdem` AS medicos_numeroOrdem,
+     relatoriomedico.`idrelatorio` AS relatoriomedico_idrelatorio,
+     relatoriomedico.`HDA` AS relatoriomedico_HDA,
+     relatoriomedico.`exameGeral` AS relatoriomedico_exameGeral,
+     relatoriomedico.`laboratorio` AS relatoriomedico_laboratorio,
+     relatoriomedico.`raioX` AS relatoriomedico_raioX,
+     relatoriomedico.`ecografia` AS relatoriomedico_ecografia,
+     relatoriomedico.`ecg` AS relatoriomedico_ecg,
+     relatoriomedico.`eco` AS relatoriomedico_eco,
+     relatoriomedico.`diagnostico` AS relatoriomedico_diagnostico,
+     relatoriomedico.`conduta` AS relatoriomedico_conduta,
+     relatoriomedico.`codigoPaciente` AS relatoriomedico_codigoPaciente,
+     relatoriomedico.`codigoMedico` AS relatoriomedico_codigoMedico,
+     relatoriomedico.`data` AS relatoriomedico_data
+FROM
+     `pacientes` pacientes INNER JOIN `relatoriomedico` relatoriomedico ON pacientes.`idPaciente` = relatoriomedico.`codigoPaciente`
+     INNER JOIN `medicos` medicos ON relatoriomedico.`codigoMedico` = medicos.`idMedico` WHERE  relatoriomedico.`idrelatorio`=$P{CODIGO}]]>
+	</queryString>
+	<field name="idade" class="java.lang.Long"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="pacientes_morada" class="java.lang.String"/>
+	<field name="pacientes_genero" class="java.lang.String"/>
+	<field name="medicos_idMedico" class="java.lang.Long"/>
+	<field name="medicos_nomeCompleto" class="java.lang.String"/>
+	<field name="medicos_numeroOrdem" class="java.lang.String"/>
+	<field name="relatoriomedico_idrelatorio" class="java.lang.Long"/>
+	<field name="relatoriomedico_HDA" class="java.lang.String"/>
+	<field name="relatoriomedico_exameGeral" class="java.lang.String"/>
+	<field name="relatoriomedico_laboratorio" class="java.lang.String"/>
+	<field name="relatoriomedico_raioX" class="java.lang.String"/>
+	<field name="relatoriomedico_ecografia" class="java.lang.String"/>
+	<field name="relatoriomedico_ecg" class="java.lang.String"/>
+	<field name="relatoriomedico_eco" class="java.lang.String"/>
+	<field name="relatoriomedico_diagnostico" class="java.lang.String"/>
+	<field name="relatoriomedico_conduta" class="java.lang.String"/>
+	<field name="relatoriomedico_codigoPaciente" class="java.lang.Long"/>
+	<field name="relatoriomedico_codigoMedico" class="java.lang.Long"/>
+	<field name="relatoriomedico_data" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="0" y="0" width="123" height="93" uuid="c7214574-09e7-488a-bec0-05b275514b1b"/>
+				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="172" y="59" width="306" height="20" uuid="912dbcae-3081-48e5-a3d0-262ffdd266bf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Médico]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="119" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#00CCFF" uuid="62b366a9-1dae-491a-8fb1-b51d1a9c745f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dados do Doente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="58" width="249" height="20" uuid="e297c1d5-06b1-4079-a1a4-fc81072a4f73"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Idade: "+$F{idade}+ "anos"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="98" width="249" height="20" uuid="43a9874a-2c44-4ad1-b3ca-c505da950ebb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Morada: "+$F{pacientes_morada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="78" width="249" height="20" uuid="f592cbca-78a4-439b-b327-5e1bcd9c45a0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sexo: "+$F{pacientes_genero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="38" width="555" height="20" uuid="73f3beaf-cc7d-4f10-8d38-2377b1f58476"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nome: "+$F{pacientes_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="555" height="20" uuid="e4bd621b-2974-4678-8335-a8df76e357ec"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Proc. Nº:"+$F{pacientes_idPaciente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="20" backcolor="#00CCFF" uuid="248e7e1c-8e77-44aa-a14e-1cdc013f9a51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[H.D.A]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="115" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="557" height="115" uuid="62e57ba7-4218-435a-8100-4b4ca166678d"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_HDA}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="145">
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="20" backcolor="#00CCFF" uuid="acb667c1-4adc-410c-afd6-b87d0f975558"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Exames Objectivo Geral]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="20" width="553" height="125" uuid="721545bc-2f9a-4ccb-a816-91d6da5685ad"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_exameGeral}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="168">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" backcolor="#00CCFF" uuid="752a6e72-4164-486c-860a-22cc394ab505"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Exames Complementares]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="102" height="20" uuid="fc6d7543-815a-480d-8ee3-390fb23be23e"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Laboratório:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="40" width="100" height="20" uuid="9508e7af-7559-4ded-867d-640328855d52"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Raio X:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="60" width="100" height="20" uuid="1b2d66b4-045b-42bf-a2f1-5bb5429a7da1"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Ecografia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="80" width="100" height="20" uuid="bb1d2611-0f2f-4d5f-a90b-cef9b6c7c753"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[ECG:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="20" width="453" height="20" uuid="60969d1a-a879-4758-8eab-9bb87560feb7"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_laboratorio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="40" width="453" height="20" uuid="fafa0ea4-99ce-46cf-9126-a960089988a9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_raioX}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="60" width="453" height="20" uuid="0afa8581-580f-428d-bd7d-1d77936a8927"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_ecografia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="80" width="453" height="20" uuid="7e539cd8-f7f1-4913-bee2-9d19de08598c"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_ecg}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="99" width="100" height="20" uuid="870d846b-ab44-434c-9dd3-b14cd29531ee"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Ecocardiograma:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="119" width="100" height="20" uuid="18352e68-5ff8-4294-a98e-dc923b546f24"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Diagnóstico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="139" width="100" height="20" uuid="39e75ca8-1c28-4097-94e7-087b2b9f26ab"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Conduta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="102" y="100" width="453" height="20" uuid="95b47c97-5bb6-401d-8ac6-684c76ef01fb"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_eco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="119" width="453" height="20" uuid="fd35978f-1806-43bd-9a07-a469f197b740"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_diagnostico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="102" y="139" width="453" height="20" uuid="aeb9656d-3a0f-4d7b-b729-b9bd53d053cf"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{relatoriomedico_conduta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement x="282" y="18" width="222" height="20" uuid="7ba2c2ea-dce0-4e1c-94c4-8a1dd7518d6d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O Médico Assistente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="282" y="48" width="251" height="20" uuid="2badca43-52b7-474d-8181-9620c2a4e4c9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medicos_nomeCompleto} + "Nº de Ordem:" +$F{medicos_numeroOrdem}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="271" y="47" width="262" height="1" uuid="5fad88f1-9314-42d7-a58d-c15938080df2"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="54" y="64" width="153" height="20" uuid="ca0c6c8c-dd53-4c8b-95b3-77e0fbf5e527"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="64" width="54" height="20" uuid="8763d974-7536-4051-9c4a-0988173bf9ff"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Luanda,]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

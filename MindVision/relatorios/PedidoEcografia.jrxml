@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PedidoAnalises" pageWidth="842" pageHeight="595" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="e3998df1-01dc-4c1f-820d-ad9f1bd0a611">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="91"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="CODIGO" class="java.lang.Integer"/>
+	<parameter name="DATA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     year(curdate())-year(p.`dataNascimento`) AS idade,
+     p.`nomeCompleto` AS p_nomeCompleto,
+     p.`morada` AS p_morada,
+     p.`contacto` AS p_contacto,
+     p.`dataNascimento` AS p_dataNascimento,
+     p.`genero` AS p_genero,
+     s.`designacao` AS s_designacao,
+     s.`idServico` AS s_idServico,
+     empresa.`designacao` AS empresa_designacao,
+     empresa.`idSeguros` AS empresa_idSeguros,
+     pedidos_ecografia.`idPedidoExame` AS pedidos_ecografia_idPedidoExame,
+     pedidos_ecografia.`codigoServico` AS pedidos_ecografia_codigoServico,
+     pedidos_ecografia.`codigoMedico` AS pedidos_ecografia_codigoMedico,
+     pedidos_ecografia.`dataPedido` AS pedidos_ecografia_dataPedido,
+     pedidos_ecografia.`codigoPaciente` AS pedidos_ecografia_codigoPaciente,
+     pedidos_ecografia.`designacao` AS pedidos_ecografia_designacao,
+     medicos.`idMedico` AS medicos_idMedico,
+     medicos.`nomeCompleto` AS medicos_nomeCompleto,
+     medicos.`numeroOrdem` AS medicos_numeroOrdem,
+     p.`idPaciente` AS p_idPaciente
+FROM
+     `pacientes` p INNER JOIN `empresaseguros` empresa ON p.`codigoSeguro` = empresa.`idSeguros`
+     INNER JOIN `pedidos_ecografia` pedidos_ecografia ON p.`idPaciente` = pedidos_ecografia.`codigoPaciente`
+     INNER JOIN `servicos` s ON pedidos_ecografia.`codigoServico` = s.`idServico`
+     INNER JOIN `medicos` medicos ON pedidos_ecografia.`codigoMedico` = medicos.`idMedico`
+WHERE
+     p.`idPaciente` = $P{CODIGO}
+ AND pedidos_ecografia.`dataPedido` = $P{DATA}]]>
+	</queryString>
+	<field name="idade" class="java.lang.Long"/>
+	<field name="p_nomeCompleto" class="java.lang.String"/>
+	<field name="p_morada" class="java.lang.String"/>
+	<field name="p_contacto" class="java.lang.String"/>
+	<field name="p_dataNascimento" class="java.lang.String"/>
+	<field name="p_genero" class="java.lang.String"/>
+	<field name="s_designacao" class="java.lang.String"/>
+	<field name="s_idServico" class="java.lang.Long"/>
+	<field name="empresa_designacao" class="java.lang.String"/>
+	<field name="empresa_idSeguros" class="java.lang.Long"/>
+	<field name="pedidos_ecografia_idPedidoExame" class="java.lang.Long"/>
+	<field name="pedidos_ecografia_codigoServico" class="java.lang.Long"/>
+	<field name="pedidos_ecografia_codigoMedico" class="java.lang.Long"/>
+	<field name="pedidos_ecografia_dataPedido" class="java.sql.Date"/>
+	<field name="pedidos_ecografia_codigoPaciente" class="java.lang.Long"/>
+	<field name="pedidos_ecografia_designacao" class="java.lang.String"/>
+	<field name="medicos_idMedico" class="java.lang.Long"/>
+	<field name="medicos_nomeCompleto" class="java.lang.String"/>
+	<field name="medicos_numeroOrdem" class="java.lang.String"/>
+	<field name="p_idPaciente" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="108" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="149" y="41" width="218" height="20" backcolor="#00CCFF" uuid="805e2514-9953-4673-a0a6-e6c1797e1611"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement mode="Opaque" x="554" y="41" width="228" height="20" backcolor="#00CCFF" uuid="4b070fbf-ed95-4749-bc64-d7d545fb1851"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText" mode="Transparent" x="165" y="41" width="202" height="20" forecolor="#000000" backcolor="#99FF99" uuid="f954e5a3-c873-4633-b961-f21dfbafa6c8"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Resiquição de Ecografia]]></text>
+			</staticText>
+			<image>
+				<reportElement key="image-1" x="3" y="0" width="146" height="108" uuid="9b89fdab-ba62-41b5-a7b9-107c775c6eaf"/>
+				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement key="staticText" mode="Transparent" x="585" y="41" width="197" height="20" forecolor="#000000" backcolor="#99FF99" uuid="b31bad7f-0588-4484-ac52-d57177c9d3d3"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Resiquição de Ecografia]]></text>
+			</staticText>
+			<image>
+				<reportElement key="image-1" x="392" y="0" width="146" height="108" uuid="e63c0f7d-eb4e-4722-8d75-934d853ab38c"/>
+				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="623" y="88" width="159" height="20" uuid="28ed8278-0978-48a4-af35-3c652922d0b4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Seguro: "+$F{empresa_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="229" y="88" width="138" height="20" uuid="3257286e-9096-4d49-99c5-a4a8e95c9d86"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Seguro: "+$F{empresa_designacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-2" x="1" y="1" width="402" height="24" uuid="378a75e2-e7d6-4170-82ab-5615d0730999"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nome do Paciente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="1" y="25" width="138" height="24" uuid="f92fd696-ff70-450d-82a7-547cee607256"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Idade do Paciente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="1" y="49" width="137" height="24" uuid="686f818b-ccff-45ba-b0d5-e5c2ebba752f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Data da Solicitação:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="138" y="1" width="229" height="24" uuid="bd41a479-977d-4401-b387-55c2c6e1bbfd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{p_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="139" y="25" width="58" height="24" uuid="a1c25bd3-2d86-41c6-a0ca-f899052e0a8e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idade}+ " anos"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="138" y="49" width="229" height="24" uuid="dbd18cac-01cc-4675-9549-380fcf7a6d36"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pedidos_ecografia_dataPedido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-2" x="392" y="1" width="137" height="24" uuid="fe10ae91-bfe9-4666-a3d7-5d656f055182"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Nome do Paciente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="392" y="25" width="137" height="24" uuid="e63def7d-d6be-4b1e-a979-bb58345def3c"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Idade do Paciente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="392" y="49" width="137" height="24" uuid="b9414502-6687-471f-9506-360c8f277e01"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Data da Solicitação:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="652" y="25" width="130" height="24" uuid="d78c4607-383c-4222-9381-821e80b99e01"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{p_genero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="529" y="25" width="64" height="24" uuid="69cd213d-57b1-4a75-b4b7-8e8c827099c3"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idade}+ " anos"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="529" y="1" width="253" height="24" uuid="eae61b16-538c-4b3e-ad48-f62a17fe3b14"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{p_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-3" x="593" y="25" width="59" height="24" uuid="a8997b28-360f-455f-a48f-9ab0b776a55b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="197" y="25" width="59" height="24" uuid="c09f951e-a147-48bb-88b6-2fdd7c7975c2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="256" y="25" width="111" height="24" uuid="f8ec037a-55bc-453c-9b14-5a6e60f04843"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{p_genero}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="529" y="49" width="253" height="24" uuid="8b1d5073-2ffa-484b-92d7-0e5373664b19"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pedidos_ecografia_dataPedido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="392" y="0" width="390" height="16" backcolor="#00CCFF" uuid="a542f063-8977-4b9f-924a-f6de1d14bf46"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="367" height="16" backcolor="#00CCFF" uuid="ae125d08-243b-491f-8f6b-9d8a6f467f12"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="element-90" mode="Transparent" x="55" y="1" width="288" height="14" forecolor="#000000" backcolor="#99FF99" uuid="f4dadb8e-cb8b-4904-afe0-d4a0280ef550"/>
+				<box leftPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-90" mode="Transparent" x="17" y="0" width="34" height="14" forecolor="#000000" backcolor="#99FF99" uuid="1575913b-daa7-480b-b0ec-9a42f7a4853a"/>
+				<box leftPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Monotype Corsiva" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N.º]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-90" mode="Transparent" x="447" y="1" width="288" height="16" forecolor="#000000" backcolor="#99FF99" uuid="aeed6f79-46b1-446c-8879-47434dd7411a"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-90" mode="Transparent" x="408" y="1" width="38" height="16" forecolor="#000000" backcolor="#99FF99" uuid="995b9438-6a61-441b-b08a-19fb945c23dd"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N.º]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="1" width="55" height="15" uuid="34328614-8e3b-446a-80fa-5d0c5c3399a4"/>
+				<box leftPadding="0" rightPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Monotype Corsiva" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="446" y="1" width="335" height="15" uuid="3b16918b-4a99-455c-ad9d-2854c38b09dd"/>
+				<box leftPadding="0" rightPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{s_designacao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="403" y="1" width="44" height="15" uuid="f9a3b887-cbe1-4a1b-b92a-ac1229adb9c5"/>
+				<box leftPadding="0" rightPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Monotype Corsiva" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="55" y="1" width="312" height="15" uuid="e84409c5-2bda-4cd7-a733-4e10540e6fc9"/>
+				<box leftPadding="0" rightPadding="0">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{s_designacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="59">
+			<staticText>
+				<reportElement key="staticText-5" x="474" y="0" width="195" height="24" uuid="4979706c-e2b6-4ed4-bd3d-ab173c3d07be"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[O(A) Médico(a)]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line-1" x="51" y="35" width="238" height="1" uuid="aff63dc9-94b1-4a06-9a9c-61c7a92e0b67"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-5" x="61" y="0" width="195" height="24" uuid="193933f1-3af4-4bbf-99a5-1d6bce86dcfa"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[O(A) Médico(a)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="61" y="35" width="228" height="20" uuid="8807ecd6-bbf6-4d66-ae78-25f192603c70"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº de Ordem: "+$F{medicos_numeroOrdem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="473" y="37" width="228" height="20" uuid="42af73cb-3b40-435d-9d15-6f0061acc6e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº de Ordem: "+$F{medicos_numeroOrdem}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-1" x="473" y="34" width="238" height="1" uuid="1ad39983-89b4-452f-a78c-55819a1c55c9"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="144" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="36" width="366" height="20" uuid="a039c83c-ce2a-48a5-a4cf-4a909711a0df"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" +$F{pedidos_ecografia_designacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="12" width="366" height="24" uuid="5cbfeb97-945b-4f10-985d-566cbeaf8d44"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Prescrição Médica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="392" y="12" width="366" height="24" uuid="11fea236-19f9-4824-b921-ade3b429bc97"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Prescrição Médica]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="392" y="36" width="366" height="20" uuid="cd2bb3f6-d83a-40cd-a44d-1a1d270709e9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" +$F{pedidos_ecografia_designacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

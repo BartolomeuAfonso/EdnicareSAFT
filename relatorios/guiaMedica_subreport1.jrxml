@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guiaMedica_subreport1" language="groovy" pageWidth="405" pageHeight="555" orientation="Landscape" columnWidth="405" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7a003d5d-1a9b-438c-8367-e17818255301">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CODIGO" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     SUM(factura_itens.`descontoIVA`) AS factura_itens_descontoIVA,
+     SUM(factura_itens.`preco`) AS factura_itens_preco,
+     sum(factura_itens.`totalGeral`) AS factura_itens_totalGeral,
+     sum(factura_itens.`totalTPA`) AS factura_itens_totalTPA,
+     motivo.`descricacao` AS motivo_descricacao,
+     tipotaxa.`taxa` AS tipotaxa_taxa,
+     factura.`descontoFactura` AS factura_descontoFactura,
+     motivo.`codigoMotivo` AS motivo_codigoMotivo,
+     tipotaxa.`descricao` AS tipotaxa_descricao,
+     factura_itens.`quantidade` AS factura_itens_quantidade
+FROM
+     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
+     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`
+     INNER JOIN `tipotaxa` tipotaxa ON servicos.`codigoTipoTaxa` = tipotaxa.`codigo`
+     INNER JOIN `motivo` motivo ON tipotaxa.`codigoMotivo` = motivo.`codigo`
+WHERE
+     factura.`idfactura` = $P{CODIGO}
+GROUP BY
+     tipotaxa.`codigo`,
+     motivo.`codigo`, factura_itens.`quantidade`]]>
+	</queryString>
+	<field name="factura_itens_descontoIVA" class="java.lang.Double"/>
+	<field name="factura_itens_preco" class="java.lang.Double"/>
+	<field name="factura_itens_totalGeral" class="java.lang.Double"/>
+	<field name="factura_itens_totalTPA" class="java.lang.Double"/>
+	<field name="motivo_descricacao" class="java.lang.String"/>
+	<field name="tipotaxa_taxa" class="java.lang.Integer"/>
+	<field name="factura_descontoFactura" class="java.lang.Double"/>
+	<field name="motivo_codigoMotivo" class="java.lang.String"/>
+	<field name="tipotaxa_descricao" class="java.lang.String"/>
+	<field name="factura_itens_quantidade" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="24">
+			<staticText>
+				<reportElement x="74" y="12" width="62" height="12" uuid="494afe8f-60ee-4e34-af8c-21ab2890de8b"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Base de Incid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="136" y="12" width="55" height="12" uuid="33f0d45a-7b6f-46e4-8e82-05b9872e617d"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Imposto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="191" y="12" width="214" height="12" uuid="2ceb226e-cdaa-42c7-bb37-3536b9fe85f9"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Motivo de Isenção]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="12" width="74" height="12" uuid="1ca4e52e-9fd9-4c6f-8805-e7e86fa6f71c"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Taxa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="405" height="12" backcolor="#CCCCCC" uuid="a2e54029-5276-4f06-8cbe-eab9cebc2c38"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Quadro Resumo Imposto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="191" y="0" width="214" height="12" uuid="2a961eeb-def6-4d21-a7bc-9d9f12d9a794"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo_descricacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="136" y="0" width="55" height="12" uuid="16c448f0-54eb-4831-bf26-e6a2032d1662"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_itens_descontoIVA}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="74" y="0" width="62" height="12" uuid="407a5ac2-6254-4362-8d21-fba933b3b74b"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_itens_preco}*$F{factura_itens_quantidade}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="0" y="0" width="74" height="12" uuid="dcdb4ae3-1ed1-41c0-aabc-71b5f687ea4d"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{tipotaxa_descricao}+"" + $F{tipotaxa_taxa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

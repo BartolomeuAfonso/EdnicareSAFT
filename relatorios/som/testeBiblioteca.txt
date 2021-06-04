@@ -1,0 +1,16 @@
+Testando a LibVlc
+package br.com.devmedia.player;
+ 
+import uk.co.caprica.vlcj.binding.LibVlc;
+ 
+public class InformationLib {
+ 
+    public static void main(String[] args) throws Exception {
+        System.out.println("  version: {}"
+        + LibVlc.INSTANCE.libvlc_get_version());
+        System.out.println(" compiler: {}"
+        + LibVlc.INSTANCE.libvlc_get_compiler());
+        System.out.println("changeset: {}"
+        + LibVlc.INSTANCE.libvlc_get_changeset());
+    }
+}

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportMovimentoSeguradora" language="groovy" pageWidth="300" pageHeight="300" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="397e590b-5568-4f4e-878a-320fbf2f70d1">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="37"/>
+	<parameter name="DATA1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EMPRESA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     factura.`dataFactura` AS factura_dataFactura,
+     factura.`valorNumerario` AS factura_valorNumerario,
+     factura.`valorMulticaixa` AS factura_valorMulticaixa,
+     factura_itens.`totalGeral` AS factura_itens_totalGeral,
+     factura_itens.`codigoCategoria` AS factura_itens_codigoCategoria,
+     factura_itens.`totalTPA` AS factura_itens_totalTPA,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     empresaseguros.`idSeguros` AS empresaseguros_idSeguros,
+     empresaseguros.`designacao` AS empresaseguros_designacao,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     factura.`valorApagar` AS factura_valorApagar,
+     factura_itens.`quantidade` AS factura_itens_quantidade
+FROM
+     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
+     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`
+     INNER JOIN `pacientes` pacientes ON factura.`codigoCliente` = pacientes.`idPaciente`
+     INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`
+WHERE
+     date(factura.`dataFactura`) BETWEEN $P{DATA1} and $P{DATA2}
+AND empresaseguros.`designacao` = $P{EMPRESA}
+AND servicos.`designacao` <> 'CO - PAGAMENTO']]>
+	</queryString>
+	<field name="factura_dataFactura" class="java.sql.Timestamp"/>
+	<field name="factura_valorNumerario" class="java.lang.Double"/>
+	<field name="factura_valorMulticaixa" class="java.lang.Double"/>
+	<field name="factura_itens_totalGeral" class="java.lang.Double"/>
+	<field name="factura_itens_codigoCategoria" class="java.lang.Long"/>
+	<field name="factura_itens_totalTPA" class="java.lang.Double"/>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="empresaseguros_idSeguros" class="java.lang.Long"/>
+	<field name="empresaseguros_designacao" class="java.lang.String"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="factura_valorApagar" class="java.lang.Double"/>
+	<field name="factura_itens_quantidade" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="0" y="0" width="121" height="80" uuid="22d5a084-21ff-46b6-a8c1-b91f41ddfd73"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="30" y="80" width="104" height="20" uuid="2b715389-e1ec-4608-9424-75d19319cd11"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<text><![CDATA[Facturação referente:  ]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="134" y="80" width="126" height="20" uuid="b89155a6-cd18-45a5-92b7-780d78efea48"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATA1}+ " à " +$P{DATA2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="1" width="260" height="20" backcolor="#00CCFF" uuid="71c9f1a4-64f9-4741-b1c3-183a37c9e929"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-81" positionType="Float" mode="Transparent" x="17" y="3" width="243" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="9764058a-3d91-4ca4-a5df-eab0cbe78dd1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Movimento em Dívida]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="135" height="16" backcolor="#CCCCCC" uuid="b2c37985-250e-4603-b932-3a2386ace213"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<text><![CDATA[Seguradora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="134" y="0" width="126" height="16" backcolor="#CCCCCC" uuid="f5c9fbb2-fb16-46df-b9b1-73be4313459b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<text><![CDATA[Valor Apagar]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="133" height="20" uuid="7fad4f4f-f898-4846-b11f-ff27563f3d1b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresaseguros_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement mode="Transparent" x="134" y="0" width="126" height="20" forecolor="#FF0000" backcolor="#FF0000" uuid="1419738e-1ad6-4531-b424-af7b357b098e"/>
+				<box>
+					<pen lineWidth="0.75" lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}+$F{factura_itens_totalTPA}*$F{factura_itens_quantidade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="58" splitType="Stretch"/>
+	</summary>
+</jasperReport>

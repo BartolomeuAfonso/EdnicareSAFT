@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportMovimentoPorUtilizadorSintetico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="98a3dde0-bfa9-499d-a31b-59fc4b204890">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Rufino Router\\Desktop\\ba\\Meucaixa\\Relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_INICIO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="DATA_FIM" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="CODIGO_USUARIO" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+     sum(venda.`valorTotal`) AS item_venda_PrecoTotal,
+     count(venda.`codVenda`) AS item_venda_Quantidade,
+     usuario.`username` AS usuario_username
+FROM
+     `usuario` usuario INNER JOIN `venda` venda ON usuario.`codUser` = venda.`codUtilizador`
+WHERE dataVenda between $P{DATA_INICIO} and $P{DATA_FIM}
+GROUP BY usuario_username
+]]>
+	</queryString>
+	<field name="item_venda_PrecoTotal" class="java.lang.Double"/>
+	<field name="item_venda_Quantidade" class="java.lang.Long"/>
+	<field name="usuario_username" class="java.lang.String"/>
+	<variable name="TOTALQUANTIDADE" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{item_venda_Quantidade}]]></variableExpression>
+	</variable>
+	<variable name="TOTALPRECO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{item_venda_PrecoTotal}]]></variableExpression>
+	</variable>
+	<group name="NumeroFactura">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="USUARIO">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="0" y="15" width="554" height="30" uuid="3330d814-ff80-4b97-af25-a8af42de79b6"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Relatório de Movimentos  ( Sintético)]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="61" width="555" height="18" uuid="ce38c652-2c8e-4e9c-bb25-205280d70a4e"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Periodo de: " +$P{DATA_INICIO}+ " á " +$P{DATA_FIM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-6" x="0" y="1" width="274" height="20" uuid="ca4cd1d7-2d7d-4931-86cf-d3a30dd44f1a"/>
+				<box>
+					<pen lineWidth="0.05"/>
+					<topPen lineWidth="0.05"/>
+					<leftPen lineWidth="0.05"/>
+					<bottomPen lineWidth="0.05"/>
+					<rightPen lineWidth="0.05"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Utilizador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="274" y="1" width="146" height="20" uuid="feaa1172-2976-4952-b704-2afc1bd4fe00"/>
+				<box>
+					<pen lineWidth="0.05"/>
+					<topPen lineWidth="0.05"/>
+					<leftPen lineWidth="0.05"/>
+					<bottomPen lineWidth="0.05"/>
+					<rightPen lineWidth="0.05"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" x="420" y="1" width="135" height="20" uuid="fcd83ba9-8cf3-40e6-a3e4-5377d6f30a40"/>
+				<box>
+					<pen lineWidth="0.05"/>
+					<topPen lineWidth="0.05"/>
+					<leftPen lineWidth="0.05"/>
+					<bottomPen lineWidth="0.05"/>
+					<rightPen lineWidth="0.05"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="0" width="274" height="18" isRemoveLineWhenBlank="true" uuid="0231d996-8e67-4218-86c8-2b088a3a7a8d"/>
+				<box>
+					<pen lineWidth="0.05"/>
+					<topPen lineWidth="0.05"/>
+					<leftPen lineWidth="0.05"/>
+					<bottomPen lineWidth="0.05"/>
+					<rightPen lineWidth="0.05"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuario_username}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="274" y="0" width="146" height="18" isRemoveLineWhenBlank="true" uuid="4bf78326-2519-4ad0-9f79-63ed76421c73"/>
+				<box>
+					<pen lineWidth="0.05"/>
+					<topPen lineWidth="0.05"/>
+					<leftPen lineWidth="0.05"/>
+					<bottomPen lineWidth="0.05"/>
+					<rightPen lineWidth="0.05"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{item_venda_Quantidade}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="420" y="0" width="135" height="18" isRemoveLineWhenBlank="true" uuid="8fa1a006-d4c8-4257-94b0-7eae6311a545"/>
+				<box>
+					<pen lineWidth="0.05"/>
+					<topPen lineWidth="0.05"/>
+					<leftPen lineWidth="0.05"/>
+					<bottomPen lineWidth="0.05"/>
+					<rightPen lineWidth="0.05"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{item_venda_PrecoTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="15" uuid="3c1b06ea-e6be-4467-9bf8-adf89c7e964c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Century Gothic" size="8"/>
+				</textElement>
+				<text><![CDATA[Software desenvolvido e assistido pela SOCOMPSER]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="14" width="553" height="1" uuid="dfb63b9a-2dd1-4bea-b1fe-56a7c7ae0eaa"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-2" x="0" y="0" width="556" height="20" backcolor="#009999" uuid="446b22ea-3c74-41ba-a520-dbc5a3529ffb"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" x="420" y="1" width="134" height="18" isRemoveLineWhenBlank="true" uuid="3ad99f55-1c3a-40ba-aafd-ae72660221ec"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALPRECO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="1" width="147" height="20" uuid="16774765-29ad-4f16-bdce-ac5b195db96a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALQUANTIDADE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="56" y="1" width="218" height="20" uuid="05f4468d-1c10-4b28-b61c-74429e6beed8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAIS:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

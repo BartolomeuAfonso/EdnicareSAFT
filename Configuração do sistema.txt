@@ -1,0 +1,14 @@
+1. Consulta - Código =1
+2. Exames - Codigo =2
+3. Raio X - Codigo = 3
+4. Ecografia - Código = 5
+
+Para instalar o software ednicare deve instalar os seguintes programas
+1. Para o servidor: Mysql Server, JDK e JRE
+2. Para os demais computador JDK e JRE.
+
+Para aceder formulario de configuração do sistema poõe o seguinte código.
+Senha: mindvision.2018 Nela irá encontrar o nome do usuario e a senha do usuario da base de dados do sistema.
+
+No servidor criar uma pasta para o software e partilha para os demais computador.
+Em seguida o sistema está pronto para usar.

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MapadeServicos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9f1d686-c09c-4005-a9a8-7505b3db2fc7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="148"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DATA1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CONSULTA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     empresa.`codEmpresa` AS empresa_codEmpresa,
+     empresa.`descricao` AS empresa_descricao,
+     empresa.`endereco` AS empresa_endereco,
+     empresa.`email` AS empresa_email,
+     empresa.`contacto` AS empresa_contacto,
+     empresa.`nif` AS empresa_nif,
+     empresa.`website` AS empresa_website,
+     empresa.`NConta1` AS empresa_NConta1,
+     empresa.`IBAN1` AS empresa_IBAN1,
+     empresa.`NConta2` AS empresa_NConta2,
+     empresa.`IBAN2` AS empresa_IBAN2
+FROM
+     `empresa` empresa]]>
+	</queryString>
+	<field name="empresa_codEmpresa" class="java.lang.Long"/>
+	<field name="empresa_descricao" class="java.lang.String"/>
+	<field name="empresa_endereco" class="java.lang.String"/>
+	<field name="empresa_email" class="java.lang.String"/>
+	<field name="empresa_contacto" class="java.lang.String"/>
+	<field name="empresa_nif" class="java.lang.String"/>
+	<field name="empresa_website" class="java.lang.String"/>
+	<field name="empresa_NConta1" class="java.lang.String"/>
+	<field name="empresa_IBAN1" class="java.lang.String"/>
+	<field name="empresa_NConta2" class="java.lang.String"/>
+	<field name="empresa_IBAN2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="0" y="0" width="123" height="79" uuid="08b3c6fa-2427-4206-a693-13ee71455ea7"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="191" y="55" width="351" height="24" uuid="14434bf4-8c88-44f7-bf46-c194288b4738"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="16" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_descricao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="0" y="96" width="515" height="15" uuid="d22a4e9a-eb8f-4abd-b18d-2c7d019af74d"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Endereço: "+$F{empresa_endereco}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="0" y="111" width="514" height="12" uuid="4341cc66-2320-4a2d-b895-9f491e83c7dc"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Telemóveis:"+$F{empresa_contacto}+ "  Email: "+$F{empresa_email}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="0" y="81" width="515" height="15" uuid="926302d3-3449-492f-a580-daee675bab2b"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NIF: "+$F{empresa_nif}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="603" y="31" width="71" height="24" uuid="92203e92-e2db-4b9d-8324-5cf6e6a4b474"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Data Inicial:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="603" y="55" width="71" height="24" uuid="a9b28119-d581-42bb-9efa-cb11c26a5ece"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Data Final:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="720" height="33" uuid="a7523cfa-0bfb-45c0-9496-a7073f987f54"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAPA DE SERVIÇOS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="24" uuid="e3afc299-8781-4f96-af8c-04bd14d51f3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="0" width="316" height="24" uuid="136afff8-c7f1-444f-8492-c9fe289529b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Designação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="0" width="173" height="24" uuid="07879800-d78b-4f14-82ad-6e19aac3049a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="532" y="0" width="173" height="24" uuid="314aeb7b-a232-4b61-873c-7305807f74c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Total Facturado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

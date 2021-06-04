@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportEstoque" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7bfaea1c-a3fc-4664-9bb8-9595162dd607">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="TODOS" class="java.lang.Integer"/>
+	<parameter name="BAIXO" class="java.lang.Integer"/>
+	<parameter name="PEDIDOS" class="java.lang.Integer"/>
+	<parameter name="PRODUTOS" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT p.descricao as Item,e.estoqueUN as QtdDisponivel,p.estoqueMin as EstoqueMinimo,pv.valorUnitario as ValUnitario,(pv.valorUnitario*estoqueUN) as ValTota FROM estoque e inner join produto p on p.codProduto=e.codProduto inner join produtovenda pv on pv.codProduto = p.codProduto]]>
+	</queryString>
+	<field name="Item" class="java.lang.String"/>
+	<field name="QtdDisponivel" class="java.lang.Long"/>
+	<field name="EstoqueMinimo" class="java.lang.Double"/>
+	<field name="ValUnitario" class="java.lang.Double"/>
+	<field name="ValTota" class="java.lang.Double"/>
+	<variable name="QTD" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{QtdDisponivel}]]></variableExpression>
+	</variable>
+	<variable name="VALOR" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ValTota}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="145" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="125" width="555" height="20" uuid="f2ec267b-849e-409c-b1b6-0170290d2bf3"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="326" y="3" width="178" height="20" uuid="972c9689-eec1-4ce2-830d-99ce61d415d4"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ QTD.  PRODUTOS NO ESTOQUE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="23" width="178" height="20" uuid="ca888331-7031-4d6c-8cec-945ab8c79c1d"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ PRODUTOS COM ESTOQUE BAIXO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="43" width="178" height="20" uuid="a853e9f1-3025-4420-8fb2-cdd658f254c4"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ PEDIDOS PARA RECEBER HOJE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="326" y="63" width="178" height="20" uuid="146275e5-930d-4e2d-b5a1-b9a039b10211"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ PRODUTOS ATIVOS CADASTRADOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="125" width="553" height="20" uuid="b69484a3-ec0c-4f2e-9630-79991d758ce4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[LISTAGEM GERAL DOS PRODUTOS EM  ESTOQUE]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="504" y="3" width="50" height="20" uuid="f4b2cd4a-6dab-4fb4-9359-484ce9a77cb4"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{TODOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="504" y="23" width="50" height="20" uuid="d6fdb2fe-a554-4a71-83e7-aebdd7874023"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{BAIXO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="504" y="42" width="50" height="21" uuid="fbaec0a8-6882-4d33-8fae-3f68f1aca395"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{PEDIDOS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="504" y="63" width="50" height="20" uuid="42100980-4f22-4c60-b688-9e441104cf4e"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{PRODUTOS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="1" width="554" height="20" backcolor="#CCCCCC" uuid="eb2bfc74-8940-4cc9-90a1-5a224cdc901f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="231" y="2" width="72" height="20" uuid="25babcf1-7ede-4226-9314-707a6e5dd2c3"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[QtdDisponivel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="2" width="69" height="20" uuid="222ac94c-f4a4-454e-80b4-d1fe9b4c7ff4"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[EstoqueMin.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="2" width="95" height="20" uuid="772b4e9d-6532-4c6b-95f2-224eb55b8b0c"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ValUnitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="2" width="88" height="20" uuid="f0006610-a676-41a2-80c9-b38b7dd1e438"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[ValTota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="2" width="231" height="20" uuid="33efd9de-bb75-4023-9368-e37ac722515b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ Produto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern=" #,##0.00">
+				<reportElement x="231" y="0" width="72" height="20" uuid="33cdef15-3b13-48ed-bfca-6b00b4acaff8"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{QtdDisponivel}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00">
+				<reportElement x="303" y="0" width="69" height="20" uuid="e699a2d0-b901-416d-ab65-be6047765a0c"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{EstoqueMinimo}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00">
+				<reportElement x="372" y="0" width="95" height="20" uuid="e92c7705-9654-4ea2-ac5d-1537c230c3b6"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ValUnitario}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00">
+				<reportElement x="467" y="0" width="88" height="20" uuid="90a44e18-ec21-44c2-880a-9886cffb0f44"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ValTota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="230" height="20" uuid="ebbfb973-0272-4014-8f16-199794e009a0"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[" "+$F{Item}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="467" y="0" width="88" height="20" uuid="b17255ea-4460-4369-9f51-b11e5505a503"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{VALOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="231" y="0" width="72" height="20" uuid="3f5e2ec1-31e7-47f2-a934-067818d0f21a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{QTD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="0" width="121" height="20" uuid="3eed68be-984a-43fa-8abf-0136029a8539"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Quantidade em Estoque:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="0" width="164" height="20" uuid="66138b08-b8e3-4f8b-86e2-30247e5a7287"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Valor total em estoque:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="23" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="24" splitType="Stretch"/>
+	</summary>
+</jasperReport>

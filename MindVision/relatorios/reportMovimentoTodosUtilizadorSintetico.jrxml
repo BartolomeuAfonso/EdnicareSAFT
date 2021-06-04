@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportMovimentoTodosUtilizadorSintetico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b61abf41-92c0-4035-8291-8016b3c3727f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="DATA1" class="java.util.Date" isForPrompting="false"/>
+	<parameter name="DATA2" class="java.util.Date" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT
+     sum(("Quantidade")) AS vendaItem_Quantidade,
+     sum((vendas."ValorPagar")) AS vendaItem_ValorPAgar,
+     usuarios."NomeUser" AS usuarios_NomeUser
+FROM
+     "public"."vendas" vendas INNER JOIN "public"."vendaItem" vendaItem ON vendas."Codigo" = vendaItem."CodigoVenda"
+     INNER JOIN "public"."usuarios" usuarios ON vendas."CodigoUtilizador" = usuarios."Codigo"
+     INNER JOIN "public"."formaPagamento" formaPagamento ON vendas."CodigoFormaPagamento" = formaPagamento."Codigo"
+WHERE
+     vendas."DataFactura" BETWEEN $P{DATA1} AND $P{DATA2}
+GROUP BY
+     usuarios."NomeUser"]]>
+	</queryString>
+	<field name="vendaitem_quantidade" class="java.lang.Long"/>
+	<field name="vendaitem_valorpagar" class="java.lang.Double"/>
+	<field name="usuarios_nomeuser" class="java.lang.String"/>
+	<variable name="TOTALQUANTIDADE" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{vendaitem_quantidade}]]></variableExpression>
+	</variable>
+	<variable name="TOTALPRECO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{vendaitem_valorpagar}]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.String"/>
+	<group name="NumeroFactura">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="USUARIO">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupHeader>
+			<band splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="1" splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="119" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="158" y="36" width="385" height="30" uuid="ae2411e7-0632-41d4-8f54-3c9c8cb3f090"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Movimentos dos Utilizadores ( Sintético)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-8" x="282" y="97" width="88" height="22" uuid="f5fdfa9e-560d-4baf-a842-3df0d15a02ad"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periódo de:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-9" x="457" y="97" width="29" height="22" uuid="1b6bfe20-97cf-411a-956b-cb6605d993df"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[à]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="369" y="97" width="89" height="22" uuid="41a316d9-7fe6-44bf-ad44-476e4bfa016a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATA1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="486" y="97" width="69" height="22" uuid="839780c9-302f-4ada-8ab9-8229fc22c67b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATA2}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="146" height="119" uuid="97b13d07-e2ed-456b-b333-ddbc70516824"/>
+				<imageExpression><![CDATA["Relatorios/logo1.jpeg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-6" mode="Opaque" x="0" y="1" width="244" height="20" backcolor="#FFCCCC" uuid="9ffc8a53-83df-43ea-a845-665f721d64b4"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Utilizador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" mode="Opaque" x="244" y="1" width="149" height="20" backcolor="#FFCCCC" uuid="15432470-971c-46de-8c66-a4b41d8a1a86"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-7" mode="Opaque" x="393" y="1" width="162" height="20" backcolor="#FFCCCC" uuid="a9555c6c-ee59-42a9-b66d-cdf1a435f123"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="0" y="0" width="244" height="18" backcolor="#CCCCCC" uuid="6712f4fd-a3bb-4f53-a66e-e7176d0cf96a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarios_nomeuser}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement key="textField" mode="Opaque" x="393" y="0" width="162" height="18" backcolor="#CCCCCC" uuid="99095fcd-2e5c-4610-a428-8041793aa52b"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vendaitem_valorpagar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="244" y="0" width="149" height="18" backcolor="#CCCCCC" uuid="5a7dba49-ee05-4107-958f-557244ef95cd"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vendaitem_quantidade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement key="rectangle-2" x="0" y="0" width="555" height="20" backcolor="#FFCCCC" uuid="6a530f34-8420-4d91-aaff-4915a4aa1023"/>
+			</rectangle>
+			<staticText>
+				<reportElement key="staticText-2" x="0" y="0" width="244" height="21" uuid="1463a0bc-b5d0-4d68-915b-dd566d15e907"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="393" y="2" width="162" height="18" uuid="79143326-9658-4b97-9b4f-51cc13abb0d6"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALPRECO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="245" y="2" width="148" height="18" uuid="025a8993-24c4-4255-b49c-916fdd155769"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALQUANTIDADE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

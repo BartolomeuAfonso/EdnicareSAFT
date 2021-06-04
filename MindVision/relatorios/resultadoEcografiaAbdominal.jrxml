@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resultadoEcografia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="495" leftMargin="50" rightMargin="50" topMargin="20" bottomMargin="20" uuid="b036d2b0-93d1-46a8-b473-90f50bd2d820">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="219"/>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     YEAR(CURDATE())-YEAR(pacientes.`dataNascimento`) AS Idade,
+     UPPER(empresa.`descricao`) AS empresa_descricao,
+     resultadoecografia.`idresultadoEcografia` AS resultadoecografia_idresultadoEcografia,
+     resultadoecografia.`nomePaciente` AS resultadoecografia_nomePaciente,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     servicos.`unidade` AS servicos_unidade,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     pacientes.`morada` AS pacientes_morada,
+     resultadoecografia.`descricao` AS resultadoecografia_descricao,
+     empresa.`codEmpresa` AS empresa_codEmpresa,
+     empresa.`endereco` AS empresa_endereco,
+     empresa.`slogan` AS empresa_slogan,
+     resultadoecografia.`ovarios` AS resultadoecografia_ovarios,
+     resultadoecografia.`conclusao` AS resultadoecografia_conclusao,
+     resultadoecografia.`estado` AS resultadoecografia_estado,
+     empresa.`contacto` AS empresa_contacto,
+     empresa.`email` AS empresa_email,
+     empresa.`contacto` AS empresa_contacto,
+     empresa.`IBAN2` AS empresa_IBAN2,
+     empresa.`NConta2` AS empresa_NConta2,
+     empresa.`IBAN1` AS empresa_IBAN1,
+     empresa.`NConta1` AS empresa_NConta1,
+     empresa.`website` AS empresa_website,
+     empresa.`nif` AS empresa_nif
+FROM
+     `servicos` servicos INNER JOIN `resultadoecografia` resultadoecografia ON servicos.`idServico` = resultadoecografia.`codigoServico`
+     INNER JOIN `pacientes` pacientes ON resultadoecografia.`codigoPaciente` = pacientes.`idPaciente`,
+     `empresa` empresa
+WHERE
+     resultadoecografia.`idresultadoEcografia` = $P{CODIGO}]]>
+	</queryString>
+	<field name="Idade" class="java.lang.Long"/>
+	<field name="empresa_descricao" class="java.lang.String"/>
+	<field name="resultadoecografia_idresultadoEcografia" class="java.lang.Long"/>
+	<field name="resultadoecografia_nomePaciente" class="java.lang.String"/>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="servicos_unidade" class="java.lang.String"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="pacientes_morada" class="java.lang.String"/>
+	<field name="resultadoecografia_descricao" class="java.lang.String"/>
+	<field name="empresa_codEmpresa" class="java.lang.Long"/>
+	<field name="empresa_endereco" class="java.lang.String"/>
+	<field name="empresa_slogan" class="java.lang.String"/>
+	<field name="resultadoecografia_ovarios" class="java.lang.String"/>
+	<field name="resultadoecografia_conclusao" class="java.lang.String"/>
+	<field name="resultadoecografia_estado" class="java.lang.String"/>
+	<field name="empresa_contacto" class="java.lang.String"/>
+	<field name="empresa_email" class="java.lang.String"/>
+	<field name="empresa_IBAN2" class="java.lang.String"/>
+	<field name="empresa_NConta2" class="java.lang.String"/>
+	<field name="empresa_IBAN1" class="java.lang.String"/>
+	<field name="empresa_NConta1" class="java.lang.String"/>
+	<field name="empresa_website" class="java.lang.String"/>
+	<field name="empresa_nif" class="java.lang.String"/>
+	<title>
+		<band height="201" splitType="Stretch">
+			<rectangle>
+				<reportElement x="234" y="122" width="258" height="64" backcolor="#FFFFCC" uuid="aef5d8e0-d527-47fe-b422-83fd171b7faf"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="299" y="173" width="162" height="10" uuid="7d359574-5079-442a-abbc-219a5164093b"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_descricao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="248" y="173" width="51" height="10" backcolor="#99FF99" uuid="95a6b43b-d9da-4420-ab2b-7fdc988dc8a5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Un. Recolha:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="247" y="134" width="213" height="10" backcolor="#FFFFFF" uuid="72fb87df-5055-45db-9502-0246795c6102"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pacientes_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="248" y="161" width="96" height="10" uuid="8e6fa816-8304-412d-9bc8-35ec66f0d812"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº do Processo: "+$F{pacientes_idPaciente}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="474" y="122" width="18" height="64" uuid="43361188-ec63-4464-8d9a-b529eb1fde3c"/>
+				<imageExpression><![CDATA["relatorios/barra.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="246" y="122" width="213" height="10" backcolor="#FFFFFF" uuid="22ca7619-e04d-4ce6-be90-b2f75cf1f13e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Exmo.Sr(a):"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="249" y="148" width="31" height="10" backcolor="#99FF99" uuid="0d23e9e0-df65-486a-967e-d181a58f94ba"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Idade:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="278" y="148" width="64" height="10" backcolor="#99FF99" uuid="4bc6767a-9d65-4290-ab6b-2909ed381e3b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Idade} + " anos"]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement key="image-1" x="0" y="0" width="151" height="72" uuid="64f291b7-4a24-4a15-bb01-3a688eadb343"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="1" y="88" width="298" height="12" uuid="22239f1b-bd79-437c-bfca-bdcc4b722638"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{empresa_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="72" width="296" height="16" uuid="13184959-1257-44be-963c-7ed1c773d1f4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="100" width="300" height="12" uuid="9ec9f7f1-a258-4688-aa6e-cfcd31023d40"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TEL:"+$F{empresa_contacto}+ " E-mail:"+$F{empresa_email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="495" height="29" uuid="a6f9665a-c068-496f-98f0-ec317adf8475"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{servicos_designacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="323" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="12" width="495" height="236" uuid="dfce1bc6-4718-4e26-91a2-dbe7acafe03d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resultadoecografia_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="264" width="497" height="40" uuid="54aecb73-2343-4b14-896d-1e7630dcb74e"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resultadoecografia_conclusao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="304" width="494" height="19" uuid="c1b2a121-bff3-430f-a530-5e806ccb477d"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resultadoecografia_estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="248" width="497" height="16" uuid="d212585f-bac1-465f-bc4f-c935b95a29ce"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Conclusão]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="173">
+			<line>
+				<reportElement x="128" y="105" width="250" height="1" uuid="63184e48-0a61-4240-b818-a4056f6246ec"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText" x="3" y="81" width="494" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="bf2b0fd1-20ef-47f5-ab9a-80f9e70cce22"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O(A) Médico(A)]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="227" y="0" width="268" height="20" uuid="d60b2a47-3248-4f4b-a789-856b1e5fb6f9"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="0" width="225" height="20" uuid="7a2052cd-024a-49c4-a14a-71f9f02479ff"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Luanda, aos]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

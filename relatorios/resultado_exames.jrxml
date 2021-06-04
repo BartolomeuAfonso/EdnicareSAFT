@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resultado_exames" pageWidth="350" pageHeight="450" columnWidth="325" leftMargin="15" rightMargin="10" topMargin="20" bottomMargin="20" uuid="29f0e158-86e6-42bf-b36e-e348785a9490">
+	<property name="ireport.zoom" value="1.6500000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="74"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="DATA1" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="DATA2" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="CODIGO_EXAME" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="CODIGO_PACIENTE" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     YEAR(CURDATE())-YEAR(pacientes.`dataNascimento`) AS Idade,
+     examesporfazer.`idexamesPorFazer` AS examesporfazer_idexamesPorFazer,
+     examesporfazer.`codigoPaciente` AS examesporfazer_codigoPaciente,
+     examesporfazeritems.`codigoExames` AS examesporfazeritems_codigoExames,
+     examesporfazeritems.`dataResultado` AS examesporfazeritems_dataResultado,
+     examesporfazeritems.`referencia` AS examesporfazeritems_referencia,
+     examesporfazeritems.`codigoProduto` AS examesporfazeritems_codigoProduto,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     status_exames.`idstatus_exames` AS status_exames_idstatus_exames,
+     status_exames.`designacao` AS status_exames_designacao,
+     examesporfazeritems.`codigoExamesIntegrado` AS examesporfazeritems_codigoExamesIntegrado,
+     examesporfazer.`codigoMedico` AS examesporfazer_codigoMedico,
+     examesporfazeritems.`codigo` AS examesporfazeritems_codigo,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     examesporfazeritems.`factor_rh` AS examesporfazeritems_factor_rh,
+     examesporfazeritems.`resultado` AS examesporfazeritems_resultado,
+     servicos.`unidade` AS servicos_unidade,
+     empresa.`descricao` AS empresa_descricao,
+     empresaseguros.`idSeguros` AS empresaseguros_idSeguros,
+     empresaseguros.`designacao` AS empresaseguros_designacao,
+     empresa.`endereco` AS empresa_endereco,
+     medicos.`nomeCompleto` AS medicos_nomeCompleto,
+     servicos.`referencia` AS servicos_referencia,
+     examesporfazer.`dataPedido` AS examesporfazer_dataPedido,
+     examesporfazer.`tecnico` AS examesporfazer_tecnico
+FROM
+     `examesporfazer` examesporfazer INNER JOIN `examesporfazeritems` examesporfazeritems ON examesporfazer.`idexamesPorFazer` = examesporfazeritems.`codigoExames`
+     INNER JOIN `servicos` servicos ON examesporfazeritems.`codigoProduto` = servicos.`idServico`
+     INNER JOIN `status_exames` status_exames ON examesporfazeritems.`codigoStatusExame` = status_exames.`idstatus_exames`
+     INNER JOIN `pacientes` pacientes ON examesporfazer.`codigoPaciente` = pacientes.`idPaciente`
+     INNER JOIN `medicos` medicos ON examesporfazer.`codigoMedico` = medicos.`idMedico`
+     INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`,
+     `empresa` empresa
+WHERE
+     examesporfazeritems.`codigoStatusExame` = 2
+ AND Date(examesporfazer.`dataPedido`) BETWEEN $P{DATA1} AND $P{DATA2}
+ AND pacientes.`idPaciente` = $P{CODIGO_PACIENTE}
+ AND examesporfazer.`idexamesPorFazer` = $P{CODIGO_EXAME}]]>
+	</queryString>
+	<field name="Idade" class="java.lang.Long"/>
+	<field name="examesporfazer_idexamesPorFazer" class="java.lang.Long"/>
+	<field name="examesporfazer_codigoPaciente" class="java.lang.Long"/>
+	<field name="examesporfazeritems_codigoExames" class="java.lang.Long"/>
+	<field name="examesporfazeritems_dataResultado" class="java.sql.Date"/>
+	<field name="examesporfazeritems_referencia" class="java.lang.String"/>
+	<field name="examesporfazeritems_codigoProduto" class="java.lang.Long"/>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="status_exames_idstatus_exames" class="java.lang.Long"/>
+	<field name="status_exames_designacao" class="java.lang.String"/>
+	<field name="examesporfazeritems_codigoExamesIntegrado" class="java.lang.Long"/>
+	<field name="examesporfazer_codigoMedico" class="java.lang.Long"/>
+	<field name="examesporfazeritems_codigo" class="java.lang.Integer"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="examesporfazeritems_factor_rh" class="java.lang.String"/>
+	<field name="examesporfazeritems_resultado" class="java.lang.String"/>
+	<field name="servicos_unidade" class="java.lang.String"/>
+	<field name="empresa_descricao" class="java.lang.String"/>
+	<field name="empresaseguros_idSeguros" class="java.lang.Long"/>
+	<field name="empresaseguros_designacao" class="java.lang.String"/>
+	<field name="empresa_endereco" class="java.lang.String"/>
+	<field name="medicos_nomeCompleto" class="java.lang.String"/>
+	<field name="servicos_referencia" class="java.lang.String"/>
+	<field name="examesporfazer_dataPedido" class="java.sql.Date"/>
+	<field name="examesporfazer_tecnico" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="131" splitType="Stretch">
+			<rectangle>
+				<reportElement x="127" y="0" width="193" height="106" backcolor="#FFFFCC" uuid="4415eb47-8b62-4811-80c4-4e27f19e0b3f"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<image>
+				<reportElement key="image-1" x="1" y="0" width="117" height="53" uuid="cbbee1f2-b675-4e63-b33b-3ebd080d683c"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="302" y="10" width="18" height="92" uuid="e9a0a7fb-24bf-492c-8108-69a2a157ee92"/>
+				<imageExpression><![CDATA["relatorios/barra.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="128" y="20" width="174" height="10" backcolor="#FFFFFF" uuid="41d0432e-4a06-4a53-967e-34ee1538cc5b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pacientes_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="128" y="43" width="174" height="10" backcolor="#99FF99" uuid="4905a9af-44c6-4189-9d71-f6bfd50f1147"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Análises Requisitadas por."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="179" y="83" width="123" height="10" uuid="1084a96a-1014-4cc7-85f8-3519d7cfa713"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_descricao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="179" y="70" width="123" height="10" uuid="f1db0d02-2ad9-4256-9050-b348f64d6661"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_descricao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="128" y="10" width="174" height="10" backcolor="#FFFFFF" uuid="5cc9461a-4644-4a0d-b244-65955c16e856"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Exmo.Sr(a):"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="127" y="96" width="92" height="10" uuid="2d378fb3-1f7a-4a59-bb3a-912cb1937059"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº Amostra: "+$F{examesporfazer_idexamesPorFazer}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="219" y="96" width="90" height="10" uuid="0bb3aea0-307a-4b27-955f-b2a9474ff16a"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº do Processo: "+$F{pacientes_idPaciente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="128" y="57" width="174" height="10" uuid="bb7182f4-dccc-4d5d-b56f-35eb636a4edf"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{medicos_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="128" y="83" width="51" height="10" backcolor="#99FF99" uuid="157408dd-e69d-48c1-9855-32701bf72033"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Entidade:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="128" y="70" width="51" height="10" backcolor="#99FF99" uuid="7a92df12-bcc4-4761-ba15-362372c3af08"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Un. Recolha:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="33" y="99" width="64" height="10" backcolor="#99FF99" uuid="82c4be7a-5c2c-4239-9de5-fd1fec76128f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Idade} + " anos"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="2" y="100" width="31" height="10" backcolor="#99FF99" uuid="033ffa54-388f-4efa-b831-a97af123c2af"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Idade:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="63" y="57" width="45" height="10" backcolor="#99FF99" uuid="751d670b-9646-4872-b0d6-327513a821e5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{examesporfazer_dataPedido}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="1" y="111" width="127" height="10" uuid="47f71684-03f9-4c08-b06e-559726c0a3a4"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Empresa: " +$F{empresaseguros_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="71" y="77" width="37" height="10" backcolor="#99FF99" uuid="2150b29e-2d25-4696-b1d3-2733e1703787"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{examesporfazeritems_dataResultado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="2" y="77" width="69" height="10" backcolor="#99FF99" uuid="e4bec8b5-1dea-476b-9053-3cea6e20ac5f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Emissão Actual:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="3" y="67" width="57" height="10" backcolor="#99FF99" uuid="85b95541-a92d-4af3-a111-00e8d1f6a456"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["1ª Emissão:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="4" y="57" width="56" height="10" backcolor="#99FF99" uuid="e77f16b4-b8f0-4356-acf5-a787850cc67f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Registo:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Transparent" x="60" y="67" width="48" height="10" backcolor="#99FF99" uuid="6ba2960a-e348-4166-8b4a-cf3b75767dfe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{examesporfazer_dataPedido}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="129" width="325" height="1" uuid="58201f08-d4af-4a64-ae29-e05bb6d1d618"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="12" splitType="Stretch">
+			<staticText>
+				<reportElement key="element-90" mode="Transparent" x="2" y="0" width="92" height="12" forecolor="#000000" backcolor="#99FF99" uuid="0a641163-5f2f-473f-9920-e682f02c8ed3"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Análise]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-93" mode="Transparent" x="94" y="0" width="85" height="12" forecolor="#000000" backcolor="#99FF99" uuid="19426ff7-de3d-4ca7-98ad-13936596033d"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultado/unidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-94" mode="Transparent" x="179" y="0" width="69" height="12" forecolor="#000000" backcolor="#99FF99" uuid="5e251f62-beee-47f3-a230-957f42d1f5dc"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Intervalo de Referência]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="element-94" mode="Transparent" x="247" y="0" width="78" height="12" forecolor="#000000" backcolor="#99FF99" uuid="5f2ccea1-3672-4a98-a5f9-311f1cbe26be"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultado s Anterior]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-3" x="2" y="0" width="92" height="12" forecolor="#000000" uuid="ed0a6dc9-cf61-4b28-94cc-616796ee7369"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{servicos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-3" x="94" y="0" width="90" height="12" forecolor="#000000" uuid="c65e260e-526e-45d3-9ee3-3910d162d4f1"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{examesporfazeritems_resultado}+""+$F{servicos_unidade}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-3" x="184" y="0" width="136" height="12" forecolor="#000000" uuid="4c2f6b8a-bc06-46f2-95b2-1dd8afee1ead"/>
+				<box leftPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{servicos_unidade}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="11" width="321" height="1" uuid="5537fb78-f288-40e8-bb72-6ada59d115d7"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="50">
+			<staticText>
+				<reportElement key="staticText" x="4" y="0" width="318" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="1b46d6b5-9396-4a62-b56b-6bb273e6bf50"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O Técnico]]></text>
+			</staticText>
+			<line>
+				<reportElement x="52" y="24" width="250" height="1" uuid="066bc068-5f72-45b5-afc1-9c21c4550065"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="60" y="35" width="170" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="42ab8888-57c3-4df4-887a-468ec331c4a4"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="230" y="35" width="36" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="1f1740e6-f1f3-4ba7-8dd2-b620f1fd1533"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="52" y="25" width="235" height="10" uuid="40faf170-4997-4a57-86e6-78dfece3eb22"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{examesporfazer_tecnico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

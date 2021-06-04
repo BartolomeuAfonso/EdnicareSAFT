@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="folha_registo" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c258fb9b-3882-43fc-8e46-00213b968eea">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DATA1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTILIZADOR" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     year(curdate())-year(pacientes.`dataNascimento`) AS idade,
+     marcacaoconsulta.`dataAtendimento` AS marcacaoconsulta_dataAtendimento,
+     medicos.`idMedico` AS medicos_idMedico,
+     medicos.`nomeCompleto` AS medicos_nomeCompleto,
+     especialidade_medico.`designacao` AS especialidade_medico_designacao,
+     servicos.`designacao` AS servicos_designacao,
+     historicoclinico.`codigoConsulta` AS historicoclinico_codigoConsulta,
+     historicoclinico.`dataAtendimento` AS historicoclinico_dataAtendimento,
+     historicoclinico.`historiaDoencaActual` AS historicoclinico_historiaDoencaActual,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     empresaseguros.`designacao` AS empresaseguros_designacao,
+     pacientes.`genero` AS pacientes_genero
+FROM
+     `medicos` medicos INNER JOIN `marcacaoconsulta` marcacaoconsulta ON medicos.`idMedico` = marcacaoconsulta.`codigoMedico`
+     INNER JOIN `especialidade_medico` especialidade_medico ON medicos.`codigoEspecialidade` = especialidade_medico.`idEspecialidade`
+     INNER JOIN `historicoclinico` historicoclinico ON medicos.`idMedico` = historicoclinico.`codigoMedico`
+     INNER JOIN `servicos` servicos ON marcacaoconsulta.`codigoServico` = servicos.`idServico`
+     INNER JOIN `pacientes` pacientes ON marcacaoconsulta.`codigoPaciente` = pacientes.`idPaciente`
+     INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`
+WHERE
+     DATE(historicoclinico.`dataAtendimento`) BETWEEN $P{DATA1} AND $P{DATA2}
+ AND medicos.`idMedico` = $P{UTILIZADOR}]]>
+	</queryString>
+	<field name="idade" class="java.lang.Long"/>
+	<field name="marcacaoconsulta_dataAtendimento" class="java.sql.Date"/>
+	<field name="medicos_idMedico" class="java.lang.Long"/>
+	<field name="medicos_nomeCompleto" class="java.lang.String"/>
+	<field name="especialidade_medico_designacao" class="java.lang.String"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="historicoclinico_codigoConsulta" class="java.lang.Long"/>
+	<field name="historicoclinico_dataAtendimento" class="java.sql.Timestamp"/>
+	<field name="historicoclinico_historiaDoencaActual" class="java.lang.String"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="empresaseguros_designacao" class="java.lang.String"/>
+	<field name="pacientes_genero" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="0" y="0" width="123" height="93" uuid="c7214574-09e7-488a-bec0-05b275514b1b"/>
+				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="61" width="802" height="32" forecolor="#000000" backcolor="#999999" uuid="a9f29825-4156-4b27-b7ca-5dd8d2e8aa41"/>
+				<box>
+					<pen lineColor="#FF0000"/>
+					<topPen lineColor="#FF0000"/>
+					<leftPen lineColor="#FF0000"/>
+					<bottomPen lineColor="#FF0000"/>
+					<rightPen lineColor="#FF0000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="14" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Registo de Pacientes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="43" y="14" width="276" height="20" uuid="a8226187-d1df-4c7e-9dfd-6d8246d2d252"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medicos_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="MM/dd/yyyy" isBlankWhenNull="true">
+				<reportElement key="textField-5" x="613" y="13" width="189" height="21" uuid="278b2d58-0243-47c4-a567-85afe28823cb"/>
+				<box leftPadding="0" rightPadding="2">
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " +$P{DATA1}+ " á " + $P{DATA2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="589" y="12" width="24" height="21" forecolor="#009900" backcolor="#FFFFFF" uuid="e83be17e-25e6-4f2d-9c9f-ea3628ee1c3c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="319" y="13" width="75" height="20" forecolor="#009900" backcolor="#FFFFFF" uuid="d2b235ca-9315-477c-a309-5e867b53ea79"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Especialidade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="394" y="13" width="195" height="21" uuid="5e9366fc-a9a6-4d82-a44e-cb4eaa365585"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{especialidade_medico_designacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="14" width="42" height="20" forecolor="#009900" backcolor="#FFFFFF" uuid="7ed15ae4-db70-4d5b-98b9-24be998d8ece"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dr.(a):]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="244" y="0" width="98" height="21" forecolor="#000000" backcolor="#0099FF" uuid="b422b965-8d3e-408e-857e-3811aa410028"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="342" y="0" width="52" height="21" forecolor="#000000" backcolor="#0099FF" uuid="603de91d-fb04-4002-8f59-000081d02e96"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Idade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="569" y="0" width="233" height="21" forecolor="#000000" backcolor="#0099FF" uuid="372a6337-bf78-4167-9403-2ffc515287f7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diagnóstico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="31" y="0" width="76" height="21" forecolor="#000000" backcolor="#0099FF" uuid="fb8623e3-1b5d-4a0a-ab35-e23911834787"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="31" height="21" forecolor="#000000" backcolor="#0099FF" uuid="b77b629a-724e-4155-8330-a8361bc44f46"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="394" y="0" width="174" height="21" forecolor="#000000" backcolor="#0099FF" uuid="cc8c604f-671e-4a3a-8e11-e1b047d5a575"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consulta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="107" y="0" width="137" height="21" forecolor="#000000" backcolor="#0099FF" uuid="bf9958fc-59c3-4b60-9fe3-b4c17de3e538"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paciente]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="107" y="0" width="137" height="20" uuid="32125187-b752-4da3-950f-c93956f3f7e2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{pacientes_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="31" y="0" width="76" height="20" uuid="30e32d18-b51d-4f7c-a48a-8a2c1e45a4a8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{empresaseguros_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="0" width="98" height="20" uuid="515b358a-8e02-4638-b6a0-636855668251"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pacientes_genero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="0" width="52" height="20" uuid="2901ee92-8956-4e7b-9fe5-54e8c21e15f1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="0" width="175" height="20" uuid="eb64cd1c-9b66-4102-8751-409aac657482"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{servicos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="569" y="0" width="233" height="20" uuid="96d411fe-01b7-43bc-ae9a-eaae927f6366"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{historicoclinico_historiaDoencaActual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="31" height="20" uuid="4355b94a-c925-4073-baf1-aff7f6d7d699"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="511" y="25" width="58" height="20" uuid="f8a118d1-31ed-46ef-a8b4-85650fde1a97"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assinatura:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="568" y="44" width="234" height="1" uuid="471e34c4-26ec-4211-a910-81bd2491cb42"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

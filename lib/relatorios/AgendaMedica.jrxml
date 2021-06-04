@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AgendaMedica" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="529affa0-a142-4bab-b103-0990496f31d9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     medicos.`nomeCompleto` AS medicos_nomeCompleto,
+     agendamedica.`id` AS agendamedica_id,
+     agendamedica.`dias` AS agendamedica_dias,
+     especialidade_medico.`idEspecialidade` AS especialidade_medico_idEspecialidade,
+     especialidade_medico.`designacao` AS especialidade_medico_designacao,
+     medicos.`contacto` AS medicos_contacto,
+     agendamedica.`mes` AS agendamedica_mes
+FROM
+     `medicos` medicos INNER JOIN `agendamedica` agendamedica ON medicos.`idMedico` = agendamedica.`codigoMedico`
+     INNER JOIN `especialidade_medico` especialidade_medico ON medicos.`codigoEspecialidade` = especialidade_medico.`idEspecialidade`]]>
+	</queryString>
+	<field name="medicos_nomeCompleto" class="java.lang.String"/>
+	<field name="agendamedica_id" class="java.lang.Long"/>
+	<field name="agendamedica_dias" class="java.lang.String"/>
+	<field name="especialidade_medico_idEspecialidade" class="java.lang.Long"/>
+	<field name="especialidade_medico_designacao" class="java.lang.String"/>
+	<field name="medicos_contacto" class="java.lang.String"/>
+	<field name="agendamedica_mes" class="java.lang.String"/>
+	<group name="MEDICO">
+		<groupExpression><![CDATA[$F{medicos_nomeCompleto}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="25" backcolor="#00CCFF" uuid="c9b442f5-200a-44e4-9f5c-ca688432aaff"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Dr.(a): " +$F{medicos_nomeCompleto}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="137" height="79" uuid="a0227592-3835-4d61-b5ee-f2053bf476a6"/>
+				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="35" uuid="76cf9ecf-4462-4ba7-89ed-61a96433039c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGENDA DE TRABALHO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27">
+			<staticText>
+				<reportElement x="291" y="0" width="130" height="27" uuid="262ca55a-f642-4c8d-a7de-945a4c525517"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENTE AO MÊS:]]></text>
+			</staticText>
+			<textField pattern="MMM">
+				<reportElement x="421" y="0" width="134" height="27" uuid="37825e0b-83b4-47cb-9a8e-a53a6848b135"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agendamedica_mes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="23" uuid="b32374ef-e265-4614-ab17-7949960752e1"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Monotype Corsiva" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Dias de Trabalhos: "+$F{agendamedica_dias}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

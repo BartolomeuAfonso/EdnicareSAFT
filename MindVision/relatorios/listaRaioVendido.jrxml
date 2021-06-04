@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listaRaioVendido" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="47ca62a4-b0a4-49c7-a40c-5df9d7ca8bc6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     categoriaservico.`idcategoriaServico` AS categoriaservico_idcategoriaServico,
+     categoriaservico.`designacao` AS categoriaservico_designacao,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     servicos.`preco` AS servicos_preco,
+     servicos.`codigoStatus` AS servicos_codigoStatus,
+     servicos.`preco1` AS servicos_preco1,
+     servicos.`preco2` AS servicos_preco2
+FROM
+     `categoriaservico` categoriaservico INNER JOIN `servicos` servicos ON categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`
+WHERE
+     servicos.`codigoStatus` = 1]]>
+	</queryString>
+	<field name="categoriaservico_idcategoriaServico" class="java.lang.Long"/>
+	<field name="categoriaservico_designacao" class="java.lang.String"/>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="servicos_preco" class="java.lang.Double"/>
+	<field name="servicos_codigoStatus" class="java.lang.Long"/>
+	<field name="servicos_preco1" class="java.lang.Double"/>
+	<field name="servicos_preco2" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="108" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="194" height="108" uuid="2126d2db-1a8c-4054-a2ac-25f14a507b67"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-81" positionType="Float" mode="Opaque" x="1" y="0" width="555" height="18" forecolor="#000000" backcolor="#00CCFF" uuid="f629f0dc-b440-4ea4-8a33-296364a06a40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Listagem de Raio X mais vendido]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="351" y="0" width="103" height="20" uuid="4359d64f-b7dd-4370-ad12-e98ea66ffe7a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. Unitário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="0" width="85" height="20" uuid="fa740d66-5cf6-452c-a5c0-44d9ae47bb37"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="266" height="20" uuid="45dfb31d-7715-4179-a4e5-d0d3c98cb80c"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="0" width="101" height="20" uuid="f5229344-b996-4aa5-9d34-3142d6675539"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Vendido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="265" height="20" uuid="87f301ba-8d4c-4f78-944b-647a50554f6c"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{servicos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="266" y="0" width="85" height="20" uuid="1a3ce708-b98b-4d3b-9fa4-881db28b702f"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_preco}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="351" y="0" width="103" height="20" uuid="7fc4383c-8160-40a9-a4d7-b67b1210e74a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_preco1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="454" y="0" width="101" height="20" uuid="1bc45af5-9224-454f-8829-e6e5ea804d7a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_preco2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="67" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-45" positionType="Float" x="0" y="10" width="555" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="5272c868-74be-4b4f-8df9-cc3cf38c0bda"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Monotype Corsiva" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Software de gestão Hospitalar, desenvolvido e Assistido pela Mind Vision Tecnology".]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

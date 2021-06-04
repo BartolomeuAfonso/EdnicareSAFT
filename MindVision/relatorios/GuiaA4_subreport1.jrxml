@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacturaA4_subreport1" pageWidth="802" pageHeight="358" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="85cb15da-254d-489c-9b9b-ac5b12a3cb05">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="710"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     factura.`idfactura` AS factura_idfactura,
+     factura.`descontoIVa` AS factura_descontoIVa,
+     factura_itens.`codigoFactura` AS factura_itens_codigoFactura,
+     SUM(factura_itens.`descontoIVA`) AS factura_itens_descontoIVA,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     tipotaxa.`taxa` AS tipotaxa_taxa,
+     tipotaxa.`codigoMotivo` AS tipotaxa_codigoMotivo,
+     motivo.`codigoMotivo` AS motivo_codigoMotivo,
+     motivo.`descricacao` AS motivo_descricacao
+FROM
+     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
+     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`
+     INNER JOIN `tipotaxa` tipotaxa ON servicos.`codigoTipoTaxa` = tipotaxa.`codigo`
+     INNER JOIN `motivo` motivo ON tipotaxa.`codigoMotivo` = motivo.`codigo`
+WHERE factura.`idfactura` =$P{CODIGO} GROUP BY 1,5
+]]>
+	</queryString>
+	<field name="factura_idfactura" class="java.lang.Long"/>
+	<field name="factura_descontoIVa" class="java.lang.Double"/>
+	<field name="factura_itens_codigoFactura" class="java.lang.Long"/>
+	<field name="factura_itens_descontoIVA" class="java.lang.Double"/>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="tipotaxa_taxa" class="java.lang.Integer"/>
+	<field name="tipotaxa_codigoMotivo" class="java.lang.Long"/>
+	<field name="motivo_codigoMotivo" class="java.lang.String"/>
+	<field name="motivo_descricacao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="2" y="21" width="76" height="11" uuid="7be8df41-7aeb-4efd-b4df-69252a604087"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipotaxa_taxa}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="78" y="21" width="73" height="11" uuid="62d5da86-2083-472a-b9aa-7e22fe7d4d7f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.lang.Double(($F{facturaitem_subtotal}.doubleValue()-$F{facturaitem_desconto}.doubleValue()))]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="152" y="21" width="72" height="11" uuid="52bb01b1-b444-44da-8aee-804270065a04"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_itens_descontoIVA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-4" x="225" y="21" width="131" height="11" uuid="c8dc4bc5-3493-4284-8b37-6dd3c0445f4c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo_descricacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-1" mode="Opaque" x="1" y="1" width="355" height="21" forecolor="#E9E9E9" backcolor="#F5F4F4" uuid="3e91cffd-9ecd-4b29-9fed-1668973595ac"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-2" x="96" y="11" width="0" height="0" uuid="5fa16168-c748-4681-949a-79847c44be62"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Static Text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-3" x="1" y="2" width="78" height="19" uuid="3aa68be7-a594-44a5-8509-8cb5d5f348ed"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Taxa Imposto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-4" x="79" y="2" width="72" height="19" uuid="87a7889f-1abe-4bd9-a611-9a10e4e9e412"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Base de Incid.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-5" x="152" y="2" width="72" height="19" uuid="e57678f8-4c7f-4c7d-b06c-9c801a69a860"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Valor de Imposto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-6" x="224" y="2" width="132" height="19" uuid="3b24c486-7e69-440f-937f-d68559770e96"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Motivo de Isenção]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

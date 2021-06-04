@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tabelaPrecoEcografia" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7261c290-1944-4ef7-99fe-661997793c67">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     servicos.`preco` AS servicos_preco,
+     servicos.`preco1` AS servicos_preco1,
+     servicos.`preco2` AS servicos_preco2,
+     empresa.`codEmpresa` AS empresa_codEmpresa,
+     empresa.`descricao` AS empresa_descricao,
+     empresa.`endereco` AS empresa_endereco,
+     empresa.`email` AS empresa_email,
+     empresa.`contacto` AS empresa_contacto,
+     empresa.`nif` AS empresa_nif,
+     categoriaservico.`idcategoriaServico` AS categoriaservico_idcategoriaServico,
+     categoriaservico.`designacao` AS categoriaservico_designacao
+FROM
+     `categoriaservico` categoriaservico INNER JOIN `servicos` servicos ON categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`,
+     `empresa` empresa
+WHERE
+     servicos.`codigoStatus` = 1 and categoriaservico.`idcategoriaServico` = 3]]>
+	</queryString>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="servicos_preco" class="java.lang.Double"/>
+	<field name="servicos_preco1" class="java.lang.Double"/>
+	<field name="servicos_preco2" class="java.lang.Double"/>
+	<field name="empresa_codEmpresa" class="java.lang.Long"/>
+	<field name="empresa_descricao" class="java.lang.String"/>
+	<field name="empresa_endereco" class="java.lang.String"/>
+	<field name="empresa_email" class="java.lang.String"/>
+	<field name="empresa_contacto" class="java.lang.String"/>
+	<field name="empresa_nif" class="java.lang.String"/>
+	<field name="categoriaservico_idcategoriaServico" class="java.lang.Long"/>
+	<field name="categoriaservico_designacao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="114" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="221" height="98" uuid="81af226c-67cc-468e-a2ad-102ed4100a66"/>
+				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="353" y="77" width="182" height="13" uuid="5b173e3b-2cc1-4c61-a326-f1251780c0c8"/>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Endereço: "+$F{empresa_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="352" y="51" width="182" height="13" uuid="085fe2d5-be3e-4da7-8690-e68cebf14b52"/>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tel.: "+$F{empresa_contacto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="352" y="38" width="182" height="13" uuid="672105aa-4c52-4ba9-ac53-53a92dc2a08e"/>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NIF: "+$F{empresa_nif}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="352" y="25" width="182" height="13" uuid="1a93fcfc-6b23-406d-ae91-2e06aa5d697a"/>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_descricao}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="341" y="19" width="204" height="79" backcolor="#00CCFF" uuid="d9857e43-9681-4e02-a087-04458cafa45c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="352" y="64" width="182" height="13" uuid="d334b04e-c9d1-4226-8067-33b2b9161a63"/>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["E-mail: "+$F{empresa_email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-81" positionType="Float" mode="Opaque" x="0" y="0" width="555" height="23" forecolor="#000000" backcolor="#00CCFF" uuid="fb10ad01-b694-4b5e-abc6-4bb98b1ef3ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="16" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Tabela de Preços]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="42" height="26" backcolor="#F4F4F4" uuid="62fcc016-9bb0-404b-b8dd-508bdf7a9a76"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="42" y="0" width="179" height="26" backcolor="#F4F4F4" uuid="d282c310-71b5-42f2-bc07-c822011c9d9d"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serviços]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="221" y="0" width="120" height="26" backcolor="#F4F4F4" uuid="befb35e9-0384-4d19-835a-a674aa63cf23"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1. Particular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="341" y="0" width="101" height="26" backcolor="#F4F4F4" uuid="3ee1311c-c2b2-443b-99ad-6b9fa91a7e2b"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2. Seguradora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="442" y="0" width="113" height="26" backcolor="#F4F4F4" uuid="7e7a44a6-56d7-4cd3-92c6-2a7c5ba2b53c"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3. Empresa]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="42" y="0" width="179" height="20" uuid="47188d98-1144-46b8-b27e-a996ce656159"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+ $F{servicos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="221" y="0" width="120" height="20" uuid="6d71ca07-6b47-4943-9a12-914b2b19ff49"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_preco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="42" height="20" uuid="22d4beb2-1e67-4397-86a4-b304c5d73f6f"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="341" y="0" width="101" height="20" uuid="1916aca2-19e5-4abb-b09a-af1f8073f0d0"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_preco1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="442" y="0" width="113" height="20" uuid="9c9e05d9-13de-4ffa-9f30-3b517e208519"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_preco2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="111" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-45" positionType="Float" x="0" y="13" width="555" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="7303a31a-7bb3-445f-b7a1-31902686cac2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Monotype Corsiva" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Software de gestão Hospitalar, desenvolvido e Assistido pelo Departamento de Informática da Clínica "SantoAntónio".]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

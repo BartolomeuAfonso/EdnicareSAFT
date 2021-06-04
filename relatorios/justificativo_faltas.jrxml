@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="justificativo_faltas" pageWidth="595" pageHeight="400" orientation="Landscape" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="9315e7d7-6717-4c3c-a44c-8c5eb83c0245">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="CODIGO" class="java.lang.Integer"/>
+	<parameter name="CODIGOPACIENTE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATAINICIAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATAFINAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HORA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     year(curdate())-year(p.`dataNascimento`) AS idade,
+(day(justificativomedico.`dataFim`)-day(justificativomedico.`dataConsulta`)) AS diasFerias,
+     time(justificativomedico.`dataConsulta`) AS horas,
+     YEAR(justificativomedico.`dataConsulta`) AS ANO,
+     MONTH(justificativomedico.`dataConsulta`) AS MES,
+     DAY(justificativomedico.`dataConsulta`) AS DIAS,
+     UPPER(p.`nomeCompleto`) AS p_nomeCompleto,
+     UPPER(medicos.`nomeCompleto`) AS medicos_nomeCompleto,
+     DATE(justificativomedico.`dataConsulta`) AS justificativomedico_dataConsulta,
+     DATE(justificativomedico.`dataFim`) AS justificativomedico_dataFim,
+     p.`dataNascimento` AS p_dataNascimento,
+     p.`genero` AS p_genero,
+     medicos.`idMedico` AS medicos_idMedico,
+     medicos.`numeroOrdem` AS medicos_numeroOrdem,
+     p.`idPaciente` AS p_idPaciente,
+     justificativomedico.`idjustificativoMedico` AS justificativomedico_idjustificativoMedico,
+     justificativomedico.`designacao` AS justificativomedico_designacao,
+     justificativomedico.`codigoPaciente` AS justificativomedico_codigoPaciente,
+     justificativomedico.`codigoMedico` AS justificativomedico_codigoMedico,
+     justificativomedico.`codigoCid` AS justificativomedico_codigoCid,
+     justificativomedico.`acompanhante` AS justificativomedico_acompanhante,
+     empresaseguros.`idSeguros` AS empresaseguros_idSeguros,
+     empresaseguros.`designacao` AS empresaseguros_designacao,
+     justificativomedico.`grau` AS justificativomedico_grau
+FROM
+     `pacientes` p INNER JOIN `justificativomedico` justificativomedico ON p.`idPaciente` = justificativomedico.`codigoPaciente`
+     INNER JOIN `medicos` medicos ON justificativomedico.`codigoMedico` = medicos.`idMedico`
+     INNER JOIN `empresaseguros` empresaseguros ON p.`codigoSeguro` = empresaseguros.`idSeguros`
+WHERE
+     justificativomedico.`idjustificativoMedico` = $P{CODIGO}
+ AND justificativomedico.`codigoPaciente` = $P{CODIGOPACIENTE}]]>
+	</queryString>
+	<field name="idade" class="java.lang.Long"/>
+	<field name="diasFerias" class="java.lang.Long"/>
+	<field name="horas" class="java.sql.Time"/>
+	<field name="ANO" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MES" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DIAS" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="p_nomeCompleto" class="java.lang.String"/>
+	<field name="medicos_nomeCompleto" class="java.lang.String"/>
+	<field name="justificativomedico_dataConsulta" class="java.sql.Date"/>
+	<field name="justificativomedico_dataFim" class="java.sql.Date"/>
+	<field name="p_dataNascimento" class="java.lang.String"/>
+	<field name="p_genero" class="java.lang.String"/>
+	<field name="medicos_idMedico" class="java.lang.Long"/>
+	<field name="medicos_numeroOrdem" class="java.lang.String"/>
+	<field name="p_idPaciente" class="java.lang.Long"/>
+	<field name="justificativomedico_idjustificativoMedico" class="java.lang.Long"/>
+	<field name="justificativomedico_designacao" class="java.lang.String"/>
+	<field name="justificativomedico_codigoPaciente" class="java.lang.Long"/>
+	<field name="justificativomedico_codigoMedico" class="java.lang.Long"/>
+	<field name="justificativomedico_codigoCid" class="java.lang.Long"/>
+	<field name="justificativomedico_acompanhante" class="java.lang.String"/>
+	<field name="empresaseguros_idSeguros" class="java.lang.Long"/>
+	<field name="empresaseguros_designacao" class="java.lang.String"/>
+	<field name="justificativomedico_grau" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="1" y="0" width="154" height="80" uuid="d489dadf-9949-4772-a91b-a7e19a49e76e"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement key="line-1" x="167" y="48" width="363" height="1" uuid="3d14a892-d621-443a-949f-f75972979e27"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="167" y="28" width="363" height="20" backcolor="#00CCFF" uuid="07531224-ad95-49c4-998a-31ca3afa7f3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ DECLARAÇÃO MÉDICA PARA JUSTIFICAÇÃO DE FALTAS]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-21" x="449" y="76" width="86" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="074c08f4-af5c-475a-833c-9999aa415b75"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{p_idPaciente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-22" x="397" y="76" width="52" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="0a96bb82-e561-482d-9c05-f111a685e028"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed" lineColor="#000000"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Proc. Nº:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="219" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="1" y="0" width="532" height="53" forecolor="#000000" backcolor="#FFFFFF" uuid="2bf7db66-c1ed-4b8b-8f69-5e5cd5ae3f51"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{medicos_nomeCompleto}+", médico ao serviço nesta Clínica, declaro ter observado "+$F{p_nomeCompleto}+" no dia "+$F{DIAS}+"/"+$F{MES}+"/"+$F{ANO}+", às  "+$F{horas}+"  "]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="313" y="190" width="217" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="462c2f9f-1b73-4681-95c0-b10ebefe4394"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medicos_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="313" y="204" width="217" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="7336a629-ad45-40cf-9284-e437502b82e2"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["N.º da Ordem: " + $F{medicos_numeroOrdem}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line-3" x="313" y="180" width="217" height="1" uuid="8c621ce9-674c-4c3a-a65a-cb5d0a0228a9"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="9" y="87" width="526" height="24" uuid="4ee6a7b0-0aa2-4a47-a2f3-548940ab54b8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{justificativomedico_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy" isBlankWhenNull="false">
+				<reportElement key="textField" x="3" y="69" width="226" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="35d7ad37-d5ef-4a70-bf60-ba32fefff813"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Deve beneficiar de repouso do dia "+$F{DIAS}+"/"+$F{MES}+"/"+$F{ANO}+"  até    "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" positionType="Float" x="315" y="149" width="215" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="9c0dfe9c-d14b-48d3-b5a9-00c2b2edf268"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Médico(a)]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="10" y="199" width="140" height="20" uuid="c18c0518-0612-4309-90b5-7543e4a9ecc7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="226" y="69" width="282" height="20" uuid="2f172180-88ed-4aff-9499-7fcf5024b84a"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{justificativomedico_dataFim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="199" width="141" height="20" uuid="6c7dc039-dd17-45f7-b678-e789fac1ff7d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[", às "+$F{horas}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="125" width="535" height="24" uuid="addcef45-e609-4e19-b883-2f995f8b3b14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Acompanhante:"+$F{justificativomedico_acompanhante}+" ("+$F{justificativomedico_grau}+")"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

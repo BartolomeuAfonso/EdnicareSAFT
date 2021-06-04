@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturaA4" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b5f36d47-f0ff-415d-a559-2a257f25756c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     factura.`idfactura` AS factura_idfactura,
+     factura.`dataFactura` AS factura_dataFactura,
+     factura.`valorNumerario` AS factura_valorNumerario,
+     factura.`valorMulticaixa` AS factura_valorMulticaixa,
+     factura.`nomeClientes` AS factura_nomeClientes,
+     factura.`troco` AS factura_troco,
+     factura.`desconto` AS factura_desconto,
+     factura.`valorApagar` AS factura_valorApagar,
+     factura.`valorApagarExtenso` AS factura_valorApagarExtenso,
+     factura_itens.`codigoProduto` AS factura_itens_codigoProduto,
+     factura_itens.`codigoFactura` AS factura_itens_codigoFactura,
+     factura_itens.`quantidade` AS factura_itens_quantidade,
+     factura_itens.`totalGeral` AS factura_itens_totalGeral,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     utilizadores.`idUtilizador` AS utilizadores_idUtilizador,
+     utilizadores.`nomeCompleto` AS utilizadores_nomeCompleto,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     servicos.`preco` AS servicos_preco,
+     formapagamento.`designacao` AS formapagamento_designacao,
+     factura.`codigoFormaPagamento` AS factura_codigoFormaPagamento,
+     factura.`codigoUtilizador` AS factura_codigoUtilizador,
+     factura.`codigoCliente` AS factura_codigoCliente,
+     empresa.`nif` AS empresa_nif,
+     empresa.`email` AS empresa_email,
+     empresa.`website` AS empresa_website,
+     pacientes.`bilheteIdentidade` AS pacientes_bilheteIdentidade,
+     pacientes.`morada` AS pacientes_morada,
+     empresa.`endereco` AS empresa_endereco,
+     pacientes.`contacto` AS pacientes_contacto,
+     empresa.`codEmpresa` AS empresa_codEmpresa,
+     empresa.`descricao` AS empresa_descricao,
+     empresa.`contacto` AS empresa_contacto
+FROM
+     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
+     INNER JOIN `pacientes` pacientes ON factura.`codigoCliente` = pacientes.`idPaciente`
+     INNER JOIN `utilizadores` utilizadores ON factura.`codigoUtilizador` = utilizadores.`idUtilizador`
+     INNER JOIN `formapagamento` formapagamento ON factura.`codigoFormaPagamento` = formapagamento.`codForma`
+     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`,
+     `empresa` empresa
+WHERE
+     factura.`idfactura` = $P{CODIGO}]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

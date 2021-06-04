@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="folha_calculos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9039c065-4230-429c-8518-6996fa966afa">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Wed May 23 17:53:38 WAT 2018"/>
+	<parameter name="DATA1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+         despesainternamento.`codigo` AS despesainternamento_codigo,
+     despesainternamento.`designacao` AS despesainternamento_designacao,
+     despesainternamento.`preco` AS despesainternamento_preco,
+     despesainternamento.`obs` AS despesainternamento_obs,
+     despesainternamento.`codigoInternamento` AS despesainternamento_codigoInternamento,
+     despesainternamento.`dataCadastro` AS despesainternamento_dataCadastro,
+     despesainternamento.`codigoPaciente` AS despesainternamento_codigoPaciente,
+     internamento.`codigo` AS internamento_codigo,
+     internamento.`codigoPaciente` AS internamento_codigoPaciente,
+     internamento.`codigoMedico` AS internamento_codigoMedico,
+     internamento.`codigoCama` AS internamento_codigoCama,
+     internamento.`codigoUtilizador` AS internamento_codigoUtilizador,
+     internamento.`dataEntrada` AS internamento_dataEntrada,
+     internamento.`codigoStatus` AS internamento_codigoStatus,
+     internamento.`codigoAltaMedica` AS internamento_codigoAltaMedica,
+     internamento.`codigoPedidoInternmamento` AS internamento_codigoPedidoInternmamento,
+     internamento.`acompanhante` AS internamento_acompanhante,
+     internamento.`dignostico` AS internamento_dignostico,
+     internamento.`dataSaida` AS internamento_dataSaida,
+     cama.`codigo` AS cama_codigo,
+     cama.`designacao` AS cama_designacao,
+     medicos.`Codigo` AS medicos_Codigo,
+     medicos.`Nome` AS medicos_Nome,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     pacientes.`morada` AS pacientes_morada,
+     pacientes.`contacto` AS pacientes_contacto,
+     pacientes.`nomePai` AS pacientes_nomePai,
+     pacientes.`nomeMae` AS pacientes_nomeMae,
+     pacientes.`codigoNaturalidade` AS pacientes_codigoNaturalidade,
+     pacientes.`telefone` AS pacientes_telefone,
+     pacientes.`bilheteIdentidade` AS pacientes_bilheteIdentidade,
+     pacientes.`codigoStatus` AS pacientes_codigoStatus,
+     pacientes.`genero` AS pacientes_genero,
+     pacientes.`apn` AS pacientes_apn,
+     pacientes.`cartaoPS` AS pacientes_cartaoPS,
+     pacientes.`codigoSeguro` AS pacientes_codigoSeguro,
+     pacientes.`estadocivil` AS pacientes_estadocivil,
+     pacientes.`dataNascimento` AS pacientes_dataNascimento,
+     medicos.`nomeCompleto` AS medicos_nomeCompleto,
+     despesainternamento.`medicacao` AS despesainternamento_medicacao,
+     despesainternamento.`alimentacao` AS despesainternamento_alimentacao,
+     despesainternamento.`honorario` AS despesainternamento_honorario
+FROM
+     `clientes` clientes INNER JOIN `despesainternamento` despesainternamento ON clientes.`Codigo` = despesainternamento.`codigoPaciente`
+     INNER JOIN `internamento` internamento ON clientes.`Codigo` = internamento.`codigoPaciente`
+     AND internamento.`codigo` = despesainternamento.`codigoInternamento`
+     INNER JOIN `cama` cama ON internamento.`codigoCama` = cama.`codigo`
+     INNER JOIN `medicos` medicos ON internamento.`codigoMedico` = medicos.`Codigo`,
+     `pacientes` pacientes
+WHERE
+     despesainternamento.`dataCadastro` BETWEEN $P{DATA1} AND $P{DATA2}
+]]>
+	</queryString>
+	<field name="clientes_Codigo" class="java.lang.Long"/>
+	<field name="despesainternamento_codigo" class="java.lang.Long"/>
+	<field name="despesainternamento_designacao" class="java.lang.String"/>
+	<field name="despesainternamento_preco" class="java.lang.Float"/>
+	<field name="despesainternamento_obs" class="java.lang.String"/>
+	<field name="despesainternamento_codigoInternamento" class="java.lang.Integer"/>
+	<field name="despesainternamento_dataCadastro" class="java.sql.Date"/>
+	<field name="despesainternamento_codigoPaciente" class="java.lang.Long"/>
+	<field name="internamento_codigo" class="java.lang.Integer"/>
+	<field name="internamento_codigoPaciente" class="java.lang.Long"/>
+	<field name="internamento_codigoMedico" class="java.lang.Long"/>
+	<field name="internamento_codigoCama" class="java.lang.Integer"/>
+	<field name="internamento_codigoUtilizador" class="java.lang.Long"/>
+	<field name="internamento_dataEntrada" class="java.sql.Timestamp"/>
+	<field name="internamento_codigoStatus" class="java.lang.Long"/>
+	<field name="internamento_codigoAltaMedica" class="java.lang.Integer"/>
+	<field name="internamento_codigoPedidoInternmamento" class="java.lang.Integer"/>
+	<field name="internamento_acompanhante" class="java.lang.String"/>
+	<field name="internamento_dignostico" class="java.lang.String"/>
+	<field name="internamento_dataSaida" class="java.sql.Timestamp"/>
+	<field name="cama_codigo" class="java.lang.Integer"/>
+	<field name="cama_designacao" class="java.lang.String"/>
+	<field name="medicos_Codigo" class="java.lang.Long"/>
+	<field name="medicos_Nome" class="java.lang.String"/>
+	<field name="clientes_Nome" class="java.lang.String"/>
+	<field name="configuracoes_idconfiguracoes" class="java.lang.Integer"/>
+	<field name="configuracoes_nomeempresa" class="java.lang.String"/>
+	<field name="configuracoes_numcontribuinte" class="java.lang.String"/>
+	<field name="configuracoes_endereco" class="java.lang.String"/>
+	<field name="configuracoes_telefones" class="java.lang.String"/>
+	<field name="configuracoes_nomeimpressora" class="java.lang.String"/>
+	<field name="configuracoes_email" class="java.lang.String"/>
+	<field name="configuracoes_site" class="java.lang.String"/>
+	<field name="configuracoes_telemoveis" class="java.lang.String"/>
+	<field name="configuracoes_nomebanco1" class="java.lang.String"/>
+	<field name="configuracoes_nomebanco2" class="java.lang.String"/>
+	<field name="configuracoes_numeroconta1" class="java.lang.String"/>
+	<field name="configuracoes_numeroconta2" class="java.lang.String"/>
+	<field name="configuracoes_numeroloja" class="java.lang.String"/>
+	<field name="configuracoes_ibanconta1" class="java.lang.String"/>
+	<field name="configuracoes_ibanconta2" class="java.lang.String"/>
+	<field name="configuracoes_nomebanco3" class="java.lang.String"/>
+	<field name="configuracoes_numeroconta3" class="java.lang.String"/>
+	<field name="configuracoes_ibanconta3" class="java.lang.String"/>
+	<field name="configuracoes_director_clinico" class="java.lang.String"/>
+	<variable name="SOMA" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{despesainternamento_preco}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="129" splitType="Stretch">
+			<image>
+				<reportElement x="10" y="10" width="195" height="119" uuid="ceae34f5-1e9b-4a8a-92de-ea43f87eea06"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="205" y="58" width="587" height="33" uuid="e752bd56-11d1-4963-bfd4-81f09924460f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FOLHA CÁLCULO DE GASTOS/ INTERNADOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="1" width="97" height="20" backcolor="#3399FF" uuid="13e505ca-6839-4a7f-93af-712909804031"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="20" width="97" height="20" backcolor="#3399FF" uuid="eb9db720-5576-47e3-b8fb-6c27932cdd47"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[ Data de Entrada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="343" y="20" width="79" height="20" backcolor="#3399FF" uuid="4812c229-a247-41c7-b7de-457420c04a68"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[ Data de Saída:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="343" y="1" width="79" height="19" backcolor="#3399FF" uuid="94b53f21-97fc-4450-ad08-94cbaf0dca2c"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Médico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="669" y="1" width="66" height="20" backcolor="#3399FF" uuid="e2f45db8-8ed9-4f31-8926-35eeafd88152"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[ Cama:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="735" y="1" width="67" height="20" backcolor="#3399FF" uuid="ff4d2637-c3da-4c1d-b5f6-c2b287c4d1e6"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" "+$F{cama_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="98" y="1" width="245" height="20" backcolor="#3399FF" uuid="18751ba7-2173-4759-a15b-96eb5d350d0e"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" "+$F{clientes_Nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="98" y="20" width="245" height="20" backcolor="#3399FF" uuid="5d56a8ee-59b3-4337-ad88-d80babb612c1"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" "+$F{internamento_dataEntrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="422" y="20" width="380" height="20" backcolor="#3399FF" uuid="040d2a08-50f4-4367-bd02-dcaf9172c174"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{internamento_dataSaida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="422" y="1" width="247" height="19" backcolor="#3399FF" uuid="bb4fcd80-dba3-4647-92ea-09b331cefb08"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{medicos_Nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="56" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="1" width="802" height="55" uuid="89d6abac-c5c3-458c-a558-a581bd77b59f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="1" width="42" height="55" uuid="c8f01f29-9ce2-4c0c-857d-a59dee0c9885"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="1" width="301" height="55" uuid="ee27fffb-e13c-471a-be00-d10891f4061b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="1" width="459" height="18" uuid="10cc052a-5b6f-4717-b204-6cc04b903fa3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALORES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="19" width="163" height="20" uuid="96ae438e-28a1-4109-884b-207d45e96fc8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MOVIMENTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="506" y="19" width="163" height="20" uuid="bb3a8698-1fe0-4b48-8aef-1532f7d8ff1f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACUMULADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="669" y="19" width="133" height="20" uuid="04bdd533-676c-4e5a-86e4-374639fbcd1b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SALDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="39" width="79" height="17" uuid="1b16389c-d769-47a0-bedc-2991c45defe3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DÉBITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="39" width="84" height="17" uuid="6788966d-488c-4ad0-8acb-98510615a23e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CRÉDITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="506" y="39" width="79" height="17" uuid="5c566866-0aac-47c1-b3df-e5982793e653"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DÉBITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="585" y="39" width="84" height="17" uuid="c4750e62-f874-4179-8239-84836048dfd9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CRÉDITO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="669" y="39" width="133" height="17" uuid="b4b36d06-a1e9-4dcc-bd49-17fa00f5295f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEVEDOR]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="42" y="0" width="301" height="20" uuid="9c92679f-343b-45a7-b078-59a7e4d47d67"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[" "+$F{despesainternamento_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM">
+				<reportElement x="1" y="0" width="41" height="20" uuid="f14a79ca-f6d6-40fc-b94b-17c9db6c3a59"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{despesainternamento_dataCadastro}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="343" y="0" width="79" height="20" uuid="18e49fc1-99f8-414f-88e2-ae685aef4a94"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{despesainternamento_preco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="0" width="84" height="20" uuid="78ce70ca-f92b-4091-b578-dbb1a714d6a4"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="585" y="0" width="84" height="20" uuid="fecc58ec-744e-42ab-b680-300162e9fd9d"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="669" y="0" width="133" height="20" uuid="b7284767-dd59-4c9b-b7ec-209e64553d07"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SOMA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="505" y="0" width="79" height="20" uuid="66fde3cc-abd7-485a-829d-54bbb34f0c9a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[+$V{SOMA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
