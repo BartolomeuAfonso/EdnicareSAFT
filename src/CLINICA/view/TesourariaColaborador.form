@@ -718,7 +718,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century Gothic" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Factura Cr&#xe9;dito/ Proforma"/>
+                <Property name="text" type="java.lang.String" value="Factura Pro-forma"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton1ActionPerformed"/>

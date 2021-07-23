@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import static java.lang.System.exit;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -61,10 +62,10 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         codigoTipoUtilizador = controllerUsuario.getTipoUtilizador(Codigouser);
         JOptionPane.showMessageDialog(this, "Bemvindo ao Ednicare - Técnica de Laboratório:" + controllerUsuario.getNome(user));
         jLabel7.setText("Técnico(a):" + controllerUsuario.getNome(user));
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+    //    setExtendedState(JFrame.MAXIMIZED_BOTH);
 //      jPanel3.set
 //        this.dimension.setSize(100);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+  //      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
        // pack();
 //        jPanel3.setMaximumSize(dimension.getSize());
         jPanel4.setVisible(true);
@@ -120,13 +121,13 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -422,6 +423,15 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         });
         jMenu8.add(jMenuItem20);
 
+        jMenuItem21.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jMenuItem21.setText("Adicionar Parametros");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem21);
+
         jMenu2.add(jMenu8);
 
         jMenu3.setText("Estatística");
@@ -462,15 +472,6 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         jMenu4.add(jCheckBoxMenuItem1);
 
         jMenu2.add(jMenu4);
-
-        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        jMenuItem1.setText("Utentes");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem1);
 
         jMenuBar1.add(jMenu2);
 
@@ -516,11 +517,10 @@ public class HomeLaboratorio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        if (codigoTipoUtilizador == 4) {
-            new Servico(1, getCodigoUser()).setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Não tens permissão");
-        }
+        System.out.println("codigoTipoUtilizador:"+codigoTipoUtilizador);
+        System.out.println("Utilizador:"+getCodigoUser());
+        System.out.println("");
+         new Servico(codigoTipoUtilizador, getCodigoUser()).setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -559,7 +559,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
     }
 
     public int getCodigoUser() {
-        return controllerUsuario.getCodigoUtilizador(user);
+        return controllerUsuario.getCodigoUtilizadorUsername(user);
     }
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         new MovimentosLaboratorio().setVisible(true);
@@ -607,7 +607,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        System.exit(0);
+        exit(0);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -631,11 +631,6 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Caso em Estudo");
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        int tipoArea = 2;
-        new Recepcao(getCodigoUser(), tipoArea).setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
         new ExamesParametro().setVisible(true);
     }//GEN-LAST:event_jMenuItem20ActionPerformed
@@ -651,6 +646,10 @@ public class HomeLaboratorio extends javax.swing.JFrame {
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
         new ResultadoPronto(user).setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+       new viewParametro().setVisible(true);
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     /**
      * @param args the command line ar //</editor-fold>
@@ -733,13 +732,13 @@ public class HomeLaboratorio extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

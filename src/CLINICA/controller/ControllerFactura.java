@@ -18,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import sf.ce.utilizacoes.Data;
 import java.text.DecimalFormat;
@@ -67,13 +68,13 @@ public class ControllerFactura {
         String data_hora = datav + "T" + getHora();
 
         if ("FACTURA PRONTO".equals(factura.getEstado())) {
-            soma = soma + getLastCodigo("FACTURA PRONTO", "FACTURA PRONTO");
-            hashAnterior = getLasHash("FACTURA PRONTO", "FACTURA PRONTO");
+            soma = soma + getLastCodigo("FR", "FR");
+            hashAnterior = getLasHash("FR", "FACTURA ANULADA");
             nRef = "FR " + getAnoemCurso() + "/" + soma;
 
         } else {
-            hashAnterior = getLasHash("FACTURA PROFORMA", "FACTURA PROFORMA");
-            soma = soma + getLastCodigo("FACTURA PROFORMA", "FACTURA PROFORMA");
+            hashAnterior = getLasHash("FP", "FP");
+            soma = soma + getLastCodigo("FP", "FP");
             nRef = "FP " + getAnoemCurso() + "/" + soma;
         }
         try {
@@ -95,7 +96,7 @@ public class ControllerFactura {
             Logger.getLogger(ControllerFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        sql = "INSERT INTO factura(dataFactura,valorNumerario,valorMulticaixa,nomeClientes,quantidadeItens,codigoUtilizador,codigoFormaPagamento,codigoCliente,troco,desconto,valorApagar,valorApagarExtenso,hashValor,facturaReference,estado,codigoSeguro,descontoIVA,nEcomenda,nIBAN,descontoFactura,subTotal,nRef,numerador)values(now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        sql = "INSERT INTO factura(dataFactura,valorNumerario,valorMulticaixa,nomeClientes,quantidadeItens,codigoUtilizador,codigoFormaPagamento,codigoCliente,troco,desconto,valorApagar,valorApagarExtenso,hashValor,facturaReference,estado,codigoSeguro,descontoIVA,nEcomenda,nIBAN,descontoFactura,subTotal,nRef,numerador,nif)values(now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         //  System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -122,6 +123,7 @@ public class ControllerFactura {
             ps.setDouble(20, factura.getValorApagar() - (factura.getDescontoIVA() + factura.getDescontoFactura()));
             ps.setString(21, nRef);
             ps.setString(22, "" + soma);
+            ps.setString(23, factura.getNif());
             ps.execute();
             //       JOptionPane.showMessageDialog(null, "Venda realizada com Sucesso");
         } catch (SQLException ex) {
@@ -132,6 +134,21 @@ public class ControllerFactura {
 
     public String getReferenciaFactura(int codigo) {
         String sql = "SELECT nRef FROM factura where idFactura =" + codigo;
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("nRef");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getDataFactura(int codigo) {
+        String sql = "SELECT DATE(dataFactura) as nRef  FROM factura where idFactura =" + codigo;
+
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -523,14 +540,14 @@ public class ControllerFactura {
 
 //        String data_hora = "2021-04-11T20:12:10";
         if ("FACTURA CRÉDITO".equals(factura.getEstado())) {
-            soma = soma + getLastCodigo("FACTURA CRÉDITO", "FACTURA CRÉDITO");
-            hashAnterior = getLasHash("FACTURA CRÉDITO", "FACTURA CRÉDITO");
+            soma = soma + getLastCodigo("FT", "FT");
+            hashAnterior = getLasHash("FT", "FT");
             nRef = "FT " + getAnoemCurso() + "/" + soma;
             nRecibo = "RC " + getAnoemCurso() + "/" + soma;
 
         } else {
-            hashAnterior = getLasHash("FACTURA PROFORMA", "FACTURA PROFORMA");
-            soma = soma + getLastCodigo("FACTURA PROFORMA", "FACTURA PROFORMA");
+            hashAnterior = getLasHash("FP", "FP");
+            soma = soma + getLastCodigo("FP", "FP");
             nRef = "FP " + getAnoemCurso() + "/" + soma;
         }
         try {
@@ -570,7 +587,7 @@ public class ControllerFactura {
             ps.setString(12, factura.getNumOrdem());
             ps.setDouble(13, factura.getDescontoFactura());
             ps.setString(14, novaData);
-           // ps.setString(14, dataFactura);
+            // ps.setString(14, dataFactura);
             ps.setString(15, factura.getAviaoNavio());
             ps.setDouble(16, factura.getDescontoIVA());
             ps.setDouble(17, factura.getValorApagar() - (factura.getDescontoIVA() + factura.getDescontoFactura()));
@@ -754,12 +771,12 @@ public class ControllerFactura {
         String data_hora = datav + "T" + getHora();
 
         if ("FACTURA PRONTO".equals(factura.getEstado())) {
-            hashAnterior = getLasHash(factura.getEstado(), "FACTURA PRONTO");
-            soma = soma + getLastCodigo("FACTURA PRONTO", "FACTURA PRONTO");
+            hashAnterior = getLasHash("FR", "FR");
+            soma = soma + getLastCodigo("FR", "FR");
             nRef = "FR " + getAnoemCurso() + "/" + soma;
         } else {
-            hashAnterior = getLasHash("FACTURA PROFORMA", "FACTURA PROFORMA");
-            soma = soma + getLastCodigo("FACTURA PROFORMA", "FACTURA PROFORMA");
+            hashAnterior = getLasHash("FP", "FP");
+            soma = soma + getLastCodigo("FP", "FP");
             nRef = "FP " + getAnoemCurso() + "/" + soma;
         }
         hashcode_actual = RSA.getHash(datav + ";" + data_hora + ";" + nRef + ";" + grosstotal + ";" + hashAnterior);
@@ -826,7 +843,7 @@ public class ControllerFactura {
 
     public String getLasHash(String status, String status2) {
         try {
-            String sql = "select hashValor as hash from factura where (estado='" + status + "') order by idFactura desc limit 1";
+            String sql = "select hashValor as hash from factura where LEFT(nRef,2)='" + status + "'  order by idFactura desc limit 1";
             System.out.println("Hash anterior:" + sql);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -847,8 +864,8 @@ public class ControllerFactura {
 
     public int getLastCodigo(String status, String status2) {
         try {
-            String sql = "select numerador as numerador from factura where (estado='" + status + "' or estado='" + status2 + "') order by idFactura desc limit 1";
-            System.out.println("Hash anterior:" + sql);
+            String sql = "select numerador as numerador from factura where LEFT(nRef,2)='" + status + "' order by idFactura desc limit 1";
+            System.out.println("numerador:" + sql);
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             try {
@@ -896,7 +913,7 @@ public class ControllerFactura {
     }
 
     public ArrayList<String> getFactura(int codigoCliente) {
-        sql = "SELECT idFactura FROM factura f where codigoCliente=" + codigoCliente;
+        sql = "SELECT idFactura FROM factura f where date(f.dataFactura)=CURRENT_DATE AND f.estado<>'FACTURA ANULADA' AND codigoCliente=" + codigoCliente;
         System.out.println("Codigo:" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
@@ -954,4 +971,84 @@ public class ControllerFactura {
         }
         return null;
     }
+
+    public Date getDataStistema() {
+        sql = "SELECT NOW() as DataSistema";
+        //     sql = "SELECT CURRENT_DATE as DataSistema";
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getDate("DataSistema");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+        return null;
+    }
+
+    public Time getDataHoraStistema() {
+        sql = "SELECT TIME(NOW()) as DataSistema";
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getTime("DataSistema");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+        return null;
+    }
+
+    public Date getDataUltimaFactura() {
+
+        sql = "SELECT dataFactura as dataFactura FROM factura order by idFactura desc limit 1";
+        //   sql = "SELECT DATE(dataFactura) as dataFactura FROM factura order by idFactura desc limit 1";
+        // sql = "SELECT dataFactura FROM factura order by idFactura desc limit 1";
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getDate("dataFactura");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+        return null;
+    }
+
+    public String getHoraUltimaFactura() {
+
+        sql = "SELECT DATE_FORMAT(dataFactura,'%H:%i') as dataFactura FROM factura WHERE DATE(dataFactura)=current_date order by idFactura desc limit 1";
+        System.out.println("Sql:" + sql);
+        //sql = "SELECT dataFactura FROM factura order by idFactura desc limit 1";
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("dataFactura");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+        return "";
+    }
+
+    public Date getDataHoraUltimaFactura() {
+
+        sql = "SELECT dataFactura FROM factura order by idFactura desc limit 1";
+        // sql = "SELECT dataFactura FROM factura order by idFactura desc limit 1";
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getDate("dataFactura");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+        return null;
+    }
+
 }

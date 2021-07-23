@@ -19,17 +19,9 @@ public class LineItensPayment {
     public class LineItem {
 
         String LineNumber = "3467";
-//        String ProductCode = "PR LJ5P";
-//        String ProductDescription = "";
-//        String Quantity = "1";
-//        String UnitOfMeasure = "Unid";
-//        String UnitPrice = "482.59";
-//        String TaxPointDate = "2007-01-24";
-//        String Description = "bom";
-       
         SourceDocumentID SourceDocumentID = new SourceDocumentID();
         String SettlementAmount = "0";
-        String CreditAmount = "";
+        String CreditAmount = "0";
         Tax Tax = new Tax();
         String TaxExemptionReason = "";
         String TaxExemptionCode = "";
@@ -128,60 +120,6 @@ public class LineItensPayment {
         public void setCreditAmount(String CreditAmount) {
             this.CreditAmount = CreditAmount;
         }
-//       public String getDebitAmount() {
-//            return DebitAmount;
-//        }
-//
-//        public void setDebitAmount(String DebitAmount) {
-//            this.DebitAmount = DebitAmount;
-//        }
-//        public String getQuantity() {
-//            return Quantity;
-//        }
-//
-//        public void setQuantity(String Quantity) {
-//            this.Quantity = Quantity;
-//        }
-//
-//        public String getUnitOfMeasure() {
-//            return UnitOfMeasure;
-//        }
-//
-//        public void setUnitOfMeasure(String UnitOfMeasure) {
-//            this.UnitOfMeasure = UnitOfMeasure;
-//        }
-//
-//        public String getUnitPrice() {
-//            return UnitPrice;
-//        }
-//
-//        public void setUnitPrice(String UnitPrice) {
-//            this.UnitPrice = UnitPrice;
-//        }
-//
-//        public String getTaxPointDate() {
-//            return TaxPointDate;
-//        }
-//
-//        public void setTaxPointDate(String TaxPointDate) {
-//            this.TaxPointDate = TaxPointDate;
-//        }
-//
-//        public String getDescription() {
-//            return Description;
-//        }
-//
-//        public void setDescription(String Description) {
-//            this.Description = Description;
-//        }
-//
-//        public String getProductCode() {
-//            return ProductCode;
-//        }
-//
-//        public void setProductCode(String ProductCode) {
-//            this.ProductCode = ProductCode;
-//        }
         public String getTaxExemptionReason() {
             return TaxExemptionReason;
         }

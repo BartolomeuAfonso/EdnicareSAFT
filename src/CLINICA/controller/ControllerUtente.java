@@ -34,7 +34,7 @@ public class ControllerUtente {
 
     public void Inserir(Utente utente) {
 //       // conexao.Connectando();
-        sql = "INSERT INTO pacientes(nomeCompleto,morada,contacto,nomePai,nomeMae,codigoNaturalidade,telefone,bilheteIdentidade,genero,apn,cartaoPS,codigoSeguro,estadocivil,dataNascimento)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        sql = "INSERT INTO pacientes(nomeCompleto,morada,contacto,nomePai,nomeMae,codigoNaturalidade,telefone,bilheteIdentidade,genero,apn,cartaoPS,codigoSeguro,estadocivil,dataNascimento,nif,email)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -52,6 +52,8 @@ public class ControllerUtente {
             ps.setInt(12, utente.getEmpresa());
             ps.setString(13, utente.getEstado_civil());
             ps.setDate(14, (Date) utente.getNascimento());
+            ps.setString(15, utente.getBI());
+            ps.setString(16, utente.getEmail());
             ps.execute();
             JOptionPane.showMessageDialog(null, "Paciente cadastro com Sucesso");
         } catch (SQLException ex) {
@@ -62,7 +64,7 @@ public class ControllerUtente {
 
     public void editar(Utente utente, int codigo) {
         //conexao.Connectando();
-        sql = "update pacientes set nomeCompleto=?,morada=?,contacto=?,nomePai=?,nomeMae=?,codigoNaturalidade=?,telefone=?,bilheteIdentidade=?,genero=?,apn=?,cartaoPS=?,codigoSeguro=?,estadocivil=?,dataNascimento=? WHERE idPaciente=" + codigo;
+        sql = "update pacientes set nomeCompleto=?,morada=?,contacto=?,nomePai=?,nomeMae=?,codigoNaturalidade=?,telefone=?,bilheteIdentidade=?,genero=?,apn=?,cartaoPS=?,codigoSeguro=?,estadocivil=?,dataNascimento=?,email=? WHERE idPaciente=" + codigo;
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -80,6 +82,7 @@ public class ControllerUtente {
             ps.setInt(12, utente.getEmpresa());
             ps.setString(13, utente.getEstado_civil());
             ps.setDate(14, (Date) utente.getNascimento());
+            ps.setString(15, utente.getEmail());
             ps.execute();
             JOptionPane.showMessageDialog(null, "Dados do paciente alterado com Sucesso");
         } catch (SQLException ex) {
@@ -498,6 +501,22 @@ public class ControllerUtente {
         return null;
     }
 
+    public String getNif(int codigo) {
+//        conexao.Connectando();
+        sql = "SELECT nif from pacientes where idPaciente =" + codigo;
+        System.out.println("sql:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getString("nif");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return null;
+    }
+
     public Date getData(String designacao) {
 //        conexao.Connectando();
         sql = "SELECT dataNascimento from pacientes where nomeCompleto ='" + designacao + "'";
@@ -542,7 +561,7 @@ public class ControllerUtente {
             rs = ps.executeQuery();
             Utente clientes;
             if (rs.next()) {
-                clientes = new Utente(rs.getString("nomeCompleto"), rs.getString("nomePai"), rs.getString("nomeMae"), rs.getString("contacto"), rs.getString("telefone"), rs.getString("bilheteIdentidade"), rs.getString("cartaoPS"), rs.getString("apn"), rs.getString("morada"), rs.getDate("dataNascimento"));
+                clientes = new Utente(rs.getString("nomeCompleto"), rs.getString("nomePai"), rs.getString("nomeMae"), rs.getString("contacto"), rs.getString("telefone"), rs.getString("bilheteIdentidade"), rs.getString("cartaoPS"), rs.getString("apn"), rs.getString("morada"), rs.getDate("dataNascimento"),rs.getString("email"));
                 return clientes;
 
             }
@@ -561,7 +580,7 @@ public class ControllerUtente {
             rs = ps.executeQuery();
             Utente clientes;
             if (rs.next()) {
-                clientes = new Utente(rs.getString("nomeCompleto"), rs.getString("nomePai"), rs.getString("nomeMae"), rs.getString("contacto"), rs.getString("telefone"), rs.getString("bilheteIdentidade"), rs.getString("cartaoPS"), rs.getString("apn"), rs.getString("morada"), rs.getDate("dataNascimento"));
+                clientes = new Utente(rs.getString("nomeCompleto"), rs.getString("nomePai"), rs.getString("nomeMae"), rs.getString("contacto"), rs.getString("telefone"), rs.getString("bilheteIdentidade"), rs.getString("cartaoPS"), rs.getString("apn"), rs.getString("morada"),rs.getDate("dataNascimento"),rs.getString("email"));
                 return clientes;
 
             }
@@ -569,5 +588,21 @@ public class ControllerUtente {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public String verificarClienteFacturado(int codigo) {
+        sql = "SELECT DISTINCT  p.bilheteIdentidade AS BI FROM pacientes p INNER JOIN factura f ON f.codigoCliente= p.idPaciente WHERE p.idPaciente=" + codigo;
+        System.out.println("SQL:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("BI");
+            }
+        } catch (SQLException ex) {
+
+            return "";
+        }
+        return "";
     }
 }

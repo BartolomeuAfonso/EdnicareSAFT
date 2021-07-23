@@ -14,6 +14,8 @@ public class ExamesIntegrado {
     private long idExamesIntegrado;
     private String designacao, unidade, referencia, resultado;
     private int codigoStatus;
+    private int codigoServico;
+    private int codigoCategoria;
 
     public ExamesIntegrado() {
     }
@@ -74,5 +76,22 @@ public class ExamesIntegrado {
     public void setResultado(String resultado) {
         this.resultado = resultado;
     }
+
+    public int getCodigoServico() {
+        return codigoServico;
+    }
+
+    public void setCodigoServico(int codigoServico) {
+        this.codigoServico = codigoServico;
+    }
+
+    public int getCodigoCategoria() {
+        return codigoCategoria;
+    }
+
+    public void setCodigoCategoria(int codigoCategoria) {
+        this.codigoCategoria = codigoCategoria;
+    }
+    
 
 }

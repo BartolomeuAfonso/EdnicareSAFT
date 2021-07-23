@@ -4,6 +4,7 @@
  */
 package sf.ce.utilizacoes;
 
+
 import com.toedter.calendar.JDateChooser;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
@@ -571,25 +572,50 @@ public class Data {
         System.out.println("" + dias + messes + anos);
         return dias + messes + anos;
     }
-    
-     public java.sql.Date converteDataSql2(Object data) {
+
+    public java.sql.Date converteDataSql2(Object data) {
         java.sql.Date dataSql = null;
         try {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Date dataUtil = df.parse((String) data);
-            
+
             try {
                 dataUtil = new java.sql.Date(dataUtil.getTime());
                 dataSql = (java.sql.Date) dataUtil;
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Erro de conversão da data: " + ex.getMessage());
             }
-           return dataSql; 
+            return dataSql;
         } catch (ParseException ex) {
-            Logger.getLogger(Data.class.getName()).log(Level.SEVERE,null, ex);
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
         }
         return dataSql;
     }
-     
+
+    public static Integer[] getHorAndMinute(String hora) {
+        int horario, minutos;
+
+        horario = Integer.parseInt(hora.substring(0, 2));
+        minutos = Integer.parseInt(hora.substring(3, 5));
+
+        return new Integer[]{horario, minutos};
+    }
+
+    public static boolean getHoraMaior(String horaFecha) {
+        String horaAtual = new SimpleDateFormat("HH:mm").format(new Date().getTime());// Pega hora atual do Sistema
+        Integer horarioFecha[] = getHorAndMinute(horaFecha);
+        Integer horarioAtual[] = getHorAndMinute(horaAtual);
+
+        if (horarioFecha[0] >= horarioAtual[0]) {
+
+            System.out.println("Em dia");
+            return true;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Não é permitido emitir factura com hora inferior que a hora da Ultima Factura, verifica a Hora do Computador do computador!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+    }
 
 }

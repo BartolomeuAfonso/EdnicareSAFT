@@ -136,7 +136,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu9">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Movimento"/>
+            <Property name="text" type="java.lang.String" value="Factura&#xe7;&#xe3;o"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="12" style="1"/>
             </Property>
@@ -150,7 +150,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century Gothic" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Factura&#xe7;&#xe3;o"/>
+                <Property name="text" type="java.lang.String" value="Factura&#xe7;&#xe3;o Singular"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem18ActionPerformed"/>

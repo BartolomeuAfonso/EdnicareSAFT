@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportMovimentoTodosDetalhado2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f04433f7-abec-4623-8c02-7beea71dce8d">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="14"/>
+	<property name="ireport.y" value="0"/>
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -18,7 +18,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT
+		<![CDATA[SELECT DISTINCT
      UPPER(pacientes.`nomeCompleto`) AS pacientes_nomeCompleto,
      servicos.`idServico` AS servicos_idServico,
      servicos.`designacao` AS servicos_designacao,
@@ -73,19 +73,24 @@
      factura_itens.`totalTPA` AS factura_itens_totalTPA,
      factura_itens.`descontoIVA` AS factura_itens_descontoIVA,
      factura_itens.`elegibilidade` AS factura_itens_elegibilidade,
-     factura_itens.`descontoProduto` AS factura_itens_descontoProduto
+     factura_itens.`descontoProduto` AS factura_itens_descontoProduto,
+     factura.`subTotal` AS factura_subTotal,
+     factura.`nRecibo` AS factura_nRecibo,
+     factura.`nif` AS factura_nif,
+     factura_itens.`preco` AS factura_itens_preco
 FROM
      `servicos` servicos INNER JOIN `categoriaservico` categoriaservico ON servicos.`codigoCategoria` = categoriaservico.`idcategoriaServico`
      INNER JOIN `factura_itens` factura_itens ON servicos.`idServico` = factura_itens.`codigoProduto`
-    INNER JOIN `factura` factura ON factura_itens.`codigoFactura` = factura.`idfactura`
+     INNER JOIN `factura` factura ON factura_itens.`codigoFactura` = factura.`idfactura`
      INNER JOIN `pacientes` pacientes ON factura.`codigoCliente` = pacientes.`idPaciente`
      INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`
-    INNER JOIN `areafuncional` areafuncional ON categoriaservico.`codigoArea` = areafuncional.`codArea`
-WHERE
+     INNER JOIN `areafuncional` areafuncional ON categoriaservico.`codigoArea` = areafuncional.`codArea`
+WHERE factura.`estado` ='FACTURA CRÉDITO' AND
      DATE(factura.`dataFactura`) BETWEEN $P{DATA1} AND $P{DATA2}
  AND empresaseguros.`designacao` = $P{AREA}
- AND servicos.`designacao` <> 'CO - PAGAMENTO'
-ORDER BY factura.`dataFactura`]]>
+ AND servicos.`designacao` <> 'CO - PAGAMENTO'  AND factura_itens.`flag` = 1
+ORDER BY
+        DATE(factura.`dataFactura`),UPPER(pacientes.`nomeCompleto`) ASC]]>
 	</queryString>
 	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
 	<field name="servicos_idServico" class="java.lang.Long"/>
@@ -142,6 +147,10 @@ ORDER BY factura.`dataFactura`]]>
 	<field name="factura_itens_descontoIVA" class="java.lang.Double"/>
 	<field name="factura_itens_elegibilidade" class="java.lang.String"/>
 	<field name="factura_itens_descontoProduto" class="java.lang.Double"/>
+	<field name="factura_subTotal" class="java.lang.Double"/>
+	<field name="factura_nRecibo" class="java.lang.String"/>
+	<field name="factura_nif" class="java.lang.String"/>
+	<field name="factura_itens_preco" class="java.lang.Double"/>
 	<variable name="TOTALSEGURADO" class="java.lang.Double" resetType="Group" resetGroup="AREA" calculation="Sum">
 		<variableExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}+$F{factura_itens_totalTPA}*$F{factura_itens_quantidade}]]></variableExpression>
 	</variable>
@@ -153,37 +162,14 @@ ORDER BY factura.`dataFactura`]]>
 		<initialValueExpression><![CDATA[]]></initialValueExpression>
 	</variable>
 	<group name="AREA">
-		<groupExpression><![CDATA[$F{areafuncional_descricaoArea}]]></groupExpression>
+		<groupExpression><![CDATA[$F{pacientes_nomeCompleto}]]></groupExpression>
 		<groupHeader>
-			<band height="16">
-				<textField>
-					<reportElement x="62" y="0" width="62" height="16" uuid="b0e004b1-582b-4264-97a2-35e901dab052"/>
-					<box>
-						<pen lineWidth="1.0"/>
-						<topPen lineWidth="0.0" lineColor="#FFFFFF"/>
-						<leftPen lineWidth="1.0" lineColor="#FFFFFF"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
-						<font fontName="Arial" size="8"/>
-						<paragraph lineSpacing="AtLeast"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{areafuncional_descricaoArea}]]></textFieldExpression>
-				</textField>
-			</band>
+			<band height="5"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="21">
-				<textField>
-					<reportElement x="1" y="2" width="240" height="18" uuid="1cdeb392-8248-4929-ae71-f452e0056ed6"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="Arial" size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Sub-Total [ "+$F{areafuncional_descricaoArea}+ " ]"]]></textFieldExpression>
-				</textField>
+			<band height="17">
 				<textField pattern="#,##0.00">
-					<reportElement x="487" y="0" width="69" height="18" forecolor="#000000" uuid="9605314e-718b-47fd-9afb-a50fc373dd53"/>
+					<reportElement x="485" y="0" width="69" height="15" forecolor="#000000" uuid="e6fe74b1-806e-4976-95a1-0c821d198698"/>
 					<box>
 						<pen lineWidth="1.0" lineStyle="Solid"/>
 						<topPen lineWidth="1.0" lineStyle="Solid"/>
@@ -196,6 +182,13 @@ ORDER BY factura.`dataFactura`]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{TOTALSEGURADO}]]></textFieldExpression>
 				</textField>
+				<textField>
+					<reportElement x="137" y="0" width="240" height="15" uuid="128538bd-90d0-44d7-9838-5a9a879d8bc7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Sub-Total - [ "+$F{pacientes_nomeCompleto}+" ]"]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupFooter>
 	</group>
@@ -205,7 +198,7 @@ ORDER BY factura.`dataFactura`]]>
 	<title>
 		<band height="112" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText" x="208" y="34" width="320" height="25" uuid="ba84943e-81a4-40fb-8ca1-30629c50ce46"/>
+				<reportElement key="staticText" x="208" y="34" width="347" height="25" uuid="ba84943e-81a4-40fb-8ca1-30629c50ce46"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -216,30 +209,30 @@ ORDER BY factura.`dataFactura`]]>
 				<imageExpression><![CDATA["Relatorios/logo12.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="241" y="70" width="62" height="20" uuid="c62ec381-9ffa-4735-9e3b-c33c75bfe882"/>
+				<reportElement x="302" y="70" width="62" height="15" uuid="c62ec381-9ffa-4735-9e3b-c33c75bfe882"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" isBold="false"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data:]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="311" y="70" width="137" height="20" uuid="e454e567-b93e-4421-a536-e86f81e207a9"/>
+				<reportElement x="364" y="70" width="190" height="15" uuid="e454e567-b93e-4421-a536-e86f81e207a9"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{DATA1}+" à "+$P{DATA2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="249" y="90" width="62" height="20" uuid="ce8a736c-0c22-4dbf-bba3-47df70f05e4c"/>
+				<reportElement x="302" y="85" width="62" height="15" uuid="ce8a736c-0c22-4dbf-bba3-47df70f05e4c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" isBold="false"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Entidade:]]></text>
 			</staticText>
 			<textField pattern="dd MMMMM yyyy">
-				<reportElement x="311" y="90" width="243" height="20" uuid="c0cdcc1f-e2be-4114-ba87-4da3331aabd3"/>
+				<reportElement x="364" y="85" width="190" height="15" uuid="c0cdcc1f-e2be-4114-ba87-4da3331aabd3"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empresaseguros_designacao}]]></textFieldExpression>
 			</textField>
@@ -249,114 +242,156 @@ ORDER BY factura.`dataFactura`]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="37">
+		<band height="18">
 			<staticText>
-				<reportElement x="1" y="10" width="44" height="20" uuid="68fdb928-6000-4493-bdb2-3397d4bf6773"/>
+				<reportElement x="1" y="4" width="44" height="12" uuid="68fdb928-6000-4493-bdb2-3397d4bf6773"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="4" width="555" height="1" uuid="32633a13-f3cb-403e-af8b-6bbab57e580d"/>
+				<reportElement x="1" y="2" width="555" height="1" uuid="32633a13-f3cb-403e-af8b-6bbab57e580d"/>
 			</line>
 			<staticText>
-				<reportElement x="44" y="10" width="80" height="20" uuid="a7b0b30c-2318-4ff6-a6f3-497e0c01eb7e"/>
+				<reportElement x="44" y="4" width="93" height="12" uuid="a7b0b30c-2318-4ff6-a6f3-497e0c01eb7e"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" isBold="false"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nº Factura]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="387" y="10" width="100" height="20" uuid="de5b055c-d709-429a-ba3c-b55d65a2557e"/>
+				<reportElement x="277" y="3" width="100" height="12" uuid="de5b055c-d709-429a-ba3c-b55d65a2557e"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isBold="false"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Serviço/Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="487" y="10" width="69" height="20" uuid="384c2272-70cd-4543-b13a-19fb9201c778"/>
+				<reportElement x="487" y="3" width="69" height="12" uuid="384c2272-70cd-4543-b13a-19fb9201c778"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<line>
-				<reportElement x="1" y="36" width="555" height="1" uuid="403381c9-a89d-4758-b62f-95892d9f1e55"/>
+				<reportElement x="1" y="16" width="555" height="1" uuid="403381c9-a89d-4758-b62f-95892d9f1e55"/>
 			</line>
 			<staticText>
-				<reportElement x="185" y="10" width="192" height="20" uuid="2a173e81-e8e7-4ab6-8c23-33a918d4c200"/>
+				<reportElement x="156" y="4" width="208" height="12" uuid="2a173e81-e8e7-4ab6-8c23-33a918d4c200"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+					<topPen lineWidth="0.25" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.25" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.25" lineStyle="Dashed"/>
+				</box>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font fontName="Arial" isBold="false"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nome do Segurado]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="124" y="10" width="61" height="20" uuid="25185417-bd24-4d11-93d3-bc731855f84b"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Nº Cartão]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="18" splitType="Stretch">
+		<band height="13" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="0" width="44" height="18" uuid="7a12da52-c030-4624-acf5-19ac197cd01c"/>
+				<reportElement x="0" y="0" width="44" height="12" uuid="7a12da52-c030-4624-acf5-19ac197cd01c"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+					<topPen lineWidth="0.25" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.25" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.25" lineStyle="Dotted"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_dataFactura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="44" y="0" width="80" height="18" uuid="9212b06b-d944-4b2e-bd13-e74d855f377e"/>
+				<reportElement x="44" y="0" width="93" height="12" uuid="9212b06b-d944-4b2e-bd13-e74d855f377e"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+					<topPen lineWidth="0.25" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.25" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.25" lineStyle="Dotted"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_idfactura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="377" y="0" width="110" height="18" uuid="05bf656c-2ba8-49d7-882f-115bcb031f92"/>
+				<reportElement x="156" y="0" width="266" height="12" uuid="05bf656c-2ba8-49d7-882f-115bcb031f92"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+					<topPen lineWidth="0.25" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.25" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.25" lineStyle="Dotted"/>
+				</box>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{servicos_designacao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="487" y="0" width="67" height="18" uuid="7c6ad605-f113-429d-ab0a-ebd4b0bb4a5c"/>
+				<reportElement x="487" y="0" width="67" height="12" uuid="7c6ad605-f113-429d-ab0a-ebd4b0bb4a5c"/>
+				<box>
+					<pen lineWidth="0.25" lineStyle="Dotted"/>
+					<topPen lineWidth="0.25" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.25" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.25" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.25" lineStyle="Dotted"/>
+				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}+$F{factura_itens_totalTPA}*$F{factura_itens_quantidade}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="185" y="0" width="192" height="18" uuid="3abbdde3-26f2-412c-ba9b-5b1a546211ec"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{pacientes_nomeCompleto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="124" y="0" width="61" height="18" uuid="c4781e2c-274e-48f5-bdc9-b851e95cda46"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{pacientes_cartaoPS}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="21">
+		<band height="15">
 			<staticText>
-				<reportElement key="staticText-2" x="0" y="0" width="485" height="21" forecolor="#FF0000" uuid="af4bf272-e5e6-425c-aee4-4e09c67ba4f3"/>
+				<reportElement key="staticText-2" x="0" y="0" width="485" height="15" forecolor="#FF0000" uuid="af4bf272-e5e6-425c-aee4-4e09c67ba4f3"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total por Página:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement x="485" y="0" width="69" height="20" forecolor="#FF0000" uuid="c0e713a1-501d-432a-867b-abeb1644d41f"/>
+				<reportElement x="485" y="0" width="69" height="12" forecolor="#FF0000" uuid="c0e713a1-501d-432a-867b-abeb1644d41f"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 					<topPen lineWidth="1.0" lineStyle="Solid"/>
@@ -372,21 +407,21 @@ ORDER BY factura.`dataFactura`]]>
 		</band>
 	</columnFooter>
 	<lastPageFooter>
-		<band height="21">
-			<staticText>
-				<reportElement key="staticText-2" x="0" y="0" width="485" height="21" forecolor="#FF0000" uuid="03c8887d-c896-46bc-b793-20da2165a2c1"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom">
-					<font fontName="Arial" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total Geral:]]></text>
-			</staticText>
+		<band height="14">
 			<textField pattern="#,##0.00">
-				<reportElement x="485" y="1" width="69" height="20" forecolor="#FF0000" uuid="49cb4a32-ca59-4aaf-9532-3901f4cf00cd"/>
+				<reportElement x="485" y="1" width="69" height="12" forecolor="#FF0000" uuid="49cb4a32-ca59-4aaf-9532-3901f4cf00cd"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TOTALAGREGADO}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement key="staticText-2" x="0" y="0" width="485" height="14" forecolor="#FF0000" uuid="03c8887d-c896-46bc-b793-20da2165a2c1"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Geral:]]></text>
+			</staticText>
 		</band>
 	</lastPageFooter>
 </jasperReport>

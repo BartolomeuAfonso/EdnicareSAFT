@@ -194,10 +194,10 @@ public class ControllerEcografia {
         return 0;
     }
 
-    public void alter(String codigo) {
+    public void alter(int codigoProduto, String codigoPedido) {
 
 //        conexao.Connectando();
-        sql = "UPDATE pedidoecografia SET estado='SIM' WHERE idPedido=" + codigo;
+        sql = "UPDATE pedidos_ecografia SET estado='SIM' WHERE codigoServico=" + codigoProduto + " AND codigoPedido="+codigoPedido;
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);

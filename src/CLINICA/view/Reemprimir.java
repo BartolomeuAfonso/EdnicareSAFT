@@ -87,6 +87,7 @@ public class Reemprimir extends javax.swing.JFrame {
             jButton4.setEnabled(true);
             jButton5.setEnabled(true);
         }
+        jButton3.setEnabled(false);
     }
 
     public final void iconeSistema() {
@@ -789,7 +790,7 @@ public class Reemprimir extends javax.swing.JFrame {
                 if (estado.equals("FACTURA PRONTO")) {
                     System.out.println("Teste:" + jTable1.getValueAt(jTable1.getSelectedRow(), 4).toString());
                     int codigoFactura = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-                    relatorioVenda.getFactura(codigoFactura);
+                    relatorioVenda.getFacturaSegunda(codigoFactura);
 
                 }
                 // Factura a Crédito

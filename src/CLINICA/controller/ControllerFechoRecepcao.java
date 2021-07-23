@@ -32,7 +32,7 @@ public class ControllerFechoRecepcao {
     }
 
     public void salvar(FechoRecepcao factura) {
-        sql = "INSERT INTO fechoconta(valorEcografia,valorLaboratorio,valorRaio,valorInternamento,valorOutros,valorMedico,valorTotal,data)values(?,?,?,?,?,?,?,now())";
+        sql = "INSERT INTO fechoconta(valorEcografia,valorLaboratorio,valorRaio,valorInternamento,valorOutros,valorMedico,valorTotal,data,valorConsulta)values(?,?,?,?,?,?,?,now(),?)";
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -43,6 +43,7 @@ public class ControllerFechoRecepcao {
             ps.setDouble(5, factura.getValorOutros());
             ps.setDouble(6, factura.getValorMedico());
             ps.setDouble(7, factura.getValorTotal());
+            ps.setDouble(8, factura.getValorConsulta());
             ps.execute();
             JOptionPane.showMessageDialog(null, "Guia realizada com Sucesso");
         } catch (SQLException ex) {

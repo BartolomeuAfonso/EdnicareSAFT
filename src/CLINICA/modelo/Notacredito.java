@@ -26,7 +26,7 @@ public class Notacredito {
     private String moradaCliente;
     private String telefoneCliente;
     private String dataViagem, origemViagem, nRef, destinoViagem, numContetor, motorista, viatura, nIBAN;
-    private String numProcesso, Obs, Next, pesoBruto, Flag, LocalEmissao, LocalEntrega, Cabecalho, aviaoNavio, Tipo_movimento;
+    private String numProcesso, Obs, Next, pesoBruto, Flag, LocalEmissao, LocalEntrega, Cabecalho, aviaoNavio, Tipo_movimento,dataFacturaEliminada;
     private double quantidadeServico;
     private double valorCambio, subbtotal, valorAduaneiro, descontoFactura;
 
@@ -473,5 +473,15 @@ public class Notacredito {
     public void setSubtotal(double subbtotal) {
         this.subbtotal = subbtotal;
     }
+
+    public String getDataFacturaEliminada() {
+        return dataFacturaEliminada;
+    }
+
+    public void setDataFacturaEliminada(String dataFacturaEliminada) {
+        this.dataFacturaEliminada = dataFacturaEliminada;
+    }
+    
+    
 
 }

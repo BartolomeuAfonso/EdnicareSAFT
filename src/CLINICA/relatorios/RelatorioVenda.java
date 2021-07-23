@@ -54,6 +54,36 @@ public class RelatorioVenda {
             JOptionPane.showMessageDialog(null, "ERRO AO TENTAR MOSTRAR AS ENTRADAS !..." + ex);
         }
     }
+    public void getFacturaSegunda(int codigoFactura) {
+
+        con = new ConexaoBancos().ConexaoBD();
+        HashMap hashMap = new HashMap();
+        hashMap.put("CODIGO", codigoFactura);
+
+        String relatorio = "relatorios/FacturaA5SegundaVia.jasper";
+        System.out.println("Relatorio:" + relatorio);
+
+        File file = new File(relatorio).getAbsoluteFile();
+        String obterCaminho = file.getAbsolutePath();
+        System.out.println("Caminho:" + obterCaminho);
+        try {
+            JasperFillManager.fillReport(obterCaminho, hashMap, con);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(obterCaminho, hashMap, con);
+
+            if (jasperPrint.getPages().size() >= 1) {
+                JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+                jasperViewer.setTitle("Factura");
+                jasperViewer.setVisible(true);
+                //  jasperViewer.setAlwaysOnTop(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Nao Existem Factura!...");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "ERRO AO TENTAR MOSTRAR AS ENTRADAS !..." + ex);
+        }
+    }
 
     public void getFactura1(int codigoFactura) {
 

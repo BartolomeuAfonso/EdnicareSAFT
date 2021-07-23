@@ -436,6 +436,37 @@ public class ControllerServico {
         return lista;
     }
 
+     public ArrayList<String> getNomeExameCategoriaIntegrado() {
+        //conexao.Connectando();
+        sql = "SELECT * FROM categoria_exames";
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+    
+      public int getCodigoNomeExameCategoriaIntegrado(String designacao) {
+
+        sql = "SELECT codigo from categoria_exames where designacao ='"+designacao+"'";
+        System.out.println("Codigo de Serviço:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return 0;
+    }
+    
     public ArrayList<String> getNomeExamesPorLike(String designacao) {
         //conexao.Connectando();
         sql = "SELECT * FROM servicos s where designacao like '" + designacao + "%' and codigoCategoria=2";

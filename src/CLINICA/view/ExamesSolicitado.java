@@ -59,6 +59,7 @@ public class ExamesSolicitado extends javax.swing.JFrame {
         controllerExamesporFazerItens = new ControllerExamesporFazerItens(con);
         jLabel2.setText("");
         jDateChooser1.setDate(new Date());
+        jDateChooser2.setDate(new Date());
         mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao\n"
                 + "FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join servicos s1 on s1.idServico = e2.codigoProduto\n"
@@ -101,6 +102,8 @@ public class ExamesSolicitado extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jButton5 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -227,20 +230,32 @@ public class ExamesSolicitado extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setFont(new java.awt.Font("Century Gothic", 3, 11)); // NOI18N
+        jButton5.setText("Pesquisar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton4)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,11 +263,16 @@ public class ExamesSolicitado extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                         .addComponent(jTextField1)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -417,7 +437,7 @@ public class ExamesSolicitado extends javax.swing.JFrame {
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                 + "inner join examesintegrado ex on s1.idServico = ex.codigoServico\n"
                 + "where s.designacao ='Pago' AND e2.Espera='NÃO' AND ex.codigoCategoria > 0\n"
-                + " and p.idexamesPorFazer ='" + getCodigo() + "'");
+                + " and p.idexamesPorFazer ='"+getCodigo()+"'");
     }//GEN-LAST:event_jTextField2CaretUpdate
 
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
@@ -428,13 +448,32 @@ public class ExamesSolicitado extends javax.swing.JFrame {
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                 + "inner join examesintegrado ex on s1.idServico = ex.codigoServico\n"
                 + "where s.designacao ='Pago' AND e2.Espera='NÃO' AND ex.codigoCategoria > 0\n"
-                + " and pa.nomeCompleto like '%" + jTextField1.getText() + "'%");
+                + " and pa.nomeCompleto like '%"+jTextField1.getText()+"'%");
     }//GEN-LAST:event_jTextField1CaretUpdate
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new ResultadoPronto1("Mind Vision Tecnology").setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao\n"
+                + "FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+                + "inner join servicos s1 on s1.idServico = e2.codigoProduto\n"
+                + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
+                + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
+                + "inner join examesintegrado ex on s1.idServico = ex.codigoServico\n"
+                + "where s.designacao ='Pago' AND e2.Espera='NÃO' AND ex.codigoCategoria > 0\n"
+                + " and p.dataPedido BETWEEN '"+getData1()+"' AND '"+getData2()+"'");
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    public Date getData1() {
+        return d.converteDataSql(jDateChooser1.getDate());
+    }
+
+    public Date getData2() {
+        return d.converteDataSql(jDateChooser2.getDate());
+    }
 
     public int getCodigo() {
         return Integer.parseInt(jTextField2.getText());
@@ -487,7 +526,7 @@ public class ExamesSolicitado extends javax.swing.JFrame {
      * @param sql
      */
     public final void mostrarExame(String sql) {
-        System.out.println("Teste:" + sql);
+     //   System.out.println("Teste:" + sql);
         try {
             con = new ConexaoBancos().ConexaoBD();
             PreparedStatement ps;
@@ -655,7 +694,9 @@ public class ExamesSolicitado extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

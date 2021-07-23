@@ -145,7 +145,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century Gothic" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Factura&#xe7;&#xe3;o"/>
+                <Property name="text" type="java.lang.String" value="Factura&#xe7;&#xe3;o Singular"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem36ActionPerformed"/>
@@ -159,7 +159,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century Gothic" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Factura&#xe7;&#xe3;o Seguradora"/>
+                <Property name="text" type="java.lang.String" value="Factura&#xe7;&#xe3;o Cov&#xea;nio/Empresa"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem37ActionPerformed"/>
@@ -456,7 +456,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Century Gothic" size="11" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Reagentes "/>
+                    <Property name="text" type="java.lang.String" value="Adicionar parametros"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem16ActionPerformed"/>

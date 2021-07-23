@@ -1111,7 +1111,10 @@ public final class HomeMedicos extends javax.swing.JFrame {
 
         jTextField24.setColumns(20);
         jTextField24.setRows(5);
+        jTextField24.setAutoscrolls(false);
         jTextField24.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "3. Toráx", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jTextField24.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField24.setVerifyInputWhenFocusTarget(false);
         jScrollPane19.setViewportView(jTextField24);
 
         jTextField27.setColumns(20);
@@ -3378,7 +3381,7 @@ public final class HomeMedicos extends javax.swing.JFrame {
         if (jLabel42.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Não existe paciente Selecionado");
         } else {
-            new frameCardiologia().setVisible(true);
+            new frameCardiologia(getCodigoPaciente(),jLabel42.getText(),getCodigoTriagem(),NomeMedico).setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 

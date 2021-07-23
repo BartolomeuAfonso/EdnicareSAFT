@@ -101,14 +101,14 @@ public class EnfermariaHome extends javax.swing.JFrame {
 //        jDateChooser1.setDate(new Date());
         ls = new DefaultListModel();
         getPacienteEmEspera();
-        mostraMedico("SELECT distinct p.nomecompleto,me.nomecompleto,s.designacao, e.designacao,m.estado FROM marcacaoconsulta m\n"
-                + "inner join pacientes p on m.codigoPAciente = p.idPaciente\n"
-                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
-                + "inner join especialidade_medico ep on ep.idEspecialidade =me.codigoEspecialidade\n"
-                + "inner join servicos s on m.codigoServico = s.idServico\n"
+        mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
+                + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
+                + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
+                + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
                 + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                + "where m.dataAtendimento=current_date and Atendido='Nao'\n"
-                + "AND ep.idEspecialidade < 14 OR ep.idEspecialidade > 15");
+                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
+                + "where m.dataAtendimento =current_date and m.Atendido='Nao'\n"
+                + "AND s.codigoCategoria=1");
         setLocationRelativeTo(null);
 //       
 //        thread(TEMPO);
@@ -714,23 +714,23 @@ public class EnfermariaHome extends javax.swing.JFrame {
                 SalvarTriagem();
                 limparTriagem();
                 controllerTriagem.actualizarStatus(getCodigoPaciente());
-                controllerMarcarcaoConsulta.actualizarStatusMarcacao(getCodigoPaciente(),getData());
+                controllerMarcarcaoConsulta.actualizarStatusMarcacao(getCodigoPaciente(), getData());
                 JOptionPane.showMessageDialog(null, "Triagem feita com Sucesso");
 //                int codigo = controllerTriagem.getLastCodigo();
 //                relatorioHistoricoClinico.getTriagem(codigo);
                 limparPaciente();
                 // thread(TEMPO);
-                mostraMedico("SELECT distinct p.nomecompleto,me.nomecompleto,s.designacao, e.designacao,m.estado FROM marcacaoconsulta m\n"
-                        + "inner join pacientes p on m.codigoPAciente = p.idPaciente\n"
-                        + "inner join medicos me on m.codigoMedico=me.idMedico\n"
-                        + "inner join especialidade_medico ep on ep.idEspecialidade =me.codigoEspecialidade\n"
-                        + "inner join servicos s on m.codigoServico = s.idServico\n"
-                        + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                        + "where m.dataAtendimento=current_date and m.Atendido='Nao'\n"
-                        + "AND ep.idEspecialidade < 14 OR ep.idEspecialidade > 15");
+               mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
+                + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
+                + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
+                + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
+                + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
+                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
+                + "where m.dataAtendimento=current_date and Atendido='Nao'\n"
+                + "AND s.codigoCategoria=1");
             }
-        }else{
-            JOptionPane.showMessageDialog(null,"Verfica os campos obrigatórios - Vermelhos");
+        } else {
+            JOptionPane.showMessageDialog(null, "Verfica os campos obrigatórios - Vermelhos");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -793,7 +793,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
                     + "inner join especialidade_medico ep on ep.idEspecialidade =me.codigoEspecialidade\n"
                     + "inner join servicos s on m.codigoServico = s.idServico\n"
                     + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                    + "where m.dataAtendimento='"+getData()+"' and Atendido='Nao'\n"
+                    + "where m.dataAtendimento='" + getData() + "' and Atendido='Nao'\n"
                     + "AND ep.idEspecialidade < 14 OR ep.idEspecialidade > 15");
         }
         if (!jTextField8.getText().isEmpty()) {
@@ -803,7 +803,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
                     + "inner join especialidade_medico ep on ep.idEspecialidade =me.codigoEspecialidade\n"
                     + "inner join servicos s on m.codigoServico = s.idServico\n"
                     + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                    + "where p.idPaciente="+getCodigoPaciente()+" and Atendido='Nao'\n"
+                    + "where p.idPaciente=" + getCodigoPaciente() + " and Atendido='Nao'\n"
                     + "AND ep.idEspecialidade < 14 OR ep.idEspecialidade > 15");
         }
 
@@ -898,6 +898,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
     public Date getData() {
         return d.converteDataSql(jDateChooser1.getDate());
     }
+
     public void SalvarTriagem() {
         if (jRadioButton1.isSelected() && jRadioButton3.isSelected()) {
             triagem.setAltura(String.valueOf(getAltura()) + "" + jComboBox3.getSelectedItem().toString());
@@ -1079,7 +1080,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
             jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             model.setNumRows(0);
             while (rs.next()) {
-                model.addRow(new String[]{rs.getString("p.nomecompleto"), rs.getString("me.nomecompleto"), rs.getString("s.designacao"),
+                model.addRow(new String[]{rs.getString("p.nomecompleto"), rs.getString("f.nIBAN"), rs.getString("s.designacao"),
                     rs.getString("e.designacao"), rs.getString("m.estado")
 
                 });

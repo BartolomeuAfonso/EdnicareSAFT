@@ -64,8 +64,8 @@ public class ControllerNotas {
         String data_hora = datav + "T" + getHora();
 
         try {
-            soma = soma+  getCountFactura();
-            nRef = "NC " + getAnoemCurso() + "/" + soma;
+            soma = soma + getCountFactura();
+            nRef = "NC 01" + getAnoemCurso() + "/" + soma;
             System.out.println("Data: " + datav);
             System.out.println("Hora:" + data_hora);
             System.out.println("Referencia:" + nRef);
@@ -83,7 +83,7 @@ public class ControllerNotas {
         } catch (SignatureException ex) {
             Logger.getLogger(ControllerFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
-        sql = "INSERT INTO notaCredito(dataFactura,nomeClientes,quantidadeItens,codigoUtilizador,codigoFormaPagamento,codigoCliente,valorApagar,hashValor,facturaReference,estado,descontoIVA,descontoFactura,subTotal,nRef,codigoFactura,motivo,refFactura,contador)values(now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        sql = "INSERT INTO notaCredito(dataFactura,nomeClientes,quantidadeItens,codigoUtilizador,codigoFormaPagamento,codigoCliente,valorApagar,hashValor,facturaReference,estado,descontoIVA,descontoFactura,subTotal,nRef,codigoFactura,motivo,refFactura,contador,dataFacturaElimina)values(now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -105,6 +105,7 @@ public class ControllerNotas {
             ps.setString(15, factura.getnEcomenda());
             ps.setString(16, nRef1);
             ps.setInt(17, soma);
+            ps.setString(18, factura.getDataFacturaEliminada());
             ps.execute();
             JOptionPane.showMessageDialog(null, "Nota de Crédito realizada com Sucesso");
         } catch (SQLException ex) {
@@ -230,6 +231,7 @@ public class ControllerNotas {
         }
         return 0;
     }
+
     public Notacredito getNotaByCodigo(int codigo) {
         String sql = "select * from notaCredito where idNota=" + codigo;
         System.out.println("Consulta:" + sql);

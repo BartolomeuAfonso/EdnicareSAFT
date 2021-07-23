@@ -37,7 +37,7 @@ public class ConexaoBancos {
                 Config conf = (Config) new IO().read("conf");
                 Class.forName("com.mysql.jdbc.Driver");
                 conn = java.sql.DriverManager.getConnection("jdbc:mysql://" + conf.getIp() + ":3306/ednicare", conf.getUsuario(), conf.getSenha());
-//               conn = java.sql.DriverManager.getConnection("jdbc:mysql://"+conf.getIp()+":3306/ednicareempresa", conf.getUsuario(), conf.getSenha());
+//                conn = java.sql.DriverManager.getConnection("jdbc:mysql://" + conf.getIp() + ":3306/ednicareempresa", conf.getUsuario(), conf.getSenha());
 //               conn = java.sql.DriverManager.getConnection("jdbc:mysql://"+conf.getIp()+":3306/empresa", conf.getUsuario(), conf.getSenha());
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(ConexaoBancos.class.getName()).log(Level.SEVERE, null, ex);

@@ -23,6 +23,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import static java.lang.System.exit;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -424,12 +425,12 @@ public class Home extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu9.setText("Movimento");
+        jMenu9.setText("Facturação");
         jMenu9.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
 
         jMenuItem18.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem18.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jMenuItem18.setText("Facturação");
+        jMenuItem18.setText("Facturação Singular");
         jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem18ActionPerformed(evt);
@@ -831,7 +832,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        dispose();
+        exit(0);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -935,8 +936,7 @@ public class Home extends javax.swing.JFrame {
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         int codigo = controllerUsuario.getCodigoUtilizadorUsername(user);
-        Caucao caucao = new Caucao(codigo);
-        caucao.setVisible(true);
+        new Caucao(codigo).setVisible(true);
 
 
     }//GEN-LAST:event_jMenuItem21ActionPerformed

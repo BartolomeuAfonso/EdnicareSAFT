@@ -41,6 +41,7 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
     int codigoUser;
     RelatorioEcografia ecografia = new RelatorioEcografia();
     String codigoPedido;
+    int codigoProduto;
 
     public ProcessarAbdominal(String nome, int idade, String ecografia, String designacao, String conclusao, int codigoUser, int codigoEcografia, String codigo) {
         initComponents();
@@ -53,7 +54,7 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
         controllerResultadoRaioX = new ControllerResultadoRaioX(con);
         controllerUtente = new ControllerUtente(con);
         controllerServico = new ControllerServico(con);
-
+        this.codigoProduto = codigoEcografia;
         jEditorPane1.setText(designacao);
         jTextPane1.setText(conclusao);
         iconeSistema();
@@ -227,7 +228,7 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
         int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor reler com atenção antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
             salvar();
-            controllerEcografia.alter(codigoPedido);
+            controllerEcografia.alter(codigoProduto,codigoPedido);
             int codigoRaixo = controllerEcografia.getLastFactura();
             if (jLabel3.getText().equals("Ecografia Abdominal")) {
                 ecografia.getEcografiaAbdominal(codigoRaixo);
@@ -305,8 +306,9 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
             if (jasperPrint.getPages().size() >= 1) {
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
                 jasperViewer.setTitle("Factura");
+                
                 jasperViewer.setVisible(true);
-                //  jasperViewer.setAlwaysOnTop(true);
+                 jasperViewer.setAlwaysOnTop(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Nao Existem Pedidos!...");
             }

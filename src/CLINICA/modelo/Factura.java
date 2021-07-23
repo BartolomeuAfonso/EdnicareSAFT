@@ -28,7 +28,7 @@ public class Factura {
     private String dataViagem, origemViagem, destinoViagem, numContetor, motorista, viatura, nIBAN;
     private String numProcesso, facturaReferente, pesoBruto, designacaoMercadoria, docTransporte, numOrdem, aviaoNavio, delegacaoAduaneira;
     private double quantidadeServico;
-    private double valorCambio, SubTotal, valorAduaneiro, descontoFactura;
+    private double valorCambio, SubTotal, valorAduaneiro, descontoFactura,grossTotal;
     Utente utente = new Utente();
 
     public Factura() {
@@ -449,6 +449,14 @@ public class Factura {
 
     public void setFacturaReferente(String facturaReferente) {
         this.facturaReferente = facturaReferente;
+    }
+
+    public double getGrossTotal() {
+        return grossTotal;
+    }
+
+    public void setGrossTotal(double grossTotal) {
+        this.grossTotal = grossTotal;
     }
 
 }

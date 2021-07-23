@@ -92,7 +92,7 @@ public class Servico extends javax.swing.JFrame {
                 + "inner join categoriaservico c on c.idcategoriaServico =s.codigoCategoria where s.codigoStatus=1 order by s.codigoCategoria limit 50");
         mostrarCategoria("SELECT * FROM categoriaservico c limit 50");
         codigoTipoUtilizador = controllerUsuario.getTipoUtilizadorporID(codigoUser);
-        if (codigoTipoUtilizador == 4) {
+        if (codigoTipoUtilizador != 3) {
             jTabbedPane1.setEnabledAt(1, false);
             jTabbedPane1.setEnabledAt(2, false);
             jTabbedPane1.setEnabledAt(3, false);

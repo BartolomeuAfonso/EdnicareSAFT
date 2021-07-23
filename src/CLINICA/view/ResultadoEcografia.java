@@ -72,7 +72,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
         mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
                 + "inner join servicos s on s.idServico = p1.codigoServico inner join pacientes pa\n"
                 + "on pa.idPaciente = p.codigoPaciente\n"
-                + "where  p.estado='Nao' AND p1.dataPedido =current_date order by p.dataPedido");
+                + "where  p1.estado='Nao' AND p1.dataPedido =current_date order by p.dataPedido");
         // date(f.datafactura)
         setLocationRelativeTo(null);
         iconeSistema();
@@ -422,9 +422,9 @@ public class ResultadoEcografia extends javax.swing.JFrame {
             }
             if (jRadioButton5.isSelected()) {
 
-                int resposta = JOptionPane.showConfirmDialog(null, "Ecografia Obstétrica seg a quarto trimestre?", "Atenção", JOptionPane.YES_NO_OPTION);
+                int resposta = JOptionPane.showConfirmDialog(null, "Ecografia Obstétrica segundo e tereceiro trimestre?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
-                    String dados = "Ecografia Obstétrica seg a quarto trimestre";
+                    String dados = "Ecografia Obstétrica segundo e tereceiro trimestre";
                     int codigoProduto = controllerServico.getCodigoServico(dados);
                     String resultado = controllerEcografia.getDesignacao(codigoProduto);
                     //  String ovario = controllerEcografia.getOvario(codigoProduto);
@@ -434,6 +434,16 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                     resposta = JOptionPane.showConfirmDialog(null, "Ecografia Obstétrica primeiro trimestro", "Atenção", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
                         String dados = "Ecografia Obstétrica primeiro trimestro";
+                        int codigoProduto = controllerServico.getCodigoServico(dados);
+                        String resultado = controllerEcografia.getDesignacao(codigoProduto);
+                        //  String ovario = controllerEcografia.getOvario(codigoProduto);
+                        String conclusao = controllerEcografia.getConclusao(codigoProduto);
+                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                    }
+                } else if (resposta == JOptionPane.NO_OPTION) {
+                    resposta = JOptionPane.showConfirmDialog(null, "Ecografia Obstétrica", "Atenção", JOptionPane.YES_NO_OPTION);
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        String dados = "Ecografia Obstétrica";
                         int codigoProduto = controllerServico.getCodigoServico(dados);
                         String resultado = controllerEcografia.getDesignacao(codigoProduto);
                         //  String ovario = controllerEcografia.getOvario(codigoProduto);
@@ -521,7 +531,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
         mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
                 + "inner join servicos s on s.idServico = p1.codigoServico inner join pacientes pa\n"
                 + "on pa.idPaciente = p.codigoPaciente\n"
-                + "where  p.estado='Nao' AND p1.dataPedido =current_date order by p.dataPedido");
+                + "where  p1.estado='Nao' AND p1.dataPedido =current_date order by p.dataPedido");
         // date(f.datafactura)        // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -529,7 +539,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
         mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
                 + "inner join servicos s on s.idServico = p1.codigoServico inner join pacientes pa\n"
                 + "on pa.idPaciente = p.codigoPaciente\n"
-                + "where p.estado='Nao' AND date(p1.dataPedido) between '"+getData()+"' and '"+getData1()+"'");
+                + "where p1.estado='Nao' AND date(p1.dataPedido) between '" + getData() + "' and '" + getData1() + "'");
     }//GEN-LAST:event_jButton4ActionPerformed
     public void BuscarImagem() {
         JFileChooser chooser = new JFileChooser();

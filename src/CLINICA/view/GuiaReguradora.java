@@ -17,6 +17,7 @@ import CLINICA.controller.ControllerExamesporFazerItens;
 import CLINICA.controller.ControllerMedico;
 import CLINICA.controller.ControllerParametros;
 import CLINICA.controller.ControllerMarcarcaoConsulta;
+import CLINICA.controller.ControllerPedidoExames;
 import CLINICA.modelo.ExamesPorFazerItem;
 import CLINICA.modelo.ExamesporFazer;
 import CLINICA.modelo.Factura;
@@ -25,6 +26,7 @@ import CLINICA.modelo.Guia;
 import CLINICA.modelo.GuiaItens;
 import CLINICA.modelo.MarcacaoConsulta;
 import CLINICA.modelo.ModeloEstatistica;
+import CLINICA.modelo.PedidoExames;
 import CLINICA.relatorios.RelatorioVenda;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -52,6 +54,7 @@ import javax.swing.table.DefaultTableModel;
 import sf.ce.conexao.ConexaoBancos;
 import sf.ce.utilizacoes.Data;
 import GestaoStock.controller.EntradaController;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Vector;
 import json_xml_iva.Calculo;
@@ -70,6 +73,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
     ExamesporFazer exame;
     Factura factura1 = new Factura();
     GuiaItens facturaItens = new GuiaItens();
+    FacturaItens facturaItens1 = new FacturaItens();
     private DecimalFormat decimalformat;
     ControllerUsuario controllerUsuario;
     ControllerServico controllerServico;
@@ -95,16 +99,17 @@ public class GuiaReguradora extends javax.swing.JFrame {
     ControllerExamesporFazerItens controllerExamesporFazerItens;
     ControllerExamesporFazer controllerExamesporFazer;
     ControllerMedico controllerMedico;
-    //   int codigoTipoUtilizador;
     ControllerMarcarcaoConsulta controllerMarcarcaoConsulta;
     MarcacaoConsulta marcacaoConsulta = new MarcacaoConsulta();
     ControllerParametros controllerParametros;
+    PedidoExames pedidoExames = new PedidoExames();
+    ControllerPedidoExames controllerPedidoExames;
 
     public GuiaReguradora(int codigo) {
         initComponents();
         this.user = codigo;
 //        con = new ConexaoBancos().ConexaoBD();
-
+        controllerPedidoExames = new ControllerPedidoExames(con);
         controllerExamesporFazerItens = new ControllerExamesporFazerItens(con);
         controllerExamesporFazer = new ControllerExamesporFazer(con);
         controllerUsuario = new ControllerUsuario(con);
@@ -993,6 +998,17 @@ public class GuiaReguradora extends javax.swing.JFrame {
         return controllerUsuario.getCodigoMedico(jComboBox7.getSelectedItem().toString());
     }
 
+    public void salvarColaboradores() {
+        int codigoFactura = controllerGuia.getLastFactura();
+        factura.setCodigoCliente(getCodigoMedicoColaboradores());
+        factura.setCodigoUtilizador(getCodigoUtilizador());
+        factura.setTotalFactura(totalGeral());
+        factura.setDataVencimento(getDataActual());
+        factura.setEstado(String.valueOf(codigoFactura));
+        controllerMedico.salvarHonorario(factura);
+
+    }
+
     public void salvarMedicoHonorario() {
         Factura factura1 = new Factura();
         int codigofacto = controllerGuia.getLastFactura();
@@ -1109,50 +1125,63 @@ public class GuiaReguradora extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         if (flag == 1) {
             if (!jComboBox7.getSelectedItem().equals(null)) {
-                int numeroGuia = controllerSeguradora.getCodigoNumerador(jComboBox4.getSelectedItem().toString());
-                int numeradorSeguro = controllerGuia.getCodigoNumeradorEmpresa(jComboBox4.getSelectedItem().toString());
-                if (numeradorSeguro != 0) {
-                    System.out.println("Entrou aqui");
-                    salvarGuia(numeradorSeguro);
-                    salvarItemGuia();
-                    inserirExame();
-                    int codigofactura = controllerGuia.getLastFactura();
-                    relatorioVenda.getFacturaGuia(codigofactura);
-                    int quantidade = controllerParametros.getValorImpressao();
-                    for (int i = 0; i < quantidade; i++) {
-                        relatorioVenda.getFacturaticketseguradora(codigofactura);
-                    }
-
-                    salvarEstatistica(numeradorSeguro);
-                    salvarEstatisticaItens();
-                    limparVenda();
-                    jComboBox1.setModel(new DefaultComboBoxModel(controllerSeguradora.getNomeCategoria().toArray()));
-                    mostrarGuiaProntas("SELECT f.idFactura as codigo,p.nomeCompleto as nome,date(dataFactura) as data, e.designacao as empresa, u.nomeCompleto as username FROM factura f inner join pacientes p on f.codigoCliente =p.idPaciente\n"
-                            + "inner join empresaseguros e on p.codigoSeguro = e.idSeguros\n"
-                            + "inner join utilizadores u on u.idUtilizador=f.codigoUtilizador\n"
-                            + "where f.codigoSeguro <>8 and f.estado='FACTURA CRÉDITO' AND date(dataFactura) = current_date order by 4");
+                if (controllerGuia.getDataStistema().after(controllerGuia.getDataUltimaFactura()) || controllerGuia.getDataUltimaFactura().equals(controllerGuia.getDataStistema())) {
+                    String horaUltimaFactura = controllerGuia.getHoraUltimaFactura();
+                    if (getHoraMaior(horaUltimaFactura)) {
+                        int numeroGuia = controllerSeguradora.getCodigoNumerador(jComboBox4.getSelectedItem().toString());
+                        int numeradorSeguro = controllerGuia.getCodigoNumeradorEmpresa(jComboBox4.getSelectedItem().toString());
+                        if (numeradorSeguro != 0) {
+                            System.out.println("Entrou aqui");
+                            salvarGuia(numeradorSeguro);
+                            salvarItemGuia();
+                            int codigofactura = controllerGuia.getLastFactura();
+                            relatorioVenda.getFacturaGuia(codigofactura);
+                            int quantidade = controllerParametros.getValorImpressao();
+                            for (int i = 0; i < quantidade; i++) {
+                                relatorioVenda.getFacturaticketseguradora(codigofactura);
+                            }
+                            inserirExame();
+                            inserirEcografia(codigoFactura);
+                            salvarMedicoHonorario();
+                            salvarServicoMedicosIntesSantaMarta();
+                            salvarEstatistica(codigofactura);
+                            salvarEstatisticaItens();
+                            limparVenda();
+                            jComboBox1.setModel(new DefaultComboBoxModel(controllerSeguradora.getNomeCategoria().toArray()));
+                            mostrarGuiaProntas("SELECT f.idFactura as codigo,p.nomeCompleto as nome,date(dataFactura) as data, e.designacao as empresa, u.nomeCompleto as username FROM factura f inner join pacientes p on f.codigoCliente =p.idPaciente\n"
+                                    + "inner join empresaseguros e on p.codigoSeguro = e.idSeguros\n"
+                                    + "inner join utilizadores u on u.idUtilizador=f.codigoUtilizador\n"
+                                    + "where f.codigoSeguro <>8 and f.estado='FACTURA CRÉDITO' AND date(dataFactura) = current_date order by 4");
 //                jComboBox2.setModel(new DefaultComboBoxModel(controllerGuia.getNumeroGuia(getData2(), jComboBox1.getSelectedItem().toString()).toArray()));
-                } else {
-                    inserirExame();
-                    salvarGuia(numeroGuia);
-                    salvarItemGuia();
-                    int codigofactura = controllerGuia.getLastFactura();
-                    salvarMedicoHonorario();
-                    salvarServicoMedicosIntesSantaMarta();
-                    salvarEstatistica(numeroGuia);
-                    salvarEstatisticaItens();
-                    relatorioVenda.getFacturaGuia(codigoFactura);
-                    int quantidade = controllerParametros.getValorImpressao();
-                    for (int i = 0; i < quantidade; i++) {
-                        relatorioVenda.getFacturaticketseguradora(codigofactura);
+                        } else {
+                            inserirExame();
+                            salvarGuia(numeroGuia);
+                            salvarItemGuia();
+                            int codigofactura = controllerGuia.getLastFactura();
+                            inserirEcografia(codigoFactura);
+                            salvarMedicoHonorario();
+                            salvarServicoMedicosIntesSantaMarta();
+                            salvarEstatistica(numeroGuia);
+                            salvarEstatisticaItens();
+
+                            relatorioVenda.getFacturaGuia(codigofactura);
+                            int quantidade = controllerParametros.getValorImpressao();
+                            for (int i = 0; i < quantidade; i++) {
+                                relatorioVenda.getFacturaticketseguradora(codigofactura);
+                            }
+
+                            limparVenda();
+                            jComboBox1.setModel(new DefaultComboBoxModel(controllerSeguradora.getNomeCategoria().toArray()));
+                            mostrarGuiaProntas("SELECT f.idFactura as codigo,p.nomeCompleto as nome,date(dataFactura) as data, e.designacao as empresa, u.nomeCompleto as username FROM factura f inner join pacientes p on f.codigoCliente =p.idPaciente\n"
+                                    + "inner join empresaseguros e on p.codigoSeguro = e.idSeguros\n"
+                                    + "inner join utilizadores u on u.idUtilizador=f.codigoUtilizador\n"
+                                    + "where f.codigoSeguro <>8 and f.estado='FACTURA CRÉDITO' AND date(dataFactura) = current_date order by 4");
+                        }
+
                     }
 
-                    limparVenda();
-                    jComboBox1.setModel(new DefaultComboBoxModel(controllerSeguradora.getNomeCategoria().toArray()));
-                    mostrarGuiaProntas("SELECT f.idFactura as codigo,p.nomeCompleto as nome,date(dataFactura) as data, e.designacao as empresa, u.nomeCompleto as username FROM factura f inner join pacientes p on f.codigoCliente =p.idPaciente\n"
-                            + "inner join empresaseguros e on p.codigoSeguro = e.idSeguros\n"
-                            + "inner join utilizadores u on u.idUtilizador=f.codigoUtilizador\n"
-                            + "where f.codigoSeguro <>8 and f.estado='FACTURA CRÉDITO' AND date(dataFactura) = current_date order by 4");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não é permitido emitir factura com data anterior, verifica a data do computador!", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Insira nome do Médico", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -1182,6 +1211,25 @@ public class GuiaReguradora extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    public void inserirEcografia(int codigoFactura) {
+        pedidoExames.setCodigoPaciente(getCodigoCliente());
+        pedidoExames.setCodigoMedico(getCodigoMedico1());
+        controllerPedidoExames.SalvarEcografiaItens(pedidoExames);
+        int codigoSeguradora = utentes.getCodigoSeguro(getCodigoCliente());
+        int codigoEcografia = controllerPedidoExames.getLastInsertEcografiaItens();
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            int codigoProduto = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+            int codigoCategoria = controllerServico.getCodigoCategoriaServico(codigoProduto);
+            int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+            pedidoExames.setCodigoServico(codigoServico);
+            pedidoExames.setCodigoTriagem(codigoEcografia);
+            //      pedidoExames.setCodigoFactura(codigoEcografia);
+            if (codigoCategoria == 5 || codigoCategoria == 21 || codigoCategoria == 22 || codigoCategoria == 23) {
+                controllerPedidoExames.SalvarEcografia(pedidoExames);
+            }
+
+        }
+    }
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
         if (!jTextField1.getText().isEmpty()) {
             codigo = Integer.parseInt(jTextField1.getText());
@@ -1201,18 +1249,12 @@ public class GuiaReguradora extends javax.swing.JFrame {
         boolean itemGravado = false;
         boolean salvo = false;
         int quantidade = 1;
-        // Data data = new Data();
         exame = new ExamesporFazer();
         exame.setCodigoPaciente(getCodigoCliente());
         exame.setCodigoUtilizador(getCodigoUtilizador());
         exame.setCodigoMedico(getCodigoMedico1());
         exame.setDataPedido(getData());
         exame.setQuantidade(quantidade);
-
-        System.out.println("Codigo do Paciente:" + exame.getCodigoPaciente());
-        System.out.println("Codigo do Utilizador:" + exame.getCodigoUtilizador());
-        System.out.println("Data:" + exame.getDataPedido());
-        //System.out.println("Data:");
         controllerExamesporFazer.create(exame);
         salvo = true;
         if (salvo) {
@@ -1223,13 +1265,10 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 int codigoCategoria = controllerServico.getCodigoCategoriaServico(codigoServico);
                 if (codigoCategoria == 2) {
                     System.out.println("Codigo do Serviço:" + codigoServico);
-
                     int codigoProdutoItem = controllerServico.getCodigoProdutoItem(codigoServico);
                     Vector vectProdutosItem;
                     vectProdutosItem = controllerServico.getCodigosProdutoItem(codigoServico);
-
                     for (int j = 0; j < vectProdutosItem.size(); j++) {
-
                         System.out.println("Quantidade de Pedido:" + quantidade);
                         if (codigoServico != 0) {
                             System.out.println("Codigo do Serviço:" + codigoServico);
@@ -1240,8 +1279,6 @@ public class GuiaReguradora extends javax.swing.JFrame {
                                 salvarPedidoExameItem(codigoUltimoExamePorFazer, codigoServico, 1, 0, quantidade);
                             }
                         }
-//                    pedidoExames.setCodigoServico(codigoServico);
-//                    controllerPedidoExames.SalvarParticular(pedidoExames);
                     }
                     if (codigoProdutoItem == 0) {
                         salvarPedidoExameItem(codigoUltimoExamePorFazer, codigoServico, 1, 0, quantidade);
@@ -1341,92 +1378,98 @@ public class GuiaReguradora extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+
         if (evt.getClickCount() == 2) {
-            // Angola Telecom
-            flag = 2;
-
-            codigoFactura = Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString());
-            String nomePaciente = "" + jTable2.getValueAt(jTable2.getSelectedRow(), 1).toString();
-            String nomeSegura = "" + jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString();
-            codigoSeguro = controllerSeguradora.getCodigoSeguradora(nomeSegura);
-            System.out.println("Codigo Seguro:" + codigoSeguro);
-            jComboBox4.setModel(new DefaultComboBoxModel(controllerSeguradora.getTodaporNome(nomeSegura).toArray()));
-            jComboBox5.setModel(new DefaultComboBoxModel(utentes.getNome_Segura(codigoSeguro, nomePaciente).toArray()));
-            if (codigoSeguro == 9) {
-                mostrarFacturaAT("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco6, gt.quantidade,t.taxa,gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-            // Advance Care Seguradora
-            if (codigoSeguro == 1 || codigoSeguro == 2 || codigoSeguro == 3 || codigoSeguro == 4 || codigoSeguro == 5 || codigoSeguro == 6 || codigoSeguro == 7) {
-                mostrarFacturaEnsa("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco1, gt.quantidade,t.taxa,gt.descontoProduto, gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-            // Seguragora SAHAM
-            if (codigoSeguro == 10) {
-                mostrarFacturaSAHAM("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco5, gt.quantidade,t.taxa, gt.descontoProduto, gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo \n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-            // Seguragora UniSaude
-            if (codigoSeguro == 12) {
-                mostrarFacturaUnisaude("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco2, gt.quantidade,t.taxa,gt.descontoProduto, gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo \n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-            // Seguragora Saude +
-            if (codigoSeguro == 13) {
-                mostrarFacturaSaudeMais("SELECT DISTINCT g.idFactura, s.idServico,s.designacao,s.preco3, gt.quantidade,t.taxa,gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-            // Fidelidade
-            if (codigoSeguro == 14) {
-                mostrarFacturaSaudeFinalidade("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco4, gt.quantidade,t.taxa, gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-            // Master Seguros
-            if (codigoSeguro == 16) {
-                mostrarFacturaMasterSeguros("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco7, gt.quantidade,t.taxa, gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-            // MedisPuls
-            if (codigoSeguro == 17) {
-                mostrarFacturaAT("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco6, gt.quantidade,t.taxa, gt.descontoProduto, gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-            // Prodencial
-            if (codigoSeguro == 18) {
-                mostrarFacturaSAHAM("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco5, gt.quantidade, t.taxa,gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
-                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
-                        + "where g.idFactura ='" + codigoFactura + "'");
-                flag = 2;
-                jTabbedPane1.setSelectedIndex(0);
-            }
-
+            JOptionPane.showMessageDialog(null, "Não lhe é permitido alterar factura uma vez assinada!", "Mind Vision Tecnology", JOptionPane.ERROR_MESSAGE);
         }
-        actualizarValorApagar();
-        actualizar();
+
+//        if (evt.getClickCount() == 2) {
+//            // Angola Telecom
+//            flag = 2;
+//
+//            codigoFactura = Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString());
+//            String nomePaciente = "" + jTable2.getValueAt(jTable2.getSelectedRow(), 1).toString();
+//            String nomeSegura = "" + jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString();
+//            codigoSeguro = controllerSeguradora.getCodigoSeguradora(nomeSegura);
+//            System.out.println("Codigo Seguro:" + codigoSeguro);
+//            jComboBox4.setModel(new DefaultComboBoxModel(controllerSeguradora.getTodaporNome(nomeSegura).toArray()));
+//            jComboBox5.setModel(new DefaultComboBoxModel(utentes.getNome_Segura(codigoSeguro, nomePaciente).toArray()));
+//            if (codigoSeguro == 9) {
+//                mostrarFacturaAT("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco6, gt.quantidade,t.taxa,gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//            // Advance Care Seguradora
+//            if (codigoSeguro == 1 || codigoSeguro == 2 || codigoSeguro == 3 || codigoSeguro == 4 || codigoSeguro == 5 || codigoSeguro == 6 || codigoSeguro == 7) {
+//                mostrarFacturaEnsa("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco1, gt.quantidade,t.taxa,gt.descontoProduto, gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//            // Seguragora SAHAM
+//            if (codigoSeguro == 10) {
+//                mostrarFacturaSAHAM("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco5, gt.quantidade,t.taxa, gt.descontoProduto, gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo \n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//            // Seguragora UniSaude
+//            if (codigoSeguro == 12) {
+//                mostrarFacturaUnisaude("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco2, gt.quantidade,t.taxa,gt.descontoProduto, gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo \n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//            // Seguragora Saude +
+//            if (codigoSeguro == 13) {
+//                mostrarFacturaSaudeMais("SELECT DISTINCT g.idFactura, s.idServico,s.designacao,s.preco3, gt.quantidade,t.taxa,gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//            // Fidelidade
+//            if (codigoSeguro == 14) {
+//                mostrarFacturaSaudeFinalidade("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco4, gt.quantidade,t.taxa, gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//            // Master Seguros
+//            if (codigoSeguro == 16) {
+//                mostrarFacturaMasterSeguros("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco7, gt.quantidade,t.taxa, gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//            // MedisPuls
+//            if (codigoSeguro == 17) {
+//                mostrarFacturaAT("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco6, gt.quantidade,t.taxa, gt.descontoProduto, gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//            // Prodencial
+//            if (codigoSeguro == 18) {
+//                mostrarFacturaSAHAM("SELECT DISTINCT g.idFactura, s.idServico,s.designacao, s.preco5, gt.quantidade, t.taxa,gt.descontoProduto,gt.totalGeral FROM factura g inner join factura_itens gt on g.idFactura =gt.codigoFactura\n"
+//                        + "inner join servicos s on gt.codigoProduto =idServico inner join tipotaxa t on s.codigoTipoTaxa=t.codigo\n"
+//                        + "where g.idFactura ='" + codigoFactura + "'");
+//                flag = 2;
+//                jTabbedPane1.setSelectedIndex(0);
+//            }
+//
+//        }
+//        actualizarValorApagar();
+//        actualizar();
+
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -1745,7 +1788,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         fila[2] = quantidade;
         fila[3] = preco;
         fila[4] = getValorMonetario(IVA);
-        fila[5] = precoDesconto;
+        fila[5] = precoDesconto * preco;
         fila[6] = totalPreco - (preco * quantidade * precoDesconto);
         defaultTableModel.addRow(fila);
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -1985,7 +2028,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         //   codigoFactura = Integer.parseInt(jComboBox2.getSelectedItem().toString());
         double descontoTotal = 0.0;
 
-        controllerGuia.update(getValorApagar()+getTotalDesconto()+getDescontoIVAporProdutoTotal(), getTotalDesconto(), codigoFactura, getTotalDesconto(), getDescontoIVAporProdutoTotal());
+        controllerGuia.update(getValorApagar() + getTotalDesconto() + getDescontoIVAporProdutoTotal(), getTotalDesconto(), codigoFactura, getTotalDesconto(), getDescontoIVAporProdutoTotal());
         // }
 
     }
@@ -2695,6 +2738,171 @@ private class LeitorTeclas implements KeyListener {
             System.out.println("Erro!!!" + ex);
         }
 
+    }
+
+    public int getCodigoMedicoColaboradores() {
+        return 1;
+    }
+
+    public void salvarColaboradoresIntes() {
+        double lab = 0, consulta = 0, raioX = 0, ecografia = 0, ecografia7 = 0, ecografia10 = 0, ecografiamorfologica = 0, ecocardiograma = 0, electrocardiograma = 0;
+
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            int codigoFactura = controllerMedico.getLastFacturaHonorario();
+// int codigoFactura = controllerFactura.getLastFactura();
+            int codigoProduto = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+            int codigoCategoria = controllerServico.getCodigoCategoriaServico(codigoProduto);
+            // Consulta
+            if (codigoCategoria == 1) {
+                consulta = controllerParametros.getValorConsulta() + Double.parseDouble(jTable1.getValueAt(i, 3).toString()) * controllerParametros.getPercentagemConsulta();
+                lab = 0;
+                raioX = 0;
+                ecografia = 0;
+                ecografia7 = 0;
+                ecocardiograma = 0;
+                electrocardiograma = 0;
+                ecografiamorfologica = 0;
+            }
+            // Laboratorio
+            if (codigoCategoria == 2) {
+                lab = controllerParametros.getValorExames() + Double.parseDouble(jTable1.getValueAt(i, 3).toString()) * controllerParametros.getPercentagemExames();
+                consulta = 0;
+                System.out.println("Laboratorio:" + lab);
+                raioX = 0;
+                ecografia = 0;
+                ecografia10 = 0;
+                ecografia7 = 0;
+                ecocardiograma = 0;
+                electrocardiograma = 0;
+                ecografiamorfologica = 0;
+            }
+            // Raio X
+            if (codigoCategoria == 3) {
+                raioX = controllerParametros.getValorRaioX() + Double.parseDouble(jTable1.getValueAt(i, 3).toString()) * controllerParametros.getPercentagemRaioX();
+                consulta = 0;
+                lab = 0;
+                ecografia = 0;
+                ecografia10 = 0;
+                ecografia7 = 0;
+                ecografiamorfologica = 0;
+                electrocardiograma = 0;
+                ecocardiograma = 0;
+            }
+            // Ecografia
+            if (codigoCategoria == 5) {
+
+                ecografia = controllerParametros.getValorEcografiaCola5() + controllerParametros.getPercentagemEcografia5() * Double.parseDouble(jTable1.getValueAt(i, 3).toString());
+                consulta = 0;
+                raioX = 0;
+                lab = 0;
+                ecografia10 = 0;
+                ecografia7 = 0;
+                ecografiamorfologica = 0;
+                ecocardiograma = 0;
+                electrocardiograma = 0;
+            }
+            // ElectroCardiograma
+            if (codigoCategoria == 19) {
+                electrocardiograma = controllerParametros.getElectroColaborador() + controllerParametros.getPercentagemElectroCardiograma() * Double.parseDouble(jTable1.getValueAt(i, 3).toString());;
+                consulta = 0;
+                raioX = 0;
+                lab = 0;
+                ecografia = 0;
+                ecografia = 0;
+                ecografia7 = 0;
+                ecografiamorfologica = 0;
+                ecocardiograma = 0;
+            }
+            // Ecografia 7
+            if (codigoCategoria == 21) {
+                ecografia7 = controllerParametros.getValorEcografia7() + controllerParametros.getPercentagemEcografia7() * Double.parseDouble(jTable1.getValueAt(i, 3).toString());;
+                consulta = 0;
+                raioX = 0;
+                lab = 0;
+                ecografia = 0;
+                electrocardiograma = 0;
+                ecografiamorfologica = 0;
+                ecocardiograma = 0;
+            }
+            // Ecografia 10
+            if (codigoCategoria == 22) {
+                ecografia10 = controllerParametros.getValorEcografia10() + controllerParametros.getPercentagemEcografia10() * Double.parseDouble(jTable1.getValueAt(i, 3).toString());;
+                consulta = 0;
+                raioX = 0;
+                lab = 0;
+                ecografia = 0;
+                electrocardiograma = 0;
+                ecografia7 = 0;
+                ecocardiograma = 0;
+            }
+            // Ecografia 20
+            if (codigoCategoria == 23) {
+                ecografiamorfologica = controllerParametros.getValorEcografiaCola20() + controllerParametros.getPercentagemEcografia20() * Double.parseDouble(jTable1.getValueAt(i, 3).toString());;
+                consulta = 0;
+                raioX = 0;
+                lab = 0;
+                ecografia = 0;
+                electrocardiograma = 0;
+                ecografia7 = 0;
+                ecografia10 = 0;
+                ecocardiograma = 0;
+            }
+
+            double valorUnitario = Double.parseDouble(jTable1.getValueAt(i, 3).toString());
+            facturaItens1.setCodigoFactura(codigoFactura);
+            facturaItens1.setCodigoServico(codigoProduto);
+            facturaItens1.setPreco(valorUnitario);
+            facturaItens1.setLaboratorio(lab);
+            facturaItens1.setRaioX(raioX);
+            facturaItens1.setPercentagem(lab);
+            facturaItens1.setConsulta(consulta);
+            facturaItens1.setEcocardiograma(ecocardiograma);
+            facturaItens1.setElectrocardiograma(electrocardiograma);
+            facturaItens1.setEcografia(ecografia);
+            facturaItens1.setEcografia7(ecografia7);
+            facturaItens1.setEcografia10(ecografia10);
+            facturaItens1.setEcografiaMorfologia(ecografiamorfologica);
+            controllerMedico.salvarHonorarioItens(facturaItens1);
+
+        }
+    }
+
+    public static Integer[] getHorAndMinute(String hora) {
+        //  System.out.println("Data passada:" + hora);
+        int horario, minutos;
+        String ba = null;
+        if (hora.isEmpty()) {
+
+            String horaAtual = new SimpleDateFormat("HH:mm").format(new Date().getTime());
+            horario = Integer.parseInt(horaAtual.substring(0, 2));
+            minutos = Integer.parseInt(horaAtual.substring(3, 5));
+            return new Integer[]{horario, minutos};
+        } else {
+            horario = Integer.parseInt(hora.substring(0, 2));
+            minutos = Integer.parseInt(hora.substring(3, 5));
+            return new Integer[]{horario, minutos};
+        }
+
+    }
+
+    public static boolean getHoraMaior(String horaFecha) {
+        System.out.println("Passada para comparar:" + horaFecha);
+        String horaAtual = new SimpleDateFormat("HH:mm").format(new Date().getTime());// Pega hora atual do Sistema
+        System.out.println("Hora do Sistema:" + horaAtual);
+        Integer horarioFecha[] = getHorAndMinute(horaFecha);
+        System.out.println("Hora Passada:" + horarioFecha[0]);
+        Integer horarioAtual[] = getHorAndMinute(horaAtual);
+        System.out.println("Hora Passada do sistema:" + horarioAtual[0]);
+
+        if (horarioAtual[0] >= horarioFecha[0]) {
+
+            System.out.println("Em dia");
+            return true;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Não é permitido emitir factura com hora inferior que a hora da Ultima Factura, verifica a Hora do seu Computador!", "Mind Vision Tecnology - Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 
 }

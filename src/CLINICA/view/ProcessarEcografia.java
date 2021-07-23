@@ -38,6 +38,7 @@ public class ProcessarEcografia extends javax.swing.JFrame {
     ControllerEcografia controllerEcografia;
     Connection con;
     int codigoUser;
+    int codigoProduto;
     RelatorioEcografia ecografia = new RelatorioEcografia();
     String codigoPedido;
 
@@ -52,6 +53,8 @@ public class ProcessarEcografia extends javax.swing.JFrame {
         controllerResultadoRaioX = new ControllerResultadoRaioX(con);
         controllerUtente = new ControllerUtente(con);
         controllerServico = new ControllerServico(con);
+        this.codigoProduto = codigoEcografia;
+        System.out.println("Codigo do Produto:"+codigoProduto);
         // String conclucao = controllerEcografia.getResultado(codigoEcografia);
         // jTextPane1.setText(conclucao);
         //  jEditorPane1.setContentType("text/html");
@@ -242,7 +245,7 @@ public class ProcessarEcografia extends javax.swing.JFrame {
         int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor reler com atenção antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
             salvar();
-            controllerEcografia.alter(codigoPedido);
+            controllerEcografia.alter(codigoProduto,codigoPedido);
             int codigoRaixo = controllerEcografia.getLastFactura();
             ecografia.getEcografiaPelvica(codigoRaixo);
         }
@@ -312,7 +315,8 @@ public class ProcessarEcografia extends javax.swing.JFrame {
 
             if (jasperPrint.getPages().size() >= 1) {
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
-                jasperViewer.setTitle("Factura");
+                jasperViewer.setTitle("Ecografia");
+                
                 jasperViewer.setVisible(true);
                 //  jasperViewer.setAlwaysOnTop(true);
             } else {

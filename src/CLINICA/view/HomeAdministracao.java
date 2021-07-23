@@ -1223,7 +1223,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
 
         jMenuItem36.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem36.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jMenuItem36.setText("Facturação");
+        jMenuItem36.setText("Facturação Singular");
         jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem36ActionPerformed(evt);
@@ -1233,7 +1233,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
 
         jMenuItem37.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         jMenuItem37.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jMenuItem37.setText("Facturação Seguradora");
+        jMenuItem37.setText("Facturação Covênio/Empresa");
         jMenuItem37.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem37ActionPerformed(evt);
@@ -1447,7 +1447,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jMenu6.add(jMenuItem15);
 
         jMenuItem16.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jMenuItem16.setText("Reagentes ");
+        jMenuItem16.setText("Adicionar parametros");
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem16ActionPerformed(evt);
@@ -1888,7 +1888,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        JOptionPane.showMessageDialog(null, "Brevemente");
+       new viewParametro().setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed

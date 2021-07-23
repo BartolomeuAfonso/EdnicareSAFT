@@ -47,21 +47,30 @@ public class FechoConta extends javax.swing.JFrame {
     Double valorRaioX = 0.0;
     Double valorEcografia = 0.0;
     Double valorInternamento = 0.0;
+    Double valorConsulta = 0.0;
+    Double totalGeral = 0.0;
+    Double valorOutros =0.0;
 
     public FechoConta() {
         initComponents();
         controllerMedico = new ControllerMedico(con);
         controllerFechoRecepcao = new ControllerFechoRecepcao(con);
         controllerFechoRecepcaoItens = new ControllerFechoRecepcaoItens(con);
+        valorConsulta = getValorConsulta();
         valorLaborio = getValorLaboratorio();
         valorRaioX = getValorRaioX();
         valorEcografia = getValorEcografia();
         valorInternamento = getValorInternamento();
-        jTable2.setValueAt(valorLaborio, 0, 1);
-        jTable2.setValueAt(valorRaioX, 1, 1);
-        jTable2.setValueAt(valorEcografia, 2, 1);
-        jTable2.setValueAt(valorInternamento,3 , 1);
+        totalGeral = valorConsulta + valorLaborio + valorRaioX + valorEcografia + valorInternamento;
+        jTable2.setValueAt(valorConsulta, 0, 1);
+        jTable2.setValueAt(valorLaborio, 1, 1);
+        jTable2.setValueAt(valorRaioX, 2, 1);
+        jTable2.setValueAt(valorEcografia, 3, 1);
+        jTable2.setValueAt(valorInternamento, 4, 1);
+        jTable2.setValueAt(valorOutros, 5, 1);
 
+        jTextField1.setText("TOTAL GERAL:  " + totalGeral);
+        //TOTAL GERAL
         mostraMovimentoMedico("SELECT distinct\n"
                 + "medicos.`idMedico` AS idMedico,\n"
                 + "medicos.`nomeCompleto` AS nomeCompleto,\n"
@@ -180,10 +189,11 @@ public class FechoConta extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)), "Movimentos dos Serviços da Clínica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 11))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)), "Movimentos dos Serviços da Clínica/Centros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 11))); // NOI18N
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {"Consulta", null},
                 {"Laboratório", null},
                 {"Raio X", null},
                 {"Imagiologia", null},
@@ -279,60 +289,43 @@ public class FechoConta extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         salvar();
-        salvarItens();
+     //   salvarItens();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void salvar() {
         double valorItens = 0;
         double valorTotal = 0;
-        double valorLaboratorio = 0;
-        double valorTotalGeral = 0;
-
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
-            valorItens = Double.valueOf(jTable1.getValueAt(i, 4).toString().replaceAll(",", "").toString());
-            valorTotal = valorTotal + valorItens;
-
-        }
-        System.out.println("Total dos Medico:" + valorTotal);
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
-            double valorItens1 = Double.valueOf(jTable2.getValueAt(i, 1).toString().replaceAll(",", "").toString());
-            valorLaboratorio = valorLaboratorio + valorItens1;
-
-        }
-        System.out.println("Outros:" + valorLaboratorio);
-        valorTotalGeral = valorTotal + valorLaboratorio;
-        System.out.println("Total Geral:" + valorTotalGeral);
-        fechoRecepcao.setValorLaboratorio(Double.valueOf(jTable2.getValueAt(0, 1).toString()));
-        fechoRecepcao.setValorRaiox(Double.valueOf(jTable2.getValueAt(1, 1).toString()));
-        fechoRecepcao.setValorEcografia(Double.valueOf(jTable2.getValueAt(2, 1).toString()));
-        fechoRecepcao.setValorInternamento(Double.valueOf(jTable2.getValueAt(3, 1).toString()));
-        fechoRecepcao.setValorOutros(Double.valueOf(jTable2.getValueAt(4, 1).toString()));
+        fechoRecepcao.setValorConsulta(Double.valueOf(jTable2.getValueAt(0, 1).toString()));
+        fechoRecepcao.setValorLaboratorio(Double.valueOf(jTable2.getValueAt(1, 1).toString()));
+        fechoRecepcao.setValorRaiox(Double.valueOf(jTable2.getValueAt(2, 1).toString()));
+        fechoRecepcao.setValorEcografia(Double.valueOf(jTable2.getValueAt(3, 1).toString()));
+        fechoRecepcao.setValorInternamento(Double.valueOf(jTable2.getValueAt(4, 1).toString()));
+        fechoRecepcao.setValorOutros(Double.valueOf(jTable2.getValueAt(5, 1).toString()));
         fechoRecepcao.setValorMedico(valorTotal);
-        System.out.println("Total Geral:" + valorTotalGeral);
-        fechoRecepcao.setValorTotal(valorTotalGeral);
+        fechoRecepcao.setValorTotal(totalGeral);
         controllerFechoRecepcao.salvar(fechoRecepcao);
     }
 
-    public void salvarItens() {
-        int codigoConta = controllerFechoRecepcao.getLastFactura();
-
-        for (int i = 0; i < jTable1.getRowCount(); i++) {
-            int codigoMedico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
-            fechoRecepcaoItens.setCodigoConta(codigoConta);
-            fechoRecepcaoItens.setCodigoMedico(codigoMedico);
-            fechoRecepcaoItens.setValorTotal(Double.valueOf(jTable1.getValueAt(i, 4).toString().replaceAll(",", "").toString()));
-            fechoRecepcaoItens.setDescricao(jTable1.getValueAt(i, 1).toString());
-            controllerFechoRecepcaoItens.salvar(fechoRecepcaoItens);
-        }
-        for (int i = 0; i < jTable2.getSelectedRow(); i++) {
-            fechoRecepcaoItens.setCodigoConta(codigoConta);
-            fechoRecepcaoItens.setDescricao(jTable2.getValueAt(i, 0).toString());
-            double valorItens = Double.valueOf(jTable2.getValueAt(i, 1).toString().replaceAll(",", "").toString());
-
-            controllerFechoRecepcaoItens.salvar(fechoRecepcaoItens);
-        }
-
-    }
+//    public void salvarItens() {
+//        int codigoConta = controllerFechoRecepcao.getLastFactura();
+//
+//        for (int i = 0; i < jTable1.getRowCount(); i++) {
+//            int codigoMedico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+//            fechoRecepcaoItens.setCodigoConta(codigoConta);
+//            fechoRecepcaoItens.setCodigoMedico(codigoMedico);
+//            fechoRecepcaoItens.setValorTotal(Double.valueOf(jTable1.getValueAt(i, 4).toString().replaceAll(",", "").toString()));
+//            fechoRecepcaoItens.setDescricao(jTable1.getValueAt(i, 1).toString());
+//            controllerFechoRecepcaoItens.salvar(fechoRecepcaoItens);
+//        }
+//        for (int i = 0; i < jTable2.getSelectedRow(); i++) {
+//            fechoRecepcaoItens.setCodigoConta(codigoConta);
+//            fechoRecepcaoItens.setDescricao(jTable2.getValueAt(i, 0).toString());
+//            double valorItens = Double.valueOf(jTable2.getValueAt(i, 1).toString().replaceAll(",", "").toString());
+//
+//            controllerFechoRecepcaoItens.salvar(fechoRecepcaoItens);
+//        }
+//
+//    }
 
     /**
      * @param args the command line arguments
@@ -371,8 +364,29 @@ public class FechoConta extends javax.swing.JFrame {
 
     public final double getValorLaboratorio() {
         try {
-            String sql = "SELECT sum(f.valorApagar) as TotalLaboratorio FROM factura f inner join factura_itens f1 on f.idFactura =f1.codigoFactura\n"
+            String sql = "SELECT SUM(f1.preco) as TotalLaboratorio FROM factura f inner join factura_itens f1 on f.idFactura =f1.codigoFactura\n"
                     + "where date(f.DataFactura) =current_date and f1.codigoCategoria =2";
+            con = new ConexaoBancos().ConexaoBD();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            try {
+                if (rs.next()) {
+                    return rs.getDouble("TotalLaboratorio");
+                }
+            } catch (SQLException ex) {
+                System.out.println("Erro:" + ex);
+            }
+            return 0;
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+        return 0;
+    }
+
+    public final double getValorConsulta() {
+        try {
+            String sql = "SELECT SUM(f1.preco) as TotalLaboratorio FROM factura f inner join factura_itens f1 on f.idFactura =f1.codigoFactura\n"
+                    + "where date(f.DataFactura) =current_date and f1.codigoCategoria =1";
             con = new ConexaoBancos().ConexaoBD();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -392,7 +406,7 @@ public class FechoConta extends javax.swing.JFrame {
 
     public final double getValorRaioX() {
         try {
-            String sql = "SELECT sum(f.valorApagar) as TotalLaboratorio FROM factura f inner join factura_itens f1 on f.idFactura =f1.codigoFactura\n"
+            String sql = "SELECT SUM(f1.preco) as TotalLaboratorio FROM factura f inner join factura_itens f1 on f.idFactura =f1.codigoFactura\n"
                     + "where date(f.DataFactura) =current_date and f1.codigoCategoria =3";
             con = new ConexaoBancos().ConexaoBD();
             ps = con.prepareStatement(sql);
@@ -413,8 +427,8 @@ public class FechoConta extends javax.swing.JFrame {
 
     public final double getValorEcografia() {
         try {
-            String sql = "SELECT sum(f.valorApagar) as TotalLaboratorio FROM factura f inner join factura_itens f1 on f.idFactura =f1.codigoFactura\n"
-                    + "where date(f.DataFactura) =current_date and f1.codigoCategoria =5";
+            String sql = "SELECT SUM(f1.preco) as TotalLaboratorio FROM factura f inner join factura_itens f1 on f.idFactura =f1.codigoFactura\n"
+                    + "where date(f.DataFactura) =current_date and f1.codigoCategoria =5 AND f1.codigoCategoria =21 AND f1.codigoCategoria =22";
             con = new ConexaoBancos().ConexaoBD();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

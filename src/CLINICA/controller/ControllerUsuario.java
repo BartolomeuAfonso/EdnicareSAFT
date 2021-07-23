@@ -296,7 +296,7 @@ public class ControllerUsuario {
 
     public int getCodigoUtilizador(String designacao) {
         //   conexao.Connectando();
-        sql = "SELECT idUtilizador from utilizadores where nomeCompleto ='" + designacao + "'";
+        sql = "SELECT idUtilizador from utilizadores where nomeCompleto ='"+designacao+"'";
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -343,7 +343,7 @@ public class ControllerUsuario {
     }
     public String getDataCadastro(String designacao) {
         //      conexao.Connectando();
-        sql = "SELECT dataCadastro from utilizadores where username ='" + designacao + "'";
+        sql = "SELECT date(dataCadastro) as dataCadastro from utilizadores where username ='" + designacao + "'";
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);

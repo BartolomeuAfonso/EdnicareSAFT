@@ -457,7 +457,7 @@ public class ControllerMedico {
             ps.setDouble(11, facturaItens.getElectrocardiograma());
             ps.setDouble(12, facturaItens.getConsulta());
             ps.execute();
-            JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
+         //   JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
         } catch (SQLException ex) {
           ex.printStackTrace();
         }

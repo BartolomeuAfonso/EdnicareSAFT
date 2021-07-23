@@ -73,6 +73,7 @@ public class NotaView extends javax.swing.JFrame {
         //  jComboBox2.setModel(new DefaultComboBoxModel(controllerFactura.getFactura(codigoCliente).toArray()));
         setLocationRelativeTo(null);
         iconeSistema();
+
     }
 
     public final void iconeSistema() {
@@ -345,7 +346,9 @@ public class NotaView extends javax.swing.JFrame {
         jTextFieldTotaPagar.setEditable(false);
         jTextFieldTotaPagar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Valor Total"));
 
+        jTextFieldDesconto.setText("0");
         jTextFieldDesconto.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Desconto Total"));
+        jTextFieldDesconto.setEnabled(false);
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)), "Tipo de Papel", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 11))); // NOI18N
 
@@ -446,8 +449,10 @@ public class NotaView extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
 
         jLabel4.setText(controllerFactura.getCodigoReferencia(jComboBox2.getSelectedItem().toString()));
+
         mostrarFactura("SELECT DISTINCT s.idServico as idServico, s.designacao as designacao,f1.quantidade as quantidade, f1.preco as preco FROM factura f inner join factura_itens f1 on f.idFactura =f1.codigoFactura\n"
                 + "inner join servicos s on s.idServico =f1.codigoProduto where f1.codigoFactura='" + jComboBox2.getSelectedItem().toString() + "' AND f1.flag = 1");
+        System.out.println("Data da Factura:" + getDataFactura());
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -459,9 +464,11 @@ public class NotaView extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         inserirTabela();
+        defaultTableModel1.removeRow(jTable1.getSelectedRow());
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            
         salvarFactura();
         salvarItemFacturaNota();
         salvarItemFactura();
@@ -567,6 +574,10 @@ public class NotaView extends javax.swing.JFrame {
         return controllerFactura.getReferenciaFactura(Integer.parseInt(jLabel4.getText()));
     }
 
+    public String getDataFactura() {
+        return controllerFactura.getDataFactura(Integer.parseInt(jComboBox2.getSelectedItem().toString()));
+    }
+
     public void salvarFactura() {
         factura.setCodigoCliente(getCodigoCliente());
         factura.setCodigoUtilizador(getCodigoUtilizador());
@@ -585,6 +596,7 @@ public class NotaView extends javax.swing.JFrame {
             factura.setEstado("Anulação");
         }
 
+        factura.setDataFacturaEliminada(getDataFactura());
         factura.setnEcomenda(jTextField2.getText());
         controllerNotas.salvar(factura, jLabel4.getText());
 

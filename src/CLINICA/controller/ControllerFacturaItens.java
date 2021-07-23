@@ -148,7 +148,7 @@ public class ControllerFacturaItens {
     public void salvarItensGuia(GuiaItens guiaItens) {
         // conexao.Connectando();
         sql = "INSERT INTO factura_itens(codigoProduto,codigoFactura,quantidade,totalGeral,elegibilidade,descontoProduto,codigoCategoria,descontoIVA,preco)values(?,?,?,?,?,?,?,?,?)";
-//        System.out.println("Teste:" + sql);
+        System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, guiaItens.getCodigoServico());

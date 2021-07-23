@@ -46,8 +46,11 @@ import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,6 +84,8 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     ControllerFacturaItens controllerFacturaItens;
     VendaController vendaController = new VendaController();
     Data d = new Data();
+    SimpleDateFormat format = new SimpleDateFormat("yyy-MM-dd");
+
     ControllerEmpresa controllerEmpresa;
     ControllerPedidoExames controllerPedidoExames;
     RelatorioVenda relatorioVenda = new RelatorioVenda();
@@ -149,7 +154,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             jLabel16.setVisible(false);
             // jTextField8.setVisible(false);
             jTextField8.setText("0.0");
-            jRadioButton1.setVisible(false);
+            jRadioButton1.setVisible(true);
         }
         if (codigoTipoUtilizador == 9) {
             jLabel15.setVisible(false);
@@ -556,7 +561,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         jPanel4.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 240, 160, 30));
 
         jRadioButton1.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jRadioButton1.setText("Factura Crédito/ Proforma");
+        jRadioButton1.setText("Factura Pro-forma");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton1ActionPerformed(evt);
@@ -926,6 +931,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             calculoTroco();
             actualizarValorApagar();
             actualizarValorIva();
+            actualizaPreco();
             actualizar();
 
         } else {
@@ -1258,132 +1264,137 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
         int codigoProduto = jTable1.getRowCount();
-        if (codigoProduto != 0) {
-            if (!jComboBox1.getSelectedItem().equals("") && !jComboBox4.getSelectedItem().equals("")) {
-                if (tipoCodigoArea == 1) {
-//                    salvarServicoMedicosIntes();
-                    // Testando
-                    // Para melhorar
-                    inserirExame();
-                    if (jRadioButton1.isSelected()) {
-                        int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor confirmar o nome do Paciente antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
-                        if (resposta == JOptionPane.YES_OPTION) {
-                            salvarFactura();
-                            salvarItemFactura();
-                            salvarMedicoHonorario();
-                            salvarServicoMedicosIntesSantaMarta();
-                            int codigoFactura = controllerFactura.getLastFactura();
-                            salvarEstatistica(codigoFactura);
-                            salvarEstatisticaItens();
-                            limparVenda();
-                            if (jRadioButton5.isSelected()) {
-                                // Factura A5
-                                relatorioVenda.getFactura1(codigoFactura);
-                            }
-                            if (jRadioButton7.isSelected()) {
-                                // Factura A4
-                                relatorioVenda.getFacturaGuia2(codigoFactura);
-                            }
-                            jComboBox1.setModel(new DefaultComboBoxModel(controllerMedico.getNomeMedico().toArray()));
-                            jComboBox4.setModel(new DefaultComboBoxModel(controllerMedico.getNomeMedicoColaboradores().toArray()));
-                        }
+        if (controllerFactura.getDataStistema().after(controllerFactura.getDataUltimaFactura()) || controllerFactura.getDataUltimaFactura().equals(controllerFactura.getDataStistema())) {
+            String horaUltimaFactura = controllerFactura.getHoraUltimaFactura();
+            // System.out.println("Data da Ultima Facutra:" + horaUltimaFactura);
+            if (getHoraMaior(horaUltimaFactura)) {
+                if (codigoProduto != 0) {
+                    if (!jComboBox1.getSelectedItem().equals("") && !jComboBox4.getSelectedItem().equals("")) {
+                        if (tipoCodigoArea == 1) {
+                            if (jRadioButton1.isSelected()) {
+                                int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor confirmar o nome do Paciente antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
+                                if (resposta == JOptionPane.YES_OPTION) {
+                                    salvarFactura();
+                                    salvarItemFactura();
+                                    //salvarMedicoHonorario();
+                                    //    salvarServicoMedicosIntesSantaMarta();
+                                    int codigoFactura = controllerFactura.getLastFactura();
+                                    //  salvarEstatistica(codigoFactura);
+                                    //  salvarEstatisticaItens();
+                                    limparVenda();
+//                                if (jRadioButton5.isSelected()) {
+//                                    // Factura A5
+//                                    relatorioVenda.getFactura1(codigoFactura);
+//                                }
+                                    if (jRadioButton7.isSelected()) {
+                                        // Factura A4
+                                        relatorioVenda.getFacturaGuia2(codigoFactura);
+                                    }
+                                    jComboBox1.setModel(new DefaultComboBoxModel(controllerMedico.getNomeMedico().toArray()));
+                                    jComboBox4.setModel(new DefaultComboBoxModel(controllerMedico.getNomeMedicoColaboradores().toArray()));
+                                }
 
-                    } else {
-                        int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor confirmar o nome do Paciente antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
-                        if (resposta == JOptionPane.YES_OPTION) {
-                            if (getValorEntregue() + getValorEntregueMulticaixa() >= getValorApagar()) {
-                                salvarFactura();
-                                salvarItemFactura();
-                                int codigoFactura = controllerFactura.getLastFactura();
-                                salvarColaboradores();
-                                salvarColaboradoresIntes();
-                                salvarMarcacao();
-                                salvarEstatistica(codigoFactura);
-                                salvarEstatisticaItens();
-                                salvarMedicoHonorario();
-                                salvarServicoMedicosIntesSantaMarta();
-                                inserirEcografia(codigoFactura);
-                                limparVenda();
+                            } else {
+                                inserirExame();
+                                int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor confirmar o nome do Paciente antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
+                                if (resposta == JOptionPane.YES_OPTION) {
+                                    if (getValorEntregue() + getValorEntregueMulticaixa() >= getValorApagar()) {
+                                        salvarFactura();
+                                        salvarItemFactura();
+                                        int codigoFactura = controllerFactura.getLastFactura();
+                                        salvarColaboradores();
+                                        salvarColaboradoresIntes();
+                                        salvarMarcacao();
+                                        salvarEstatistica(codigoFactura);
+                                        salvarEstatisticaItens();
+                                        salvarMedicoHonorario();
+                                        salvarServicoMedicosIntesSantaMarta();
+                                        inserirEcografia(codigoFactura);
+                                        limparVenda();
 
-                                int quantidade = controllerParametros.getValorImpressao();
-                                if (jRadioButton6.isSelected()) {
-                                    // Factura Ticket
-                                    for (int i = 0; i < quantidade; i++) {
-                                        relatorioVenda.getFacturaticket(codigoFactura);
+                                        int quantidade = controllerParametros.getValorImpressao();
+                                        if (jRadioButton6.isSelected()) {
+                                            // Factura Ticket
+                                            for (int i = 0; i < quantidade; i++) {
+                                                relatorioVenda.getFacturaticket(codigoFactura);
+                                            }
+
+                                        }
+                                        if (jRadioButton5.isSelected()) {
+                                            // Factura A5
+                                            relatorioVenda.getFactura(codigoFactura);
+                                        }
+                                        if (jRadioButton7.isSelected()) {
+                                            // Factura A4
+                                            relatorioVenda.getFacturaGuia1(codigoFactura);
+                                        }
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Valor Entregue deve Maior que o valor Total!", "Erro", JOptionPane.ERROR_MESSAGE);
                                     }
 
                                 }
+                            }
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Insira nome do Médico", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
+                    if (tipoCodigoArea == 2) {
+                        if (jRadioButton1.isSelected()) {
+                            int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor confirmar o nome do Paciente antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
+                            if (resposta == JOptionPane.YES_OPTION) {
+                                salvarFactura();
+                                salvarItemFactura();
+                                int codigoFactura = controllerFactura.getLastFactura();
+                                limparVenda();
                                 if (jRadioButton5.isSelected()) {
                                     // Factura A5
-                                    relatorioVenda.getFactura(codigoFactura);
+                                    relatorioVenda.getFactura1(codigoFactura);
                                 }
                                 if (jRadioButton7.isSelected()) {
                                     // Factura A4
-                                    relatorioVenda.getFacturaGuia1(codigoFactura);
+                                    relatorioVenda.getFacturaGuia2(codigoFactura);
                                 }
+
                             } else {
-                                JOptionPane.showMessageDialog(null, "Valor Entregue deve Maior que o valor Total!", "Erro", JOptionPane.ERROR_MESSAGE);
-                            }
+                                if (getValorEntregue() + getValorEntregueMulticaixa() >= getValorApagar()) {
 
-                        }
-                    }
+                                    salvarFactura();
+                                    salvarItemFactura();
+                                    int codigoFactura = controllerFactura.getLastFactura();
+                                    limparVenda();
+                                    if (jRadioButton6.isSelected()) {
+                                        // Factura Ticket
+                                        int quantidade = controllerParametros.getValorImpressao();
+                                        for (int i = 0; i < quantidade; i++) {
+                                            relatorioVenda.getFacturaticket(codigoFactura);
+                                        }
 
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Insira nome do Médico", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-            if (tipoCodigoArea == 2) {
-                if (jRadioButton1.isSelected()) {
-                    int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor confirmar o nome do Paciente antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
-                    if (resposta == JOptionPane.YES_OPTION) {
-                        salvarFactura();
-                        salvarItemFactura();
-                        int codigoFactura = controllerFactura.getLastFactura();
-                        limparVenda();
-                        if (jRadioButton5.isSelected()) {
-                            // Factura A5
-                            relatorioVenda.getFactura1(codigoFactura);
-                        }
-                        if (jRadioButton7.isSelected()) {
-                            // Factura A4
-                            relatorioVenda.getFacturaGuia2(codigoFactura);
-                        }
+                                    }
+                                    if (jRadioButton5.isSelected()) {
+                                        // Factura A5
+                                        relatorioVenda.getFactura(codigoFactura);
+                                    }
+                                    if (jRadioButton7.isSelected()) {
+                                        // Factura A4
+                                        relatorioVenda.getFacturaGuia1(codigoFactura);
+                                    }
 
-                    } else {
-                        if (getValorEntregue() + getValorEntregueMulticaixa() >= getValorApagar()) {
-
-                            salvarFactura();
-                            salvarItemFactura();
-                            int codigoFactura = controllerFactura.getLastFactura();
-                            limparVenda();
-                            if (jRadioButton6.isSelected()) {
-                                // Factura Ticket
-                                int quantidade = controllerParametros.getValorImpressao();
-                                for (int i = 0; i < quantidade; i++) {
-                                    relatorioVenda.getFacturaticket(codigoFactura);
-                                }
-
-                            }
-                            if (jRadioButton5.isSelected()) {
-                                // Factura A5
-                                relatorioVenda.getFactura(codigoFactura);
-                            }
-                            if (jRadioButton7.isSelected()) {
-                                // Factura A4
-                                relatorioVenda.getFacturaGuia1(codigoFactura);
-                            }
-
-                            // Ticket
+                                    // Ticket
 //                    relatorioVenda.getFacturaticket(codigoFactura);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Valor Entregue deve Maior que o valor Total!", "Erro", JOptionPane.ERROR_MESSAGE);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Valor Entregue deve Maior que o valor Total!", "Erro", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+
                         }
                     }
-
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não existe Produto no carrinho de Compra!", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Não existe Produto no carrinho de Compra!", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não é permitido emitir factura com data anterior, verifica a data do computador!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
         //   jTextField8.setText("0.0");
@@ -1458,6 +1469,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             jTextFieldMulticaixa.setEnabled(false);
             jTextFieldTroco.setEnabled(false);
             jComboBox2.setModel(new DefaultComboBoxModel(formaPagamento.getDesignacaoCredito().toArray()));
+            jRadioButton7.setSelected(true);
             limparVenda();
 
         } else {
@@ -1465,6 +1477,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             jTextFieldValorEntregue.setEnabled(true);
             jTextFieldMulticaixa.setEnabled(true);
             jTextFieldTroco.setEnabled(true);
+            jRadioButton6.setSelected(true);
 
         }
     }//GEN-LAST:event_jRadioButton1ActionPerformed
@@ -1528,6 +1541,8 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTable1.setValueAt(getValorMonetario(getDescontoMeto(jTable1.getValueAt(jTable1.getSelectedRow(), 5).toString(), getValorNormal(jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString()))), jTable1.getSelectedRow(), 5);
         updateDesconto();
+        actualizarValorIva();
+        actualizarValorApagar();
         actualizaPreco();
 
     }//GEN-LAST:event_jTable1KeyReleased
@@ -1569,31 +1584,33 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     public void actualizaPreco() {
         double toal_geral = 0, subTotal = 0;
         int codigoServico, codigoTaxa;
-        double total = 0, total_iva = 0, desconto = 0;
+        double total = 0, total_iva = 0, iva = 0, total_iva1 = 0, desconto = 0;
         double Totalgeral = 0;
         for (int i = 0; i < jTable1.getRowCount(); i++) {
-            codigoServico = controllerServico.getCodigoServico(jTable1.getValueAt(jTable1.getSelectedRow(), i).toString());
-            codigoTaxa = controllerServico.getCodigoTaxa(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
-            // codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
-
-            if (codigoTaxa == 14) {
-
-                total_iva += 0.14 * (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString()));
-                toal_geral = toal_geral + (getValorNormal(jTable1.getValueAt(i, 6).toString()));
-
-                System.out.println("Total IVA:" + total_iva);
-                System.out.println("Total Geral:" + toal_geral);
-            } else {
-                desconto += getValorNormal(jTable1.getValueAt(i, 5).toString());
-                //  total_iva += 0 * (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString()));
-                total_iva = 0;
-                toal_geral = toal_geral + (getValorNormal(jTable1.getValueAt(i, 6).toString()));
-            }
-
+//            System.out.println("Para ver o erro:" + jTable1.getValueAt(0, i).toString());
+//            codigoServico = controllerServico.getCodigoServico(jComboBox3.getSelectedItem().toString());
+//            //  codigoServico = controllerServico.getCodigoServico(jTable1.getValueAt(jTable1.getSelectedRow(), i).toString());
+//            //  codigoTaxa = controllerServico.getCodigoTaxa(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
+//            codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
+//
+//            if (codigoTaxa == 14) {
+//
+//                iva = 0.14 * (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString()));
+//                total_iva = total_iva + iva; //(getValorNormal(jTable1.getValueAt(i, 6).toString()));
+//                toal_geral = toal_geral + (getValorNormal(jTable1.getValueAt(i, 6).toString()));
+//                System.out.println("Total IVA:" + total_iva);
+//                System.out.println("Total Geral:" + toal_geral);
+//            } else {
+            desconto += getValorNormal(jTable1.getValueAt(i, 5).toString());
+//                //iva += 0 * (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString()));
+//                iva = 0;
+//                total_iva = total_iva + iva; //(getValorNormal(jTable1.getValueAt(i, 6).toString()));
+//                toal_geral = toal_geral + (getValorNormal(jTable1.getValueAt(i, 6).toString()));
         }
+
         //  Totalgeral = toal_geral- desconto;
-        jTextFieldTotaPagar.setText("" + getValorMonetario(toal_geral));
-        jTextFieldDesconto.setText("" + getValorMonetario(total_iva));
+        //  jTextFieldTotaPagar.setText("" + getValorMonetario(toal_geral));
+        // jTextFieldDesconto.setText("" + getValorMonetario(total_iva));
         jTextField8.setText("" + getValorMonetario(desconto));
     }
 //    public void actualizaPreco() {
@@ -1643,27 +1660,30 @@ public class TesourariaColaborador extends javax.swing.JFrame {
 
     public void actualizarValorApagar() {
 
-        double valor, valorTotal = 0;
+        double valor, valorTotal = 0, valorTotal1 = 0;
         double valorIVA = 0;
         double troco = 0;
         if (tipoCodigoArea == 1) {
             for (int i = 0; i < jTable1.getRowCount(); i++) {
-                int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
-                int codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
-                if (codigoTaxa == 14) {
-                    valor = Double.valueOf(jTable1.getValueAt(i, 3).toString()) + Double.valueOf(jTable1.getValueAt(i, 5).toString()) * 0.14;
-                    valorTotal = valorTotal + valor;
+//                int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+//                int codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
+//                if (codigoTaxa == 14) {
+//                    valor = (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString())) * 0.14;
+//                    valorTotal = valorTotal + valor;
+////                    System.out.println("Total:" + valorTotal);
+//                    jTextFieldTotaPagar.setText(String.valueOf(valorTotal));
+//                    troco = Double.parseDouble(getTroco());
+//                } else {
+//                    //valor = getValorNormal(jTable1.getValueAt(i, 6).toString());
+//                   // valor = Double.valueOf(jTable1.getValueAt(i, 3).toString()) - Double.valueOf(jTable1.getValueAt(i, 5).toString()) * 0;
+//                    valor = (getValorNormal(jTable1.getValueAt(i, 3).toString())-getValorNormal(jTable1.getValueAt(i, 5).toString())) * 0;
+                valor = getValorNormal(jTable1.getValueAt(i, 6).toString());
+                valorTotal1 = valorTotal1 + valor;
 //                    System.out.println("Total:" + valorTotal);
-                    jTextFieldTotaPagar.setText(String.valueOf(valorTotal));
-                    troco = Double.parseDouble(getTroco());
-                } else {
-                    valor = Double.valueOf(jTable1.getValueAt(i, 3).toString());
-                    valorTotal = valorTotal + valor;
-                    System.out.println("Total:" + valorTotal);
-                    jTextFieldTotaPagar.setText(String.valueOf(valorTotal));
-                    troco = Double.parseDouble(getTroco());
-                }
-
+//                    jTextFieldTotaPagar.setText(String.valueOf(valorTotal));
+//                    troco = Double.parseDouble(getTroco());
+//                }
+                jTextFieldTotaPagar.setText(String.valueOf(valorTotal + valorTotal1));
             }
         }
         if (tipoCodigoArea == 2) {
@@ -1680,7 +1700,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
 
     public void actualizarValorIva() {
 
-        double valor, valorTotal = 0;
+        double valor = 0, valorTotal = 0;
         String troco = null;
         if (tipoCodigoArea == 2) {
             int codigoServico = controllerServico.getCodigoServico(jComboBox3.getSelectedItem().toString());
@@ -1696,30 +1716,32 @@ public class TesourariaColaborador extends javax.swing.JFrame {
 //            System.out.println("Chegou aqui");
             if (jTable1.getRowCount() != 0) {
                 for (int i = 0; i < jTable1.getRowCount(); i++) {
-                    int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
-                    int quantidade = Integer.parseInt(jTable1.getValueAt(i, 2).toString());
-                    int codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
-                    if (codigoTaxa == 14) {
-                        valor = Double.valueOf(jTable1.getValueAt(i, 3).toString()) * 14 * quantidade;
-                        valorTotal = valorTotal + valor;
-//                        System.out.println("Teste Desconto:" + valorTotal);
-                        jTextFieldDesconto.setText(String.valueOf(valorTotal / 100));
-                        troco = String.valueOf(getDesconto());
-                        // Por analizar
-                    } else {
-                        jTextFieldDesconto.setText("0.0");
-                        //    jTextField3.setText("0.0");
-                        //     jComboBox3.setModel(new DefaultComboBoxModel(controllerServico.getNomeServicos().toArray()));
-                    }
+//                    int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+//                    int quantidade = Integer.parseInt(jTable1.getValueAt(i, 2).toString());
+//                    int codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
+//                    if (codigoTaxa == 14) {
+//                        valor = Double.valueOf(jTable1.getValueAt(i, 3).toString()) * 14 * quantidade;
+//                        valorTotal = valorTotal + valor;
+////                        System.out.println("Teste Desconto:" + valorTotal);
+                    valor = getValorNormal(jTable1.getValueAt(i, 4).toString());
+                    valorTotal = valorTotal + valor;
+                    jTextFieldDesconto.setText(String.valueOf(valorTotal));
+                    //jTextFieldDesconto.setText(String.valueOf(valorTotal / 100));
+                    // troco = String.valueOf(getDesconto());
                 }
-
-            } else {
                 // Por analizar
-                //  jTextField3.setText("0.0");
-                //     jComboBox3.setModel(new DefaultComboBoxModel(controllerServico.getNomeServicos().toArray()));
+//                    } else {
+//                        jTextFieldDesconto.setText("0.0");
+//                        //    jTextField3.setText("0.0");
+//                        //     jComboBox3.setModel(new DefaultComboBoxModel(controllerServico.getNomeServicos().toArray()));
+//                    }
             }
-        }
 
+        } else {
+            // Por analizar
+            //  jTextField3.setText("0.0");
+            //     jComboBox3.setModel(new DefaultComboBoxModel(controllerServico.getNomeServicos().toArray()));
+        }
     }
 
     public double getDescontoPersentagem() {
@@ -1776,6 +1798,10 @@ public class TesourariaColaborador extends javax.swing.JFrame {
 
     public int getCodigoCliente() {
         return utentes.getCodigoUtente(jComboBox5.getSelectedItem().toString());
+    }
+
+    public String getNifCliente() {
+        return utentes.getNif(getCodigoCliente());
     }
 
     public void inserirTabela() {
@@ -1855,7 +1881,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         actualizarValorIva();
         actualizarValorApagar();
         actualizar();
-        actualizaPreco();
+        // actualizaPreco();
 
     }
 
@@ -2018,7 +2044,8 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         factura.setnEcomenda(jTextField7.getText());
         factura.setVaorporExtenso("");
         factura.setCodigoSeguro(8);
-        factura.setDescontoIVA(getDescontoIVA());
+        factura.setNif(getNifCliente());
+        factura.setDescontoIVA(Double.parseDouble(jTextFieldDesconto.getText()));
         factura.setnIBAN(jComboBox1.getSelectedItem().toString());
         factura.setCodigoFormaPagamento(getCodigoFormaPagamento());
         factura.setDataVencimento(getDataActual());
@@ -2291,7 +2318,6 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         int codigoFactura = controllerFactura.getLastFactura();
         factura.setCodigoCliente(getCodigoMedico1());
         factura.setCodigoUtilizador(getCodigoUtilizador());
-        //factura.setTotalFactura(totalGeral());
         factura.setEstado(String.valueOf(codigoFactura));
         controllerMedico.salvarHonorarioMedico(factura);
 
@@ -2746,4 +2772,41 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         }
     }
 
+    public static Integer[] getHorAndMinute(String hora) {
+        //  System.out.println("Data passada:" + hora);
+        int horario, minutos;
+        String ba = null;
+        if (hora.isEmpty()) {
+
+            String horaAtual = new SimpleDateFormat("HH:mm").format(new Date().getTime());
+            horario = Integer.parseInt(horaAtual.substring(0, 2));
+            minutos = Integer.parseInt(horaAtual.substring(3, 5));
+            return new Integer[]{horario, minutos};
+        } else {
+            horario = Integer.parseInt(hora.substring(0, 2));
+            minutos = Integer.parseInt(hora.substring(3, 5));
+            return new Integer[]{horario, minutos};
+        }
+
+    }
+
+    public static boolean getHoraMaior(String horaFecha) {
+        System.out.println("Passada para comparar:" + horaFecha);
+        String horaAtual = new SimpleDateFormat("HH:mm").format(new Date().getTime());// Pega hora atual do Sistema
+        System.out.println("Hora do Sistema:" + horaAtual);
+        Integer horarioFecha[] = getHorAndMinute(horaFecha);
+        System.out.println("Hora Passada:" + horarioFecha[0]);
+        Integer horarioAtual[] = getHorAndMinute(horaAtual);
+        System.out.println("Hora Passada do sistema:" + horarioAtual[0]);
+
+        if (horarioAtual[0] >= horarioFecha[0]) {
+
+            System.out.println("Em dia");
+            return true;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Não é permitido emitir factura com hora inferior que a hora da Ultima Factura, verifica a Hora do seu Computador!", "Mind Vision Tecnology - Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
 }

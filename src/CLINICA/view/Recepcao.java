@@ -68,6 +68,7 @@ public class Recepcao extends javax.swing.JFrame {
     String nomePaciente;
     int codigoUser;
     int tipoArea;
+    int tipoUtilizador;
     String nomeempresa;
 //    SaftXML saftXML = new SaftXML();
 
@@ -75,6 +76,7 @@ public class Recepcao extends javax.swing.JFrame {
         initComponents();
         codigoUser = codigoUsuario;
         System.out.println("Codigo do Usuario:" + codigoUsuario);
+
         //  con = new ConexaoBancos().ConexaoBD();
         controllerNaturalidade = new ControllerNaturalidade(con);
         controllerBeneficiario = new ControllerUtente(con);
@@ -84,10 +86,11 @@ public class Recepcao extends javax.swing.JFrame {
         controllerServico = new ControllerServico(con);
         controllerEmpresa = new ControllerEmpresa(con);
         nomeempresa = controllerEmpresa.getNomeEmpresa();
-
+        this.tipoUtilizador = controllerUsuario.getTipoUtilizadorporID(codigoUser);
+        
         jDateChooser2.setDate(new Date());
         this.tipoArea = tipoArea;
-
+        
         if (tipoArea == 1) {
             controllerMarcarcaoConsulta = new ControllerMarcarcaoConsulta(con);
             // defaultTableModel = (DefaultTableModel) jTable2.getModel();
@@ -104,7 +107,7 @@ public class Recepcao extends javax.swing.JFrame {
             jComboBox3.setModel(new DefaultComboBoxModel(controllerUsuario.getNomeMedico().toArray()));
             if (jRadioButton2.isSelected()) {
                 jPanel2.setVisible(false);
-
+                
             }
             if (!jCheckBox1.isSelected()) {
                 jPanel5.setVisible(false);
@@ -140,13 +143,17 @@ public class Recepcao extends javax.swing.JFrame {
             jButton6.setVisible(false);
             jTabbedPane1.setTitleAt(0, "Dado do Cliente");
             jTabbedPane1.setTitleAt(1, "Lista do Clientes");
-
+            
+        }
+        // Comentar esse opção para clínicas excepto ao centro médico Octávio.
+        if (tipoUtilizador == 4) {
+            jRadioButton3.setVisible(false);
         }
         iconeSistema();
         teclaInser();
-
+        
     }
-
+    
     public final void iconeSistema() {
         // URL caminho = this.getClass().getResource("/meus icons/GRest.png");
         URL caminho = this.getClass().getResource("/sf/ce/imagens/Icons/logoteste2.jpg");
@@ -192,6 +199,8 @@ public class Recepcao extends javax.swing.JFrame {
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jComboBox7 = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jTextField16 = new javax.swing.JTextField();
         jPanel18 = new javax.swing.JPanel();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -281,7 +290,7 @@ public class Recepcao extends javax.swing.JFrame {
                 jTextField4ActionPerformed(evt);
             }
         });
-        jPanel17.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 290, -1));
+        jPanel17.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, 290, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Naturalidade:");
@@ -300,20 +309,20 @@ public class Recepcao extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel14.setText("Estado civil:");
-        jPanel17.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, -1, 20));
+        jPanel17.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, -1, 20));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel15.setText("Nascimento:");
-        jPanel17.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, -1, -1));
+        jPanel17.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, -1, -1));
 
         jLabel17.setText("Sexo:");
-        jPanel17.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, 40, 20));
+        jPanel17.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, 40, 20));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO", "OUTRO" }));
-        jPanel17.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 90, 100, -1));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
+        jPanel17.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 60, 100, -1));
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOLTEIRO(A)", "CASADO(A)", "DIVORCIADO(A)", "VIUVO(A)" }));
-        jPanel17.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, 130, -1));
+        jPanel17.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 130, -1));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel19.setText("* Telefone:");
@@ -325,22 +334,22 @@ public class Recepcao extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel20.setText("Pai:");
-        jPanel17.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, -1, 20));
+        jPanel17.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, -1, 20));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel21.setText("Mâe:");
-        jPanel17.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, -1, -1));
+        jPanel17.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, -1, -1));
 
         jTextField12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField12ActionPerformed(evt);
             }
         });
-        jPanel17.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 290, -1));
+        jPanel17.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 290, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel22.setText("* Contacto:");
-        jPanel17.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 80, 20));
+        jLabel22.setText("E-mail:");
+        jPanel17.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 50, 20));
 
         jFormattedTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -354,12 +363,12 @@ public class Recepcao extends javax.swing.JFrame {
                 jTextField15ActionPerformed(evt);
             }
         });
-        jPanel17.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, 290, -1));
+        jPanel17.add(jTextField15, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 290, -1));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel29.setText("* Nº BI:");
-        jPanel17.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, -1, -1));
-        jPanel17.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 280, -1));
+        jPanel17.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, -1, -1));
+        jPanel17.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 280, -1));
 
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox7.addActionListener(new java.awt.event.ActionListener() {
@@ -372,6 +381,17 @@ public class Recepcao extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel26.setText("*Nome:");
         jPanel17.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 70, 20));
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel28.setText("* Contacto:");
+        jPanel17.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 80, 20));
+
+        jTextField16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField16ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(jTextField16, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, 290, -1));
 
         jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Tipo de Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 12))); // NOI18N
 
@@ -1023,7 +1043,7 @@ public class Recepcao extends javax.swing.JFrame {
         dispose();
 //        salvarSAFT();
     }//GEN-LAST:event_jButton11ActionPerformed
-
+    
     public Object getPaciente() {
         beneficiario.setNomeCompleto(getNome());
         beneficiario.setNomeMae(getnomeMae());
@@ -1058,9 +1078,9 @@ public class Recepcao extends javax.swing.JFrame {
                 if (tipoArea == 1) {
                     new TesourariaColaborador(getCodigoUsuario(), 1).setVisible(true);
                 }
-
+                
             }
-
+            
         } else {
             if (camposValidos()) {
                 codigo = getEmpresa();
@@ -1072,7 +1092,7 @@ public class Recepcao extends javax.swing.JFrame {
                 if (tipoArea == 1) {
                     new GuiaReguradora(getCodigoUsuario()).setVisible(true);
                 }
-
+                
             }
 
     }//GEN-LAST:event_btSalvarActionPerformed
@@ -1086,7 +1106,7 @@ public class Recepcao extends javax.swing.JFrame {
             mostrarPaciente("SELECT p.idPaciente,p.nomeCompleto,p.telefone,p.morada,e.designacao FROM pacientes p inner join empresaseguros e\n"
                     + "on p.codigoSeguro = e.idSeguros where p.codigoStatus=1");
         } else if (resposta == JOptionPane.NO_OPTION) {
-
+            
             mostrarPaciente("SELECT p.idPaciente,p.nomeCompleto,p.telefone,p.morada,e.designacao FROM pacientes p inner join empresaseguros e\n"
                     + "on p.codigoSeguro = e.idSeguros where p.codigoStatus=1");
         }
@@ -1105,7 +1125,7 @@ public class Recepcao extends javax.swing.JFrame {
                             + "on p.codigoSeguro = e.idSeguros AND p.codigoStatus=1 group by 1 desc limit 50");
                     new TesourariaColaborador(getCodigoUsuario(), 1).setVisible(true);
                 }
-
+                
             } else {
                 if (camposValidos()) {
                     codigo = getEmpresa();
@@ -1116,7 +1136,7 @@ public class Recepcao extends javax.swing.JFrame {
                             + "on p.codigoSeguro = e.idSeguros AND p.codigoStatus=1 group by 1 desc limit 50");
                     new GuiaReguradora(getCodigoUsuario()).setVisible(true);
                 }
-
+                
             }
         }
         if (tipoArea == 2) {
@@ -1145,16 +1165,16 @@ public class Recepcao extends javax.swing.JFrame {
         //        jTextField14.setEnabled(false);
         jPanel2.setVisible(true);
     }//GEN-LAST:event_jRadioButton3MouseClicked
-
+    
     public boolean camposValidos() {
         if (getNome().trim().equals("") || getTelefone().trim().equals("")) {
             // JOptionPane.showMessageDialog(null, "Campo nome e Contacto são Obrigatório");
             JOptionPane.showMessageDialog(null, "Campo nome e Contacto são Obrigatório!", "Aviso", JOptionPane.WARNING_MESSAGE);
             jFormattedTextField1.setBackground(Color.red);
             return false;
-
+            
         }
-
+        
         return true;
     }
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
@@ -1228,6 +1248,7 @@ public class Recepcao extends javax.swing.JFrame {
         nomePaciente = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
         int codigoPaciente = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
         int codigo = controllerBeneficiario.getCodigoSeguro(codigoPaciente);
+        String codigoClienteFacturado = controllerBeneficiario.verificarClienteFacturado(codigoPaciente);
         if (evt.getClickCount() == 2) {
             if (controllerBeneficiario.pacienteSegurado(nomePaciente)) {
                 beneficiario = controllerBeneficiario.getDadosCliente(nomePaciente);
@@ -1237,28 +1258,58 @@ public class Recepcao extends javax.swing.JFrame {
                 jTextField1.setText(beneficiario.getApn());
                 jFormattedTextField1.setText(beneficiario.getTelefone());
                 jTextField6.setText(beneficiario.getTomadorSegurado());
+                if (codigoClienteFacturado.equalsIgnoreCase("Consumidor Final")) {
+                    jTextField15.setEditable(true);
+                    jTextField2.setEditable(true);
+                } else if (codigoClienteFacturado.equalsIgnoreCase("999999999")) {
+                    jTextField15.setEditable(true);
+                    jTextField2.setEditable(true);
+                } else if (codigoClienteFacturado.equalsIgnoreCase("")) {
+                    jTextField15.setEditable(true);
+                    jTextField2.setEditable(true);
+                } else {
+                    jTextField15.setEditable(false);
+                    jTextField2.setEditable(false);
+                }
+                
                 jTextField15.setText(beneficiario.getBI());
                 jTextField9.setText(beneficiario.getMorada());
                 jDateChooser2.setDate(controllerBeneficiario.getData(nomePaciente));
                 jTextField10.setText(beneficiario.getContacto());
-                jComboBox4.setModel(new DefaultComboBoxModel(controllerBeneficiario.getGenero(nomePaciente).toArray()));
+                jTextField16.setText(beneficiario.getEmail());
+                //        jComboBox4.setModel(new DefaultComboBoxModel(controllerBeneficiario.get.toArray()));
                 jComboBox2.setModel(new DefaultComboBoxModel(controllerSeguradora.getTodaporCodigo(codigo).toArray()));
                 jTabbedPane1.setSelectedIndex(0);
                 btSalvar.setEnabled(false);
                 jButton14.setEnabled(true);
-                jPanel2.setVisible(true);
+                // Para meter true para outra clínica excepto a Centro Octávio
+                jPanel2.setVisible(false);
             } else {
                 beneficiario = controllerBeneficiario.getDadosCliente(nomePaciente);
                 jTextField2.setText(beneficiario.getNomeCompleto());
                 jTextField4.setText(beneficiario.getNomePai());
                 jTextField12.setText(beneficiario.getNomeMae());
                 jTextField1.setText(beneficiario.getApn());
+                if (codigoClienteFacturado.equalsIgnoreCase("Consumidor Final")) {
+                    jTextField15.setEditable(true);
+                    jTextField2.setEditable(true);
+                } else if (codigoClienteFacturado.equalsIgnoreCase("999999999")) {
+                    jTextField15.setEditable(true);
+                    jTextField2.setEditable(true);
+                } else if (codigoClienteFacturado.equalsIgnoreCase("")) {
+                    jTextField15.setEditable(true);
+                    jTextField2.setEditable(true);
+                } else {
+                    jTextField15.setEditable(false);
+                    jTextField2.setEditable(false);
+                }
                 jFormattedTextField1.setText(beneficiario.getTelefone());
                 jTextField6.setText(beneficiario.getTomadorSegurado());
                 jTextField15.setText(beneficiario.getBI());
                 jTextField9.setText(beneficiario.getMorada());
                 jDateChooser2.setDate(controllerBeneficiario.getData(nomePaciente));
-                jComboBox4.setModel(new DefaultComboBoxModel(controllerBeneficiario.getGenero(nomePaciente).toArray()));
+                jTextField16.setText(beneficiario.getEmail());
+                //       jComboBox4.setModel(new DefaultComboBoxModel(controllerBeneficiario.getGenero(nomePaciente).toArray()));
                 jComboBox2.setModel(new DefaultComboBoxModel(controllerSeguradora.getTodaporCodigo(codigo).toArray()));
                 jTextField10.setText(beneficiario.getContacto());
                 jTabbedPane1.setSelectedIndex(0);
@@ -1266,9 +1317,9 @@ public class Recepcao extends javax.swing.JFrame {
                 jButton14.setEnabled(true);
                 jPanel2.setVisible(false);
             }
-
+            
         }
-
+        
 
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -1279,7 +1330,7 @@ public class Recepcao extends javax.swing.JFrame {
         } else {
             jPanel5.setVisible(false);
             jComboBox1.setModel(new DefaultComboBoxModel(controllerBeneficiario.getNomeBenefiarioUltimo().toArray()));
-
+            
         }
     }//GEN-LAST:event_jCheckBox1MouseClicked
 
@@ -1292,12 +1343,12 @@ public class Recepcao extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Já não vaga na Agenda do Medico!", nomePaciente, JOptionPane.ERROR_MESSAGE);
             }
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "Verifique a data e hora da consulta!", nomePaciente, JOptionPane.ERROR_MESSAGE);
-
+            
         }
-
+        
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -1387,42 +1438,52 @@ public class Recepcao extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jComboBox7ActionPerformed
 
+    private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField16ActionPerformed
+    
     public Date getDateSistema() {
         return jDateChooser2.getDate();
     }
-
+    
     public int getNaturalidade() {
         return controllerNaturalidade.getCodigoNaturalidade(jComboBox8.getSelectedItem().toString());
     }
-
+    
     public String getNome() {
         return jTextField2.getText();
     }
-
+    
     public String getMorada() {
         return jTextField9.getText();
     }
-
+    
     public String getTelefone() {
         return jFormattedTextField1.getText();
     }
-
+    
     public String getContacto() {
         return jTextField10.getText();
     }
-
+    
     public String getnomePai() {
         return jTextField4.getText();
     }
-
+    
     public String getnomeMae() {
         return jTextField12.getText();
     }
-
+    
     public String getBI() {
-        return jTextField15.getText();
+        if (!jTextField15.getText().isEmpty()) {
+            return jTextField15.getText();
+        } else {
+            jTextField15.setText("Consumidor Final");
+            return jTextField15.getText();
+        }
+        
     }
-
+    
     public void limpar() {
         jTextField1.setText("");
         jTextField6.setText("");
@@ -1432,11 +1493,12 @@ public class Recepcao extends javax.swing.JFrame {
         jTextField2.setText("");
         jTextField4.setText("");
         jTextField9.setText("");
+        jTextField16.setText("");
         jFormattedTextField1.setText("");
     }
-
+    
     public void salvar(int codigo) {
-
+        
         java.sql.Date data = d.converteDataSql(jDateChooser2.getDate());
         if (camposValidos()) {
             if (!controllerBeneficiario.existe(getNome(), data, codigo)) {
@@ -1452,6 +1514,8 @@ public class Recepcao extends javax.swing.JFrame {
                 beneficiario.setCodigoNaturalidade(getNaturalidade());
                 beneficiario.setApn(jTextField1.getText());
                 beneficiario.setEmpresa(codigo);
+                beneficiario.setNif(getBI());
+                beneficiario.setEmail(jTextField16.getText());
                 beneficiario.setNascimento(getData1());
                 beneficiario.setTomadorSegurado(jTextField6.getText());
                 controllerBeneficiario.Inserir(beneficiario);
@@ -1460,7 +1524,7 @@ public class Recepcao extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public void editar(int codigo) {
         java.sql.Date data = d.converteDataSql(jDateChooser2.getDate());
         if (camposValidos()) {
@@ -1478,14 +1542,15 @@ public class Recepcao extends javax.swing.JFrame {
             beneficiario.setApn(jTextField1.getText());
             beneficiario.setEmpresa(codigo);
             beneficiario.setNascimento(getData1());
+            beneficiario.setEmail(jTextField16.getText());
             beneficiario.setTomadorSegurado(jTextField6.getText());
             controllerBeneficiario.editar(beneficiario, codigoPaciente);
         }
     }
-
+    
     public String getDataConsulta() {
         String dataSelecionada = "2015-03-07";
-
+        
         if (jDateChooser1.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser1.getDate());
@@ -1495,47 +1560,47 @@ public class Recepcao extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-
+    
     public int getEmpresa() {
         return controllerSeguradora.getCodigoSeguradora(jComboBox2.getSelectedItem().toString());
     }
-
+    
     public int getCodigoMedico() {
         return controllerUsuario.getCodigoMedico(jComboBox3.getSelectedItem().toString());
     }
-
+    
     public int getCodigoUsuario() {
         return codigoUser;
     }
-
+    
     public int getCodigoUtente() {
         return controllerBeneficiario.getCodigoUtente(jComboBox1.getSelectedItem().toString());
     }
-
+    
     public int getCodigoServico() {
         return controllerServico.getCodigoServico(jComboBox5.getSelectedItem().toString());
     }
-
+    
     public int getHora() {
         return (int) hora.getValue();
     }
-
+    
     public int getMinuto() {
         return (int) minuto.getValue();
     }
-
+    
     public int getSegundo() {
         return (int) segundos.getValue();
     }
-
+    
     public Date getData() {
         return d.converteDataSql(jDateChooser1.getDate());
     }
-
+    
     public Date getData1() {
         return d.converteDataSql(jDateChooser2.getDate());
     }
-
+    
     public String getDataActual() {
         Calendar calendario = Calendar.getInstance();
 
@@ -1543,41 +1608,41 @@ public class Recepcao extends javax.swing.JFrame {
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
         int mes = calendario.get(Calendar.MONTH);
         int ano = calendario.get(Calendar.YEAR);
-
+        
         int h = calendario.get(Calendar.HOUR_OF_DAY);
         int m = calendario.get(Calendar.MINUTE);
         int s = calendario.get(Calendar.SECOND);
-
+        
         String data = ano + "-" + (mes + 1) + "-" + dia + " " + h + ":" + m + ":" + s;
         //String data = ano + "-" + (mes + 1) + "-" + dia;
 
         return data;
     }
-
+    
     public String getHoraConsulta() {
         Time t = new Time(getHora(), getMinuto(), getSegundo());
         return t.toString();
     }
-
+    
     public boolean horaConsultaValida() {
         Date datConsulta = jDateChooser1.getDate();
         Date dataActual = new Date();
         datConsulta.setHours(getHora());
         datConsulta.setMinutes(getMinuto());
-
+        
         if (datConsulta.compareTo(dataActual) >= 0) {
             return true;
         }
         return false;
     }
-
+    
     public boolean limiteAtingido() {
         if (controllerMarcarcaoConsulta.getLimiteDiario(getCodigoMedico()) <= controllerMarcarcaoConsulta.getTotalConsultasAgendadasPorMedico(getCodigoMedico(), getDataConsulta())) {
             return true;
         }
         return false;
     }
-
+    
     public void salvarMarcar() {
         marcacaoConsulta.setCodigoUtlizador(codigoUser);
         marcacaoConsulta.setCodigoMedico(getCodigoMedico());
@@ -1633,9 +1698,9 @@ public class Recepcao extends javax.swing.JFrame {
             marcacaoConsulta.setPreco(anst);
             controllerMarcarcaoConsulta.salvar(marcacaoConsulta);
         }
-
+        
     }
-
+    
     public final void mostrarPaciente(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -1667,7 +1732,7 @@ public class Recepcao extends javax.swing.JFrame {
         } catch (Exception ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
 
     /**
@@ -1684,21 +1749,21 @@ public class Recepcao extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Recepcao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(Recepcao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(Recepcao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Recepcao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -1775,6 +1840,7 @@ public class Recepcao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1807,6 +1873,7 @@ public class Recepcao extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
@@ -1825,7 +1892,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jComboBox8.requestFocus();
                 }
             }
-
+            
         });
         jComboBox8.addKeyListener(
                 new KeyAdapter() {
@@ -1834,7 +1901,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jComboBox6.requestFocus();
                 }
             }
-
+            
         });
         jComboBox6.addKeyListener(
                 new KeyAdapter() {
@@ -1843,7 +1910,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jComboBox4.requestFocus();
                 }
             }
-
+            
         });
         jComboBox4.addKeyListener(
                 new KeyAdapter() {
@@ -1852,7 +1919,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField9.requestFocus();
                 }
             }
-
+            
         });
         jTextField9.addKeyListener(
                 new KeyAdapter() {
@@ -1861,7 +1928,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField4.requestFocus();
                 }
             }
-
+            
         });
         jTextField4.addKeyListener(
                 new KeyAdapter() {
@@ -1870,7 +1937,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField10.requestFocus();
                 }
             }
-
+            
         });
         jTextField10.addKeyListener(
                 new KeyAdapter() {
@@ -1879,7 +1946,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField12.requestFocus();
                 }
             }
-
+            
         });
         jTextField12.addKeyListener(
                 new KeyAdapter() {
@@ -1888,7 +1955,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jFormattedTextField1.requestFocus();
                 }
             }
-
+            
         });
         jFormattedTextField1.addKeyListener(
                 new KeyAdapter() {
@@ -1897,7 +1964,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField15.requestFocus();
                 }
             }
-
+            
         });
         jTextField15.addKeyListener(
                 new KeyAdapter() {
@@ -1906,7 +1973,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField6.requestFocus();
                 }
             }
-
+            
         });
         jTextField6.addKeyListener(
                 new KeyAdapter() {
@@ -1915,7 +1982,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField1.requestFocus();
                 }
             }
-
+            
         });
         jTextField1.addKeyListener(
                 new KeyAdapter() {
@@ -1924,7 +1991,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jComboBox2.requestFocus();
                 }
             }
-
+            
         });
     }
 }

@@ -18,6 +18,7 @@ import CLINICA.relatorios.RelatorioUtilizador;
 import GestaoStock.views.Login;
 import java.awt.Image;
 import java.awt.Toolkit;
+import static java.lang.System.exit;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -430,7 +431,7 @@ public class HomeEcografia extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        System.exit(0);
+        exit(0);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

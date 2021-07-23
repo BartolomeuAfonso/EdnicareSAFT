@@ -198,7 +198,7 @@ public class Login extends javax.swing.JFrame {
             if (controllerUsuario.login(jTextField1.getText(), jPasswordField1.getText())) {
                 String dataCadastro = controllerUsuario.getDataCadastro(jTextField1.getText());
                 if (getData().equalsIgnoreCase(dataCadastro)) {
-                    int resposta = JOptionPane.showConfirmDialog(null, "Benvindo ao Ednicare,por favor reset a senha?", "Atenção", JOptionPane.YES_NO_OPTION);
+                    int resposta = JOptionPane.showConfirmDialog(null, "Benvindo ao Ednicare,por favor resetar a senha?", "Atenção", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
                         try {
                             new ResetUtilizador(1,jTextField1.getText()).setVisible(true);

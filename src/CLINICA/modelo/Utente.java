@@ -28,6 +28,7 @@ public class Utente {
     private String estado_civil;
     private String naturalidade;
     private String BI;
+    private String nif;
     private int empresa;
     private String apn;
     private String tomadorSegurado;
@@ -86,7 +87,7 @@ public class Utente {
 
     }
 
-    public Utente(String nomeCompleto, String nomePai, String nomeMae, String telefone, String contacto, String BI, String tomador, String apn, String morada, Date dataNascimento) {
+    public Utente(String nomeCompleto, String nomePai, String nomeMae, String telefone, String contacto, String BI, String tomador, String apn, String morada, Date dataNascimento, String email) {
         this.nomeCompleto = nomeCompleto;
         this.nomePai = nomePai;
         this.nomeMae = nomeMae;
@@ -97,6 +98,7 @@ public class Utente {
         this.apn = apn;
         this.morada = morada;
         this.dataNascimento = dataNascimento;
+        this.email = email;
 
     }
 
@@ -258,6 +260,22 @@ public class Utente {
 
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getNif() {
+        return nif;
+    }
+
+    public void setNif(String nif) {
+        this.nif = nif;
     }
 
 }

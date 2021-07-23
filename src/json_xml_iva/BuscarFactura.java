@@ -233,28 +233,20 @@ public class BuscarFactura {
                 CustomerIten modelo = new CustomerIten();
                 CustomerIten.Customer ci = new CustomerIten().getCustomer();
                 ci.setCustomerID(String.valueOf(rs.getInt("c.idPaciente")));
-                String custormerTaxID = rs.getString("c.Nif");
+                String custormerTaxID = rs.getString("c.nif");
 
-                if (custormerTaxID != null) {
-                    custormerTaxID = custormerTaxID.trim();
-                    if (!custormerTaxID.equals("")
-                            && !custormerTaxID.equals("999999999")) {
-                        ci.setCustomerTaxID(custormerTaxID);
-                        ci.getBillingAddress().setAddressDetail(rs.getString("c.Morada"));
-                        //  ci.setCustomerTaxID(custormerTaxID);
-                    } else {
-                        ci.setCustomerTaxID("999999999");
-                        ci.getBillingAddress().setAddressDetail(rs.getString("c.Morada"));
-                    }
-                } else {
+                if (custormerTaxID.equals("Consumidor Final")) {
                     ci.setCustomerTaxID("999999999");
                     ci.getBillingAddress().setAddressDetail(rs.getString("c.Morada"));
-
+//                    }
+                } else {
+                    ci.setCustomerTaxID(custormerTaxID);
+                    ci.getBillingAddress().setAddressDetail(rs.getString("c.Morada"));
                 }
 
                 ci.setCompanyName(rs.getString("c.nomeCompleto"));
 
-                if (ci.getCompanyName().trim().equalsIgnoreCase("DIVERSOS")) {
+                if (ci.getCompanyName().trim().equalsIgnoreCase("Diversos")) {
 
                     ci.setCompanyName("Consumidor final");
                 }
@@ -339,38 +331,14 @@ public class BuscarFactura {
         return false;
     }
 
-    /*    public List<ProdutItem> listaProdutosVendidos(String data1, String data2) {
 
-        String sql = "select Distinct  p.Id, p.Designacao "
-                + "from facturaitem fi, produto p,factura f "
-                + "where (p.Id = fi.IdProduto) and (date(f.Data) between '" + data1 + "' and '" + data2 + "')";
-
-        List<ProdutItem> pitem = new ArrayList<>();
-        try {
-            con = conFactory.open();
-            command = con.prepareCall(sql);
-            query = command.executeQuery();
-
-            while (query.next()) {
-
-                ProdutItem.Product produto = new ProdutItem().getProduct();
-                produto.setProductCode(String.valueOf(query.getInt("p.Id")));
-                produto.setProductDescription(query.getString("p.Designacao"));
-                ProdutItem modelo = new ProdutItem();
-                modelo.setProduct(produto);
-                pitem.add(modelo);
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return pitem;
-    }*/
     public double getTotalCredit(String data, String data1) {
 
-        String sql = "select sum(subTotal) as total from factura where (estado<>'FACTURA PROFORMA' AND estado<>'FACTURA ANULADA')\n"
-                + "AND date(dataFactura) between '" + data + "' and '" + data1 + "'";
+//        String sql = "SELECT sum(valorApagar) as total from factura where (estado<>'FACTURA PROFORMA' AND estado<>'FACTURA ANULADA')\n"
+//                + "AND date(dataFactura) between '" + data + "' and '" + data1 + "'";
+        String sql = "SELECT SUM(f1.preco) as total from factura f INNER JOIN factura_itens f1 ON f.idfactura = f1.codigoFactura\n"
+                + "WHERE (f.estado<>'FACTURA PROFORMA' AND f.estado<>'FACTURA ANULADA')\n"
+                + "AND DATE(f.dataFactura) between '" + data + "' and '" + data1 + "'";
         System.out.println("Total Crédito:" + sql);
         double valor = 0;
         try {
@@ -409,8 +377,9 @@ public class BuscarFactura {
 
     public double getTotalCreditRecibo(String data, String data1) {
 
-        String sql = "select sum(subTotal) as total from factura where  (estado='FACTURA CRÉDITO')\n"
-                + "AND date(dataFactura) between '" + data + "' and '" + data1 + "' AND Guia=1";
+        String sql = "SELECT SUM(f1.preco) as total from factura f INNER JOIN factura_itens f1 ON f.idfactura = f1.codigoFactura\n"
+                + "WHERE (f.estado='FACTURA CRÉDITO') AND DATE(f.dataFactura) between '" + data + "' and '" + data1 + "' AND Guia=1";
+        System.out.println("Total de Crédito de Recibo:" + sql);
         double valor = 0;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -477,7 +446,7 @@ public class BuscarFactura {
         for (Invoices invoicese : getNotasDeCreditoGerais(data, data1)) {
             invoiceses.add(invoicese);
         }
-  
+
         return invoiceses;
     }
 
@@ -567,11 +536,11 @@ public class BuscarFactura {
                 factura.setTotalFactura(miController.getTotalCredit(codigoNC));
                 factura.setDescontoIVA(miController.getTotalCreditoIva(codigoNC));
                 factura.setSubtotal(miController.getTotalCredit(codigoNC) - miController.getTotalCreditoIva(codigoNC));
-               factura.setDescontoFactura(miController.getSubTotalDescontoMovimento(codigoNC));
+                factura.setDescontoFactura(miController.getSubTotalDescontoMovimento(codigoNC));
                 factura.setCodigoCliente(rs.getInt("f.codigoCliente"));
                 ControllerNotas mController = new ControllerNotas(con);
                 Notacredito modelo = mController.getNotaByCodigo(codigoNC);
-              String dataFactura = rs.getString("f.dataFactura").substring(0, 10);
+                String dataFactura = rs.getString("f.dataFactura").substring(0, 10);
                 String dataNotaCredito = rs.getString("f.dataFactura").substring(0, 10);
 
                 Invoice element = new Invoice();
@@ -623,11 +592,11 @@ public class BuscarFactura {
 
                 str = getValorCasaDecimal(df.format(rs.getDouble("f.subTotal")), ".");
                 element.getDocumentTotals().setNetTotal(str.replace(',', '.'));
-               
+
                 String grossTotal = getValorCasaDecimal(df.format(rs.getDouble("f.valorApagar")), ".");
                 element.getDocumentTotals().setGrossTotal(grossTotal.replace(',', '.'));
                 str = getValorCasaDecimal(df.format(rs.getDouble("f.valorApagar")), ".");
-                
+
                 List<LineItensWithholding.WithholdingTax> listaWithholdingTax = new ArrayList<>();
                 element.setWithholdingTax(listaWithholdingTax);
 
@@ -950,23 +919,23 @@ public class BuscarFactura {
                 element.setSourceID(factura.getCodigoUtilizador() + "");
 
                 String workDate = vet[0];
-
-                Double[] valores = getValores(codigoFatura, dataFactura);
-
-                double novoPreco = 0;
-                double novoSubTotal = 0;
-                if (valores.length > 0) {
-
-                    novoPreco = (valores[0] - valores[1]) / valores[2];
-                    novoSubTotal = novoPreco * valores[2];
-
-                }
-
-                str = getValorCasaDecimal(df.format(novoSubTotal), ".");
+//
+//                Double[] valores = getValores(codigoFatura, dataFactura);
+//
+//                double novoPreco = 0;
+//                double novoSubTotal = 0;
+//                if (valores.length > 0) {
+//
+//                    novoPreco = (valores[0] - valores[1]) / valores[2];
+//                    novoSubTotal = novoPreco * valores[2];
+//
+//                }
+                System.out.println("Antes:" + factura.getValorApagar());
+                str = getValorCasaDecimal(df.format(getxtNet(codigoFatura)), ".");
+                System.out.println("Depois Nect:" + str);
                 element.getDocumentTotals().setNetTotal(str.replace(',', '.'));
 
-                str = getValorCasaDecimal(df.format(factura.getValorApagar()), ".");
-//                str = getValorCasaDecimal(df.format(factura.getTotalApagar() + factura.getrV()), ".");
+                str = getValorCasaDecimal(df.format(getGrossTotal(codigoFatura)), ".");
                 //str = getValorCasaDecimal(df.format(factura.getValorAPagar() + factura.getDesconto() + fiController.getTotalDescontoItem(codigoFatura) + factura.getrV()), ".");
                 element.getDocumentTotals().setGrossTotal(str.replace(',', '.'));
 
@@ -1091,11 +1060,6 @@ public class BuscarFactura {
 
                 LineItensPayment.LineItem item = new LineItensPayment().getLine();
                 item.setLineNumber(cont.toString());
-//                item.setProductCode(rs.getString("p.idServico"));
-                //  item.setDebitAmount(rs.getString("p.designacao"));
-//                item.setDescription(rs.getString("p.designacao"));
-//                item.setQuantity(df.format(rs.getDouble("f.quantidade")).replace(',', '.'));
-//                item.setUnitOfMeasure("*");
                 double total2 = rs.getDouble("f.preco");
                 double desconto = rs.getDouble("f.DescontoProduto");
                 double imposto = rs.getDouble("f.descontoIVA");
@@ -1105,13 +1069,10 @@ public class BuscarFactura {
 
                 double novoPreco = (total - imposto) / qtd;
                 double novoSubTotal = novoPreco * qtd;
-
-//                item.setUnitPrice(getValorCasaDecimal(df.format(total), ".").replace(',', '.'));
-//                item.setTaxPointDate(dataFactura);
                 item.getSourceDocumentID().setOriginatingON("" + rs.getString("f1.nRef"));
                 item.getSourceDocumentID().setInvoiceDate(dataFactura);
-                //List<LineItensReferences.References> listaReferences = new ArrayList<>();
-                item.setCreditAmount(getValorCasaDecimal(df.format(total), ".").replace(',', '.'));
+                item.setCreditAmount("" + total2*qtd);
+              //  item.setCreditAmount(getValorCasaDecimal(df.format(total2), ".").replace(',', '.'));
 
                 //item.setReferences(listaReferences);
                 totalCredito += Double.parseDouble(getValorCasaDecimal(df.format(novoSubTotal), ".").replace(',', '.'));
@@ -1345,6 +1306,23 @@ public class BuscarFactura {
         return null;
     }
 
+    public String getTipoFactura(int codigo) {
+        String sql = "SELECT LEFt(nRef,2) as InvoiceType FROM factura f WHERE f.idfactura=" + codigo;
+        System.out.println("Tipo de Factura:" + sql);
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("InvoiceType");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+
+        }
+        return null;
+    }
+
     public List<LineItens> getItemFatura(int codigoFatura, String dataFactura, Connection con) {
         String sql = "SELECT f.*, p.* FROM factura_itens f join servicos p on p.idServico = f.codigoProduto\n"
                 + "where f.codigoFactura=" + codigoFatura;
@@ -1368,7 +1346,7 @@ public class BuscarFactura {
                 item.setQuantity(df.format(rs.getDouble("f.quantidade")).replace(',', '.'));
                 item.setUnitOfMeasure("*");
                 item.setDescription(rs.getString("p.designacao"));
-                
+
                 //  item.setUnitOfMeasure(rs1.getString("unidadeMedida"));
                 //double total = rs.getDouble("f.preco") - rs.getDouble("f.DescontoProduto");
                 double total2 = rs.getDouble("f.preco");
@@ -1457,6 +1435,7 @@ public class BuscarFactura {
                 factura.setCodigoUtilizador(rs.getInt("codigoUtilizador"));
                 factura.setCodigoCliente(rs.getInt("codigoCliente"));
                 factura.setNextFactura("0");
+                factura.setGrossTotal(rs.getDouble("subTotal"));
                 factura.setCodigoFormaPagamento(rs.getInt("codigoFormaPagamento"));
                 return factura;
             }
@@ -1510,11 +1489,13 @@ public class BuscarFactura {
                 element.setPeriod(mes < 9 ? vet2[1].substring(1) : vet2[1]);
 //                element.setInvoiceNo(OrganizarRefFactura.saft(organiza.trim()));
                 //  Factura factura = new Factura();
-                if (tipoFactura.equals("FACTURA PRONTO")) {
-                    element.setInvoiceType("FR");
-                } else {
-                    element.setInvoiceType("FR");
-                }
+                String tipo = getTipoFactura(codigoFatura);
+                element.setInvoiceType(tipo);
+//                if (tipoFactura.equals("FACTURA PRONTO")) {
+//                    element.setInvoiceType("FR");
+//                } else {
+//                   
+//                }
                 element.setLineItens(getItemFatura(codigoFatura, dataFactura, con));
                 Factura factura = findFacturaByFactura(codigoFatura, con);
                 DecimalFormat df = new DecimalFormat("#,##0.00#", new DecimalFormatSymbols(new Locale("pt", "BR")));
@@ -1528,13 +1509,15 @@ public class BuscarFactura {
                 element.getDocumentStatus().setInvoiceStatusDate(vet[0] + "T" + vet[1]);
                 element.getDocumentStatus().setSourceID(factura.getCodigoUtilizador() + "");
                 element.setSourceID(factura.getCodigoUtilizador() + "");
+                System.out.println("Antes:" + factura.getValorApagar());
 
-                str = getValorCasaDecimal(df.format(factura.getValorApagar() - (factura.getDescontoFactura() + factura.getDescontoIVA())), ".");
-                element.getDocumentTotals().setNetTotal(str.replace(',', '.'));
+                String nexTotal = getValorCasaDecimal(df.format(getxtNet(codigoFatura)), ".");
+                System.out.println("Depois Nect:" + str);
+                element.getDocumentTotals().setNetTotal(nexTotal.replace(',', '.'));
 
-                str = getValorCasaDecimal(df.format(factura.getValorApagar()), ".");
+                String GrossTotal = getValorCasaDecimal(df.format(getGrossTotal(codigoFatura)), ".");
                 //str = getValorCasaDecimal(df.format(factura.getValorAPagar() + factura.getDesconto() + fiController.getTotalDescontoItem(codigoFatura) + factura.getrV()), ".");
-                element.getDocumentTotals().setGrossTotal(str.replace(',', '.'));
+                element.getDocumentTotals().setGrossTotal(GrossTotal.replace(',', '.'));
 
                 str = getValorCasaDecimal(df.format(factura.getValorApagar()), ".");
                 //   element.getDocumentTotals().getPayment().setPaymentAmount(str.replace(',', '.'));
@@ -1570,6 +1553,38 @@ public class BuscarFactura {
         }
 
         return null;
+    }
+
+    public double getxtNet(int id) {
+        String sql = "SELECT sum(preco) as getNtextTotal FROM factura_itens where codigoFactura=" + id;
+        try {
+            System.out.println(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                return rs.getDouble("getNtextTotal");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
+    public double getGrossTotal(int id) {
+        String sql = "SELECT sum(preco+descontoIVA) as  getGrossTotal FROM factura_itens where codigoFactura=" + id;
+        try {
+            System.out.println(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                return rs.getDouble("getGrossTotal");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
 
     ////////// Notas de CreditoItens

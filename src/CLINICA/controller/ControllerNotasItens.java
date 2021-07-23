@@ -105,6 +105,7 @@ public class ControllerNotasItens {
                 + "inner join tipotaxa t on t.codigo = p.codigoTipoTaxa\n"
                 + "inner join motivo m on t.codigoMotivo= m.codigo where idNota=" + codigo;
 
+        System.out.println("Nota de Créditos Itens:" + sql);
         ArrayList<LineItens> lista = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -130,7 +131,8 @@ public class ControllerNotasItens {
                 if (!Objects.equals(descricao, null) && !Objects.equals(descricao, "")) {
                     item.setDescription(descricao);
                 }
-                item.setDebitAmount(getValorCasaDecimal(df.format(rs.getDouble("preco")), ".").replace(',', '.'));
+                item.setDebitAmount(rs.getString("preco"));
+                //item.setDebitAmount(getValorCasaDecimal(df.format(rs.getDouble("preco")), ".").replace(',', '.'));
                 System.out.println("Subtotal:" + rs.getDouble("subtotal"));
                 int codigoTaxa = rs.getInt("codigoTipoTaxa");
                 int taxa = rs.getInt("taxa");
@@ -158,7 +160,7 @@ public class ControllerNotasItens {
                     }
 
                 }
-                item.setCreditAmount("0.00");
+                //item.setCreditAmount("0.00");
                 LineItens linha = new LineItens();
                 item.setSettlementAmount("0");
                 linha.setLine(item);

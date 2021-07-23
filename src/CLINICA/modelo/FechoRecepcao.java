@@ -12,7 +12,7 @@ package CLINICA.modelo;
 public class FechoRecepcao {
 
     int idfechoConta;
-    private double valorMedico, valorEcografia, valorLaboratorio, valorRaiox, valorInternamento, valorOutros;
+    private double valorMedico,valorConsulta, valorEcografia, valorLaboratorio, valorRaiox, valorInternamento, valorOutros;
     String data;
     double valorTotal;
 
@@ -99,6 +99,13 @@ public class FechoRecepcao {
     public void setValorOutros(double valorOutros) {
         this.valorOutros = valorOutros;
     }
-    
 
+    public double getValorConsulta() {
+        return valorConsulta;
+    }
+
+    public void setValorConsulta(double valorConsulta) {
+        this.valorConsulta = valorConsulta;
+    }
+   
 }

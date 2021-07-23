@@ -6,11 +6,18 @@
 package CLINICA.view;
 
 import CLINICA.controller.ControllerCids;
+import CLINICA.controller.ControllerHistoricoClinico;
+import CLINICA.controller.ControllerMedico;
+import CLINICA.controller.ControllerServico;
+import CLINICA.controller.ControllerTriagem;
+import CLINICA.controller.ControllerUtente;
+import CLINICA.modelo.HistorialClinico;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.sql.Connection;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,13 +30,29 @@ public class frameCardiologia extends javax.swing.JFrame {
      */
     ControllerCids controllerCids;
     Connection con;
+    ControllerMedico controllerMedico;
+    ControllerUtente controllerBeneficiario;
+    ControllerTriagem controllerTriagem;
+    ControllerServico controllerServico;
+    HistorialClinico historialClinico = new HistorialClinico();
+    ControllerHistoricoClinico controllerHistoricoClinico;
+    String NomeMedico;
 
-    public frameCardiologia() {
+    public frameCardiologia(int codigoPaciente, String nome, int codigoTriagem, String codigoMedico) {
         initComponents();
-        setLocationRelativeTo(null);
         controllerCids = new ControllerCids(con);
+        controllerMedico = new ControllerMedico(con);
+        controllerBeneficiario = new ControllerUtente(con);
+        controllerTriagem = new ControllerTriagem(con);
+        controllerHistoricoClinico = new ControllerHistoricoClinico(con);
         jComboBox1.setModel(new DefaultComboBoxModel(controllerCids.getNomeCids().toArray()));
+        int idade = controllerBeneficiario.getIdade(nome);
+        this.NomeMedico = codigoMedico;
+        jLabel2.setText(nome);
+        jLabel3.setText("Idade: " + idade + " Anos");
         iconeSistema();
+        setLocationRelativeTo(null);
+
     }
 
     public final void iconeSistema() {
@@ -50,6 +73,8 @@ public class frameCardiologia extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
@@ -78,6 +103,9 @@ public class frameCardiologia extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("PRONTUÁRIO DO(A) PACIENTE");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 51, 51));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -85,12 +113,22 @@ public class frameCardiologia extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 100, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(153, 204, 255));
@@ -306,12 +344,103 @@ public class frameCardiologia extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      
+        salvarHistoricoPaciente();
+        controllerTriagem.actualizarStatusTriagem(getCodigoTriagem());
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public int getCodigoTriagem() {
+        int codigo = controllerBeneficiario.getCodigoUtente(jLabel2.getText());
+        return controllerTriagem.getLastCodigoByPaciente(codigo);
+
+    }
+
+    public int getCodigoCids() {
+        return controllerCids.getCodigoCids(jComboBox1.getSelectedItem().toString());
+    }
+
+    public int getCodigoPaciente() {
+        return controllerBeneficiario.getCodigoUtente(jLabel2.getText());
+    }
+
+    public String getQueixa() {
+        return rTextArea6.getText();
+    }
+
+    public String getDiagnostico() {
+        return rTextArea4.getText();
+    }
+
+    public int getCodigoHistorico() {
+        return controllerHistoricoClinico.getLastCodigobyHystorico(getCodigoTriagem(), getCodigoPaciente());
+    }
+
+    public int getCodigoMedico() {
+        return controllerMedico.getCodigoMedicoUsername(NomeMedico);
+    }
+
+    public String getExames() {
+        return rTextArea3.getText();
+    }
+
+    public String getDoenca() {
+        return rTextArea5.getText();
+    }
+
+    public void salvarHistoricoPaciente() {
+        int codigoDoenca = 1; //controllerHistoricoClinico.getCodigoDoenca(getCodigoPaciente());
+        historialClinico.setCodigoCids(getCodigoCids());
+        historialClinico.setCodigoMedico(getCodigoMedico());
+        historialClinico.setCodigoPaciente(getCodigoPaciente());
+        historialClinico.setCodigoconsulta(getCodigoTriagem());
+        historialClinico.setExameFisico(getExames());
+        historialClinico.setHistorialDoenca(getDoenca());
+        historialClinico.setHipoteseDiagnostico(getDiagnostico());
+        historialClinico.setQueixaPrincipal(getQueixa());
+        //    historialClinico.set
+        historialClinico.setApf(rTextArea2.getText());
+        historialClinico.setCodigoDoenca(codigoDoenca);
+//        historialClinico.setCabeca(getCabeca());
+//        historialClinico.setPescoco(getPescoco());
+//        historialClinico.setTorax(getTorax());
+//        historialClinico.setAbdomem(getAbdomem());
+//        historialClinico.setOrgaogenital(getOrgaogenital());
+//        historialClinico.setMembroinferior(getMembros());
+        controllerHistoricoClinico.salvar(historialClinico);
+
+    }
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       
+        int codigoClinico = 1;
+        if (!jLabel2.getText().equals("")) {
+            editarHistoricoPaciente(codigoClinico);
+            limpar();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Verificar se todos os campos estão devidamente preenchido!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void limpar() {
+        rTextArea6.setText("");
+        rTextArea5.setText("");
+        rTextArea3.setText("");
+        rTextArea4.setText("");
+        rTextArea2.setText("");
+     
+
+    }
+
+    public void editarHistoricoPaciente(int codigo) {
+        //int codigoDoenca = controllerHistoricoClinico.getCodigoDoenca(getCodigoPaciente());
+        historialClinico.setExameFisico(getExames());
+        historialClinico.setHistorialDoenca(getDoenca());
+        historialClinico.setHipoteseDiagnostico(getDiagnostico());
+        historialClinico.setQueixaPrincipal(getQueixa());
+        historialClinico.setApf(rTextArea2.getText());
+        controllerHistoricoClinico.editar(historialClinico, codigo);
+
+    }
 
     /**
      * @param args the command line arguments
@@ -342,11 +471,11 @@ public class frameCardiologia extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frameCardiologia().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new frameCardiologia().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -354,7 +483,9 @@ public class frameCardiologia extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

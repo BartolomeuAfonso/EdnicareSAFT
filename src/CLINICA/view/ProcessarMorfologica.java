@@ -35,6 +35,7 @@ public class ProcessarMorfologica extends javax.swing.JFrame {
     int codigoUser;
     RelatorioEcografia ecografia = new RelatorioEcografia();
     String codigoPedido;
+    int codigoProduto;
 
     public ProcessarMorfologica(String nome, int idade, String ecografia, int codigoEcografia, String codigo) {
         initComponents();
@@ -42,6 +43,7 @@ public class ProcessarMorfologica extends javax.swing.JFrame {
         jLabel2.setText(nome);
         jLabel1.setText(String.valueOf(idade) + "Anos");
         jLabel3.setText(ecografia);
+        this.codigoProduto = codigoEcografia;
         controllerEcografia = new ControllerEcografia(con);
         controllerResultadoRaioX = new ControllerResultadoRaioX(con);
         controllerUtente = new ControllerUtente(con);
@@ -419,7 +421,7 @@ public class ProcessarMorfologica extends javax.swing.JFrame {
         int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor reler com atenção antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
         if (resposta == JOptionPane.YES_OPTION) {
             salvar();
-            controllerEcografia.alter(codigoPedido);
+            controllerEcografia.alter(codigoProduto,codigoPedido);
             int codigoRaixo = controllerEcografia.getLastFactura();
             ecografia.getEcografiaMorfologica(codigoRaixo);
         }

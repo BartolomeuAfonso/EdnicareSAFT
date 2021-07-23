@@ -1755,6 +1755,7 @@
                           <Properties>
                             <Property name="columns" type="int" value="20"/>
                             <Property name="rows" type="int" value="5"/>
+                            <Property name="autoscrolls" type="boolean" value="false"/>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                                 <TitledBorder title="3. Tor&#xe1;x">
@@ -1765,6 +1766,10 @@
                                 </TitledBorder>
                               </Border>
                             </Property>
+                            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                              <Color id="Text Cursor"/>
+                            </Property>
+                            <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
                           </Properties>
                         </Component>
                       </SubComponents>
