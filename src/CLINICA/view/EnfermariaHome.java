@@ -98,7 +98,6 @@ public class EnfermariaHome extends javax.swing.JFrame {
         controllerServico = new ControllerServico(con);
         controllerBeneficiario = new ControllerUtente(con);
         teclaInser();
-//        jDateChooser1.setDate(new Date());
         ls = new DefaultListModel();
         getPacienteEmEspera();
         mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
@@ -107,7 +106,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
                 + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
                 + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
                 + "inner join medicos me on m.codigoMedico=me.idMedico\n"
-                + "where m.dataAtendimento =current_date and m.Atendido='Nao'\n"
+                + "where date(f.dataFactura) =current_date and f.Triagem='Nao'\n"
                 + "AND s.codigoCategoria=1");
         setLocationRelativeTo(null);
 //       
@@ -712,22 +711,19 @@ public class EnfermariaHome extends javax.swing.JFrame {
             if (flag == 1) {
 
                 SalvarTriagem();
-                limparTriagem();
                 controllerTriagem.actualizarStatus(getCodigoPaciente());
                 controllerMarcarcaoConsulta.actualizarStatusMarcacao(getCodigoPaciente(), getData());
                 JOptionPane.showMessageDialog(null, "Triagem feita com Sucesso");
-//                int codigo = controllerTriagem.getLastCodigo();
-//                relatorioHistoricoClinico.getTriagem(codigo);
                 limparPaciente();
-                // thread(TEMPO);
-               mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
-                + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
-                + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
-                + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
-                + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
-                + "where m.dataAtendimento=current_date and Atendido='Nao'\n"
-                + "AND s.codigoCategoria=1");
+                limparTriagem();
+                mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
+                        + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
+                        + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
+                        + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
+                        + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
+                        + "inner join medicos me on m.codigoMedico=me.idMedico\n"
+                        + "where date(f.dataFactura)=current_date and f.Triagem='Nao'\n"
+                        + "AND s.codigoCategoria=1");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Verfica os campos obrigatórios - Vermelhos");
@@ -753,25 +749,25 @@ public class EnfermariaHome extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jLabel28MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MouseClicked
-        mostraMedico("SELECT distinct p.nomecompleto,me.nomecompleto,s.designacao, e.designacao FROM marcacaoconsulta m\n"
-                + "inner join pacientes p on m.codigoPAciente = p.idPaciente\n"
-                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
-                + "inner join especialidade_medico ep on ep.idEspecialidade =me.codigoEspecialidade\n"
-                + "inner join servicos s on m.codigoServico = s.idServico\n"
+        mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
+                + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
+                + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
+                + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
                 + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                + "where m.dataAtendimento=current_date and Atendido='Nao'\n"
-                + "AND ep.idEspecialidade < 14 OR ep.idEspecialidade > 15");
+                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
+                + "where date(f.dataFactura) =current_date and Atendido='Nao'\n"
+                + "AND s.codigoCategoria=1");
     }//GEN-LAST:event_jLabel28MouseClicked
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        mostraMedico("SELECT distinct p.nomecompleto,me.nomecompleto,s.designacao, e.designacao FROM marcacaoconsulta m\n"
-                + "inner join pacientes p on m.codigoPAciente = p.idPaciente\n"
-                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
-                + "inner join especialidade_medico ep on ep.idEspecialidade =me.codigoEspecialidade\n"
-                + "inner join servicos s on m.codigoServico = s.idServico\n"
+        mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
+                + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
+                + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
+                + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
                 + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                + "where m.dataAtendimento=current_date and Atendido='Nao'\n"
-                + "AND ep.idEspecialidade < 14 OR ep.idEspecialidade > 15");
+                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
+                + "where date(f.dataFactura) =current_date and Atendido='Nao'\n"
+                + "AND s.codigoCategoria=1");
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed

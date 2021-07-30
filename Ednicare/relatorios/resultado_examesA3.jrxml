@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resultado_exames4" pageWidth="421" pageHeight="595" columnWidth="361" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="490f4422-1402-4b71-8c5b-e2489e061237">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="NOME" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="DATA1" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="DATA2" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="STATUS" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO_PRODUTO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="CODIGO_EXAME_ITEM" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="CODIGO_EXAME" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="CODIGO_PACIENTE" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     upper(clientes.`Nome`) AS clientes_Nome,
+     YEAR(CURDATE())-YEAR(clientes.`dataNascimento`) AS idade,
+     exames_a_fazer_items.`Resultado` AS exames_a_fazer_items_Resultado,
+     exames_a_fazer_items.`DataResultado` AS exames_a_fazer_items_DataResultado,
+     produtos.`Designacao` AS produtos_Designacao,
+     exames_a_fazer.`DataPedido` AS exames_a_fazer_DataPedido,
+     exames_a_fazer.`Codigo` AS exames_a_fazer_Codigo,
+     status_exames.`Designacao` AS status_exames_Designacao,
+     produtos.`DescricaoProduto` AS produtos_DescricaoProduto,
+     produtos.`CodigoProduto` AS produtos_CodigoProduto,
+     exames_a_fazer_items.`codigo` AS exames_a_fazer_items_codigo,
+     exames_a_fazer_items.`CodigoExame` AS exames_a_fazer_items_CodigoExame,
+     produtos.`Codigo` AS produtos_Codigo,
+     exames_a_fazer_items.`codigoProdutoItem` AS exames_a_fazer_items_codigoProdutoItem,
+     produtoitems.`referencia` AS produtoitems_referencia,
+     produtoitems.`unidade` AS produtoitems_unidade,
+     produtoitems.`designacao` AS produtoitems_designacao,
+     exames_a_fazer_items.`factor_rh` AS exames_a_fazer_items_factor_rh,
+     categoria_exames.`designacao` AS categoria_exames_designacao,
+     categoria_exames.`referencia` AS categoria_exames_referencia,
+     categoria_exames.`unidade` AS categoria_exames_unidade,
+     categoria_exames_items.`designacao` AS categoria_exames_items_designacao,
+     categoria_exames_items.`referencia` AS categoria_exames_items_referencia,
+     categoria_exames_items.`unidade` AS categoria_exames_items_unidade,
+     tipo_entidade.`Designacao` AS tipo_entidade_Designacao,
+     clientes.`Codigo` AS clientes_Codigo,
+     clientes.`Nome` AS clientes_Nome,
+     produtos.`codigoCategoriaExames` AS produtos_codigoCategoriaExames,
+     exames_a_fazer_items.`codigoPaciente` AS exames_a_fazer_items_codigoPaciente,
+     categoria_exames_items.`codigo` AS categoria_exames_items_codigo
+FROM
+     `exames_a_fazer` exames_a_fazer INNER JOIN `exames_a_fazer_items` exames_a_fazer_items ON exames_a_fazer.`Codigo` = exames_a_fazer_items.`CodigoExame`
+     INNER JOIN `factura` factura ON exames_a_fazer.`CodigoPagamento` = factura.`Codigo`
+     INNER JOIN `status_exames` status_exames ON exames_a_fazer.`CodigoStatus` = status_exames.`Codigo`
+     INNER JOIN `clientes` clientes ON factura.`CodigoClientes` = clientes.`Codigo`
+     INNER JOIN `tipo_entidade` tipo_entidade ON clientes.`CodigoEntidade` = tipo_entidade.`Codigo`
+     INNER JOIN `produtos` produtos ON exames_a_fazer_items.`CodigoProduto` = produtos.`Codigo`
+     INNER JOIN `produtoitems` produtoitems ON exames_a_fazer_items.`codigoProdutoItem` = produtoitems.`codigo`
+     AND produtos.`Codigo` = produtoitems.`codigoproduto`
+     INNER JOIN `categoria_exames_items` categoria_exames_items ON produtoitems.`codCatExamItems` = categoria_exames_items.`codigo`
+     INNER JOIN `categoria_exames` categoria_exames ON produtos.`codigoCategoriaExames` = categoria_exames.`codigo`,
+     `configuracoes` configuracoes
+WHERE
+     date(exames_a_fazer.`DataPedido`) BETWEEN $P{DATA1} AND $P{DATA2}
+ AND clientes.`codigo` = $P{CODIGO_PACIENTE}
+ AND exames_a_fazer_items.`CodigoStatusExame` = 3]]>
+	</queryString>
+	<field name="clientes_Nome" class="java.lang.String"/>
+	<field name="idade" class="java.lang.Long"/>
+	<field name="exames_a_fazer_items_Resultado" class="java.lang.String"/>
+	<field name="exames_a_fazer_items_DataResultado" class="java.sql.Date"/>
+	<field name="produtos_Designacao" class="java.lang.String"/>
+	<field name="exames_a_fazer_DataPedido" class="java.sql.Timestamp"/>
+	<field name="exames_a_fazer_Codigo" class="java.lang.Long"/>
+	<field name="configuracoes_nomeempresa" class="java.lang.String"/>
+	<field name="configuracoes_numcontribuinte" class="java.lang.String"/>
+	<field name="configuracoes_endereco" class="java.lang.String"/>
+	<field name="configuracoes_telefones" class="java.lang.String"/>
+	<field name="configuracoes_nomeimpressora" class="java.lang.String"/>
+	<field name="configuracoes_email" class="java.lang.String"/>
+	<field name="configuracoes_site" class="java.lang.String"/>
+	<field name="configuracoes_telemoveis" class="java.lang.String"/>
+	<field name="status_exames_Designacao" class="java.lang.String"/>
+	<field name="produtos_DescricaoProduto" class="java.lang.String"/>
+	<field name="produtos_CodigoProduto" class="java.lang.String"/>
+	<field name="exames_a_fazer_items_codigo" class="java.lang.Long"/>
+	<field name="exames_a_fazer_items_CodigoExame" class="java.lang.Long"/>
+	<field name="produtos_Codigo" class="java.lang.Long"/>
+	<field name="exames_a_fazer_items_codigoProdutoItem" class="java.lang.Long"/>
+	<field name="produtoitems_referencia" class="java.lang.String"/>
+	<field name="produtoitems_unidade" class="java.lang.String"/>
+	<field name="produtoitems_designacao" class="java.lang.String"/>
+	<field name="exames_a_fazer_items_factor_rh" class="java.lang.String"/>
+	<field name="categoria_exames_designacao" class="java.lang.String"/>
+	<field name="categoria_exames_referencia" class="java.lang.String"/>
+	<field name="categoria_exames_unidade" class="java.lang.String"/>
+	<field name="categoria_exames_items_designacao" class="java.lang.String"/>
+	<field name="categoria_exames_items_referencia" class="java.lang.String"/>
+	<field name="categoria_exames_items_unidade" class="java.lang.String"/>
+	<field name="tipo_entidade_Designacao" class="java.lang.String"/>
+	<field name="clientes_Codigo" class="java.lang.Long"/>
+	<field name="produtos_codigoCategoriaExames" class="java.lang.Integer"/>
+	<field name="exames_a_fazer_items_codigoPaciente" class="java.lang.Long"/>
+	<field name="categoria_exames_items_codigo" class="java.lang.Integer"/>
+	<group name="CODIGO_EXAME_DESIGNACAO" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{categoria_exames_designacao}]]></groupExpression>
+		<groupHeader>
+			<band height="14" splitType="Stretch"/>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="CODIGO_PRODUTO">
+		<groupExpression><![CDATA[$F{produtos_Codigo}]]></groupExpression>
+		<groupHeader>
+			<band height="30" splitType="Stretch">
+				<staticText>
+					<reportElement key="element-90" mode="Opaque" x="-1" y="13" width="180" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="d2414369-e4f4-4d94-a35c-449265567650"/>
+					<box leftPadding="2" rightPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Exames]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="element-92" mode="Opaque" x="277" y="13" width="84" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="556b4b85-871e-48de-92e3-edf1097037a1">
+						<printWhenExpression><![CDATA[new Boolean( !$F{produtoitems_referencia}.equals("") )]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2" rightPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Monotype Corsiva" size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Referência]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="element-93" mode="Opaque" x="179" y="13" width="97" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="4abb1d28-99b3-4862-97d8-d7590edc504e"/>
+					<box leftPadding="2" rightPadding="2">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.5" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Resultado]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement key="textField-15" x="0" y="0" width="361" height="13" forecolor="#000000" uuid="f38a803e-53e0-49f1-b9a3-f6e659c9554f"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Monotype Corsiva" size="9" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{produtos_Designacao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<group name="CATEGORIAS_EXAMES_ITEMS">
+		<groupExpression><![CDATA[$F{categoria_exames_items_designacao}]]></groupExpression>
+		<groupHeader>
+			<band height="13" splitType="Stretch">
+				<textField pattern="" isBlankWhenNull="false">
+					<reportElement key="textField-18" x="1" y="0" width="360" height="12" forecolor="#FF3333" uuid="4b83a736-4e9d-4481-9e57-983b6f970641"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Monotype Corsiva" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoria_exames_items_designacao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band splitType="Stretch"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="-1" y="0" width="117" height="45" uuid="2ae309de-f0f9-4230-a998-a66605abdc01"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="2" y="58" width="242" height="20" backcolor="#FFFFFF" uuid="f268c5a5-3e44-4d1e-b7dd-d1fcecadc87b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Exmo.SR(a):"+$F{clientes_Nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-9" x="2" y="46" width="242" height="12" uuid="7114e8b3-c865-4667-900a-a118e153ae60"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nª do Processo: "+$F{pacientes_idPaciente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField" x="1" y="78" width="243" height="12" uuid="e361b9ee-2998-4cbb-94c7-9d24593003fe"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Monotype Corsiva" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Empresa: "+$F{empresaseguros_designacao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="84" y="90" width="42" height="20" backcolor="#00CCFF" uuid="3fa5e151-c691-4840-b892-674e2431ab58"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Idade:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="126" y="90" width="67" height="20" backcolor="#00CCFF" uuid="1e3fac51-fd9c-4b8b-9504-98c6f635a196"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idade} + " anos"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="1" y="90" width="30" height="20" backcolor="#00CCFF" uuid="d22105af-4898-425c-ab69-f576ccb51262"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Data:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" mode="Opaque" x="31" y="90" width="53" height="20" backcolor="#00CCFF" uuid="9bc7a27e-e62a-4173-b475-457bb93efa0f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{exames_a_fazer_items_DataResultado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement key="textField-17" x="0" y="0" width="361" height="17" forecolor="#CC0000" uuid="835fdd94-9c69-42f5-95de-85e9fbca2c02"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categoria_exames_designacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-7" positionType="Float" x="0" y="-1" width="181" height="17" forecolor="#000000" uuid="8e81a4c7-2f20-46e9-97ef-7132cfc94b31"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtoitems_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-8" positionType="Float" x="278" y="-1" width="84" height="17" forecolor="#000000" uuid="35cdb039-c355-48e6-baa3-d659a4948bf4">
+					<printWhenExpression><![CDATA[new Boolean( !$F{produtoitems_referencia}.equals("") )]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{produtoitems_referencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-10" positionType="Float" x="180" y="-1" width="98" height="17" forecolor="#000000" uuid="d3058440-55ec-4de3-a1ce-504dd8ca7795"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{exames_a_fazer_items_Resultado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="60" splitType="Stretch">
+			<line>
+				<reportElement key="line" x="121" y="23" width="155" height="1" uuid="99c640f9-44aa-489f-8a53-b08b51f28fda"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="168" y="38" width="170" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="084dcf07-7ffc-472a-b3b4-0a9302046afd"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pág. " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="textField" x="339" y="38" width="21" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="8f51a8d9-78d3-44a9-82b0-0733dac53d94"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="1" y="3" width="359" height="13" uuid="c51a0ebe-f51b-46cf-83bf-3d175a9844df"/>
+				<textElement textAlignment="Center">
+					<font fontName="Monotype Corsiva" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O Técnico]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<break>
+				<reportElement key="element-309" x="0" y="26" width="361" height="1" uuid="8f2bc7c7-104a-445f-b040-82bbeaff2119"/>
+			</break>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" positionType="Float" x="0" y="0" width="361" height="26" uuid="fa34e3f5-db3a-4791-bd0d-923a6164948e"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO_EXAME_ITEM">
+					<subreportParameterExpression><![CDATA[$P{CODIGO_EXAME_ITEM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO_PRODUTO">
+					<subreportParameterExpression><![CDATA[$P{CODIGO_PRODUTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA2">
+					<subreportParameterExpression><![CDATA[$P{DATA2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATA1">
+					<subreportParameterExpression><![CDATA[$P{DATA1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO_PACIENTE">
+					<subreportParameterExpression><![CDATA[$P{CODIGO_PACIENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CODIGO_EXAME">
+					<subreportParameterExpression><![CDATA[$P{CODIGO_EXAME}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="STATUS">
+					<subreportParameterExpression><![CDATA[$P{STATUS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NOME">
+					<subreportParameterExpression><![CDATA[$P{NOME}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+ "resultado_exames3_subreport0.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

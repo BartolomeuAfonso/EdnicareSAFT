@@ -146,9 +146,9 @@ public class Recepcao extends javax.swing.JFrame {
             
         }
         // Comentar esse opção para clínicas excepto ao centro médico Octávio.
-        if (tipoUtilizador == 4) {
-            jRadioButton3.setVisible(false);
-        }
+//        if (tipoUtilizador == 4) {
+//            jRadioButton3.setVisible(false);
+//        }
         iconeSistema();
         teclaInser();
         
@@ -1475,7 +1475,8 @@ public class Recepcao extends javax.swing.JFrame {
     }
     
     public String getBI() {
-        if (!jTextField15.getText().isEmpty()) {
+        if (!jTextField15.getText().isEmpty() || jTextField15.getText().equalsIgnoreCase("999999999") ) {
+            jTextField15.setText("Consumidor Final");
             return jTextField15.getText();
         } else {
             jTextField15.setText("Consumidor Final");

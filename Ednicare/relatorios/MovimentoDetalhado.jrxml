@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportMovimentoDetalhado" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a12cf69-08a9-4fa9-b50d-8971587d91fe">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="122"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DATA1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FORMA_PAGAMENTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTILIZADOR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     factura.`dataFactura` AS factura_dataFactura,
+     factura.`valorNumerario` AS factura_valorNumerario,
+     factura.`valorMulticaixa` AS factura_valorMulticaixa,
+     factura.`nomeClientes` AS factura_nomeClientes,
+     factura.`codigoFormaPagamento` AS factura_codigoFormaPagamento,
+     factura.`troco` AS factura_troco,
+     factura.`desconto` AS factura_desconto,
+     factura.`valorApagar` AS factura_valorApagar,
+     factura.`quantidadeItens` AS factura_quantidadeItens,
+     factura_itens.`quantidade` AS factura_itens_quantidade,
+     factura_itens.`totalGeral` AS factura_itens_totalGeral,
+     factura_itens.`codigoCategoria` AS factura_itens_codigoCategoria,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     utilizadores.`nomeCompleto` AS utilizadores_nomeCompleto,
+     utilizadores.`email` AS utilizadores_email,
+     formapagamento.`designacao` AS formapagamento_designacao,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     utilizadores.`idUtilizador` AS utilizadores_idUtilizador,
+     formapagamento.`codForma` AS formapagamento_codForma,
+     factura.`idfactura` AS factura_idfactura
+FROM
+     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
+     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`
+     INNER JOIN `utilizadores` utilizadores ON servicos.`codigoUtilizador` = utilizadores.`idUtilizador`
+     INNER JOIN `formapagamento` formapagamento ON factura.`codigoFormaPagamento` = formapagamento.`codForma`
+     INNER JOIN `pacientes` pacientes ON factura.`codigoCliente` = pacientes.`idPaciente`
+WHERE
+     factura.`dataFactura` BETWEEN $P{DATA1} and $P{DATA2}
+ AND formapagamento.`designacao` = $P{FORMA_PAGAMENTO}
+ AND utilizadores.`nomeCompleto` = $P{UTILIZADOR}
+ORDER BY
+     1 ASC]]>
+	</queryString>
+	<field name="factura_dataFactura" class="java.sql.Date"/>
+	<field name="factura_valorNumerario" class="java.lang.Double"/>
+	<field name="factura_valorMulticaixa" class="java.lang.Double"/>
+	<field name="factura_nomeClientes" class="java.lang.String"/>
+	<field name="factura_codigoFormaPagamento" class="java.lang.Long"/>
+	<field name="factura_troco" class="java.lang.Double"/>
+	<field name="factura_desconto" class="java.lang.Double"/>
+	<field name="factura_valorApagar" class="java.lang.Double"/>
+	<field name="factura_quantidadeItens" class="java.lang.Long"/>
+	<field name="factura_itens_quantidade" class="java.lang.Long"/>
+	<field name="factura_itens_totalGeral" class="java.lang.Double"/>
+	<field name="factura_itens_codigoCategoria" class="java.lang.Long"/>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="utilizadores_nomeCompleto" class="java.lang.String"/>
+	<field name="utilizadores_email" class="java.lang.String"/>
+	<field name="formapagamento_designacao" class="java.lang.String"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="utilizadores_idUtilizador" class="java.lang.Long"/>
+	<field name="formapagamento_codForma" class="java.lang.Long"/>
+	<field name="factura_idfactura" class="java.lang.Long"/>
+	<variable name="UNITARIO" class="java.lang.Double" resetType="Group" resetGroup="NFatura" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_valorNumerario}+$F{factura_valorMulticaixa}]]></variableExpression>
+	</variable>
+	<variable name="QTD" class="java.lang.Double" resetType="Group" resetGroup="NFatura" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_quantidadeItens}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_itens_totalGeral}]]></variableExpression>
+	</variable>
+	<variable name="V_VENDA" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_valorNumerario}+$F{factura_valorMulticaixa}]]></variableExpression>
+	</variable>
+	<variable name="DESCONTO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_desconto}]]></variableExpression>
+	</variable>
+	<variable name="TROCO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_troco}]]></variableExpression>
+	</variable>
+	<variable name="ENTREGUE" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_valorNumerario}+$F{factura_valorMulticaixa}]]></variableExpression>
+	</variable>
+	<variable name="UNIGERAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_valorNumerario}+$F{factura_valorNumerario}]]></variableExpression>
+	</variable>
+	<variable name="QTGERAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_quantidadeItens}]]></variableExpression>
+	</variable>
+	<variable name="TROCOGERAL" class="java.lang.Double" resetType="None" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_troco}]]></variableExpression>
+	</variable>
+	<variable name="DESCONTOGERAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_desconto}]]></variableExpression>
+	</variable>
+	<variable name="TOTALGERAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[($F{factura_valorNumerario}*$F{factura_quantidadeItens})+($F{factura_valorMulticaixa}*$F{factura_quantidadeItens})]]></variableExpression>
+	</variable>
+	<variable name="PAGARGERAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{factura_itens_totalGeral}]]></variableExpression>
+	</variable>
+	<group name="NFatura">
+		<groupExpression><![CDATA[$F{factura_idfactura}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<rectangle>
+					<reportElement x="0" y="0" width="802" height="20" backcolor="#CCCCCC" uuid="ff944fef-f7dc-4cf5-842d-7bf349b5a48c"/>
+					<graphicElement>
+						<pen lineWidth="0.05"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="100" y="0" width="148" height="20" uuid="7bd7a7d1-9c51-4fb9-ad86-e5146c9e0b0e"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Data: "+$F{factura_dataFactura}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="408" y="0" width="259" height="20" uuid="2ee94b08-91bc-4f35-9929-5e0df61680ec"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Utente: "+$$F{factura_nomeClientes}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="667" y="0" width="135" height="20" uuid="a6119be9-1a2f-44df-b68b-0b8ced73870b"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Utilizador: "+$F{utilizadores_nomeCompleto}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="100" height="20" uuid="5b772c0d-f2f9-4f42-b6e4-cdcfb3110b68"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" Fatura Nº " +$F{factura_idfactura}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="308" height="20" uuid="2cd313c2-46d6-4c10-b027-187615fcad82"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[ ITEM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="308" y="20" width="100" height="20" uuid="a000049c-96f8-468c-a2f6-7e7f15b8b365"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[VAL. UNITÁRIO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="408" y="20" width="49" height="20" uuid="0984e619-fb4e-41f7-ab91-499c6c333661"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[QTDE.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="457" y="20" width="87" height="20" uuid="6e144fb1-db92-4696-b789-235e2f89e063"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				</staticText>
+				<staticText>
+					<reportElement x="544" y="20" width="87" height="20" uuid="40255682-67d8-4580-98a5-cfda4efdf18d"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[DESCONTO]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="248" y="0" width="160" height="20" uuid="281377bb-e3c9-4595-bbb4-d47dc19812c0"/>
+					<box>
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Pagamento: "+$F{formapagamento_designacao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="631" y="20" width="84" height="20" uuid="2feabb1a-0b59-4450-9e7e-52cd3dd6a6b7"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[VAL. A PAGAR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="715" y="20" width="87" height="20" uuid="58a21ba8-d9c8-4204-a5b6-77b81910c6b8"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[TROCO]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<rectangle>
+					<reportElement x="0" y="0" width="802" height="20" backcolor="#FFFFFF" uuid="3faafd60-7c56-48fa-b430-8c3d11cbe2ff"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="0" width="308" height="20" uuid="9ce0a4c8-838b-4307-b5bb-be8fa9c3a414"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAIS DA FATURA]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="308" y="0" width="100" height="20" uuid="c4e6f5ba-c213-4955-8781-86f28eaf3984"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{UNITARIO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="408" y="0" width="49" height="20" uuid="00de27db-3385-4993-b19d-3e6fab8d5b10"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{QTD}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="457" y="0" width="87" height="20" uuid="6a27bdcd-2728-4e77-a13d-9111f5dc90dd"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{factura_valorApagar}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="631" y="0" width="84" height="20" uuid="1eade8c5-147b-4462-b5b2-3218bd62ccfb"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{factura_itens_totalGeral}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="544" y="0" width="87" height="20" uuid="52ee5986-34ca-4438-b2f5-a5cf79534944"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{factura_desconto}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="715" y="0" width="87" height="20" uuid="eb6a02de-b65f-49da-a9d7-707a87829be8"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TROCO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement x="144" y="37" width="308" height="20" uuid="d729fc43-16c8-4bf9-a37e-dbf6e2c33aa8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MOVIMENTO DA CAIXA ENTRE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="456" y="37" width="51" height="20" uuid="61b095a0-e1e9-4a66-9d5d-be9187534cf6"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATA1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="523" y="37" width="98" height="20" uuid="bb08eb36-0b3b-4820-83ca-6d9b768142c8"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATA2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="507" y="37" width="16" height="20" uuid="5b548727-2447-4a3a-8b4b-3aed27ebf595"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="308" height="20" uuid="ce925f23-4f8a-4524-a826-8627400c564c"/>
+				<box>
+					<pen lineWidth="0.05"/>
+					<topPen lineWidth="0.05"/>
+					<leftPen lineWidth="0.05"/>
+					<bottomPen lineWidth="0.05"/>
+					<rightPen lineWidth="0.05"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" "+$F{servicos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="308" y="0" width="100" height="20" uuid="5cdfefb8-a6a4-43d4-83d4-bc199673321f"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{factura_valorNumerario}+$F{factura_valorMulticaixa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="0" width="49" height="20" uuid="ad668e88-4e43-4d4c-a9e3-796c1d8608b8"/>
+				<box>
+					<pen lineWidth="0.05"/>
+					<topPen lineWidth="0.05"/>
+					<leftPen lineWidth="0.05"/>
+					<bottomPen lineWidth="0.05"/>
+					<rightPen lineWidth="0.05"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{factura_itens_quantidade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="457" y="0" width="87" height="20" uuid="cfd21b4b-d03c-468e-b314-379d4ef6de74"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="457" y="0" width="87" height="20" uuid="ce8b4f28-d5f8-442d-80cc-8508716b9c85"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_itens_quantidade}*$F{factura_valorApagar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="544" y="0" width="87" height="20" uuid="247d514c-6bb1-47e2-b0b7-fdf47d65777c"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_desconto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="631" y="0" width="84" height="20" uuid="d73d2fe5-b6da-4cd0-8ef2-7cac7c5d7dab"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_valorApagar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="715" y="0" width="86" height="20" uuid="1fc4b85b-f08e-4c45-91ef-f65422ea2913"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_troco}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="32" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" backcolor="#999999" uuid="e77eb772-e71e-4cbc-b9bc-adc03836051d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" backcolor="#999999" uuid="9e424e98-88a3-4fa2-999c-191ea2c5e24b"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="308" height="20" uuid="9d622438-5964-4441-ac1a-93ba83873cd4"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAIS GERAIS]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="308" y="0" width="100" height="20" uuid="7b52e240-a182-4329-becd-31c08a6be128"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{UNIGERAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="408" y="0" width="49" height="20" uuid="f6cf7e24-b759-4be3-9340-d9942ee84173"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{QTGERAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00">
+				<reportElement x="544" y="0" width="87" height="20" forecolor="#0066FF" uuid="16af6fc5-ab25-476b-87b5-95a7a7317318"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALGERAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00">
+				<reportElement x="631" y="0" width="84" height="20" forecolor="#009966" uuid="c37c270d-538e-46b6-82ea-73d81dc06ae1"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

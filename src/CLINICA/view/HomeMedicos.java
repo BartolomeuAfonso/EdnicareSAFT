@@ -3349,6 +3349,10 @@ public final class HomeMedicos extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         getPacienteEmEspera(codigoMedico);
+        mostraHistoricoClinico("SELECT h.idHistoricoClinico,p.nomeCompleto,h.queixaPresente,h.historiaDoencaActual,h.exameFisico,h.hipoteseDiagnostico from historicoclinico h inner join triagem t on h.codigoConsulta=t.idtriagem\n"
+                + "inner join pacientes p on t.codigoPaciente = p.idpaciente AND h.codigoMedico=" + getCodigoMedico() + " and  Date(h.dataAtendimento)=current_date "
+                + "order by h.dataAtendimento ");
+
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
@@ -3368,7 +3372,7 @@ public final class HomeMedicos extends javax.swing.JFrame {
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
         int codigo = controllerBeneficiario.getCodigoUtente(jLabel42.getText());
-        if (jLabel75.getText().equals("Consulta de Ginecologia")) {
+        if (jLabel75.getText().equals("Consulta de Ginecologia") || jLabel75.getText().equalsIgnoreCase("Ginecologia")) {
             new frameGinecologia(jLabel42.getText(), codigo).setVisible(true);
         } else {
 
@@ -3381,7 +3385,7 @@ public final class HomeMedicos extends javax.swing.JFrame {
         if (jLabel42.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Não existe paciente Selecionado");
         } else {
-            new frameCardiologia(getCodigoPaciente(),jLabel42.getText(),getCodigoTriagem(),NomeMedico).setVisible(true);
+            new frameCardiologia(getCodigoPaciente(), jLabel42.getText(), getCodigoTriagem(), NomeMedico).setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 

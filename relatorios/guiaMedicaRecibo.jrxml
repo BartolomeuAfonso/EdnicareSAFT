@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guiaMedicaRecibo" language="groovy" pageWidth="595" pageHeight="800" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f1faf50-b5c4-4a78-a785-d11202927cfe">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="144"/>
 	<property name="ireport.callouts" value="##Sun Jul 07 21:17:40 WAT 2019"/>
 	<parameter name="CODIGO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -407,7 +407,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{formapagamento_designacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="76" y="15" width="310" height="14" uuid="0803a1e3-a9af-49ca-9ca7-53b199672732"/>
+				<reportElement x="76" y="15" width="77" height="14" uuid="0803a1e3-a9af-49ca-9ca7-53b199672732"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -434,6 +434,13 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{guia_dataGuia}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="153" y="15" width="233" height="15" uuid="fd1da377-50c0-4bf8-8773-f103a43ddd75"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prestação de serviços de Saúde]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<lastPageFooter>

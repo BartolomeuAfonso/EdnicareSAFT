@@ -648,7 +648,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_itens_preco}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{factura_itens_totalTPA}+$F{guia_itens_totalGeral}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="386" y="0" width="47" height="14" uuid="abdda44a-4246-4b8f-84a7-e178b76bfab3"/>
@@ -764,11 +764,11 @@ WHERE
 				<text><![CDATA[Total Iliquido]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yy">
-				<reportElement x="2" y="191" width="551" height="12" uuid="28476f5f-e700-4baa-bc07-d5a32d758132"/>
+				<reportElement x="2" y="180" width="551" height="23" uuid="28476f5f-e700-4baa-bc07-d5a32d758132"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{guia_hashValor}+"- Processado por Programa Validado nº249/AGT/2019 - EDNICARE 3.0 | Os bens / serviços foram colocados á disposição do adquirente do adquirido na data e local do documento."]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{guia_hashValor}+"- Processado por Programa Validado nº249/AGT/2019 - EDNICARE 3.0 | A data e o local em que os bens foram colocados à disposição dos adquirentes, em que os serviços foram prestados, bem como, se aplicável, a data em que foram efectuados pagamentos antecipados;."]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy HH.mm.ss">
 				<reportElement x="3" y="203" width="550" height="12" uuid="ffad5214-d267-4e88-a2f6-7f602a9d5121"/>
@@ -810,7 +810,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{guia_descontoIVA}+$F{factura_subTotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{guia_descontoIVA}+$F{factura_subTotal})-$F{guia_desconto}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="396" y="85" width="64" height="12" uuid="5aafe518-7f61-4404-b2e9-350270864365"/>

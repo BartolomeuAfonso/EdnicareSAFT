@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guiaMedicaRecibo" language="groovy" pageWidth="595" pageHeight="800" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f1faf50-b5c4-4a78-a785-d11202927cfe">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="342"/>
+	<property name="ireport.y" value="102"/>
 	<property name="ireport.callouts" value="##Sun Jul 07 21:17:40 WAT 2019"/>
 	<parameter name="CODIGO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -12,8 +12,8 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT DISTINCT
-     factura.`idFactura` AS guia_idguia,
      date(factura.`dataFactura`) AS guia_dataGuia,
+     factura.`idFactura` AS guia_idguia,
      factura.`nomeclientes` AS guia_nomeclientes,
      factura.`valorApagar` AS guia_valorApagar,
      factura.`codigoCliente` AS guia_codigoCliente,
@@ -65,7 +65,8 @@
      factura.`nRef` AS factura_nRef,
      factura_itens.`totalTPA` AS factura_itens_totalTPA,
      formapagamento.`codForma` AS formapagamento_codForma,
-     formapagamento.`designacao` AS formapagamento_designacao
+     formapagamento.`designacao` AS formapagamento_designacao,
+     factura.`nRecibo` AS factura_nRecibo
 FROM
      `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
      INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`
@@ -79,8 +80,8 @@ FROM
 WHERE
      factura.`idfactura` = $P{CODIGO}]]>
 	</queryString>
+	<field name="guia_dataGuia" class="java.sql.Date"/>
 	<field name="guia_idguia" class="java.lang.Long"/>
-	<field name="guia_dataGuia" class="java.sql.Timestamp"/>
 	<field name="guia_nomeclientes" class="java.lang.String"/>
 	<field name="guia_valorApagar" class="java.lang.Double"/>
 	<field name="guia_codigoCliente" class="java.lang.Long"/>
@@ -133,6 +134,7 @@ WHERE
 	<field name="factura_itens_totalTPA" class="java.lang.Double"/>
 	<field name="formapagamento_codForma" class="java.lang.Long"/>
 	<field name="formapagamento_designacao" class="java.lang.String"/>
+	<field name="factura_nRecibo" class="java.lang.String"/>
 	<variable name="TOTAL_POR_PAGINA" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{guia_itens_totalGeral}+$F{factura_itens_totalTPA}]]></variableExpression>
 	</variable>
@@ -249,7 +251,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["RG 2021/"+$F{guia_idguia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{factura_nRecibo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="341" y="116" width="182" height="13" uuid="1be21b32-d5f6-4703-9db0-f44c24e122a2"/>
@@ -407,7 +409,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{formapagamento_designacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="76" y="15" width="310" height="14" uuid="0803a1e3-a9af-49ca-9ca7-53b199672732"/>
+				<reportElement x="76" y="15" width="82" height="14" uuid="0803a1e3-a9af-49ca-9ca7-53b199672732"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -434,6 +436,13 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{guia_dataGuia}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="158" y="14" width="228" height="15" uuid="d1b0baf2-f9af-47f2-a860-6a7baf39f8b2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prestação de serviços de Saúde]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<lastPageFooter>

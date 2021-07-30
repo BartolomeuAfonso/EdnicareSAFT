@@ -396,10 +396,21 @@ public class Seguradoras extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
     
+    public String getBI() {
+        if (!jTextField8.getText().isEmpty() || jTextField8.getText().equalsIgnoreCase("999999999") ) {
+            jTextField8.setText("Consumidor Final");
+            return jTextField8.getText();
+        } else {
+            jTextField8.setText("Consumidor Final");
+            return jTextField8.getText();
+        }
+        
+    }
+    
     public Empresa getEmpresa() {
         empresa.setNomeEmpresa(jTextField5.getText());
         empresa.setLogotipo(foto);
-        empresa.setNif(jTextField8.getText());
+        empresa.setNif(getBI());
         empresa.setEndereco(jTextField2.getText());
         empresa.setEmail(jTextField3.getText());
         empresa.setTelefone(jTextField4.getText());

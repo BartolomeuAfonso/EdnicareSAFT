@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacturaA5" pageWidth="810" pageHeight="560" orientation="Landscape" columnWidth="796" leftMargin="7" rightMargin="7" topMargin="2" bottomMargin="28" uuid="0b444306-64d6-406d-b517-5ed4ffaf04f6">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="221"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="171"/>
+	<property name="ireport.y" value="187"/>
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -689,7 +689,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_itens_quantidade}*$F{servicos_preco}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{factura_itens_preco}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-95" mode="Opaque" x="728" y="0" width="54" height="15" forecolor="#000000" uuid="9429b236-87f0-4fe5-a4a7-6a888aab1c3e"/>
@@ -703,7 +703,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_itens_quantidade}*$F{servicos_preco}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{factura_itens_preco}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-92" mode="Opaque" x="538" y="0" width="57" height="15" forecolor="#000000" uuid="c03329c9-57da-48f0-bcca-fe747fb0d2f6"/>
@@ -717,7 +717,7 @@ WHERE
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{servicos_preco}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{factura_itens_totalGeral}+$F{factura_itens_totalTPA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement key="textField-94" mode="Opaque" x="594" y="0" width="37" height="15" forecolor="#000000" uuid="4003a4c3-e07d-43d9-9c30-ca8efee30330"/>
@@ -787,7 +787,7 @@ WHERE
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false" pdfFontName="Helvetica"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{servicos_preco}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{factura_itens_totalGeral}+$F{factura_itens_totalTPA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement key="textField-94" mode="Opaque" x="201" y="0" width="31" height="15" forecolor="#000000" uuid="7b267d5e-7833-46fd-9849-1e9788ece0a0"/>
@@ -1094,14 +1094,14 @@ WHERE
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{guia_hashValor}+"- Processado por Programa Validado nº249/AGT/2019/EDNICARE 3.0 | Os bens/serviços foram colocados á disposição do adquirente do adquirido na data e local do documento"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{guia_hashValor}+"- Processado por Programa Validado nº249/AGT/2019 - EDNICARE 3.0 | A data e o local em que os bens foram colocados à disposição dos adquirentes, em que os serviços foram prestados, bem como, se aplicável, a data em que foram efectuados pagamentos antecipados;."]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yy">
 				<reportElement x="9" y="137" width="369" height="15" uuid="b582957d-f176-4e75-a813-d39669c34841"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="6" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{guia_hashValor}+"- Processado por Programa Validado nº249/AGT/2019/EDNICARE 3.0 | Os bens/serviços foram colocados á disposição do adquirente do adquirido na data e local do documento"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{guia_hashValor}+"- Processado por Programa Validado nº249/AGT/2019 - EDNICARE 3.0 | A data e o local em que os bens foram colocados à disposição dos adquirentes, em que os serviços foram prestados, bem como, se aplicável, a data em que foram efectuados pagamentos antecipados;."]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-92" positionType="Float" mode="Transparent" x="197" y="66" width="74" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="98d55135-1c06-47f0-9455-ac1b721c0b26"/>

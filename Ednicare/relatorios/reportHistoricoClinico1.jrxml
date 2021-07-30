@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportHistoricoClinico1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="33db4158-e0f1-42b9-9779-58d6ac878581">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     year(curdate())-year(pacientes.`dataNascimento`) AS idade,
+     historicointerno.`idInterno` AS historicointerno_idInterno,
+     historicointerno.`alergias` AS historicointerno_alergias,
+     historicointerno.`doencasCronicas` AS historicointerno_doencasCronicas,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     triagem.`idtriagem` AS triagem_idtriagem,
+     triagem.`dataCadastro` AS triagem_dataCadastro,
+     triagem.`peso` AS triagem_peso,
+     triagem.`tensao` AS triagem_tensao,
+     triagem.`altura` AS triagem_altura,
+     triagem.`IMC` AS triagem_IMC,
+     triagem.`fuma` AS triagem_fuma,
+     pacientes.`genero` AS pacientes_genero,
+     triagem.`bebe` AS triagem_bebe,
+     historicoclinico.`idHistoricoClinico` AS historicoclinico_idHistoricoClinico,
+     historicoclinico.`codigoConsulta` AS historicoclinico_codigoConsulta,
+     historicoclinico.`queixaPresente` AS historicoclinico_queixaPresente,
+     historicoclinico.`historiaDoencaActual` AS historicoclinico_historiaDoencaActual,
+     historicoclinico.`exameFisico` AS historicoclinico_exameFisico,
+     historicoclinico.`hipoteseDiagnostico` AS historicoclinico_hipoteseDiagnostico,
+     historicoclinico.`codigoCid` AS historicoclinico_codigoCid,
+     historicoclinico.`codigoMedico` AS historicoclinico_codigoMedico,
+     historicoclinico.`dataAtendimento` AS historicoclinico_dataAtendimento,
+     historicoclinico.`codigoUtente` AS historicoclinico_codigoUtente,
+     historicoclinico.`codigoInterno` AS historicoclinico_codigoInterno,
+     pacientes.`dataNascimento` AS pacientes_dataNascimento,
+     pacientes.`morada` AS pacientes_morada,
+     pacientes.`contacto` AS pacientes_contacto,
+     medicos.`idMedico` AS medicos_idMedico,
+     medicos.`nomeCompleto` AS medicos_nomeCompleto,
+     medicos.`limite` AS medicos_limite,
+     medicos.`numeroOrdem` AS medicos_numeroOrdem,
+     medicos.`contacto` AS medicos_contacto,
+     triagem.`frequenciaCardiaca` AS triagem_frequenciaCardiaca,
+     triagem.`pulso` AS triagem_pulso,
+     triagem.`temperatura` AS triagem_temperatura,
+     pacientes.`telefone` AS pacientes_telefone,
+     historicointerno.`ultimoTratamento` AS historicointerno_ultimoTratamento,
+     historicoclinico.`apf` AS historicoclinico_apf,
+     historicoclinico.`cabeca` AS historicoclinico_cabeca,
+     historicoclinico.`pescoco` AS historicoclinico_pescoco,
+     historicoclinico.`abdomen` AS historicoclinico_abdomen,
+     historicoclinico.`torax` AS historicoclinico_torax,
+     historicoclinico.`orgaogenital` AS historicoclinico_orgaogenital,
+     historicoclinico.`membros` AS historicoclinico_membros,
+     cids.`designacao` AS cids_designacao,
+     cids.`cid` AS cids_cid
+FROM
+     `pacientes` pacientes INNER JOIN `historicointerno` historicointerno ON pacientes.`idPaciente` = historicointerno.`codigoPaciente`
+     INNER JOIN `historicoclinico` historicoclinico ON historicointerno.`idInterno` = historicoclinico.`codigoInterno`
+     INNER JOIN `triagem` triagem ON historicoclinico.`codigoConsulta` = triagem.`idtriagem`
+     INNER JOIN `medicos` medicos ON historicoclinico.`codigoMedico` = medicos.`idMedico`
+     INNER JOIN `cids` cids ON historicoclinico.`codigoCid` = cids.`idCids`
+WHERE
+     historicoclinico.`idHistoricoClinico` = $P{CODIGO}]]>
+	</queryString>
+	<field name="idade" class="java.lang.Long"/>
+	<field name="historicointerno_idInterno" class="java.lang.Long"/>
+	<field name="historicointerno_alergias" class="java.lang.String"/>
+	<field name="historicointerno_doencasCronicas" class="java.lang.String"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="triagem_idtriagem" class="java.lang.Long"/>
+	<field name="triagem_dataCadastro" class="java.sql.Date"/>
+	<field name="triagem_peso" class="java.lang.String"/>
+	<field name="triagem_tensao" class="java.lang.String"/>
+	<field name="triagem_altura" class="java.lang.String"/>
+	<field name="triagem_IMC" class="java.lang.Double"/>
+	<field name="triagem_fuma" class="java.lang.String"/>
+	<field name="pacientes_genero" class="java.lang.String"/>
+	<field name="triagem_bebe" class="java.lang.String"/>
+	<field name="historicoclinico_idHistoricoClinico" class="java.lang.Long"/>
+	<field name="historicoclinico_codigoConsulta" class="java.lang.Long"/>
+	<field name="historicoclinico_queixaPresente" class="java.lang.String"/>
+	<field name="historicoclinico_historiaDoencaActual" class="java.lang.String"/>
+	<field name="historicoclinico_exameFisico" class="java.lang.String"/>
+	<field name="historicoclinico_hipoteseDiagnostico" class="java.lang.String"/>
+	<field name="historicoclinico_codigoCid" class="java.lang.Long"/>
+	<field name="historicoclinico_codigoMedico" class="java.lang.Long"/>
+	<field name="historicoclinico_dataAtendimento" class="java.sql.Timestamp"/>
+	<field name="historicoclinico_codigoUtente" class="java.lang.Long"/>
+	<field name="historicoclinico_codigoInterno" class="java.lang.Long"/>
+	<field name="pacientes_dataNascimento" class="java.lang.String"/>
+	<field name="pacientes_morada" class="java.lang.String"/>
+	<field name="pacientes_contacto" class="java.lang.String"/>
+	<field name="medicos_idMedico" class="java.lang.Long"/>
+	<field name="medicos_nomeCompleto" class="java.lang.String"/>
+	<field name="medicos_limite" class="java.lang.Long"/>
+	<field name="medicos_numeroOrdem" class="java.lang.String"/>
+	<field name="medicos_contacto" class="java.lang.String"/>
+	<field name="triagem_frequenciaCardiaca" class="java.lang.String"/>
+	<field name="triagem_pulso" class="java.lang.String"/>
+	<field name="triagem_temperatura" class="java.lang.String"/>
+	<field name="pacientes_telefone" class="java.lang.String"/>
+	<field name="historicointerno_ultimoTratamento" class="java.lang.String"/>
+	<field name="historicoclinico_apf" class="java.lang.String"/>
+	<field name="historicoclinico_cabeca" class="java.lang.String"/>
+	<field name="historicoclinico_pescoco" class="java.lang.String"/>
+	<field name="historicoclinico_abdomen" class="java.lang.String"/>
+	<field name="historicoclinico_torax" class="java.lang.String"/>
+	<field name="historicoclinico_orgaogenital" class="java.lang.String"/>
+	<field name="historicoclinico_membros" class="java.lang.String"/>
+	<field name="cids_designacao" class="java.lang.String"/>
+	<field name="cids_cid" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="287" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="10" y="10" width="166" height="98" uuid="ed707d7d-ad62-48a7-84f3-e987ac21c83a"/>
+				<imageExpression><![CDATA["relatorios//logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement key="staticText-81" positionType="Float" mode="Transparent" x="177" y="0" width="379" height="35" forecolor="#000000" backcolor="#99FF99" uuid="9bb4116e-51cd-4da0-a887-220c6fe9be1f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="24" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Historial Clínico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="312" y="93" width="85" height="16" backcolor="#F4F4F4" uuid="56916882-9d94-47ce-b2e9-260ebc396aac"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data da Consulta:]]></text>
+			</staticText>
+			<textField pattern="d/M/yyyy">
+				<reportElement mode="Transparent" x="397" y="93" width="158" height="16" uuid="cf8472d0-c7df-499f-8b50-105716e684a9"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{triagem_dataCadastro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="312" y="76" width="85" height="16" backcolor="#F4F4F4" uuid="ff99a10c-e5af-4e52-b13b-5a6044d2bf0b"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assitido pelo Drº.:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yy">
+				<reportElement mode="Transparent" x="397" y="76" width="158" height="16" uuid="0f06be99-6a00-45a9-962e-163c797fd7c7"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medicos_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="2" y="238" width="100" height="16" backcolor="#F4F4F4" uuid="86822cfa-990c-4e3a-abfa-0cd78fbe26d3"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ Tensão arterial:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="4" y="270" width="99" height="16" backcolor="#F4F4F4" uuid="378ce2b2-8408-4957-a9c8-0ad4ba4e2755"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Altura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="103" y="255" width="179" height="16" uuid="47234078-816a-4b06-87f0-e167d05cbcec"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{triagem_fuma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="383" y="255" width="174" height="16" uuid="9abec339-bd60-4e89-af68-12d322d53fd3"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{triagem_bebe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="101" y="162" width="180" height="16" uuid="4289b892-cba0-42ca-a800-b036e4cbfc86"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{pacientes_morada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="185" width="100" height="16" backcolor="#F4F4F4" uuid="fb9bb296-d108-4e48-a25b-c411e0e2eaff"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ Telefone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="281" y="162" width="95" height="16" backcolor="#F4F4F4" uuid="941a46cf-551a-49e2-b4c0-512abb1016b1"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ Idade:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="101" y="141" width="456" height="16" uuid="243fdcf9-7856-4c95-9750-fffb511dfb77"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pacientes_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="141" width="100" height="16" backcolor="#F4F4F4" uuid="4907a48e-7a32-4c5b-bab9-88d661a977d5"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ Nome:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="383" y="238" width="174" height="16" uuid="aa7117e2-7e15-490e-af8d-3bf78357282c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{triagem_pulso}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="141" width="551" height="1" uuid="1444ac03-4e18-4b9e-a6f0-548686c5e5ed"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement mode="Transparent" x="376" y="185" width="180" height="16" uuid="a4c3c5f9-6432-41f8-b99b-6e69384e0a85"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{pacientes_genero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="103" y="222" width="180" height="16" uuid="5757270a-7214-49ba-a64a-780c5424cd37"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{triagem_peso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="283" y="222" width="100" height="16" backcolor="#F4F4F4" uuid="9e0517e9-0a9e-4f0e-8e43-ddbdafb01fe8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ Temperatura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="101" y="185" width="180" height="16" uuid="8723445f-c879-462c-a2be-e320e9a87e18"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{pacientes_contacto} + "/"+$F{pacientes_telefone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="376" y="162" width="180" height="16" uuid="5c269113-ba68-46c9-af3d-11822c5d54c9"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idade}+" Anos"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="3" y="222" width="100" height="16" backcolor="#F4F4F4" uuid="52deedb4-6877-426a-9da4-d70c944598f8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ Peso:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="104" y="271" width="179" height="16" uuid="d145b33b-8e76-4851-9a1e-d7338a822bb2"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{triagem_altura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="126" width="399" height="16" backcolor="#00CCFF" uuid="81852e8c-753a-4007-a046-bb8655bd8316"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Dados Pessoais]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="207" width="551" height="1" uuid="8410bf47-090b-4759-821b-bdf20a92f974"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="281" y="185" width="95" height="16" backcolor="#F4F4F4" uuid="681e378d-89a7-4e6c-b66b-7c3c69a57f82"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ Sexo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="283" y="238" width="100" height="16" backcolor="#F4F4F4" uuid="2e5341b2-7d8c-433e-8456-4f5a32f40dbe"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Pulso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="283" y="254" width="100" height="16" backcolor="#F4F4F4" uuid="1f5feedd-c9d9-4d0b-b110-9b4909659acd"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Bebe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="3" y="254" width="99" height="16" backcolor="#F4F4F4" uuid="80e7c7ac-476b-406f-aac2-49ec2bcb698e"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[  Fuma]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="409" y="124" width="148" height="16" uuid="ee674809-8e78-46c3-818c-dc35237ebf3b"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Proc. Nº: "+$F{pacientes_idPaciente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="383" y="222" width="172" height="16" uuid="3fb92843-871f-401c-9647-70333d8ec25b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{triagem_temperatura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="162" width="100" height="16" backcolor="#F4F4F4" uuid="4ce5718f-1ba0-4d95-8e63-6be576cece14"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ Morada:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="2" y="206" width="554" height="16" backcolor="#00CCFF" uuid="37206e8e-6653-47b1-a2fe-13dc11583465"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Dados da Triagem]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="103" y="238" width="180" height="16" uuid="33ce2f29-30d0-4395-b215-b2ddb662a87c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{triagem_tensao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="155" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="101" width="280" height="54" uuid="8063a8ae-1e69-4f3a-bcbb-c32074813e52"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" +$F{historicoclinico_queixaPresente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="16" width="280" height="14" backcolor="#F4F4F4" uuid="eb207ff5-61e3-49d3-b3b7-b302e9a74683"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1. Doenças Contagiosas/Crónicas/Hereditária]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="101" width="275" height="54" uuid="b127c4fc-0a76-4ab3-b7a4-a63245f02bbb"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" +$F{historicoclinico_historiaDoencaActual}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="281" y="16" width="275" height="14" backcolor="#F4F4F4" uuid="4b7ebb8f-e5ce-4a50-ab64-24f7e743c68a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2. Medicamentos alergicos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="0" width="555" height="16" backcolor="#00CCFF" uuid="34941e34-dcb4-4957-9c37-2e342dd6d11d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Dados Clínicos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="86" width="275" height="14" backcolor="#F4F4F4" uuid="6bd9dc18-b6d7-483d-9adf-2ad52cf20622"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ 4. Historico da Doença Actual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="86" width="280" height="14" backcolor="#F4F4F4" uuid="2ef10056-ddd9-4937-bc46-78464978d0ac"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ 3. Queixa Principal]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="30" width="280" height="55" uuid="2190cc82-9fc8-4ae3-8620-9a45e5f2f1f9"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" +$F{historicointerno_doencasCronicas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="30" width="275" height="55" uuid="83429cba-9203-413d-94a4-5ff91b54415b"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" +$F{historicointerno_alergias}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="141">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="557" height="14" backcolor="#F4F4F4" uuid="26629d02-769c-4f83-918f-90add40156bf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ 5. Avaliação Geral]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="14" width="554" height="66" uuid="e03493ad-d5ea-4b98-b0f7-6904ff1188bf"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+ $F{historicoclinico_hipoteseDiagnostico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="80" width="274" height="14" backcolor="#F4F4F4" uuid="cffd1c98-cdbe-4af3-9dcc-4a6102bb46d4"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[7. Antecendente Patológico Familiar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="-1" y="80" width="280" height="14" backcolor="#F4F4F4" uuid="0a392f65-ec31-4a58-b7cf-bb0c9e7d1851"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[6. Antecendente Patológico Pessoal]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="94" width="275" height="47" uuid="6ca5a9a7-3dc7-4643-a0f2-d7c1d5119411"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{historicoclinico_apf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-2" y="94" width="282" height="47" uuid="ead6cf58-1803-414e-a52b-c906afc0fceb"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" +$F{historicointerno_ultimoTratamento}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="325">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="553" height="14" backcolor="#F4F4F4" uuid="50fed144-331e-4122-8187-703ce09c3da2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[8. Exame Físco]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="179" width="557" height="146" uuid="70afdf74-82ad-4268-b75c-f83bb3f2f3c3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historicoclinico_exameFisico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="35" width="557" height="18" uuid="39769386-85b9-4a81-af62-ba8df7ccb0d2"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cabeça: " +$F{historicoclinico_cabeca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="53" width="557" height="18" uuid="dea6b9f6-9c45-415b-afe9-86bb7ca740e2"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pescoço: " +$F{historicoclinico_pescoco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="71" width="557" height="18" uuid="6115fc1a-d246-40b7-b015-724a6b23dad1"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tórax: " +$F{historicoclinico_torax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="89" width="557" height="18" uuid="f16fbdae-165d-4e1b-981e-fd62d30328f3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Abdômen: " +$F{historicoclinico_abdomen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="107" width="557" height="18" uuid="471031c9-68ed-4156-9c7c-18584d9d8967"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Órgão Genitais: " +$F{historicoclinico_orgaogenital}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="125" width="557" height="18" uuid="f9da8a43-2b48-4b47-938e-809fc4e08366"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Membros Superior e Inferior: " +$F{historicoclinico_membros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="143" width="557" height="18" uuid="3116c5b5-5567-46f2-9da4-1ef921595eac"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CIDS " +$F{cids_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="17" width="557" height="18" uuid="e5e2b97e-2ad7-4c5e-84ee-fde5fdb8572c"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Avaliação Geral: " +$F{historicoclinico_hipoteseDiagnostico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="162" width="555" height="16" backcolor="#F4F4F4" uuid="162e4472-0f7b-448c-ac1c-c542e7515c09"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diagnóstico Presunção]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

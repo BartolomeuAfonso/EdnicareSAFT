@@ -22,15 +22,12 @@ public class ControllerNaturalidade {
     String sql;
     PreparedStatement ps;
     ResultSet rs;
-    
-     Connection con;
+    Connection con;
 
     public ControllerNaturalidade(Connection con) {
         this.con = conexao.ConexaoBD();
     }
 
-
-    
     public ArrayList<String> getNaturalidade() {
         //conexao.Connectando();
         sql = "SELECT * FROM naturalidades n";

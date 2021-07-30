@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guiaMedicaRecibo" language="groovy" pageWidth="595" pageHeight="800" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f1faf50-b5c4-4a78-a785-d11202927cfe">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="96"/>
 	<property name="ireport.callouts" value="##Sun Jul 07 21:17:40 WAT 2019"/>
 	<parameter name="CODIGO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -152,7 +152,7 @@ WHERE
 				</graphicElement>
 			</rectangle>
 			<rectangle radius="10">
-				<reportElement x="331" y="109" width="216" height="49" uuid="ff034558-0e19-47cf-ba2f-32905cdd92ba"/>
+				<reportElement x="331" y="109" width="216" height="58" uuid="ff034558-0e19-47cf-ba2f-32905cdd92ba"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -277,67 +277,11 @@ WHERE
 				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="3" y="190" width="79" height="12" uuid="fd9a93cf-a6f5-4757-9fb8-13023f59392d"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Nome:]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="-1" y="-54" width="60" height="20" uuid="f91e67aa-e4d2-4faa-baf9-e5fa0e8eea03"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[  Cartão Nr:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="82" y="190" width="256" height="12" uuid="68edfe56-9774-4b33-b8fe-b56b2e167130"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""+$F{pacientes_nomeCompleto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="82" y="202" width="256" height="12" uuid="373f24aa-09f1-4c08-b249-46e437e96205"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""+$F{pacientes_telefone}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="2" y="202" width="81" height="12" uuid="ef84799f-dbd1-4fd1-bf8f-3cc868e9b135"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Telefone:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="82" y="226" width="256" height="12" uuid="2e71e577-7a75-4be3-ba37-121d7a83d143"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""+$F{guia_Guia}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="2" y="214" width="81" height="12" uuid="e788b178-e81f-47c5-8af7-1d935341cfe5"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Nº Elegilidade:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="82" y="214" width="256" height="12" uuid="bb9132e4-bc24-4265-94ee-b1957eec1c14"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""+$F{pacientes_idPaciente}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="3" y="226" width="80" height="12" uuid="094592df-0cfd-4188-93c4-7c0bc1889dbf"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Processo Nr:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="401" y="86" width="57" height="15" uuid="8d29412d-121a-45fb-82cd-c0cc659bdf57"/>

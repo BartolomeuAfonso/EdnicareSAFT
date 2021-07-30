@@ -533,7 +533,7 @@ public final class ExamesSolicitadoParticular extends javax.swing.JFrame {
         System.out.println("Codigo Exames:" + codigoExames);
         controllerExamesporFazer.getNomedoTecnico(user, codigoExames);
         actualizarResultados();
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,horas as horas,pa.nomeCompleto,s.designacao FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                 + "where s.designacao ='Pago' AND p.PacienteInterno='NAO' AND e2.Espera='NÃO' AND p.dataPedido =CURRENT_DATE");
