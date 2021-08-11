@@ -245,4 +245,35 @@ public class RelatorioEstatistica {
         }
 
     }
+    
+     public void Irelatoriolaboratorio(String data1, String data2, int area) {
+        con = new ConexaoBancos().ConexaoBD();
+        HashMap hashMap = new HashMap();
+
+        hashMap.put("DATA1", data1);
+        hashMap.put("DATA2", data2);
+        hashMap.put("CODIGOPRODUTO", area);
+        String relatorio = "Relatorios/estatisticaLaboratorioPP.jasper";
+        System.out.println("Relatorio:" + relatorio);
+        File file = new File(relatorio).getAbsoluteFile();
+        String obterCaminho = file.getAbsolutePath();
+
+        try {
+            JasperFillManager.fillReport(obterCaminho, hashMap, con);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(obterCaminho, hashMap, con);
+
+            if (jasperPrint.getPages().size() >= 1) {
+                JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+                //    jasperViewer.setTitle("Relatório de Vendas Detalhado");
+                jasperViewer.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Nao Existem Paciente Atendido neste périodo!...");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "ERRO AO TENTAR MOSTRAR AS ENTRADAS !..." + ex);
+        }
+
+    }
 }

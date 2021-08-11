@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resultadoEcografiaMorfologica" language="groovy" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="30" rightMargin="50" topMargin="50" bottomMargin="20" uuid="b036d2b0-93d1-46a8-b473-90f50bd2d820">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="1502"/>
 	<parameter name="CODIGO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -195,7 +195,7 @@ WHERE
 		</band>
 	</title>
 	<detail>
-		<band height="478" splitType="Stretch">
+		<band height="492" splitType="Stretch">
 			<textField>
 				<reportElement x="64" y="110" width="451" height="100" uuid="dfce1bc6-4718-4e26-91a2-dbe7acafe03d"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
@@ -205,15 +205,15 @@ WHERE
 				<textFieldExpression><![CDATA[$F{resultadoecografia_biometrica}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="44" y="342" width="471" height="16" uuid="54aecb73-2343-4b14-896d-1e7630dcb74e"/>
-				<textElement verticalAlignment="Top">
+				<reportElement x="44" y="338" width="471" height="36" uuid="54aecb73-2343-4b14-896d-1e7630dcb74e"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultadoecografia_face}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="342" width="28" height="16" uuid="d212585f-bac1-465f-bc4f-c935b95a29ce"/>
+				<reportElement x="0" y="338" width="28" height="16" uuid="d212585f-bac1-465f-bc4f-c935b95a29ce"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -227,14 +227,14 @@ WHERE
 				<text><![CDATA[Biometria:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="241" width="41" height="16" uuid="6e25292a-dc30-4a28-9c7c-395b2568170c"/>
+				<reportElement x="1" y="236" width="41" height="16" uuid="6e25292a-dc30-4a28-9c7c-395b2568170c"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Crânio:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="44" y="240" width="471" height="100" uuid="519cd7b0-68bc-4e0b-8cd6-674249143d0a"/>
+				<reportElement x="44" y="235" width="471" height="100" uuid="519cd7b0-68bc-4e0b-8cd6-674249143d0a"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -242,14 +242,14 @@ WHERE
 				<textFieldExpression><![CDATA[$F{resultadoecografia_cranio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="18" y="362" width="91" height="16" uuid="3e2a6d1f-8cf5-417e-abb9-847d7febefbb"/>
+				<reportElement x="14" y="376" width="91" height="16" uuid="3e2a6d1f-8cf5-417e-abb9-847d7febefbb"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[2. Pescoço fetal:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="109" y="362" width="405" height="16" uuid="2e7c47c0-e395-4ac4-b363-9f6cbe7b4e51"/>
+				<reportElement x="109" y="376" width="405" height="16" uuid="2e7c47c0-e395-4ac4-b363-9f6cbe7b4e51"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -257,14 +257,14 @@ WHERE
 				<textFieldExpression><![CDATA[$F{resultadoecografia_pescocofetal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="21" y="388" width="50" height="16" uuid="0067f715-5cdc-4506-8ab8-85715e9bed14"/>
+				<reportElement x="21" y="401" width="50" height="16" uuid="0067f715-5cdc-4506-8ab8-85715e9bed14"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[3. Tórax:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="79" y="388" width="436" height="16" uuid="363cd5d3-4fa1-4bea-8846-60270fa556b9"/>
+				<reportElement x="79" y="401" width="436" height="16" uuid="363cd5d3-4fa1-4bea-8846-60270fa556b9"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -280,14 +280,14 @@ WHERE
 				<textFieldExpression><![CDATA[$F{resultadoecografia_descricao}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-2" y="214" width="128" height="16" uuid="4ed6b088-746f-46ee-a12e-4aa2414eb9cc"/>
+				<reportElement x="-2" y="210" width="128" height="16" uuid="4ed6b088-746f-46ee-a12e-4aa2414eb9cc"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[C. Morfologia Fetal:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="126" y="214" width="388" height="16" uuid="92f3855e-6f71-46e6-9694-c8f11979f5fb"/>
+				<reportElement x="126" y="210" width="388" height="16" uuid="92f3855e-6f71-46e6-9694-c8f11979f5fb"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -295,15 +295,15 @@ WHERE
 				<textFieldExpression><![CDATA[$F{resultadoecografia_segmentoCefalico}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="-1" y="411" width="58" height="16" uuid="9f4bfa2a-3f61-4b1f-b1ac-cb15caf05f0f"/>
+				<reportElement x="-1" y="431" width="58" height="16" uuid="9f4bfa2a-3f61-4b1f-b1ac-cb15caf05f0f"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Coração:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="57" y="411" width="458" height="66" uuid="f6e8bc15-5088-4edf-81fe-0f3a008c7ec6"/>
-				<textElement verticalAlignment="Top">
+				<reportElement x="57" y="426" width="458" height="66" uuid="f6e8bc15-5088-4edf-81fe-0f3a008c7ec6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
@@ -312,7 +312,7 @@ WHERE
 		</band>
 		<band height="477">
 			<staticText>
-				<reportElement x="0" y="0" width="67" height="16" uuid="d3cf229e-639d-4eb9-8eaf-5f836117b64a"/>
+				<reportElement x="0" y="4" width="67" height="16" uuid="d3cf229e-639d-4eb9-8eaf-5f836117b64a"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -326,64 +326,64 @@ WHERE
 				<text><![CDATA[5. Coluna Vertebral:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="189" width="65" height="16" uuid="f3750f6a-1da5-4346-b222-931261203f38"/>
+				<reportElement x="2" y="128" width="65" height="16" uuid="f3750f6a-1da5-4346-b222-931261203f38"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[6. Membros]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="19" y="205" width="51" height="16" uuid="a76d3442-0667-4caa-a2de-b89761cac281"/>
+				<reportElement x="19" y="144" width="51" height="16" uuid="a76d3442-0667-4caa-a2de-b89761cac281"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Superior]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="18" y="226" width="51" height="16" uuid="90786de8-2f03-4754-a072-ff0e93269124"/>
+				<reportElement x="18" y="165" width="51" height="16" uuid="90786de8-2f03-4754-a072-ff0e93269124"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Inferior]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="-2" y="248" width="65" height="16" uuid="6f879a5e-a5e3-423a-a279-861e35e2b7bc"/>
+				<reportElement x="-2" y="187" width="65" height="16" uuid="6f879a5e-a5e3-423a-a279-861e35e2b7bc"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[7. Anexos fetais]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="316" width="148" height="16" uuid="e4ff8e88-7fb5-423d-990e-49520dee566d"/>
+				<reportElement x="3" y="255" width="148" height="16" uuid="e4ff8e88-7fb5-423d-990e-49520dee566d"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[8. Órgãos genitais externos:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="-5" y="342" width="66" height="16" uuid="32d33aac-686d-4bbd-b844-aceb83b932c6"/>
+				<reportElement x="-5" y="281" width="66" height="16" uuid="32d33aac-686d-4bbd-b844-aceb83b932c6"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Conclusão:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="63" y="342" width="451" height="115" uuid="4d3ffe63-e1f9-435e-91e7-b143961ff88a"/>
-				<textElement verticalAlignment="Top">
+				<reportElement x="63" y="281" width="451" height="115" uuid="4d3ffe63-e1f9-435e-91e7-b143961ff88a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultadoecografia_conclusao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="-3" y="457" width="518" height="19" uuid="5f9a1dfd-ef2f-42ce-9a3b-34578348aa36"/>
+				<reportElement x="3" y="396" width="518" height="19" uuid="5f9a1dfd-ef2f-42ce-9a3b-34578348aa36"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultadoecografia_estado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="147" y="316" width="368" height="16" uuid="20679dfc-86b7-45df-bdd2-6ca05794f696"/>
+				<reportElement x="147" y="255" width="368" height="16" uuid="20679dfc-86b7-45df-bdd2-6ca05794f696"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -391,15 +391,15 @@ WHERE
 				<textFieldExpression><![CDATA[$F{resultadoecografia_orgaogenitais}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="64" y="248" width="450" height="67" uuid="331133db-5d4b-4fdf-a33c-2af903f3a7be"/>
-				<textElement verticalAlignment="Top">
+				<reportElement x="64" y="187" width="450" height="67" uuid="331133db-5d4b-4fdf-a33c-2af903f3a7be"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultadoecografia_anexoFetais}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="69" y="226" width="445" height="16" uuid="d4d30af3-8ed8-4443-907e-d88ef4cc494b"/>
+				<reportElement x="69" y="165" width="445" height="16" uuid="d4d30af3-8ed8-4443-907e-d88ef4cc494b"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -407,8 +407,8 @@ WHERE
 				<textFieldExpression><![CDATA[$F{resultadoecografia_inferiores}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="70" y="205" width="444" height="16" uuid="b2fd55b8-e847-40b8-988b-2e97b57c7c64"/>
-				<textElement verticalAlignment="Top">
+				<reportElement x="70" y="144" width="444" height="16" uuid="b2fd55b8-e847-40b8-988b-2e97b57c7c64"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
@@ -416,15 +416,15 @@ WHERE
 			</textField>
 			<textField>
 				<reportElement x="109" y="103" width="406" height="16" uuid="f397b20b-eb94-4f6a-a0b8-4e14a0152335"/>
-				<textElement verticalAlignment="Top">
+				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false" isItalic="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{resultadoecografia_colunavertebral}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="66" y="0" width="449" height="103" uuid="170e4f9d-5f9c-4fce-a9e9-e3dcd99a6c19"/>
-				<textElement verticalAlignment="Top">
+				<reportElement x="71" y="4" width="444" height="92" uuid="170e4f9d-5f9c-4fce-a9e9-e3dcd99a6c19"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Times New Roman" size="12" isBold="false"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>

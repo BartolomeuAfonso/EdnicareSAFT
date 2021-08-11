@@ -127,8 +127,8 @@ public class GuiaReguradora extends javax.swing.JFrame {
         jDateChooser2.setDate(new Date());
         jDateChooser3.setDate(new Date());
 
-        jComboBox4.setModel(new DefaultComboBoxModel(controllerSeguradora.getNomeCategoria().toArray()));
-        jComboBox1.setModel(new DefaultComboBoxModel(controllerSeguradora.getNomeCategoria().toArray()));
+        jComboBox4.setModel(new DefaultComboBoxModel(controllerSeguradora.getTodasSeguradoras().toArray()));
+        jComboBox1.setModel(new DefaultComboBoxModel(controllerSeguradora.getTodasSeguradoras().toArray()));
         jComboBox3.setModel(new DefaultComboBoxModel(controllerServico.getNomeServicos().toArray()));
         jComboBox6.setModel(new DefaultComboBoxModel(controllerServico.getNomeCoPagamento().toArray()));
         jComboBox7.setModel(new DefaultComboBoxModel(controllerMedico.getNomeMedico().toArray()));
@@ -1714,6 +1714,11 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 totalPreco = preco * quantidade + controllerServico.getPreco(jComboBox3.getSelectedItem().toString()) * quantidade * 0.14;
                 IVA = (preco * quantidade) * 0.14;
             }
+            if (codigoSeguro == 8) {
+                preco = controllerServico.getPreco(jComboBox3.getSelectedItem().toString());
+                totalPreco = preco * quantidade + controllerServico.getPreco(jComboBox3.getSelectedItem().toString()) * quantidade * 0.14;
+                IVA = (preco * quantidade) * 0.14;
+            }
 
         } else {
 
@@ -1778,6 +1783,11 @@ public class GuiaReguradora extends javax.swing.JFrame {
             if (codigoSeguro > 18) {
                 preco = controllerServico.getPreco(jComboBox3.getSelectedItem().toString());
                 totalPreco = (preco * quantidade + controllerServico.getPreco(jComboBox3.getSelectedItem().toString()) * quantidade * 0);
+                IVA = (preco * quantidade) * 0;
+            }
+            if (codigoSeguro == 8) {
+                preco = controllerServico.getPreco(jComboBox3.getSelectedItem().toString());
+                totalPreco = preco * quantidade + controllerServico.getPreco(jComboBox3.getSelectedItem().toString()) * quantidade * 0.14;
                 IVA = (preco * quantidade) * 0;
             }
 

@@ -266,6 +266,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem53 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
@@ -1364,6 +1365,15 @@ public class HomeAdministracao extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem18);
 
+        jMenuItem53.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jMenuItem53.setText("Exemplo");
+        jMenuItem53.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem53ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem53);
+
         jMenu2.add(jMenu5);
 
         jMenu4.setText("Médico");
@@ -1888,7 +1898,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-       new viewParametro().setVisible(true);
+        new viewParametro().setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
@@ -2233,6 +2243,10 @@ public class HomeAdministracao extends javax.swing.JFrame {
         new NotaView(getCodigoUser(), 1).setVisible(true);
     }//GEN-LAST:event_jMenuItem52ActionPerformed
 
+    private void jMenuItem53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem53ActionPerformed
+        relatorioServicos.getLista();        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem53ActionPerformed
+
     public int getCodigoUser() {
         return controllerUsuario.getCodigoUtilizadorUsername(user);
     }
@@ -2481,6 +2495,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem50;
     private javax.swing.JMenuItem jMenuItem51;
     private javax.swing.JMenuItem jMenuItem52;
+    private javax.swing.JMenuItem jMenuItem53;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;

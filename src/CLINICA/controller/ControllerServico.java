@@ -436,7 +436,39 @@ public class ControllerServico {
         return lista;
     }
 
-     public ArrayList<String> getNomeExameCategoriaIntegrado() {
+    public ArrayList<String> getNomeExamesporExamesIntegrado() {
+        //conexao.Connectando();
+        sql = "SELECT DISTINCT s.designacao AS designacao FROM servicos s INNER JOIN examesintegrado e ON s.idServico=e.codigoServico\n"
+                + "WHERE e.codigoCategoria <>0";
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
+     public ArrayList<String> getNomeExamesporExamesIntegradoSimples() {
+        //conexao.Connectando();
+        sql = "SELECT DISTINCT s.designacao AS designacao FROM servicos s INNER JOIN examesintegrado e ON s.idServico=e.codigoServico\n"
+                + "WHERE e.codigoCategoria = 0";
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
+    public ArrayList<String> getNomeExameCategoriaIntegrado() {
         //conexao.Connectando();
         sql = "SELECT * FROM categoria_exames";
         ArrayList<String> lista = new ArrayList<>();
@@ -450,10 +482,10 @@ public class ControllerServico {
         }
         return lista;
     }
-    
-      public int getCodigoNomeExameCategoriaIntegrado(String designacao) {
 
-        sql = "SELECT codigo from categoria_exames where designacao ='"+designacao+"'";
+    public int getCodigoNomeExameCategoriaIntegrado(String designacao) {
+
+        sql = "SELECT codigo from categoria_exames where designacao ='" + designacao + "'";
         System.out.println("Codigo de Serviço:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -466,7 +498,7 @@ public class ControllerServico {
         }
         return 0;
     }
-    
+
     public ArrayList<String> getNomeExamesPorLike(String designacao) {
         //conexao.Connectando();
         sql = "SELECT * FROM servicos s where designacao like '" + designacao + "%' and codigoCategoria=2";
@@ -514,7 +546,7 @@ public class ControllerServico {
 
     public ArrayList<String> getNomecografia() {
         //  conexao.Connectando();
-        sql = "SELECT * FROM servicos s where codigoCategoria=5";
+        sql = "SELECT * FROM servicos s where codigoCategoria=5 or codigoCategoria=21 or codigoCategoria=22";
         ArrayList<String> lista = new ArrayList<>();
         try {
             ps = con.prepareStatement(sql);
@@ -773,7 +805,7 @@ public class ControllerServico {
 
     public int getCodigoServico(String designacao) {
 
-        sql = "SELECT idServico from servicos where designacao ='"+designacao+"'";
+        sql = "SELECT idServico from servicos where designacao ='" + designacao + "'";
         System.out.println("Codigo de Serviço:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -786,8 +818,23 @@ public class ControllerServico {
         }
         return 0;
     }
+    public int getCodigoServicoporCategoria_exames(String designacao) {
 
-      public int getCodigoServicoprLike(String designacao) {
+        sql = "SELECT * FROM categoria_exames WHERE designacao='" + designacao + "'";
+        System.out.println("Codigo de Serviço:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("codigo");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return 0;
+    }
+
+    public int getCodigoServicoprLike(String designacao) {
 
         sql = "SELECT idServico from servicos where designacao LIKE '%" + designacao + "%'";
         System.out.println("Codigo de Serviço:" + sql);
@@ -968,7 +1015,7 @@ public class ControllerServico {
     public double getPreco(String designacao) {
         // conexao.Connectando();
         sql = "SELECT preco from servicos where designacao ='" + designacao + "'";
-       System.out.println("Teste:" + sql);
+        System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

@@ -260,9 +260,8 @@ public class HomeEcografia extends javax.swing.JFrame {
         jMenu1.setText("Cadastros");
         jMenu1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, 0));
         jMenuItem1.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jMenuItem1.setText("Serviços");
+        jMenuItem1.setText("Registar Ecografia");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -402,7 +401,7 @@ public class HomeEcografia extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        new Servico(1, getCodigoUser()).setVisible(true);
+      new editarEcografia().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
@@ -444,7 +443,8 @@ public class HomeEcografia extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7MouseClicked
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        relatorioServicos.getTabelaPrecoRaio();
+     
+        //relatorioServicos.getTabelaPrecoRaio();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed

@@ -48,6 +48,23 @@ public class ControllerPossiveisResultados {
 
         return 0;
     }
+     public int getCodigoporProduto(String designacao,int codigoServico) {
+      //  conexao.Connectando();
+        sql = "SELECT examesintegrado.idExamesIntegrado FROM examesintegrado where examesintegrado.designacao = '" + designacao + "' AND codigoServico="+codigoServico;
+        System.out.println("Sql:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+
+        return 0;
+    }
 
     public Vector listarPossiveisResultados(int codigoProdutoItem) {
      //   conexao.Connectando();
@@ -69,6 +86,7 @@ public class ControllerPossiveisResultados {
 
     }
 
+    
     public Vector listarResultados(String exame) {
     //    conexao.Connectando();
         sql = "SELECT r.designacao from resultados_exames_possivel r inner join servicos s\n"

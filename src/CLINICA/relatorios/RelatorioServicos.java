@@ -532,4 +532,31 @@ public class RelatorioServicos {
         }
     }
 
+     public void getLista() {
+
+        con = new ConexaoBancos().ConexaoBD();
+        HashMap hashMap = new HashMap();
+    
+        String relatorio = "relatorios/estatisticaClinica.jasper";
+        File file = new File(relatorio).getAbsoluteFile();
+        String obterCaminho = file.getAbsolutePath();
+        System.out.println("Caminho:" + obterCaminho);
+        try {
+            JasperFillManager.fillReport(obterCaminho, hashMap, con);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(obterCaminho, hashMap, con);
+
+            if (jasperPrint.getPages().size() >= 1) {
+                JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+                jasperViewer.setTitle("Agenda do Dr.");
+                jasperViewer.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Nao Existem Factura!...");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "ERRO AO TENTAR MOSTRAR AS ENTRADAS !..." + ex);
+        }
+    }
+
 }

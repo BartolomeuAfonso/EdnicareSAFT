@@ -5,6 +5,7 @@
  */
 package CLINICA.controller;
 
+import CLINICA.modelo.Ecografia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +28,51 @@ public class ControllerEcografia {
 
     public ControllerEcografia(Connection con) {
         this.con = conexao.ConexaoBD();
+    }
+
+    public void salvar(Ecografia ecografia) {
+        sql = "INSERT INTO resutado_ecografia(designacao,codigoProduto,ovarios,conclusao,cranio,coracao,face,abdomen,anexoFetais,biometria,dpp)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        System.out.println("Teste:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, ecografia.getDesignacao());
+            ps.setInt(2, ecografia.getCodigoProduto());
+            ps.setString(3, ecografia.getOvarios());
+            ps.setString(4, ecografia.getConclusao());
+            ps.setString(5, ecografia.getCranio());
+            ps.setString(6, ecografia.getCoracao());
+            ps.setString(7, ecografia.getFace());
+            ps.setString(8, ecografia.getAbdomen());
+            ps.setString(9, ecografia.getAnexoFetais());
+            ps.setString(10, ecografia.getBiometria());
+            ps.setString(11, ecografia.getDdp());
+            ps.execute();
+            JOptionPane.showMessageDialog(null, "Dados salvo com sucesso");
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+    }
+
+    public void Editar(Ecografia ecografia, int codigo) {
+        sql = "UPDATE resutado_ecografia SET designacao=?,ovarios=?,conclusao=?,cranio=?,coracao=?,face=?,abdomen=?,anexoFetais=?,biometria=?,dpp=? WHERE codigoProduto=" + codigo;
+        System.out.println("Teste:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, ecografia.getDesignacao());
+            ps.setString(2, ecografia.getOvarios());
+            ps.setString(3, ecografia.getConclusao());
+            ps.setString(4, ecografia.getCranio());
+            ps.setString(5, ecografia.getCoracao());
+            ps.setString(6, ecografia.getFace());
+            ps.setString(7, ecografia.getAbdomen());
+            ps.setString(8, ecografia.getAnexoFetais());
+            ps.setString(9, ecografia.getBiometria());
+            ps.setString(10, ecografia.getDdp());
+            ps.execute();
+            JOptionPane.showMessageDialog(null, "Dados actualizados com sucesso");
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
     }
 
     public String getDesignacao(int codigo) {
@@ -54,6 +100,22 @@ public class ControllerEcografia {
             rs = ps.executeQuery();
             while (rs.next()) {
                 return rs.getString("conclusao");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return null;
+    }
+
+    public String getDPP(int codigo) {
+        //   conexao.Connectando();
+        sql = "SELECT dpp from resutado_ecografia where codigoProduto=" + codigo;
+        System.out.println("Teste:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getString("dpp");
             }
         } catch (SQLException e) {
             System.out.println("ERRO:" + e);
@@ -197,7 +259,7 @@ public class ControllerEcografia {
     public void alter(int codigoProduto, String codigoPedido) {
 
 //        conexao.Connectando();
-        sql = "UPDATE pedidos_ecografia SET estado='SIM' WHERE codigoServico=" + codigoProduto + " AND codigoPedido="+codigoPedido;
+        sql = "UPDATE pedidos_ecografia SET estado='SIM' WHERE codigoServico=" + codigoProduto + " AND codigoPedido=" + codigoPedido;
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);

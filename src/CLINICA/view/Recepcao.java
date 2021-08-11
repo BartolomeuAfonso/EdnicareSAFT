@@ -146,9 +146,9 @@ public class Recepcao extends javax.swing.JFrame {
             
         }
         // Comentar esse opção para clínicas excepto ao centro médico Octávio.
-//        if (tipoUtilizador == 4) {
-//            jRadioButton3.setVisible(false);
-//        }
+        if (tipoUtilizador == 4) {
+            jRadioButton3.setVisible(false);
+        }
         iconeSistema();
         teclaInser();
         

@@ -47,7 +47,7 @@ public class ControllerExamesporFazer {
             ps.setString(3, e.getDataPedido());
             ps.setInt(4, e.getQuantidade());
             ps.setInt(5, 4);
-            ps.setInt(6,1);
+            ps.setInt(6, 1);
             ps.execute();
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex.getMessage());
@@ -236,6 +236,54 @@ public class ControllerExamesporFazer {
 
     }
 
+    public  ArrayList<String> getCodigo(int codigoServico) {
+      //  conexao.Connectando();
+        sql = "SELECT examesintegrado.designacao FROM examesintegrado where codigoServico="+codigoServico;
+        System.out.println("Sql:" + sql);
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+        
+    }
+     public  ArrayList<String> getCodigoporCategoria_exames(int codigoServico,int codigoProduto) {
+      //  conexao.Connectando();
+        sql = "SELECT examesintegrado.designacao FROM examesintegrado where codigocategoria="+codigoServico+" AND codigoServico="+codigoProduto;
+        System.out.println("Sql:" + sql);
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+        
+    }
+    public ArrayList<String> getCodigoporProduto(String designacao, int codigoServico) {
+        //  conexao.Connectando();
+        sql = "SELECT examesintegrado.designacao FROM examesintegrado where examesintegrado.designacao LIKE '%"+designacao+"%' AND codigoServico=" + codigoServico;
+        System.out.println("Sql:" + sql);
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
     public List<ExamesPorFazerItem> getResultadosProdutosItem(int codigoServico, String dataPedido, int codigoPaciente) {
         //conexao.Connectando();
         sql = "SELECT DISTINCT s.designacao,ex.resultado,p.dataPedido,ex.dataResultado,e1.referencia FROM examesintegrado e inner join servicos s on e.codigoServico=s.idServico\n"
@@ -347,6 +395,38 @@ public class ControllerExamesporFazer {
                 + "WHERE\n"
                 + "     examesporfazeritems.`codigoExames` = " + codigoExame + "";
         sql += " And examesporfazeritems.`codigoStatusExame` = " + codigoExameStatus + " and examesporfazeritems.codigoProduto = " + codigoProduto;
+        //  date(examesporfazer.`dataPedido`) between '" + data1 + "' And '" + data2 + "' 
+        System.out.println("Segunda consulta:" + sql);
+        List<ResultadoExame> lista = new ArrayList();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(new ResultadoExame(rs.getInt("codigoExames"), rs.getString("Designacao"), rs.getString("Resultado"), rs.getString("Referencia")));
+            }
+//            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+
+    public List<ResultadoExame> getResultadosByPaciente3porLike(int codigoPaciente, String data1, String data2, int codigoExameStatus, boolean listarTodos, boolean temProdutoItem, int codigoExame, int codigoProduto, String designacao) {
+        //   conexao.Connectando();
+        codigoExameStatus = 1;
+        sql = "SELECT DISTINCT\n"
+                + "     examesporfazeritems.`codigoExames` AS codigoExames,\n"
+                + "     examesporfazeritems.`resultado` AS Resultado,\n"
+                + "     examesintegrado.`designacao` AS Designacao,\n"
+                + "     examesintegrado.`referencia` AS Referencia\n"
+                + "FROM\n"
+                + "     `examesporfazer` examesporfazer INNER JOIN `examesporfazeritems` examesporfazeritems ON examesporfazer.`idexamesPorFazer` = examesporfazeritems.`codigoExames`\n"
+                + "     INNER JOIN `servicos` servicos ON examesporfazeritems.`codigoProduto` = servicos.`idServico`\n"
+                + "     INNER JOIN `examesintegrado` examesintegrado ON servicos.`idServico` = examesintegrado.`codigoServico`\n"
+                + "     INNER JOIN `pacientes` pacientes  ON examesporfazer.`codigoPaciente` =  `pacientes`.idPaciente\n"
+                + "WHERE\n"
+                + "     examesporfazeritems.`codigoExames` = " + codigoExame + "";
+        sql += " And examesporfazeritems.`codigoStatusExame` = " + codigoExameStatus + " and examesporfazeritems.codigoProduto = " + codigoProduto + " AND examesintegrado.`designacao` LIKE '%" + designacao + "%'";
         //  date(examesporfazer.`dataPedido`) between '" + data1 + "' And '" + data2 + "' 
         System.out.println("Segunda consulta:" + sql);
         List<ResultadoExame> lista = new ArrayList();

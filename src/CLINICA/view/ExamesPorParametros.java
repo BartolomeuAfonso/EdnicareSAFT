@@ -158,6 +158,7 @@ public class ExamesPorParametros extends javax.swing.JDialog {
             }
         }
         ;
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Exames com Parametros");
@@ -230,6 +231,12 @@ public class ExamesPorParametros extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jTextField1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextField1CaretUpdate(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -238,20 +245,23 @@ public class ExamesPorParametros extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 19, Short.MAX_VALUE))
+                    .addComponent(jTextField1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -274,7 +284,7 @@ public class ExamesPorParametros extends javax.swing.JDialog {
         for (int i = 0; i < lista.size(); i++) {
 
             System.out.println("exame: " + lista.get(i).getExame());
-            int codigoProdutoItem = possiveisResultadosC.getCodigo(lista.get(i).getExame());
+            int codigoProdutoItem = possiveisResultadosC.getCodigoporProduto(lista.get(i).getExame(),codigoProduto);
 
             System.out.println("codigoProdutoItem " + codigoProdutoItem + " i = " + i);
             JComboBox combo = new JComboBox(possiveisResultadosC.listarPossiveisResultados(codigoProdutoItem));
@@ -442,6 +452,10 @@ public class ExamesPorParametros extends javax.swing.JDialog {
         controllerExamesporFazerItens.actualizarResultadoDoProdutoItem1(getCodigoExame(), resultado, referencia, getDataActual(), codigoProdutoItens);
     }//GEN-LAST:event_jTable1KeyPressed
 
+    private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
+        carregarExamesporLike(false, jTextField1.getText().trim());
+    }//GEN-LAST:event_jTextField1CaretUpdate
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSalvar;
@@ -450,5 +464,75 @@ public class ExamesPorParametros extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    public final void carregarExamesporLike(boolean listarTodos, String designacao) {
+
+        codigoProduto = controllerServico.getCodigoServico(produto);
+
+        List<ResultadoExame> lista = controllerExamesporFazer.getResultadosByPaciente3porLike(codigoPaciente, data1, data2, codigoStatusExame, listarTodos, true, codigoExame, codigoProduto,designacao);
+        String colunsNames[] = {"Designação", "Resultado", "Valor de Referência"};
+
+        editors = new ArrayList<TableCellEditor>();
+        ArrayList<JComboBox> listaPossiveisResultados = new ArrayList<>();
+        ArrayList<DefaultCellEditor> listaDefaultCellEditor = new ArrayList<>();
+
+        for (int i = 0; i < lista.size(); i++) {
+
+            System.out.println("exame: " + lista.get(i).getExame());
+            int codigoProdutoItem = possiveisResultadosC.getCodigoporProduto(lista.get(i).getExame(),codigoProduto);
+
+            System.out.println("codigoProdutoItem " + codigoProdutoItem + " i = " + i);
+            JComboBox combo = new JComboBox(possiveisResultadosC.listarPossiveisResultados(codigoProdutoItem));
+
+            combo.setEditable(true);
+
+            listaPossiveisResultados.add(combo);
+        }
+
+        for (JComboBox combo : listaPossiveisResultados) {
+            DefaultCellEditor dce = new DefaultCellEditor(combo);
+
+            listaDefaultCellEditor.add(dce);
+        }
+
+        for (DefaultCellEditor cellEditor : listaDefaultCellEditor) {
+            editors.add(cellEditor);
+        }
+
+        //limparTabelaResultados();
+        DefaultTableModel dataModel = new DefaultTableModel(colunsNames, 0);
+
+        for (int i = 0; i < lista.size(); ++i) {
+            System.out.println("Exame---------------->  " + lista.get(i).getExame());
+            System.out.println("Resultado---------------->  " + lista.get(i).getReultado());
+            try {
+
+                String vData[]
+                        = {
+                            //""+lista.get(i).getCodigo(), 
+                            lista.get(i).getExame(),
+                            //lista.get(i).getReferencia(),
+                            lista.get(i).getReultado(),
+                            //lista.get(i).getDataResultado(),
+                            lista.get(i).getReferencia()
+                        };
+
+                dataModel.addRow(vData);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        jTable1.setModel(dataModel);
+
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(10);
+
+//        jTableResultados.getColumnModel().getColumn(3).setPreferredWidth(10);
+        //listarExame = listarExame;
+    }
+
 }
