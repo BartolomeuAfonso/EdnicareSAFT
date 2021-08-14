@@ -38,7 +38,7 @@ public class ControllerExamesporFazer {
 
     public void create(ExamesporFazer e) {
         //  conexao.Connectando();
-        sql = "insert into examesporfazer(codigoPaciente,CodigoUtilizador,hora,dataPedido,quantidade,codigoStatus,codigoMedico)values(?,?,LOCALTIME(),?,?,?,?)";
+        sql = "insert into examesporfazer(codigoPaciente,CodigoUtilizador,hora,dataPedido,quantidade,codigoStatus,codigoMedico,colaborador)values(?,?,LOCALTIME(),?,?,?,?,?)";
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -48,6 +48,7 @@ public class ControllerExamesporFazer {
             ps.setInt(4, e.getQuantidade());
             ps.setInt(5, 4);
             ps.setInt(6, 1);
+            ps.setString(7, e.getColaborador());
             ps.execute();
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex.getMessage());

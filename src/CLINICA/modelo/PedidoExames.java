@@ -17,7 +17,7 @@ public class PedidoExames {
     private int codigoPaciente, codigoServico, codigoTriagem, codigoMedico;
     private int codigoFactura;
     private Date dataPedido;
-    private String hora, descricao, diagnostico;
+    private String hora, descricao, diagnostico,colaborador;
 
     public PedidoExames() {
     }
@@ -110,5 +110,15 @@ public class PedidoExames {
     public void setCodigoFactura(int codigoFactura) {
         this.codigoFactura = codigoFactura;
     }
+
+    public String getColaborador() {
+        return colaborador;
+    }
+
+    public void setColaborador(String colaborador) {
+        this.colaborador = colaborador;
+    }
+    
+    
 
 }

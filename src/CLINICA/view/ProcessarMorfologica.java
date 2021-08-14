@@ -264,13 +264,13 @@ public class ProcessarMorfologica extends javax.swing.JFrame {
 
         jLabel7.setText("Coluna Vertebral");
 
-        jLabel9.setText("Membros Superior:");
+        jLabel9.setText("Membros Inferior:");
 
         jTextField5.setText("radio, cubito e úmero sem anomalia, as mãos com dedos completos.");
 
         jTextField6.setText("fémur de 67mm, tíbia de 60mm, perónio de 56mm com ossos de társio presentes e dedos completos.");
 
-        jLabel10.setText("Membros Inferior:");
+        jLabel10.setText("Membros Superior:");
 
         jLabel11.setText("8. Orgãos genitais externos:");
 

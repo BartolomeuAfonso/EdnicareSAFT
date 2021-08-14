@@ -59,7 +59,7 @@ public class ControllerPedidoExames {
             ps.setString(2, pedidoExames.getDescricao());
             ps.setString(3, pedidoExames.getDiagnostico());
             ps.setInt(4, pedidoExames.getCodigoTriagem());
-          //  ps.setInt(5, pedidoExames.getCodigoFactura());
+            //  ps.setInt(5, pedidoExames.getCodigoFactura());
             ps.execute();
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex);
@@ -68,12 +68,13 @@ public class ControllerPedidoExames {
     }
 
     public void SalvarEcografiaItens(PedidoExames pedidoExames) {
-        sql = "INSERT INTO pedidoecografia(codigoPaciente,codigoMedico,dataPedido)values(?,?,now())";
+        sql = "INSERT INTO pedidoecografia(codigoPaciente,codigoMedico,dataPedido,colaborador)values(?,?,now(),?)";
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, pedidoExames.getCodigoPaciente());
             ps.setInt(2, pedidoExames.getCodigoMedico());
+            ps.setString(3, pedidoExames.getColaborador());
             ps.execute();
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex);

@@ -65,7 +65,7 @@ public class ControllerNotas {
 
         try {
             soma = soma + getCountFactura();
-            nRef = "NC 01" + getAnoemCurso() + "/" + soma;
+            nRef = "NC " + getAnoemCurso() + "/" + soma;
             System.out.println("Data: " + datav);
             System.out.println("Hora:" + data_hora);
             System.out.println("Referencia:" + nRef);

@@ -228,8 +228,8 @@ public class ControllerFactura {
         }
     }
 
-    public void updateRecibo(int codigoFactura) {
-        sql = "UPDATE factura SET Guia =1 WHERE idFactura=" + codigoFactura;
+    public void updateRecibo(int codigoFactura, String Recibo,int numerador) {
+        sql = "UPDATE factura SET nRecibo='" + Recibo + "',numeradorRecibo="+numerador+",Guia=1 WHERE idFactura=" + codigoFactura;
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -543,7 +543,7 @@ public class ControllerFactura {
             soma = soma + getLastCodigo("FT", "FT");
             hashAnterior = getLasHash("FT", "FT");
             nRef = "FT " + getAnoemCurso() + "/" + soma;
-            nRecibo = "RC " + getAnoemCurso() + "/" + soma;
+            //  nRecibo = "RC " + getAnoemCurso() + "/" + soma;
 
         } else {
             hashAnterior = getLasHash("FP", "FP");
@@ -883,6 +883,28 @@ public class ControllerFactura {
         return 0;
     }
 
+    public int getLastCodigoRecibo() {
+        try {
+            String sql = "select max(numeradorRecibo) as numerador from factura";
+            // where LEFT(nRef,2)='" + status + "' order by idFactura desc limit 1
+            System.out.println("numerador:" + sql);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            try {
+                if (rs.next()) {
+                    return rs.getInt("numerador");
+                }
+            } catch (SQLException ex) {
+
+                ex.printStackTrace();
+            }
+            return 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+
     public ArrayList<String> getNome() {
         sql = "SELECT f.nomeClientes as guia FROM factura f where date(dataFactura)=CURRENT_DATE";
         ArrayList<String> lista = new ArrayList<>();
@@ -898,7 +920,7 @@ public class ControllerFactura {
     }
 
     public ArrayList<String> getNomeLike(String nome) {
-        sql = "SELECT nomeClientes FROM factura f where nomeClientes LIKE '%" + nome + "%'";
+        sql = "SELECT nomeClientes FROM factura f where idFactura='"+nome + "'";
         System.out.println("" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
@@ -914,6 +936,21 @@ public class ControllerFactura {
 
     public ArrayList<String> getFactura(int codigoCliente) {
         sql = "SELECT idFactura FROM factura f where date(f.dataFactura)=CURRENT_DATE AND f.estado<>'FACTURA ANULADA' AND codigoCliente=" + codigoCliente;
+        System.out.println("Codigo:" + sql);
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("idFactura"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+    
+    public ArrayList<String> getFacturaporCodigo(String nome) {
+        sql = "SELECT idFactura FROM factura f where idFactura='"+nome+"'";
         System.out.println("Codigo:" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
@@ -955,6 +992,21 @@ public class ControllerFactura {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public int getSomaRecibo() {
+        String sql = "SELECT Guia from factura where idFactura=";
+        System.out.println("Para recibo:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Guia");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
     }
 
     public String getCodigoReferencia(String codigo) {

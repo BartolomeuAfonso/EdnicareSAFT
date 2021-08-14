@@ -4,6 +4,37 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="ireport.callouts" value="##Sun Aug 08 18:25:44 BST 2021"/>
+	<subDataset name="addSet1" uuid="ffe26e20-4e1f-415f-b978-02d09847bc58">
+		<queryString>
+			<![CDATA[SELECT
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     examesporfazer.`idexamesPorFazer` AS examesporfazer_idexamesPorFazer,
+     examesporfazer.`dataPedido` AS examesporfazer_dataPedido,
+     examesporfazeritems.`codigoExames` AS examesporfazeritems_codigoExames,
+     examesporfazeritems.`dataResultado` AS examesporfazeritems_dataResultado,
+     examesporfazeritems.`referencia` AS examesporfazeritems_referencia,
+     examesporfazeritems.`resultado` AS examesporfazeritems_resultado,
+     examesporfazeritems.`codigo` AS examesporfazeritems_codigo,
+     examesporfazeritems.`quantidade` AS examesporfazeritems_quantidade
+FROM
+     `servicos` servicos INNER JOIN `examesporfazeritems` examesporfazeritems ON servicos.`idServico` = examesporfazeritems.`codigoProduto`
+     INNER JOIN `examesporfazer` examesporfazer ON examesporfazeritems.`codigoExames` = examesporfazer.`idexamesPorFazer`]]>
+		</queryString>
+		<field name="servicos_idServico" class="java.lang.Long"/>
+		<field name="servicos_designacao" class="java.lang.String"/>
+		<field name="examesporfazer_idexamesPorFazer" class="java.lang.Long"/>
+		<field name="examesporfazer_dataPedido" class="java.sql.Date"/>
+		<field name="examesporfazeritems_codigoExames" class="java.lang.Long"/>
+		<field name="examesporfazeritems_dataResultado" class="java.sql.Date"/>
+		<field name="examesporfazeritems_referencia" class="java.lang.String"/>
+		<field name="examesporfazeritems_resultado" class="java.lang.String"/>
+		<field name="examesporfazeritems_codigo" class="java.lang.Integer"/>
+		<field name="examesporfazeritems_quantidade" class="java.lang.Long"/>
+		<group name="servicos_designacao">
+			<groupExpression><![CDATA[$F{servicos_designacao}]]></groupExpression>
+		</group>
+	</subDataset>
 	<queryString>
 		<![CDATA[SELECT
      empresa.`descricao` AS empresa_descricao,

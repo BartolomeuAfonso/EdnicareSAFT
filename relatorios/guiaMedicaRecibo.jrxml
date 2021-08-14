@@ -12,8 +12,8 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT DISTINCT
-     factura.`idFactura` AS guia_idguia,
      date(factura.`dataFactura`) AS guia_dataGuia,
+     factura.`idFactura` AS guia_idguia,
      factura.`nomeclientes` AS guia_nomeclientes,
      factura.`valorApagar` AS guia_valorApagar,
      factura.`codigoCliente` AS guia_codigoCliente,
@@ -65,7 +65,8 @@
      factura.`nRef` AS factura_nRef,
      factura_itens.`totalTPA` AS factura_itens_totalTPA,
      formapagamento.`codForma` AS formapagamento_codForma,
-     formapagamento.`designacao` AS formapagamento_designacao
+     formapagamento.`designacao` AS formapagamento_designacao,
+     factura.`nRecibo` AS factura_nRecibo
 FROM
      `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
      INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`
@@ -79,8 +80,8 @@ FROM
 WHERE
      factura.`idfactura` = $P{CODIGO}]]>
 	</queryString>
+	<field name="guia_dataGuia" class="java.sql.Date"/>
 	<field name="guia_idguia" class="java.lang.Long"/>
-	<field name="guia_dataGuia" class="java.sql.Timestamp"/>
 	<field name="guia_nomeclientes" class="java.lang.String"/>
 	<field name="guia_valorApagar" class="java.lang.Double"/>
 	<field name="guia_codigoCliente" class="java.lang.Long"/>
@@ -133,6 +134,7 @@ WHERE
 	<field name="factura_itens_totalTPA" class="java.lang.Double"/>
 	<field name="formapagamento_codForma" class="java.lang.Long"/>
 	<field name="formapagamento_designacao" class="java.lang.String"/>
+	<field name="factura_nRecibo" class="java.lang.String"/>
 	<variable name="TOTAL_POR_PAGINA" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{guia_itens_totalGeral}+$F{factura_itens_totalTPA}]]></variableExpression>
 	</variable>
@@ -249,7 +251,7 @@ WHERE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["RG 2021/"+$F{guia_idguia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{factura_nRecibo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="341" y="116" width="182" height="13" uuid="1be21b32-d5f6-4703-9db0-f44c24e122a2"/>

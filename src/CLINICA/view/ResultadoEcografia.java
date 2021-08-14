@@ -69,7 +69,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
         controllerPedidoRaioX = new ControllerPedidoRaioX(con);
         controllerResultadoRaioX = new ControllerResultadoRaioX(con);
         controllerEcografia = new ControllerEcografia(con);
-        mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
+        mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado,p.colaborador as colaborador FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
                 + "inner join servicos s on s.idServico = p1.codigoServico inner join pacientes pa\n"
                 + "on pa.idPaciente = p.codigoPaciente\n"
                 + "where  p1.estado='Nao' AND p1.dataPedido =current_date order by p.dataPedido");
@@ -125,14 +125,14 @@ public class ResultadoEcografia extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Nome", "Designação", "Data", "Atendido"
+                "Código", "Nome", "Designação", "Data", "Atendido", "Colaborador"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -151,6 +151,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Buscar Ecografia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 3, 11))); // NOI18N
@@ -415,7 +416,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
             if (jRadioButton2.isSelected()) {
                 int resposta = JOptionPane.showConfirmDialog(null, "Ecografia Pélvica", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
-                    String dados = "Ecografia Pélvica";
+                    String dados = "Ecografia Pelvica";
                     dados = jLabel1.getText();
                     int codigoProduto = controllerServico.getCodigoServico(dados);
                     System.out.println("Codigo:" + codigoProduto);
@@ -600,7 +601,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
+        mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado, p.colaborador as colaborador  FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
                 + "inner join servicos s on s.idServico = p1.codigoServico inner join pacientes pa\n"
                 + "on pa.idPaciente = p.codigoPaciente\n"
                 + "where  p1.estado='Nao' AND p1.dataPedido =current_date order by p.dataPedido");
@@ -608,7 +609,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
+        mostrarExame("SELECT p.idPedido as codigo,pa.nomeCompleto as nome,s.designacao as ecografia, p.dataPedido as data, p.estado as estado,p.colaborador as colaborador  FROM pedidoecografia p inner join pedidos_ecografia p1 on p.idPedido =p1.codigoPedido\n"
                 + "inner join servicos s on s.idServico = p1.codigoServico inner join pacientes pa\n"
                 + "on pa.idPaciente = p.codigoPaciente\n"
                 + "where p1.estado='Nao' AND date(p1.dataPedido) between '" + getData() + "' and '" + getData1() + "'");
@@ -677,14 +678,16 @@ public class ResultadoEcografia extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(200);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(300);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(50);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(300);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
             jTable1.getTableHeader().setReorderingAllowed(false);
             jTable1.setAutoResizeMode(jTable1.AUTO_RESIZE_OFF);
             jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             model.setNumRows(0);
             while (rs.next()) {
-                model.addRow(new String[]{rs.getString("codigo"), rs.getString("nome"), rs.getString("ecografia"), rs.getString("data"), rs.getString("estado")
+                model.addRow(new String[]{rs.getString("codigo"), rs.getString("nome"), rs.getString("ecografia"), rs.getString("data"), rs.getString("estado"),rs.getString("colaborador")
 
                 });
             }

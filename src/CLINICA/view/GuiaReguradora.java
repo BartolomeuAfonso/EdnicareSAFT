@@ -104,7 +104,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
     ControllerParametros controllerParametros;
     PedidoExames pedidoExames = new PedidoExames();
     ControllerPedidoExames controllerPedidoExames;
-
+    
     public GuiaReguradora(int codigo) {
         initComponents();
         this.user = codigo;
@@ -126,7 +126,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         jDateChooser1.setDate(new Date());
         jDateChooser2.setDate(new Date());
         jDateChooser3.setDate(new Date());
-
+        
         jComboBox4.setModel(new DefaultComboBoxModel(controllerSeguradora.getTodasSeguradoras().toArray()));
         jComboBox1.setModel(new DefaultComboBoxModel(controllerSeguradora.getTodasSeguradoras().toArray()));
         jComboBox3.setModel(new DefaultComboBoxModel(controllerServico.getNomeServicos().toArray()));
@@ -148,14 +148,14 @@ public class GuiaReguradora extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         iconeSistema();
     }
-
+    
     public final void iconeSistema() {
         // URL caminho = this.getClass().getResource("/meus icons/GRest.png");
         URL caminho = this.getClass().getResource("/sf/ce/imagens/Icons/logoteste2.jpg");
         Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(caminho);
         this.setIconImage(iconeTitulo);
     }
-
+    
     public void setDesconto(String nome) {
         //  jTextFieldDesconto.setText(String.valueOf(utentes.getDescontoUtente(nome)));
     }
@@ -860,7 +860,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
 //            jTextFieldTotaPagar.setText("" + decimalformat.format(totalGeral()));
                 actualizarValorApagar();
                 actualizar();
-
+                
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Selecione um produto na tabela!");
             }
@@ -872,7 +872,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
             defaultTableModel.removeRow(jTable1.getSelectedRow());
             actualizarValorApagar();
             actualizar();
-
+            
         }
 
     }//GEN-LAST:event_jLabel8MousePressed
@@ -881,15 +881,15 @@ public class GuiaReguradora extends javax.swing.JFrame {
         limparVenda();
         flag = 1;
     }//GEN-LAST:event_jComboBox5ActionPerformed
-
+    
     public void actualizar() {
-
+        
         BigDecimal res2 = new BigDecimal((totalGeral()));
         jTextFieldTotaPagar.setText("" + res2.setScale(2, BigDecimal.ROUND_HALF_UP));
 //        jLabel7.setText("" + (jTable1.getRowCount()));
         calculoTroco();
     }
-
+    
     public void calculoTroco() {
 //        double total_antes = removerPattern(jTextFieldTotaPagar.getText());
         // double total_antes = Double.parseDouble(jTextFieldTotaPagar.getText());
@@ -912,7 +912,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
 //        jTextFieldTroco.setText("" + res2.setScale(2, BigDecimal.ROUND_HALF_UP));
 
     }
-
+    
     public double getDescontoIVA() {
         double valor = 0;
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -925,10 +925,10 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 valor = valor + (valorUnitario * 0);
             }
         }
-
+        
         return valor;
     }
-
+    
     public double getDescontoIVAporProduto() {
         double valor = 0;
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -944,7 +944,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         System.out.println("Desconto Produto IVA:" + valor);
         return valor;
     }
-
+    
     public double getDescontoIVAporProdutoTotal() {
         double valor = 0;
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -960,7 +960,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         System.out.println("Desconto Produto IVA:" + valor);
         return valor;
     }
-
+    
     public double totalGeral() {
         total = 0;
         double d = 0;
@@ -972,14 +972,14 @@ public class GuiaReguradora extends javax.swing.JFrame {
         }
         return total;
     }
-
+    
     public double totalDesconto() {
         return Double.valueOf(jTextPreco.getText());
     }
-
+    
     public String getData() {
         String dataSelecionada = "2015-03-07";
-
+        
         if (jDateChooser1.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser1.getDate());
@@ -989,15 +989,15 @@ public class GuiaReguradora extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-
+    
     public int getCodigoMedico() {
         return controllerUsuario.getCodigoUtilizador(jComboBox7.getSelectedItem().toString());
     }
-
+    
     public int getCodigoMedico1() {
         return controllerUsuario.getCodigoMedico(jComboBox7.getSelectedItem().toString());
     }
-
+    
     public void salvarColaboradores() {
         int codigoFactura = controllerGuia.getLastFactura();
         factura.setCodigoCliente(getCodigoMedicoColaboradores());
@@ -1006,9 +1006,9 @@ public class GuiaReguradora extends javax.swing.JFrame {
         factura.setDataVencimento(getDataActual());
         factura.setEstado(String.valueOf(codigoFactura));
         controllerMedico.salvarHonorario(factura);
-
+        
     }
-
+    
     public void salvarMedicoHonorario() {
         Factura factura1 = new Factura();
         int codigofacto = controllerGuia.getLastFactura();
@@ -1019,9 +1019,9 @@ public class GuiaReguradora extends javax.swing.JFrame {
         factura1.setDataVencimento(getData());
         factura1.setEstado(String.valueOf(codigofacto));
         controllerMedico.salvarHonorarioMedico1(factura1);
-
+        
     }
-
+    
     public void salvarServicoMedicosIntesSantaMarta() {
         System.out.println("Entrouuuuuuuuuu Aqui trste 1111111");
         FacturaItens f = new FacturaItens();
@@ -1043,12 +1043,12 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 f.setEcografia(irt);
                 controllerMedico.salvarMedicoHonorarioItens(f);
             }
-
+            
         }
     }
-
+    
     public void salvarMarcacao() {
-
+        
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
             int codigoCategoria = controllerServico.getCodigoCategoriaServico(codigoServico);
@@ -1113,12 +1113,12 @@ public class GuiaReguradora extends javax.swing.JFrame {
                             marcacaoConsulta.setPreco(anst);
                             controllerMarcarcaoConsulta.salvarRapida(marcacaoConsulta);
                         }
-
+                        
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Consulta já foi marcada");
                 }
-
+                
             }
         }
     }
@@ -1163,13 +1163,13 @@ public class GuiaReguradora extends javax.swing.JFrame {
                             salvarServicoMedicosIntesSantaMarta();
                             salvarEstatistica(numeroGuia);
                             salvarEstatisticaItens();
-
+                            
                             relatorioVenda.getFacturaGuia(codigofactura);
                             int quantidade = controllerParametros.getValorImpressao();
                             for (int i = 0; i < quantidade; i++) {
                                 relatorioVenda.getFacturaticketseguradora(codigofactura);
                             }
-
+                            
                             limparVenda();
                             jComboBox1.setModel(new DefaultComboBoxModel(controllerSeguradora.getNomeCategoria().toArray()));
                             mostrarGuiaProntas("SELECT f.idFactura as codigo,p.nomeCompleto as nome,date(dataFactura) as data, e.designacao as empresa, u.nomeCompleto as username FROM factura f inner join pacientes p on f.codigoCliente =p.idPaciente\n"
@@ -1177,16 +1177,16 @@ public class GuiaReguradora extends javax.swing.JFrame {
                                     + "inner join utilizadores u on u.idUtilizador=f.codigoUtilizador\n"
                                     + "where f.codigoSeguro <>8 and f.estado='FACTURA CRÉDITO' AND date(dataFactura) = current_date order by 4");
                         }
-
+                        
                     }
-
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Não é permitido emitir factura com data anterior, verifica a data do computador!", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Insira nome do Médico", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-
+            
         }
         if (flag == 2) {
             //   codigoFactura = Integer.parseInt(jComboBox2.getSelectedItem().toString());
@@ -1205,15 +1205,16 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 limparVenda();
                 System.out.println("Entrou");
             }
-
+            
         }
-
+        
 
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    
     public void inserirEcografia(int codigoFactura) {
         pedidoExames.setCodigoPaciente(getCodigoCliente());
         pedidoExames.setCodigoMedico(getCodigoMedico1());
+        pedidoExames.setColaborador("");
         controllerPedidoExames.SalvarEcografiaItens(pedidoExames);
         int codigoSeguradora = utentes.getCodigoSeguro(getCodigoCliente());
         int codigoEcografia = controllerPedidoExames.getLastInsertEcografiaItens();
@@ -1227,7 +1228,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
             if (codigoCategoria == 5 || codigoCategoria == 21 || codigoCategoria == 22 || codigoCategoria == 23) {
                 controllerPedidoExames.SalvarEcografia(pedidoExames);
             }
-
+            
         }
     }
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
@@ -1237,13 +1238,13 @@ public class GuiaReguradora extends javax.swing.JFrame {
             jComboBox5.setModel(new DefaultComboBoxModel(utentes.getCodigoNomeSeguro(codigo, codigoSeguro).toArray()));
         }
     }//GEN-LAST:event_jTextField1CaretUpdate
-
+    
     public boolean salvarPedidoExameItem(int codigoExame, int codProduto, int codigoStatus, int codigoProdutoIem, int quantidade) {
         ExamesPorFazerItem item = new ExamesPorFazerItem(codigoExame, codProduto, codigoStatus, codigoProdutoIem, quantidade);
         controllerExamesporFazerItens.create(item);
         return true;
     }
-
+    
     public void inserirExame() {
         codigoUltimoExamePorFazer = 0;
         boolean itemGravado = false;
@@ -1260,7 +1261,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         if (salvo) {
             codigoUltimoExamePorFazer = controllerExamesporFazer.getLastInsert();
             for (int i = 0; i < jTable1.getRowCount(); i++) {
-
+                
                 int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
                 int codigoCategoria = controllerServico.getCodigoCategoriaServico(codigoServico);
                 if (codigoCategoria == 2) {
@@ -1284,11 +1285,11 @@ public class GuiaReguradora extends javax.swing.JFrame {
                         salvarPedidoExameItem(codigoUltimoExamePorFazer, codigoServico, 1, 0, quantidade);
                         itemGravado = true;
                     }
-
+                    
                 }
             }
         }
-
+        
     }
 
     private void jTextField3CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField3CaretUpdate
@@ -1328,11 +1329,11 @@ public class GuiaReguradora extends javax.swing.JFrame {
         //    jComboBox2.setModel(new DefaultComboBoxModel(controllerGuia.getNumeroGuia(getData2(), jComboBox1.getSelectedItem().toString()).toArray()));
 
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    
     public String getData1() {
         return d.converteDataSql(jDateChooser2.getDate()).toString();
     }
-
+    
     public String getData2() {
         return d.converteDataSql(jDateChooser3.getDate()).toString();
     }
@@ -1343,7 +1344,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 + "where date(dataFactura) between '" + getData1() + "' and '" + getData2() + "' AND f.codigoSeguro <>8 and f.estado='FACTURA CRÉDITO'\n"
                 + "and e.designacao='" + jComboBox1.getSelectedItem().toString() + "' order by 4");
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     public String getDataActual() {
         Calendar calendario = Calendar.getInstance();
 
@@ -1351,12 +1352,12 @@ public class GuiaReguradora extends javax.swing.JFrame {
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
         int mes = calendario.get(Calendar.MONTH);
         int ano = calendario.get(Calendar.YEAR);
-
+        
         String data = ano + "-" + (mes + 1) + "-" + dia;
         //String data = ano + "-" + (mes + 1) + "-" + dia;
 
         return data;
-
+        
     }
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         codigoFactura = Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString());
@@ -1378,7 +1379,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-
+        
         if (evt.getClickCount() == 2) {
             JOptionPane.showMessageDialog(null, "Não lhe é permitido alterar factura uma vez assinada!", "Mind Vision Tecnology", JOptionPane.ERROR_MESSAGE);
         }
@@ -1479,13 +1480,16 @@ public class GuiaReguradora extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         codigoFactura = Integer.parseInt(jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString());
         String guia = controllerGuia.getCodigoRecibo(codigoFactura);
+        int soma = 1;
+        soma = soma + controllerGuia.getLastCodigoRecibo(); //("FT", "FT");
+        String recibo = "RC 2021/" + soma;
         if (!guia.isEmpty()) {
             relatorioVenda.getRecibo1(codigoFactura);
         } else {
-            controllerGuia.updateRecibo(codigoFactura);
+            controllerGuia.updateRecibo(codigoFactura, recibo, soma);
             relatorioVenda.getRecibo(codigoFactura);
         }
-
+        
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -1502,19 +1506,19 @@ public class GuiaReguradora extends javax.swing.JFrame {
     private void jTable1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1KeyTyped
-
+    
     public String getValorMonetario(Double valor) {
         return Calculo.converterCash(valor);
     }
-
+    
     public double getValorNormal(String valor) {
         return Calculo.getValueNormal(valor);
     }
-
+    
     public double getDescontoMeto(String value, Double preco) {
         return Calculo.desconto(value, preco, this);
     }
-
+    
     public void actualizarValorApagar() {
         double valor, valorTotal = 0;
         double valorIVA = 0;
@@ -1541,9 +1545,9 @@ public class GuiaReguradora extends javax.swing.JFrame {
             jTextFieldTotaPagar.setText(String.valueOf(valorTotal));
             //  troco = Double.parseDouble(0.0);
         }
-
+        
     }
-
+    
     public void updateDesconto() {
         double desconto = getValorNormal(jTable1.getValueAt(jTable1.getSelectedRow(), 5).toString());
         double subTotal = getValorNormal(jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString());
@@ -1563,7 +1567,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         jTable1.setValueAt(getValorMonetario(iva), jTable1.getSelectedRow(), 4);
         jTable1.setValueAt(getValorMonetario(precoTotal), jTable1.getSelectedRow(), 6);
     }
-
+    
     public void actualizaPreco() {
         double toal_geral = 0, subTotal = 0;
         int codigoServico, codigoTaxa;
@@ -1575,7 +1579,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
             // codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
 
             if (codigoTaxa == 14) {
-
+                
                 total_iva += 0.14 * (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString()));
                 toal_geral = toal_geral + (getValorNormal(jTable1.getValueAt(i, 6).toString()));
 //                toal_geral = toal_geral + getValorNormal(jTable1.getValueAt(i, 3).toString()) + total_iva;
@@ -1587,7 +1591,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 //    toal_geral += getValorNormal(jTable1.getValueAt(i, 3).toString());
                 total_iva += 0.14 * (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString()));
             }
-
+            
         }
         //  Totalgeral = toal_geral- desconto;
         jTextFieldTotaPagar.setText("" + getValorMonetario(toal_geral));
@@ -1615,28 +1619,28 @@ public class GuiaReguradora extends javax.swing.JFrame {
     public String getElegibilidade() {
         return jTextField5.getText();
     }
-
+    
     public double getValorApagar() {
         double valor = 0;
         try {
             if (!jTextFieldTotaPagar.getText().equals("")) {
                 valor = Double.parseDouble(jTextFieldTotaPagar.getText());
             }
-
+            
         } catch (NumberFormatException ex) {
             ex.getMessage();
         }
         return valor;
     }
-
+    
     public int getCodigoUtilizador() {
         return user;
     }
-
+    
     public int getCodigoCliente() {
         return utentes.getCodigoUtente1(jComboBox5.getSelectedItem().toString(), codigoSeguro);
     }
-
+    
     public void inserirTabela() {
         Object fila[] = new Object[7];
         double preco = 0.0, totalPreco = 0.0;
@@ -1666,7 +1670,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 totalPreco = preco * quantidade + controllerServico.getPrecoAngolaTelecom(jComboBox3.getSelectedItem().toString()) * quantidade * 0.14;
                 IVA = (preco * quantidade) * 0.14;
             }
-
+            
             if (codigoSeguro == 10) {
                 preco = controllerServico.getPrecoSaham(jComboBox3.getSelectedItem().toString());
                 totalPreco = preco * quantidade + controllerServico.getPrecoSaham(jComboBox3.getSelectedItem().toString()) * quantidade * 0.14;
@@ -1719,9 +1723,9 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 totalPreco = preco * quantidade + controllerServico.getPreco(jComboBox3.getSelectedItem().toString()) * quantidade * 0.14;
                 IVA = (preco * quantidade) * 0.14;
             }
-
+            
         } else {
-
+            
             if (codigoSeguro == 1 || codigoSeguro == 2 || codigoSeguro == 3 || codigoSeguro == 4 || codigoSeguro == 5 || codigoSeguro == 6 || codigoSeguro == 7) {
                 preco = controllerServico.getPrecoAdvance(jComboBox3.getSelectedItem().toString());
                 totalPreco = preco * quantidade + controllerServico.getPrecoAdvance(jComboBox3.getSelectedItem().toString()) * quantidade * 0;
@@ -1753,7 +1757,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 preco = controllerServico.getPrecoSaudemais(jComboBox3.getSelectedItem().toString());
                 totalPreco = (preco * quantidade + controllerServico.getPrecoSaudemais(jComboBox3.getSelectedItem().toString()) * quantidade * 0);
                 IVA = (preco * quantidade) * 0;
-
+                
             }
             //FIDELIDADE + Seguradora = 14
             if (codigoSeguro == 14) {
@@ -1772,7 +1776,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 preco = controllerServico.getPrecoAngolaTelecom(jComboBox3.getSelectedItem().toString());
                 totalPreco = (preco * quantidade + controllerServico.getPrecoAngolaTelecom(jComboBox3.getSelectedItem().toString()) * quantidade * 0);
                 IVA = (preco * quantidade) * 0;
-
+                
             }
             // Prodiencial
             if (codigoSeguro == 18) {
@@ -1790,9 +1794,9 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 totalPreco = preco * quantidade + controllerServico.getPreco(jComboBox3.getSelectedItem().toString()) * quantidade * 0.14;
                 IVA = (preco * quantidade) * 0;
             }
-
+            
         }
-
+        
         fila[0] = codigoServico;
         fila[1] = jComboBox3.getSelectedItem().toString();
         fila[2] = quantidade;
@@ -1821,9 +1825,9 @@ public class GuiaReguradora extends javax.swing.JFrame {
         actualizarValorApagar();
         actualizarValorIva();
         actualizar();
-
+        
     }
-
+    
     public double getDesconto() {
         double valor = 0;
         try {
@@ -1838,9 +1842,9 @@ public class GuiaReguradora extends javax.swing.JFrame {
         }
         return valor;
     }
-
+    
     public void actualizarValorIva() {
-
+        
         double valor, valorTotal = 0;
         String troco = null;
         if (jTable1.getRowCount() != 0) {
@@ -1849,23 +1853,23 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 int quantidade = Integer.parseInt(jTable1.getValueAt(i, 2).toString());
                 int codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
                 if (codigoTaxa == 14) {
-
+                    
                     valorTotal += 0.14 * (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString()));
                     //  valorTotal = valorTotal + (getValorNormal(jTable1.getValueAt(i, 6).toString()));
                     System.out.println("Total IVA:" + valorTotal);
                 } else {
                     //desconto += getValorNormal(jTable1.getValueAt(i, 5).toString());
                     valorTotal += 0 * (getValorNormal(jTable1.getValueAt(i, 3).toString()) - getValorNormal(jTable1.getValueAt(i, 5).toString()));
-
+                    
                 }
-
+                
             }
-
+            
         }
         jTextFieldDesconto.setText("" + getValorMonetario(valorTotal));
-
+        
     }
-
+    
     public void inserirTabelaCopagamento() {
         Object fila[] = new Object[6];
         preco = 0.0;
@@ -1898,7 +1902,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         actualizarValorApagar();
         actualizar();
     }
-
+    
     public int getQuantidadeGeral() {
         int total = 0;
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -1931,10 +1935,10 @@ public class GuiaReguradora extends javax.swing.JFrame {
                     inserirTabela();
                 }
             }
-
+            
         });
     }
-
+    
     public final void teclaInserCopagamento() {
         jTextPreco.addKeyListener(
                 new KeyAdapter() {
@@ -1942,13 +1946,13 @@ public class GuiaReguradora extends javax.swing.JFrame {
             public void keyReleased(KeyEvent evt) {
                 if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
                     inserirTabelaCopagamento();
-
+                    
                 }
             }
-
+            
         });
     }
-
+    
     public final void teclaInserCopagamento1() {
         jTextField5.addKeyListener(
                 new KeyAdapter() {
@@ -1959,7 +1963,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
                     jTextPreco.setText("");
                 }
             }
-
+            
         });
     }
 
@@ -1998,14 +2002,14 @@ public class GuiaReguradora extends javax.swing.JFrame {
         String dataSelecionada = gc.get(GregorianCalendar.YEAR) + "-"
                 + ((gc.get(GregorianCalendar.MONTH) + 1) < 10 ? "0" + (gc.get(GregorianCalendar.MONTH) + 1) : (gc.get(GregorianCalendar.MONTH) + 1)) + "-"
                 + (gc.get(GregorianCalendar.DATE) < 10 ? "0" + gc.get(GregorianCalendar.DATE) : gc.get(GregorianCalendar.DATE));
-
+        
         return dataSelecionada;
     }
-
+    
     public double getTotalDesconto() {
         return Calculo.getValueNormal(jTextField8.getText());
     }
-
+    
     public void salvarGuia(int numerador) {
         codigo = 0;
         codigo = numerador + 1;
@@ -2031,27 +2035,27 @@ public class GuiaReguradora extends javax.swing.JFrame {
         factura.setDataVencimento(getDataFacturaInicio());
         factura.setEstado("FACTURA CRÉDITO");
         controllerGuia.salvarGuia(factura);
-
+        
     }
-
+    
     public void editarGuia(int codigoFactura) {
         //   codigoFactura = Integer.parseInt(jComboBox2.getSelectedItem().toString());
         double descontoTotal = 0.0;
-
+        
         controllerGuia.update(getValorApagar() + getTotalDesconto() + getDescontoIVAporProdutoTotal(), getTotalDesconto(), codigoFactura, getTotalDesconto(), getDescontoIVAporProdutoTotal());
         // }
 
     }
-
+    
     public void salvarEstatistica(int codigoFactura) {
         ModeloEstatistica modeloEstatistica = new ModeloEstatistica();
         modeloEstatistica.setCodigoFactura(String.valueOf(codigoFactura));
         modeloEstatistica.setCodigoPaciente(getCodigoCliente());
         controllerEstatista.salvar(modeloEstatistica);
     }
-
+    
     public void salvarItemGuia() {
-
+        
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             int codigoFactura = controllerGuia.getLastFactura();
             int codigoProduto = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
@@ -2081,16 +2085,16 @@ public class GuiaReguradora extends javax.swing.JFrame {
             if (controllerServico.getProdutoEstocavel(jTable1.getValueAt(i, 1).toString())) {
                 try {
                     control.diminuirEstoque(codigoProduto, quantidadde);
-
+                    
                 } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
                     Logger.getLogger(Servico.class
                             .getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
+            
         }
     }
-
+    
     public void salvarItemGuia1(int codigoFactura) {
         String elegibilidade = "";
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -2120,7 +2124,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
             if (controllerServico.getProdutoEstocavel(jTable1.getValueAt(i, 1).toString())) {
                 try {
                     control.diminuirEstoque(codigoProduto, quantidadde);
-
+                    
                 } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
                     Logger.getLogger(Servico.class
                             .getName()).log(Level.SEVERE, null, ex);
@@ -2128,7 +2132,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public void salvarEstatisticaItens() {
         //      int codigoFactura = Integer.parseInt(jComboBox2.getSelectedItem().toString());
         int codigoEstatistica = controllerEstatista.getLastEstatistica();
@@ -2195,9 +2199,9 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 controllerEstatista.salvarItensEstatisitca(modeloEstatistica);
             }
         }
-
+        
     }
-
+    
     public void salvarEstatisticaItens1(int codigoEstatistica) {
         //      int codigoFactura = Integer.parseInt(jComboBox2.getSelectedItem().toString());
 
@@ -2264,7 +2268,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 controllerEstatista.salvarItensEstatisitca(modeloEstatistica);
             }
         }
-
+        
     }
 
 //    public void editarItemGuia() {
@@ -2297,7 +2301,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
         double total = qtd * valor_unitario;
         //  jTextField7.setText(decimalformat.format(total));
     }
-
+    
     public void limparVenda() {
         jTextFieldTotaPagar.setText("0");
         jTextField3.setText("");
@@ -2320,21 +2324,21 @@ public class GuiaReguradora extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(GuiaReguradora.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(GuiaReguradora.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(GuiaReguradora.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
+            
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GuiaReguradora.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -2410,7 +2414,7 @@ public class GuiaReguradora extends javax.swing.JFrame {
     private javax.swing.JTextField jTextPreco;
     // End of variables declaration//GEN-END:variables
 private class LeitorTeclas implements KeyListener {
-
+        
         @Override
         public final void keyPressed(KeyEvent arg0) {
             switch (arg0.getKeyCode()) {
@@ -2425,18 +2429,18 @@ private class LeitorTeclas implements KeyListener {
             }
             System.out.println("Código da tecla: " + arg0.getKeyCode());
         }
-
+        
         @Override
         public void keyReleased(KeyEvent arg0) {
-
+            
         }
-
+        
         @Override
         public void keyTyped(KeyEvent arg0) {
-
+            
         }
     }
-
+    
     public void mostrarFacturaEnsa(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2472,9 +2476,9 @@ private class LeitorTeclas implements KeyListener {
         }
         actualizar();
         actualizarValorApagar();
-
+        
     }
-
+    
     public void mostrarFacturaAT(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2507,9 +2511,9 @@ private class LeitorTeclas implements KeyListener {
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public void mostrarFacturaSAHAM(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2542,9 +2546,9 @@ private class LeitorTeclas implements KeyListener {
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public void mostrarFacturaUnisaude(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2578,7 +2582,7 @@ private class LeitorTeclas implements KeyListener {
             System.out.println("Erro!!!" + ex);
         }
     }
-
+    
     public void mostrarFacturaSaudeMais(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2611,9 +2615,9 @@ private class LeitorTeclas implements KeyListener {
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public void mostrarFacturaSaudeFinalidade(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2646,9 +2650,9 @@ private class LeitorTeclas implements KeyListener {
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public void mostrarFacturaMasterSeguros(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2679,9 +2683,9 @@ private class LeitorTeclas implements KeyListener {
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public void mostrarFacturaANST(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2712,9 +2716,9 @@ private class LeitorTeclas implements KeyListener {
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public final void mostrarGuiaProntas(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2741,22 +2745,22 @@ private class LeitorTeclas implements KeyListener {
             while (rs.next()) {
                 model.addRow(new String[]{rs.getString("codigo"), rs.getString("nome"), rs.getString("empresa"),
                     rs.getString("data"), rs.getString("username")
-
+            
                 });
             }
         } catch (Exception ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public int getCodigoMedicoColaboradores() {
         return 1;
     }
-
+    
     public void salvarColaboradoresIntes() {
         double lab = 0, consulta = 0, raioX = 0, ecografia = 0, ecografia7 = 0, ecografia10 = 0, ecografiamorfologica = 0, ecocardiograma = 0, electrocardiograma = 0;
-
+        
         for (int i = 0; i < jTable1.getRowCount(); i++) {
             int codigoFactura = controllerMedico.getLastFacturaHonorario();
 // int codigoFactura = controllerFactura.getLastFactura();
@@ -2800,7 +2804,7 @@ private class LeitorTeclas implements KeyListener {
             }
             // Ecografia
             if (codigoCategoria == 5) {
-
+                
                 ecografia = controllerParametros.getValorEcografiaCola5() + controllerParametros.getPercentagemEcografia5() * Double.parseDouble(jTable1.getValueAt(i, 3).toString());
                 consulta = 0;
                 raioX = 0;
@@ -2857,7 +2861,7 @@ private class LeitorTeclas implements KeyListener {
                 ecografia10 = 0;
                 ecocardiograma = 0;
             }
-
+            
             double valorUnitario = Double.parseDouble(jTable1.getValueAt(i, 3).toString());
             facturaItens1.setCodigoFactura(codigoFactura);
             facturaItens1.setCodigoServico(codigoProduto);
@@ -2873,16 +2877,16 @@ private class LeitorTeclas implements KeyListener {
             facturaItens1.setEcografia10(ecografia10);
             facturaItens1.setEcografiaMorfologia(ecografiamorfologica);
             controllerMedico.salvarHonorarioItens(facturaItens1);
-
+            
         }
     }
-
+    
     public static Integer[] getHorAndMinute(String hora) {
         //  System.out.println("Data passada:" + hora);
         int horario, minutos;
         String ba = null;
         if (hora.isEmpty()) {
-
+            
             String horaAtual = new SimpleDateFormat("HH:mm").format(new Date().getTime());
             horario = Integer.parseInt(horaAtual.substring(0, 2));
             minutos = Integer.parseInt(horaAtual.substring(3, 5));
@@ -2892,9 +2896,9 @@ private class LeitorTeclas implements KeyListener {
             minutos = Integer.parseInt(hora.substring(3, 5));
             return new Integer[]{horario, minutos};
         }
-
+        
     }
-
+    
     public static boolean getHoraMaior(String horaFecha) {
         System.out.println("Passada para comparar:" + horaFecha);
         String horaAtual = new SimpleDateFormat("HH:mm").format(new Date().getTime());// Pega hora atual do Sistema
@@ -2903,16 +2907,16 @@ private class LeitorTeclas implements KeyListener {
         System.out.println("Hora Passada:" + horarioFecha[0]);
         Integer horarioAtual[] = getHorAndMinute(horaAtual);
         System.out.println("Hora Passada do sistema:" + horarioAtual[0]);
-
+        
         if (horarioAtual[0] >= horarioFecha[0]) {
-
+            
             System.out.println("Em dia");
             return true;
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "Não é permitido emitir factura com hora inferior que a hora da Ultima Factura, verifica a Hora do seu Computador!", "Mind Vision Tecnology - Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
-
+    
 }

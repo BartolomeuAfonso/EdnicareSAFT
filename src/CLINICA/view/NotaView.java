@@ -468,7 +468,7 @@ public class NotaView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            
+
         salvarFactura();
         salvarItemFacturaNota();
         salvarItemFactura();
@@ -486,6 +486,7 @@ public class NotaView extends javax.swing.JFrame {
 
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
         jComboBox1.setModel(new DefaultComboBoxModel(controllerFactura.getNomeLike(jTextField1.getText()).toArray()));
+        jComboBox2.setModel(new DefaultComboBoxModel(controllerFactura.getFacturaporCodigo(jTextField1.getText()).toArray()));
     }//GEN-LAST:event_jTextField1CaretUpdate
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

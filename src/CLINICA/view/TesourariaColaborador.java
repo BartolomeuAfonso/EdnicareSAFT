@@ -2606,6 +2606,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     public void inserirEcografia(int codigoFactura) {
         pedidoExames.setCodigoPaciente(getCodigoCliente());
         pedidoExames.setCodigoMedico(getCodigoMedico1());
+        pedidoExames.setColaborador(jComboBox4.getSelectedItem().toString());
         controllerPedidoExames.SalvarEcografiaItens(pedidoExames);
         int codigoSeguradora = utentes.getCodigoSeguro(getCodigoCliente());
         int codigoEcografia = controllerPedidoExames.getLastInsertEcografiaItens();
@@ -2649,6 +2650,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         exame.setCodigoMedico(getCodigoMedico1());
         exame.setDataPedido(getDataActual());
         exame.setQuantidade(quantidade);
+        exame.setColaborador(jComboBox4.getSelectedItem().toString());
         controllerExamesporFazer.create(exame);
         salvo = true;
         if (salvo) {
