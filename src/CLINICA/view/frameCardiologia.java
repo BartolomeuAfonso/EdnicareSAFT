@@ -12,6 +12,7 @@ import CLINICA.controller.ControllerServico;
 import CLINICA.controller.ControllerTriagem;
 import CLINICA.controller.ControllerUtente;
 import CLINICA.modelo.HistorialClinico;
+import CLINICA.modelo.HistoricaInterno;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
@@ -37,6 +38,7 @@ public class frameCardiologia extends javax.swing.JFrame {
     HistorialClinico historialClinico = new HistorialClinico();
     ControllerHistoricoClinico controllerHistoricoClinico;
     String NomeMedico;
+    HistoricaInterno historicaInterno = new HistoricaInterno();
 
     public frameCardiologia(int codigoPaciente, String nome, int codigoTriagem, String codigoMedico) {
         initComponents();
@@ -45,12 +47,15 @@ public class frameCardiologia extends javax.swing.JFrame {
         controllerBeneficiario = new ControllerUtente(con);
         controllerTriagem = new ControllerTriagem(con);
         controllerHistoricoClinico = new ControllerHistoricoClinico(con);
+
         jComboBox1.setModel(new DefaultComboBoxModel(controllerCids.getNomeCids().toArray()));
+
         int idade = controllerBeneficiario.getIdade(nome);
         this.NomeMedico = codigoMedico;
         jLabel2.setText(nome);
         jLabel3.setText("Idade: " + idade + " Anos");
         iconeSistema();
+        carregarDadosDoencasCronica();
         setLocationRelativeTo(null);
 
     }
@@ -77,10 +82,26 @@ public class frameCardiologia extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        rTextArea5 = new org.fife.ui.rtextarea.RTextArea();
         jScrollPane10 = new javax.swing.JScrollPane();
         rTextArea6 = new org.fife.ui.rtextarea.RTextArea();
+        jPanel11 = new javax.swing.JPanel();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jLabel51 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jLabel50 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jLabel53 = new javax.swing.JLabel();
+        jCheckBox7 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jLabel52 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jLabel48 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        rTextArea5 = new org.fife.ui.rtextarea.RTextArea();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         rTextArea2 = new org.fife.ui.rtextarea.RTextArea();
@@ -98,13 +119,16 @@ public class frameCardiologia extends javax.swing.JFrame {
 
         setBackground(new java.awt.Color(153, 204, 255));
 
-        jPanel1.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("PRONTUÁRIO DO(A) PACIENTE");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 51, 51));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 51, 51));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,7 +141,7 @@ public class frameCardiologia extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 791, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -137,35 +161,210 @@ public class frameCardiologia extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(153, 204, 255));
 
-        rTextArea5.setBorder(javax.swing.BorderFactory.createTitledBorder("Histórico da Doença Atual"));
-        rTextArea5.setColumns(20);
-        rTextArea5.setRows(5);
-        jScrollPane9.setViewportView(rTextArea5);
-
         rTextArea6.setBorder(javax.swing.BorderFactory.createTitledBorder("Queixa Principal"));
         rTextArea6.setColumns(20);
         rTextArea6.setRows(5);
         jScrollPane10.setViewportView(rTextArea6);
+
+        jPanel11.setBackground(new java.awt.Color(153, 204, 255));
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Perguntas Opcionais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 11))); // NOI18N
+
+        jCheckBox5.setSelected(true);
+        jCheckBox5.setText("NÃO");
+        jCheckBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox5ActionPerformed(evt);
+            }
+        });
+
+        jLabel51.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel51.setText("* Quais medicamentos?");
+
+        jTextField5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        jTextField5.setText("S/N");
+
+        jCheckBox4.setBackground(new java.awt.Color(153, 204, 255));
+        jCheckBox4.setText("SIM");
+        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox4ActionPerformed(evt);
+            }
+        });
+
+        jLabel50.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel50.setText("* Apresenta alergia a medicamentos?");
+
+        jLabel49.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel49.setText("* Está actualmente em tratamento médico?");
+
+        jCheckBox3.setBackground(new java.awt.Color(153, 204, 255));
+        jCheckBox3.setSelected(true);
+        jCheckBox3.setText("NÃO");
+        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox3ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox2.setBackground(new java.awt.Color(153, 204, 255));
+        jCheckBox2.setText("SIM");
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
+
+        jLabel53.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel53.setText("* Qual é doença?");
+
+        jCheckBox7.setBackground(new java.awt.Color(153, 204, 255));
+        jCheckBox7.setSelected(true);
+        jCheckBox7.setText("NÃO");
+        jCheckBox7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox7ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox6.setBackground(new java.awt.Color(153, 204, 255));
+        jCheckBox6.setText("SIM");
+        jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox6ActionPerformed(evt);
+            }
+        });
+
+        jLabel52.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel52.setText("* Possui alguma doença Hereditária/Contagiosa?");
+
+        jTextField6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        jTextField6.setText("S/N");
+
+        jLabel48.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel48.setText("* APP (Antecendente Patologico Pessoal)");
+
+        jTextField4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        jTextField4.setText("S/N");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(140, 140, 140)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jCheckBox2)
+                        .addGap(35, 35, 35)
+                        .addComponent(jCheckBox3)
+                        .addGap(134, 134, 134)
+                        .addComponent(jCheckBox5)
+                        .addGap(68, 68, 68)
+                        .addComponent(jCheckBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel49)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel50)
+                        .addGap(53, 53, 53))))
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel11Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel11Layout.createSequentialGroup()
+                            .addComponent(jCheckBox6)
+                            .addGap(30, 30, 30)
+                            .addComponent(jCheckBox7))
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(522, Short.MAX_VALUE)))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(jLabel50))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCheckBox3)
+                        .addComponent(jCheckBox2))
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCheckBox5)
+                        .addComponent(jCheckBox4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel53)))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel51)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel11Layout.createSequentialGroup()
+                    .addGap(18, 18, 18)
+                    .addComponent(jLabel48)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel52)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCheckBox6)
+                        .addComponent(jCheckBox7))
+                    .addContainerGap(51, Short.MAX_VALUE)))
+        );
+
+        rTextArea5.setBorder(javax.swing.BorderFactory.createTitledBorder("Histórico da Doença Atual"));
+        rTextArea5.setColumns(20);
+        rTextArea5.setRows(5);
+        jScrollPane9.setViewportView(rTextArea5);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 4, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("1. Anamnese", jPanel2);
@@ -219,29 +418,31 @@ public class frameCardiologia extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, 257, Short.MAX_VALUE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addGap(20, 20, 20)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(81, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox1, 0, 257, Short.MAX_VALUE))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(76, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(129, Short.MAX_VALUE)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField3)
@@ -249,11 +450,6 @@ public class frameCardiologia extends javax.swing.JFrame {
                     .addComponent(jLabel29)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(298, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("2. Exames Físicos", jPanel3);
@@ -305,20 +501,20 @@ public class frameCardiologia extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -344,6 +540,7 @@ public class frameCardiologia extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        salvarDoencas();
         salvarHistoricoPaciente();
         controllerTriagem.actualizarStatusTriagem(getCodigoTriagem());
         limpar();
@@ -353,6 +550,21 @@ public class frameCardiologia extends javax.swing.JFrame {
     public int getCodigoTriagem() {
         int codigo = controllerBeneficiario.getCodigoUtente(jLabel2.getText());
         return controllerTriagem.getLastCodigoByPaciente(codigo);
+
+    }
+
+    public void carregarDadosDoencasCronica() {
+
+        historicaInterno = controllerHistoricoClinico.getDoencasCronicas(getCodigoPaciente());
+        try {
+            if (!historicaInterno.getDoencas().isEmpty() || !historicaInterno.getAlergias().isEmpty()) {
+                jTextField6.setText("" + historicaInterno.getSetUltimoTratamento());
+            }
+            jTextField5.setText("" + historicaInterno.getDoencas());
+            jTextField4.setText("" + historicaInterno.getAlergias());
+
+        } catch (Exception e) {
+        }
 
     }
 
@@ -388,8 +600,42 @@ public class frameCardiologia extends javax.swing.JFrame {
         return rTextArea5.getText();
     }
 
+    public String getDoencaCronicas() {
+        return jTextField4.getText();
+    }
+
+    public String getMedicamentoAlergico() {
+        return jTextField5.getText();
+    }
+
+    public String getUltimo() {
+        return jTextField6.getText();
+    }
+
+    public void salvarDoencas() {
+        HistoricaInterno hist = new HistoricaInterno();
+        if (!controllerHistoricoClinico.existeHistoriaDoenca(getCodigoPaciente())) {
+            hist.setDoencas(getDoencaCronicas());
+            hist.setAlergias(getMedicamentoAlergico());
+            hist.setSetUltimoTratamento(getUltimo());
+            hist.setCodigoPaciente(getCodigoPaciente());
+            controllerHistoricoClinico.salvarDoencas(hist);
+        }
+
+    }
+
+    public void carregarDadosClinico(int codigo) {
+        historialClinico = controllerHistoricoClinico.getDadosClinicoDados(codigo);
+        rTextArea6.setText(historialClinico.getQueixaPrincipal());
+        rTextArea5.setText(historialClinico.getHistorialDoenca());
+        rTextArea3.setText(historialClinico.getExameFisico());
+        rTextArea4.setText(historialClinico.getHipoteseDiagnostico());
+        rTextArea2.setText(historialClinico.getApf());
+
+    }
+
     public void salvarHistoricoPaciente() {
-        int codigoDoenca = 1; //controllerHistoricoClinico.getCodigoDoenca(getCodigoPaciente());
+        int codigoDoenca = controllerHistoricoClinico.getCodigoDoenca(getCodigoPaciente());
         historialClinico.setCodigoCids(getCodigoCids());
         historialClinico.setCodigoMedico(getCodigoMedico());
         historialClinico.setCodigoPaciente(getCodigoPaciente());
@@ -422,13 +668,48 @@ public class frameCardiologia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
+        if (jCheckBox5.isSelected()) {
+            jCheckBox4.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBox5ActionPerformed
+
+    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
+        if (jCheckBox4.isSelected()) {
+            jCheckBox5.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBox4ActionPerformed
+
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+        if (jCheckBox3.isSelected()) {
+            jCheckBox2.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBox3ActionPerformed
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        if (jCheckBox2.isSelected()) {
+            jCheckBox3.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jCheckBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox7ActionPerformed
+        if (jCheckBox7.isSelected()) {
+            jCheckBox6.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBox7ActionPerformed
+
+    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
+        if (jCheckBox6.isSelected()) {
+            jCheckBox7.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBox6ActionPerformed
+
     public void limpar() {
         rTextArea6.setText("");
         rTextArea5.setText("");
         rTextArea3.setText("");
         rTextArea4.setText("");
         rTextArea2.setText("");
-     
 
     }
 
@@ -482,13 +763,26 @@ public class frameCardiologia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -499,6 +793,9 @@ public class frameCardiologia extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private org.fife.ui.rtextarea.RTextArea rTextArea2;
     private org.fife.ui.rtextarea.RTextArea rTextArea3;
     private org.fife.ui.rtextarea.RTextArea rTextArea4;

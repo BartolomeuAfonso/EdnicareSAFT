@@ -28,10 +28,13 @@ import GestaoStock.views.frmCategoria;
 import GestaoStock.views.frmFormapagamento;
 import GestaoStock.views.frmUnidade;
 import GestaoStock.views.frmProvincia;
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,7 +93,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
     ControllerInternamento controllerInternamento;
     ControllerJustificativo controllerJustificativo;
     RelatorioHistoricoClinico relatorioHistoricoClinico = new RelatorioHistoricoClinico();
-
+    
     public HomeAdministracao(String medico) {
         initComponents();
         controllerUsuario = new ControllerUsuario(con);
@@ -139,12 +142,12 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jTabbedPane1.setVisible(false);
         mostrarEcografia("SELECT r.idresultadoEcografia as id,r.descricao,r.nomePaciente,r.imagem,r.data FROM resultadoecografia r\n"
                 + "where r.data=current_date");
-
+        
         iconeSistema();
         setLocationRelativeTo(null);
-
+        
     }
-
+    
     public final void iconeSistema() {
         // URL caminho = this.getClass().getResource("/meus icons/GRest.png");
         URL caminho = this.getClass().getResource("/sf/ce/imagens/Icons/logoteste2.jpg");
@@ -266,7 +269,6 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
-        jMenuItem53 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
@@ -291,6 +293,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem34 = new javax.swing.JMenuItem();
+        jMenuItem54 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenu12 = new javax.swing.JMenu();
         jMenuItem26 = new javax.swing.JMenuItem();
@@ -1365,15 +1368,6 @@ public class HomeAdministracao extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem18);
 
-        jMenuItem53.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jMenuItem53.setText("Exemplo");
-        jMenuItem53.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem53ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem53);
-
         jMenu2.add(jMenu5);
 
         jMenu4.setText("Médico");
@@ -1550,13 +1544,22 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jMenu7.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
 
         jMenuItem34.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jMenuItem34.setText("Mensal");
+        jMenuItem34.setText("Boletim de Notificação Epidemilígca mensal");
         jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem34ActionPerformed(evt);
             }
         });
         jMenu7.add(jMenuItem34);
+
+        jMenuItem54.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jMenuItem54.setText("Estatítisca de Unidade Sanitária");
+        jMenuItem54.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem54ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem54);
 
         jMenuBar1.add(jMenu7);
 
@@ -1793,7 +1796,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
                 int codigoFactura = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
                 relatorioVenda.getFacturaGuia(codigoFactura);
             }
-
+            
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -1807,7 +1810,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        
         int codigo = controllerUsuario.getCodigoMedico(jComboBox1.getSelectedItem().toString());
         mostraFacturaMedico("SELECT  h.idHistoricoClinico as clinico,date(h.dataAtendimento) as data,p.nomeCompleto as nome, m.nomeCompleto as doctor, e.designacao as servico,time(h.dataAtendimento) as horas from historicoclinico h inner join triagem t on h.codigoConsulta=t.idtriagem\n"
                 + "inner join medicos m on h.codigoMedico =m.idMedico\n"
@@ -1890,7 +1893,12 @@ public class HomeAdministracao extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
-        JOptionPane.showMessageDialog(null, "Brevemente");
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            desktop.open(new File("relatorios/MANUAL DE USUÁRIO - EDNICARE.pdf"));
+        } catch (IOException ex) {
+            Logger.getLogger(HomeAdministracao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
@@ -1997,7 +2005,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
 //            }
 //
     }//GEN-LAST:event_jMenuItem41ActionPerformed
-
+    
 
     private void jMenuItem42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem42ActionPerformed
         new Servico(1, getCodigoUser()).setVisible(true);
@@ -2117,11 +2125,11 @@ public class HomeAdministracao extends javax.swing.JFrame {
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
         jComboBox5.setModel(new DefaultComboBoxModel(controllerBeneficiario.getNomeBenefiarioBuscar(jTextField1.getText()).toArray()));
     }//GEN-LAST:event_jTextField1CaretUpdate
-
+    
     public int getCodigoPaciente2() {
         return controllerBeneficiario.getCodigoUtente(jComboBox5.getSelectedItem().toString());
     }
-
+    
     public void mostraPorData(String sql) {
         try {
             con = new ConexaoBancos().ConexaoBD();
@@ -2136,15 +2144,15 @@ public class HomeAdministracao extends javax.swing.JFrame {
             model.setNumRows(0);
             while (rs.next()) {
                 model.addRow(new String[]{rs.getString("data")
-
+            
                 });
             }
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public final void mostraHistoricoClinicoPorData(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2162,7 +2170,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
             jTableHistorico.getColumnModel().getColumn(3).setResizable(false);
             jTableHistorico.getColumnModel().getColumn(4).setPreferredWidth(220);
             jTableHistorico.getColumnModel().getColumn(4).setResizable(false);
-
+            
             jTableHistorico.getTableHeader().setReorderingAllowed(false);
             jTableHistorico.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             jTableHistorico.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -2170,13 +2178,13 @@ public class HomeAdministracao extends javax.swing.JFrame {
             while (rs.next()) {
                 model.addRow(new String[]{rs.getString("h.idHistoricoClinico"), rs.getString("p.idpaciente"), rs.getString("h.historiaDoencaActual"),
                     rs.getString("h.exameFisico"), rs.getString("h.hipoteseDiagnostico")
-
+            
                 });
             }
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
     private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
         mostraPorData("SELECT date(h.dataAtendimento) as data from historicoclinico h inner join triagem t on h.codigoConsulta=t.idtriagem\n"
@@ -2223,7 +2231,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem47ActionPerformed
 
     private void jMenuItem49ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem49ActionPerformed
-
+        
         frmFormapagamento iforn = new frmFormapagamento();
         iforn.setVisible(true);
     }//GEN-LAST:event_jMenuItem49ActionPerformed
@@ -2243,10 +2251,10 @@ public class HomeAdministracao extends javax.swing.JFrame {
         new NotaView(getCodigoUser(), 1).setVisible(true);
     }//GEN-LAST:event_jMenuItem52ActionPerformed
 
-    private void jMenuItem53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem53ActionPerformed
-        relatorioServicos.getLista();        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem53ActionPerformed
-
+    private void jMenuItem54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem54ActionPerformed
+        new viewSanitario().setVisible(true);
+    }//GEN-LAST:event_jMenuItem54ActionPerformed
+    
     public int getCodigoUser() {
         return controllerUsuario.getCodigoUtilizadorUsername(user);
     }
@@ -2255,16 +2263,16 @@ public class HomeAdministracao extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public class hora implements ActionListener {
-
+        
         public void actionPerformed(ActionEvent e) {
             Calendar ne = Calendar.getInstance();
             jLabel3.setText(String.format("%1$tH:%1$tM:%1$tS", ne));
         }
     }
-
+    
     public String getData1() {
         String dataSelecionada = "2015-03-07";
-
+        
         if (jDateChooser1.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser1.getDate());
@@ -2274,10 +2282,10 @@ public class HomeAdministracao extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-
+    
     public String getData2() {
         String dataSelecionada = "2015-03-07";
-
+        
         if (jDateChooser2.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser2.getDate());
@@ -2287,10 +2295,10 @@ public class HomeAdministracao extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-
+    
     public String getData3() {
         String dataSelecionada = "2015-03-07";
-
+        
         if (jDateChooser3.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser3.getDate());
@@ -2300,10 +2308,10 @@ public class HomeAdministracao extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-
+    
     public String getData4() {
         String dataSelecionada = "2015-03-07";
-
+        
         if (jDateChooser4.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser4.getDate());
@@ -2313,10 +2321,10 @@ public class HomeAdministracao extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-
+    
     public String getData5() {
         String dataSelecionada = "2015-03-07";
-
+        
         if (jDateChooser5.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser5.getDate());
@@ -2326,10 +2334,10 @@ public class HomeAdministracao extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-
+    
     public String getData6() {
         String dataSelecionada = "2015-03-07";
-
+        
         if (jDateChooser6.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser6.getDate());
@@ -2339,7 +2347,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-
+    
     public final String getData() {
         Date dataSistema = new Date();
         // SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -2349,14 +2357,14 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jLabel9.setText(data);
         return data;
     }
-
+    
     public final void getHora() {
         Calendar ne = Calendar.getInstance();
         jLabel3.setText(String.format("%1$tH:%1$tM:%1$tS", ne));
         //    System.out.println("Data:" + data);
         //  return jLabel18.getText();
     }
-
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -2495,7 +2503,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem50;
     private javax.swing.JMenuItem jMenuItem51;
     private javax.swing.JMenuItem jMenuItem52;
-    private javax.swing.JMenuItem jMenuItem53;
+    private javax.swing.JMenuItem jMenuItem54;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
@@ -2562,9 +2570,9 @@ public final void mostraFactura(String sql) {
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
     public final void mostraFacturaMedico(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -2595,7 +2603,7 @@ public final void mostraFactura(String sql) {
             System.out.println("Erro!!!" + ex);
         }
     }
-
+    
     public final void mostrarRaioX(String sql) {
         //  System.out.println("Teste:" + sql);
         try {
@@ -2619,14 +2627,14 @@ public final void mostraFactura(String sql) {
             model.setNumRows(0);
             while (rs.next()) {
                 model.addRow(new String[]{rs.getString("r.id"), rs.getString("r.nomePaciente"), rs.getString("r.descricao"), rs.getString("r.imagem"), rs.getString("r.data")
-
+            
                 });
             }
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
     }
-
+    
     public final void mostrarEcografia(String sql) {
         // System.out.println("Teste:" + sql);
         try {
@@ -2650,13 +2658,13 @@ public final void mostraFactura(String sql) {
             model.setNumRows(0);
             while (rs.next()) {
                 model.addRow(new String[]{rs.getString("id"), rs.getString("r.nomePaciente"), rs.getString("r.descricao"), rs.getString("r.imagem"), rs.getString("r.data")
-
+            
                 });
             }
         } catch (SQLException ex) {
             System.out.println("Erro!!!" + ex);
         }
-
+        
     }
-
+    
 }

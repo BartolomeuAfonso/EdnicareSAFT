@@ -63,7 +63,7 @@ public class ControllerPedidoRaioX {
             ps.setInt(2, pedidoExames.getQuantidade());
             ps.setString(3, pedidoExames.getDesignacao());
             ps.execute();
-            JOptionPane.showMessageDialog(null, "Requisição enviado com Sucesso");
+         //   JOptionPane.showMessageDialog(null, "Requisição enviado com Sucesso");
 
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex);

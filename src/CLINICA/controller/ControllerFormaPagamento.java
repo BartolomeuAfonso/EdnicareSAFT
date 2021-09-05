@@ -60,7 +60,7 @@ public class ControllerFormaPagamento {
 
     public ArrayList<String> getDesignacaoCredito() {
         //conexao.Connectando();
-        sql = "SELECT * FROM formapagamento s where s.designacao='CRÉDITO' OR s.designacao='PROFORMA'";
+        sql = "SELECT * FROM formapagamento s where s.designacao='FACTURA PRO-FORMA' OR s.designacao='CRÉDITO'";
         ArrayList<String> lista = new ArrayList<>();
         try {
             ps = con.prepareStatement(sql);

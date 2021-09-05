@@ -532,11 +532,37 @@ public class RelatorioServicos {
         }
     }
 
-     public void getLista() {
+    public void getLista(String data,int gota, int vs, int gs, int urina, int bk, int clinicaGeralTotal, int totalPediatria, int totalCirurgia, int Total_ginecologia, int Total_obstetricia, int Total_planeamento, int Total_planeamento1, int Total_pluericultura, int clinicaGeralMedico, int pediatriaMedico,int cirurgiaMedico,int puericulturaMedico,int obstetriciaMedico,int ginecologiaMedico,int planeamentoMedico,int planeamentoMedico1,int hematologia,int serologia,int falciformacao,int fezes) {
 
         con = new ConexaoBancos().ConexaoBD();
         HashMap hashMap = new HashMap();
-    
+        hashMap.put("DATA", data);
+        hashMap.put("GE", gota);
+        hashMap.put("VS", vs);
+        hashMap.put("GS", gs);
+        hashMap.put("URINA", urina);
+        hashMap.put("BK", bk);
+        hashMap.put("CLINICAGERALTOTAL", clinicaGeralTotal);
+        hashMap.put("PEDIATRIATOTAL", totalPediatria);
+        hashMap.put("CIRURGIATOTAL", totalCirurgia);
+        hashMap.put("TOTALGINECOLOGIA", Total_ginecologia);
+        hashMap.put("TOTALOBSTETRICIA", Total_obstetricia);
+        hashMap.put("PLANEAMENTOTOTAL", Total_planeamento);
+        hashMap.put("TOTALPLANEAMENTO1", Total_planeamento1);
+        hashMap.put("TOTALPLUERICULTURA", Total_pluericultura);
+        hashMap.put("CLINICAGERALMEDICO", clinicaGeralMedico);
+        hashMap.put("PEDIATRIAMEDICO", pediatriaMedico);
+        hashMap.put("CIRURGIAMEDICO", cirurgiaMedico);
+        hashMap.put("PUERICULTURAMEDICO", puericulturaMedico);
+        hashMap.put("OBSTETRICIAMEDICO", obstetriciaMedico);
+        hashMap.put("GINECOLOGIAMEDICO", ginecologiaMedico);
+        hashMap.put("PLANEAMENTOMEDICO", planeamentoMedico);
+        hashMap.put("PLANEAMENTOMEDICO1", planeamentoMedico1);
+        hashMap.put("HEMATOLOGIA", hematologia);
+        hashMap.put("SEROLOGIA", serologia);
+        hashMap.put("FALCIFORMACAO", falciformacao);
+        hashMap.put("FEZES", fezes);
+
         String relatorio = "relatorios/estatisticaClinica.jasper";
         File file = new File(relatorio).getAbsoluteFile();
         String obterCaminho = file.getAbsolutePath();

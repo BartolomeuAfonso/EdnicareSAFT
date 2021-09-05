@@ -120,11 +120,11 @@ public class ExamesSolicitado extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Data", "Hora", "Paciente", "Exames", "Estado"
+                "Código", "Data", "Hora", "Paciente", "Exames", "Estado", "Colaborador"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -401,7 +401,7 @@ public class ExamesSolicitado extends javax.swing.JFrame {
         String codigoProduto = jTable2.getValueAt(jTable2.getSelectedRow(), 1).toString();
         controllerExamesporFazerItens.actualizarStatus(codigoExame, codigoProduto);
         controllerExamesporFazer.getNomedoTecnico(user, codigoExame);
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao\n"
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao,p.colaborador as colaborador\n"
                 + "FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join servicos s1 on s1.idServico = e2.codigoProduto\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
@@ -419,7 +419,7 @@ public class ExamesSolicitado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao\n"
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao,p.colaborador as colaborador\n"
                 + "FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join servicos s1 on s1.idServico = e2.codigoProduto\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
@@ -430,25 +430,25 @@ public class ExamesSolicitado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField2CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField2CaretUpdate
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao\n"
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao,p.colaborador as colaborador\n"
                 + "FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join servicos s1 on s1.idServico = e2.codigoProduto\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                 + "inner join examesintegrado ex on s1.idServico = ex.codigoServico\n"
                 + "where s.designacao ='Pago' AND e2.Espera='NÃO' AND ex.codigoCategoria > 0\n"
-                + " and p.idexamesPorFazer ='"+getCodigo()+"'");
+                + " and p.idexamesPorFazer ='" + getCodigo() + "'");
     }//GEN-LAST:event_jTextField2CaretUpdate
 
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao\n"
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao,p.colaborador as colaborador\n"
                 + "FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join servicos s1 on s1.idServico = e2.codigoProduto\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                 + "inner join examesintegrado ex on s1.idServico = ex.codigoServico\n"
                 + "where s.designacao ='Pago' AND e2.Espera='NÃO' AND ex.codigoCategoria > 0\n"
-                + " and pa.nomeCompleto like '%"+jTextField1.getText()+"'%");
+                + " and pa.nomeCompleto like '%" + jTextField1.getText() + "'%");
     }//GEN-LAST:event_jTextField1CaretUpdate
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -457,14 +457,14 @@ public class ExamesSolicitado extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao\n"
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao,p.colaborador as colaborador\n"
                 + "FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join servicos s1 on s1.idServico = e2.codigoProduto\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                 + "inner join examesintegrado ex on s1.idServico = ex.codigoServico\n"
                 + "where s.designacao ='Pago' AND e2.Espera='NÃO' AND ex.codigoCategoria > 0\n"
-                + " and p.dataPedido BETWEEN '"+getData1()+"' AND '"+getData2()+"'");
+                + " and p.dataPedido BETWEEN '" + getData1() + "' AND '" + getData2() + "'");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public Date getData1() {
@@ -526,7 +526,7 @@ public class ExamesSolicitado extends javax.swing.JFrame {
      * @param sql
      */
     public final void mostrarExame(String sql) {
-     //   System.out.println("Teste:" + sql);
+        //   System.out.println("Teste:" + sql);
         try {
             con = new ConexaoBancos().ConexaoBD();
             PreparedStatement ps;
@@ -542,8 +542,10 @@ public class ExamesSolicitado extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(300);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(300);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(200);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
             jTable1.getColumnModel().getColumn(5).setPreferredWidth(100);
             jTable1.getColumnModel().getColumn(5).setResizable(false);
             jTable1.getTableHeader().setReorderingAllowed(false);
@@ -553,7 +555,7 @@ public class ExamesSolicitado extends javax.swing.JFrame {
             model.setNumRows(0);
             while (rs.next()) {
                 model.addRow(new String[]{rs.getString("p.idexamesPorFazer"), rs.getString("p.dataPedido"), rs.getString("horas"), rs.getString("pa.nomeCompleto"),
-                    rs.getString("s1.designacao"), rs.getString("s.designacao")
+                    rs.getString("s1.designacao"), rs.getString("s.designacao"),rs.getString("p.colaborador")
 
                 });
             }

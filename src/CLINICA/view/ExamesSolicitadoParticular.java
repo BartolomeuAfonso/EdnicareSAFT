@@ -498,21 +498,21 @@ public final class ExamesSolicitadoParticular extends javax.swing.JFrame {
     }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (jRadioButton1.isSelected()) {
-            mostrarExame("SELECT distinct  p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+            mostrarExame("SELECT distinct  p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao,p.colaborador as colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                     + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                     + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                     + "where p.dataPedido ='" + getData() + "' AND e2.Espera ='NAO'");
 
         }
         if (jRadioButton1.isSelected() && jRadioButton2.isSelected()) {
-            mostrarExame("SELECT distinct  p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+            mostrarExame("SELECT distinct  p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao,p.colaborador as colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                     + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                     + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                     + "where p.dataPedido ='" + getData() + "' AND pa.nomeCompleto ='" + jComboBox1.getSelectedItem().toString() + "' AND e2.Espera ='NAO'");
 
         }
         if (jRadioButton3.isSelected()) {
-            mostrarExame("SELECT distinct  p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+            mostrarExame("SELECT distinct  p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao,p.colaborador as colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                     + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                     + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                     + "where pa.idPaciente ='" + getCodigo() + "' AND e2.Espera ='NAO'");
@@ -533,7 +533,7 @@ public final class ExamesSolicitadoParticular extends javax.swing.JFrame {
         System.out.println("Codigo Exames:" + codigoExames);
         controllerExamesporFazer.getNomedoTecnico(user, codigoExames);
         actualizarResultados();
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao,p.colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
                 + "where s.designacao ='Pago' AND p.PacienteInterno='NAO' AND e2.Espera='NÃO' AND p.dataPedido =CURRENT_DATE");
@@ -591,16 +591,16 @@ public final class ExamesSolicitadoParticular extends javax.swing.JFrame {
 
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
             jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
             jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(300);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
             jTable1.getColumnModel().getColumn(2).setResizable(false);
             jTable1.getColumnModel().getColumn(3).setPreferredWidth(300);
             jTable1.getColumnModel().getColumn(3).setResizable(false);
             jTable1.getColumnModel().getColumn(4).setPreferredWidth(50);
             jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(300);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(300);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
             jTable1.getTableHeader().setReorderingAllowed(false);
             jTable1.setAutoResizeMode(jTable1.AUTO_RESIZE_OFF);
             jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

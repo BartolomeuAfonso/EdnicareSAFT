@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/view/HomeLaboratorio.java</file>
-            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/view/HomeAdministracao.java</file>
-            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/controller/ControllerFactura.java</file>
-            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/view/NotaView.java</file>
-            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/relatorios/RelatorioVenda.java</file>
-            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/controller/ControllerNotas.java</file>
-            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/view/GuiaReguradora.java</file>
-            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/view/viewParametro.java</file>
+            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/view/Recepcao.java</file>
+            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/view/Home.java</file>
+            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/view/TesourariaColaborador.java</file>
+            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/controller/ControllerFacturaItens.java</file>
+            <file>file:/C:/Users/bafonso/Documents/Bartolomeu/EdniCareSAFT/src/CLINICA/controller/ControllerFormaPagamento.java</file>
         </group>
     </open-files>
 </project-private>

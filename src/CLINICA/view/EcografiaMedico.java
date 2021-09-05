@@ -209,21 +209,29 @@ public class EcografiaMedico extends javax.swing.JFrame {
         String designacao = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
         if (evt.getClickCount() == 2) {
             if (designacao.equals("Ecografia Pelvica")) {
+                
                 ecografia.getEcografiaPelvica(codigoRaixo);
-            } else if (designacao.equals("Ecografia Morfologica")) {
+            } else if(designacao.equals("Ecografia Morfologica do segundo trimestre")) {
+                
                 ecografia.getEcografiaMorfologica(codigoRaixo);
             } else if (designacao.equals("Ecografia Abdominal")) {
-
+                
                 ecografia.getEcografiaAbdominal(codigoRaixo);
-            } else if (designacao.equals("Ecografia Obstétrica")) {
-                ecografia.getEcografiaObstetrica(codigoRaixo);
+            } else if (designacao.equals("Ecografia Obstétrica") || designacao.equals("Ecografia Obstétrica do segundo e Terceiro Trimestre") || designacao.equals("Ecografia Obstétrica do Primeiro Trimestre") || designacao.equals("Ecografia Obstétrica Gemelar")) {        
+               ecografia.getEcografiaObstetrica(codigoRaixo);
             } else if (designacao.equals("Ecografia da Mama")) {
+                
                 ecografia.getEcografiaMama(codigoRaixo);
             } else if (designacao.equals("Ecografia Testicular")) {
+                
                 ecografia.getEcografiaTesticular(codigoRaixo);
             } else if (designacao.equals("Ecografia da Tiroide")) {
+                
                 ecografia.getEcografiaTiroide(codigoRaixo);
-            } else {
+            }else if (designacao.equals("Ecografia Morfologica do primeiro trimestre")) {
+                 ecografia.getEcografiaAbdominal(codigoRaixo);
+            } 
+            else {
                 ecografia.getEcografiaAbdominal(codigoRaixo);
             }
         }

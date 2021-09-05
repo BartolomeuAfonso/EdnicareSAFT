@@ -146,9 +146,9 @@ public class Recepcao extends javax.swing.JFrame {
             
         }
         // Comentar esse opção para clínicas excepto ao centro médico Octávio.
-        if (tipoUtilizador == 4) {
-            jRadioButton3.setVisible(false);
-        }
+//        if (tipoUtilizador == 4) {
+//            jRadioButton3.setVisible(false);
+//        }
         iconeSistema();
         teclaInser();
         
@@ -318,7 +318,7 @@ public class Recepcao extends javax.swing.JFrame {
         jLabel17.setText("Sexo:");
         jPanel17.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, 40, 20));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
         jPanel17.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 60, 100, -1));
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOLTEIRO(A)", "CASADO(A)", "DIVORCIADO(A)", "VIUVO(A)" }));

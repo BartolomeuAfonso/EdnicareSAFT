@@ -478,7 +478,16 @@ public class PedidoRaioX extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         salvarPedido();
         salvarPedidoItens();
+        int codigoRaio = controllerPedidoRaioX.getLastFactura();
         RelatorioHistoricoClinico relatorioHistoricoClinico = new RelatorioHistoricoClinico();
+        int codigoPaciente = controllerBeneficiario.getCodigoUtente(jComboBox1.getSelectedItem().toString());
+        int codigoSeguradora = controllerBeneficiario.getCodigoSeguro(codigoPaciente);
+
+        if (codigoSeguradora != 8) {
+            relatorioHistoricoClinico.getPedidoExames(codigoRaio);
+        } else {
+            relatorioHistoricoClinico.getPedidoExames1(codigoRaio);
+        }
 
 
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -524,13 +533,18 @@ public class PedidoRaioX extends javax.swing.JFrame {
         int codigoRaio = controllerPedidoRaioX.getLastFactura();
         int quantidade = 1;
         for (int i = 0; i < jTable1.getRowCount(); i++) {
+
             System.out.println("Quantidade de Pedido:" + quantidade);
             int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
-            pedidoItensRaioX.setCodigoServico(codigoServico);
-            pedidoItensRaioX.setCodigoRaio(codigoRaio);
-            pedidoItensRaioX.setQuantidade(quantidade);
-            pedidoItensRaioX.setEstado("PAGO");
-            controllerPedidoRaioX.salvarItens(pedidoItensRaioX);
+            int codigoCategoria = controllerServico.getCodigoCategoriaServico(codigoServico);
+            if (codigoCategoria == 3) {
+                pedidoItensRaioX.setCodigoServico(codigoServico);
+                pedidoItensRaioX.setCodigoRaio(codigoRaio);
+                pedidoItensRaioX.setQuantidade(quantidade);
+                pedidoItensRaioX.setEstado("NÃO PAGOU");
+                controllerPedidoRaioX.salvarItens(pedidoItensRaioX);
+            }
+
         }
     }
 

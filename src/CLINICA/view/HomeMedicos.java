@@ -3382,10 +3382,16 @@ public final class HomeMedicos extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+
         if (jLabel42.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Não existe paciente Selecionado");
         } else {
-            new frameCardiologia(getCodigoPaciente(), jLabel42.getText(), getCodigoTriagem(), NomeMedico).setVisible(true);
+            if (jLabel75.getText().equals("Consulta de Cardiologia") || jLabel75.getText().equalsIgnoreCase("Cardiologia")) {
+                new frameCardiologia(getCodigoPaciente(), jLabel42.getText(), getCodigoTriagem(), NomeMedico).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Especialidade errada, somente cardiologia!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 
@@ -3557,11 +3563,6 @@ public final class HomeMedicos extends javax.swing.JFrame {
             if (!historicaInterno.getDoencas().isEmpty() || !historicaInterno.getAlergias().isEmpty()) {
                 jTextField6.setText("" + historicaInterno.getSetUltimoTratamento());
             }
-//            jTextField4.setEditable(false);
-//            jTextField5.setEditable(false);
-//            jTextField6.setEditable(false);
-//            jCheckBox4.setSelected(true);
-//            jCheckBox6.setSelected(true);
             jTextField5.setText("" + historicaInterno.getDoencas());
             jTextField4.setText("" + historicaInterno.getAlergias());
 

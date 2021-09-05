@@ -54,7 +54,7 @@ public class HomeRaioX extends javax.swing.JFrame {
         codigoTipoUtilizador = controllerUsuario.getTipoUtilizador(Codigouser);
         jLabel7.setText(controllerUsuario.getNome(user));
         iconeSistema();
-        jPanel4.setVisible(false);
+        jPanel4.setVisible(true);
 
     }
 
@@ -77,8 +77,6 @@ public class HomeRaioX extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -132,36 +130,6 @@ public class HomeRaioX extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jLabel1);
-
-        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-sales-performance-32.png"))); // NOI18N
-        jLabel2.setText("Movimentos");
-        jLabel2.setMaximumSize(new java.awt.Dimension(120, 60));
-        jLabel2.setMinimumSize(new java.awt.Dimension(200, 60));
-        jLabel2.setPreferredSize(new java.awt.Dimension(120, 60));
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-        });
-        jToolBar1.add(jLabel2);
-
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-exit-sign-32 (1).png"))); // NOI18N
-        jLabel4.setText("Sair");
-        jLabel4.setMaximumSize(new java.awt.Dimension(120, 60));
-        jLabel4.setMinimumSize(new java.awt.Dimension(120, 60));
-        jLabel4.setPreferredSize(new java.awt.Dimension(120, 60));
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        jToolBar1.add(jLabel4);
 
         jSeparator1.setMaximumSize(new java.awt.Dimension(32667, 6));
         jSeparator1.setPreferredSize(new java.awt.Dimension(32667, 6));
@@ -381,12 +349,6 @@ public class HomeRaioX extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        dispose();
-        new Login().setVisible(true);
-
-    }//GEN-LAST:event_jLabel4MouseClicked
-
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         new Servico(1, getCodigoUser()).setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
@@ -413,10 +375,6 @@ public class HomeRaioX extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         new Servico(1, getCodigoUser()).setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        new AgendaporData().setVisible(true);
-    }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         new AgendaporData().setVisible(true);
@@ -533,9 +491,7 @@ public class HomeRaioX extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

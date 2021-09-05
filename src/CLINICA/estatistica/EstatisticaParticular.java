@@ -68,7 +68,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='MEDICINA INTERNA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE MEDICINA INTERNA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -99,6 +99,98 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
                 + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='PEDIATRIA'\n"
+                + "AND empresaseguros.`idSeguros` = 8";
+        System.out.println("Teste:" + sql);
+        try {
+            ps = conexao.conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("quantidade");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return 0;
+    }
+    
+     public int getTotalPuericultura(String data, String data1) {
+        conexao.Connectando();
+        sql = "SELECT\n"
+                + "factura.`dataFactura` AS factura_dataFactura,\n"
+                + "     SUM(factura_itens.`quantidade`) AS quantidade,\n"
+                + "     empresaseguros.`designacao` AS empresa,\n"
+                + "     categoriaservico.`idcategoriaServico` AS codigoCategoria,\n"
+                + "     servicos.`designacao` AS servico,\n"
+                + "     empresaseguros.`idSeguros` AS idEmpresa\n"
+                + "FROM\n"
+                + "     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`\n"
+                + "     INNER JOIN `pacientes` pacientes ON factura.`codigoCliente` = pacientes.`idPaciente`\n"
+                + "     INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`\n"
+                + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
+                + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
+                + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE PUERICULTURA'\n"
+                + "AND empresaseguros.`idSeguros` = 8";
+        System.out.println("Teste:" + sql);
+        try {
+            ps = conexao.conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("quantidade");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return 0;
+    }
+    
+      public int getTotalPlaneamentoFamiliar(String data, String data1) {
+        conexao.Connectando();
+        sql = "SELECT\n"
+                + "factura.`dataFactura` AS factura_dataFactura,\n"
+                + "     SUM(factura_itens.`quantidade`) AS quantidade,\n"
+                + "     empresaseguros.`designacao` AS empresa,\n"
+                + "     categoriaservico.`idcategoriaServico` AS codigoCategoria,\n"
+                + "     servicos.`designacao` AS servico,\n"
+                + "     empresaseguros.`idSeguros` AS idEmpresa\n"
+                + "FROM\n"
+                + "     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`\n"
+                + "     INNER JOIN `pacientes` pacientes ON factura.`codigoCliente` = pacientes.`idPaciente`\n"
+                + "     INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`\n"
+                + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
+                + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
+                + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='PLANEAMENTO FAMILIAR'\n"
+                + "AND empresaseguros.`idSeguros` = 8";
+        System.out.println("Teste:" + sql);
+        try {
+            ps = conexao.conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("quantidade");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return 0;
+    }
+     public int getTotalCirurgia(String data, String data1) {
+        conexao.Connectando();
+        sql = "SELECT\n"
+                + "factura.`dataFactura` AS factura_dataFactura,\n"
+                + "     SUM(factura_itens.`quantidade`) AS quantidade,\n"
+                + "     empresaseguros.`designacao` AS empresa,\n"
+                + "     categoriaservico.`idcategoriaServico` AS codigoCategoria,\n"
+                + "     servicos.`designacao` AS servico,\n"
+                + "     empresaseguros.`idSeguros` AS idEmpresa\n"
+                + "FROM\n"
+                + "     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`\n"
+                + "     INNER JOIN `pacientes` pacientes ON factura.`codigoCliente` = pacientes.`idPaciente`\n"
+                + "     INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`\n"
+                + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
+                + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
+                + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE CIRURGIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -188,7 +280,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='ORTOPEDIA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA ORTOPEDIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -218,7 +310,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='ESTOMATOLOGIA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE ESTOMATOLOGIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -248,7 +340,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='GASTROENTOLOGIA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE GASTROENTOLOGIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -278,7 +370,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='OTORRINOLARINGOLOGIA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE OTORRINOLARINGOLOGIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -308,7 +400,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CARDIOLOGIA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE CARDIOLOGIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -338,7 +430,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='UROLOGIA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE UROLOGIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -368,7 +460,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='DERMATOLOGIA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE DERMATOLOGIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {
@@ -398,7 +490,7 @@ public class EstatisticaParticular {
                 + "     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`\n"
                 + "     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`\n"
                 + "     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`\n"
-                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='NEUROLOGIA'\n"
+                + "where DATE(factura.`dataFactura`) BETWEEN '" + data + "' AND '" + data1 + "' AND categoriaservico.`idcategoriaServico` = 2 AND  servicos.`designacao` ='CONSULTA DE NEUROLOGIA'\n"
                 + "AND empresaseguros.`idSeguros` = 8";
         System.out.println("Teste:" + sql);
         try {

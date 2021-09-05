@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportMovimentoTodosDetalhado1porPaciente" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f04433f7-abec-4623-8c02-7beea71dce8d">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="160"/>
+	<property name="ireport.y" value="54"/>
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -34,7 +34,8 @@
      factura.`valorApagar` AS factura_valorApagar,
      pacientes.`idPaciente` AS pacientes_idPaciente,
      pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
-     factura.`estado` AS factura_estado
+     factura.`estado` AS factura_estado,
+     factura_itens.`descontoProduto` AS factura_itens_descontoProduto
 FROM
      `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
      INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`
@@ -43,8 +44,9 @@ FROM
 WHERE
      factura.`estado` = 'FACTURA PRONTO'
  AND DATE(factura.`dataFactura`) BETWEEN $P{DATA1} AND $P{DATA2}
-AND  factura_itens.`flag` = 1
-ORDER BY 1]]>
+ AND factura_itens.`flag` = 1
+ORDER BY
+     1 ASC]]>
 	</queryString>
 	<field name="factura_idfactura" class="java.lang.Long"/>
 	<field name="factura_dataFactura" class="java.sql.Timestamp"/>
@@ -65,9 +67,10 @@ ORDER BY 1]]>
 	<field name="pacientes_idPaciente" class="java.lang.Long"/>
 	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
 	<field name="factura_estado" class="java.lang.String"/>
+	<field name="factura_itens_descontoProduto" class="java.lang.Double"/>
 	<variable name="TOTALNUMERARIO" class="java.lang.Double" resetType="None" calculation="Sum">
 		<variableExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}]]></variableExpression>
-		<initialValueExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}]]></initialValueExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
 	</variable>
 	<variable name="TOTALMULTICAIXA" class="java.lang.Double" resetType="None" calculation="Sum">
 		<variableExpression><![CDATA[$F{factura_itens_totalTPA}*$F{factura_itens_quantidade}]]></variableExpression>
@@ -82,6 +85,11 @@ ORDER BY 1]]>
 	<variable name="TOTALGERAL" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}+$F{factura_itens_totalTPA}*$F{factura_itens_quantidade}]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}+$F{factura_itens_totalTPA}*$F{factura_itens_quantidade}]]></initialValueExpression>
+	</variable>
+	<variable name="TOTALDESCONTO" class="java.lang.Double" resetType="None" calculation="Sum">
+		<variableExpression><![CDATA[
+$F{factura_itens_descontoProduto}]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{factura_itens_descontoProduto}]]></initialValueExpression>
 	</variable>
 	<group name="PorPaciente">
 		<groupExpression><![CDATA[$F{pacientes_nomeCompleto}]]></groupExpression>
@@ -159,18 +167,18 @@ ORDER BY 1]]>
 				<text><![CDATA[Clientes]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="291" y="1" width="100" height="20" uuid="95043ed7-6640-4c60-972b-b500e73932f5"/>
+				<reportElement x="306" y="2" width="62" height="20" uuid="95043ed7-6640-4c60-972b-b500e73932f5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Numerário]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="391" y="1" width="96" height="20" uuid="30275cb3-0ab7-450e-b3da-c9937d2725a6"/>
+				<reportElement x="431" y="1" width="56" height="20" uuid="30275cb3-0ab7-450e-b3da-c9937d2725a6"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Multicaixa]]></text>
+				<text><![CDATA[Desconto]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="487" y="1" width="69" height="20" uuid="384c2272-70cd-4543-b13a-19fb9201c778"/>
@@ -182,26 +190,33 @@ ORDER BY 1]]>
 			<line>
 				<reportElement x="1" y="21" width="555" height="1" uuid="403381c9-a89d-4758-b62f-95892d9f1e55"/>
 			</line>
+			<staticText>
+				<reportElement x="368" y="2" width="63" height="20" uuid="0a3d91d1-e73e-4d22-a1ca-77bbd40e9215"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Multicaixa]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="14" splitType="Stretch">
 			<textField>
-				<reportElement x="146" y="0" width="183" height="14" uuid="05bf656c-2ba8-49d7-882f-115bcb031f92"/>
+				<reportElement x="146" y="0" width="145" height="14" uuid="05bf656c-2ba8-49d7-882f-115bcb031f92"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{servicos_designacao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="329" y="0" width="62" height="14" uuid="1037717a-9e9b-4a0f-a071-f18115a7bea5"/>
+				<reportElement x="306" y="0" width="62" height="14" uuid="1037717a-9e9b-4a0f-a071-f18115a7bea5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="391" y="0" width="96" height="14" uuid="66b3fc32-9cf0-4366-871d-96fbb4e927e3"/>
+				<reportElement x="368" y="0" width="63" height="14" uuid="66b3fc32-9cf0-4366-871d-96fbb4e927e3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
@@ -212,7 +227,7 @@ ORDER BY 1]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{factura_itens_totalGeral}*$F{factura_itens_quantidade}+$F{factura_itens_totalTPA}*$F{factura_itens_quantidade}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(($F{factura_itens_totalGeral}*$F{factura_itens_quantidade}+$F{factura_itens_totalTPA}*$F{factura_itens_quantidade})-$F{factura_itens_descontoProduto})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="62" y="0" width="84" height="14" uuid="9212b06b-d944-4b2e-bd13-e74d855f377e"/>
@@ -228,6 +243,13 @@ ORDER BY 1]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_dataFactura}]]></textFieldExpression>
 			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="431" y="0" width="56" height="14" uuid="d858e106-e098-408f-8256-7f09c3bfa70e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factura_itens_descontoProduto}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -236,7 +258,7 @@ ORDER BY 1]]>
 	<pageFooter>
 		<band height="16" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-81" positionType="Float" mode="Transparent" x="1" y="0" width="328" height="16" forecolor="#000000" backcolor="#00CCFF" uuid="95b3e8c1-0d22-4614-8406-d2185e5254b7"/>
+				<reportElement key="staticText-81" positionType="Float" mode="Transparent" x="1" y="0" width="305" height="16" forecolor="#000000" backcolor="#00CCFF" uuid="95b3e8c1-0d22-4614-8406-d2185e5254b7"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -249,22 +271,8 @@ ORDER BY 1]]>
 				</textElement>
 				<text><![CDATA[A TRANSPORTAR]]></text>
 			</staticText>
-			<textField pattern="#,##0.00">
-				<reportElement x="329" y="0" width="62" height="16" uuid="ecf07c0c-0ced-4220-8a8f-22debed1925a"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right">
-					<font fontName="Times New Roman"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{TOTALNUMERARIO}]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="391" y="-1" width="96" height="17" uuid="fdfbccb8-7981-44dc-9c11-50c64f615df1"/>
+				<reportElement x="368" y="-1" width="63" height="17" uuid="fdfbccb8-7981-44dc-9c11-50c64f615df1"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -278,6 +286,20 @@ ORDER BY 1]]>
 				<textFieldExpression><![CDATA[$V{TOTALMULTICAIXA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
+				<reportElement x="306" y="0" width="62" height="16" uuid="ecf07c0c-0ced-4220-8a8f-22debed1925a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALNUMERARIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="487" y="-1" width="67" height="17" uuid="6305ba26-b265-4895-b0c4-0245c6e4a0df"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -286,10 +308,24 @@ ORDER BY 1]]>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TOTALGERAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="0" width="56" height="16" uuid="94b02630-af9a-4293-998a-6656cd65c85c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALDESCONTO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
@@ -310,7 +346,7 @@ ORDER BY 1]]>
 				<textFieldExpression><![CDATA[$V{TOTALGERAL}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-81" positionType="Float" mode="Transparent" x="1" y="0" width="328" height="16" forecolor="#000000" backcolor="#00CCFF" uuid="96f93e27-788b-4233-b8cf-477c374a1fdf"/>
+				<reportElement key="staticText-81" positionType="Float" mode="Transparent" x="1" y="0" width="305" height="16" forecolor="#000000" backcolor="#00CCFF" uuid="96f93e27-788b-4233-b8cf-477c374a1fdf"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -324,7 +360,7 @@ ORDER BY 1]]>
 				<text><![CDATA[TOTAL GERAL]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="391" y="0" width="96" height="16" uuid="5fd515ea-a599-4d8d-8ba3-64cabef3bc0a"/>
+				<reportElement x="368" y="0" width="63" height="16" uuid="5fd515ea-a599-4d8d-8ba3-64cabef3bc0a"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -338,7 +374,7 @@ ORDER BY 1]]>
 				<textFieldExpression><![CDATA[$V{TOTALMULTICAIXA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="329" y="0" width="62" height="16" uuid="6b8e0d7b-2342-4c29-867e-36b17802103a"/>
+				<reportElement x="306" y="0" width="62" height="16" uuid="6b8e0d7b-2342-4c29-867e-36b17802103a"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -350,6 +386,20 @@ ORDER BY 1]]>
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TOTALNUMERARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="0" width="56" height="16" uuid="cfb96948-3cda-4d7d-9f93-b505bbf62baa"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALDESCONTO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</lastPageFooter>

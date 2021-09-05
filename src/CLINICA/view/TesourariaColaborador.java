@@ -19,6 +19,7 @@ import CLINICA.controller.ControllerMarcarcaoConsulta;
 import CLINICA.controller.ControllerParametros;
 import CLINICA.controller.ControllerMedico;
 import CLINICA.controller.ControllerPedidoExames;
+import CLINICA.controller.ControllerPedidoRaioX;
 import CLINICA.modelo.ExamesPorFazerItem;
 import CLINICA.modelo.ExamesporFazer;
 import GestaoStock.controller.ProdutoController;
@@ -30,6 +31,8 @@ import CLINICA.modelo.FacturaItens;
 import CLINICA.modelo.MarcacaoConsulta;
 import CLINICA.modelo.ModeloEstatistica;
 import CLINICA.modelo.PedidoExames;
+import CLINICA.modelo.PedidoItensRaioX;
+import CLINICA.modelo.RaioX;
 import CLINICA.relatorios.RelatorioHistoricoClinico;
 import CLINICA.relatorios.RelatorioVenda;
 import GestaoStock.controller.EntradaController;
@@ -85,6 +88,8 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     VendaController vendaController = new VendaController();
     Data d = new Data();
     SimpleDateFormat format = new SimpleDateFormat("yyy-MM-dd");
+    RaioX raioX = new RaioX();
+    PedidoItensRaioX pedidoItensRaioX = new PedidoItensRaioX();
 
     ControllerEmpresa controllerEmpresa;
     ControllerPedidoExames controllerPedidoExames;
@@ -113,11 +118,13 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     int desconto = 0, valor = 0;
     int total = 0;
     Calculo calculo = new Calculo();
+    ControllerPedidoRaioX controllerPedidoRaioX;
 
     public TesourariaColaborador(int codigo, int codigoArea) {
         initComponents();
         this.user = codigo;
         con = new ConexaoBancos().ConexaoBD();
+        controllerPedidoRaioX = new ControllerPedidoRaioX(con);
         controllerMedico = new ControllerMedico(con);
         controllerPedidoExames = new ControllerPedidoExames(con);
         controllerExamesporFazerItens = new ControllerExamesporFazerItens(con);
@@ -1310,6 +1317,8 @@ public class TesourariaColaborador extends javax.swing.JFrame {
                                         salvarMedicoHonorario();
                                         salvarServicoMedicosIntesSantaMarta();
                                         inserirEcografia(codigoFactura);
+                                        salvarPedido();
+                                        salvarPedidoItens();
                                         limparVenda();
 
                                         int quantidade = controllerParametros.getValorImpressao();
@@ -2051,12 +2060,12 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         factura.setDataVencimento(getDataActual());
         int codigoEmpresa = utentes.getCodigoSeguro(getCodigoCliente());
         if (jRadioButton1.isSelected()) {
-            if (jComboBox2.getSelectedItem().equals("PRO-FORMA")) {
-                factura.setEstado("FACTURA PROFORMA");
-            }
-            if (jComboBox2.getSelectedItem().equals("CRÉDITO")) {
-                factura.setEstado("FACTURA CREDITO");
-            }
+
+            factura.setEstado("FACTURA PROFORMA");
+
+//            if (jComboBox2.getSelectedItem().equals("CRÉDITO")) {
+//                factura.setEstado("FACTURA CREDITO");
+//            }
         } else {
             factura.setEstado("FACTURA PRONTO");
         }
@@ -2103,6 +2112,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             facturaItens.setCodigoCategoriaServico(codigoCategoria);
             facturaItens.setQuantidade(quantidadde);
             facturaItens.setPreco(valorUnitario - descontoUnitario);
+          //  facturaItens.setTotalGeral(totalApagar);
             facturaItens.setDescontoProduto(descontoUnitario);
             if (jComboBox2.getSelectedItem().equals("NUMERARIO")) {
                 facturaItens.setTotalGeral(valorUnitario);
@@ -2130,7 +2140,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
                 jTextFieldValorEntregue.setEnabled(true);
                 jTextFieldMulticaixa.setEnabled(true);
             }
-            if (jComboBox2.getSelectedItem().equals("CRÉDITO") || jComboBox2.getSelectedItem().equals("PRO-FORMA")) {
+            if (jComboBox2.getSelectedItem().equals("CRÉDITO") || jComboBox2.getSelectedItem().equals("FACTURA PRO-FORMA")) {
                 facturaItens.setTotalGeral(0.0);
                 facturaItens.setTotalTPA(0.0);
             }
@@ -2811,4 +2821,34 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             return false;
         }
     }
+
+    public void salvarPedido() {
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+            int codigoCategoria = controllerServico.getCodigoCategoriaServico(codigoServico);
+            if (codigoCategoria == 3) {
+                raioX.setCodigoPaciente(getCodigoCliente());
+                int quantidade = 1;
+                raioX.setQuantidade(quantidade);
+                controllerPedidoRaioX.salvar(raioX);
+            }
+        }
+
+    }
+
+    public void salvarPedidoItens() {
+        raioX.setCodigoPaciente(getCodigoCliente());
+        int codigoRaio = controllerPedidoRaioX.getLastFactura();
+        int quantidade = 1;
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            System.out.println("Quantidade de Pedido:" + quantidade);
+            int codigoServico = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+            pedidoItensRaioX.setCodigoServico(codigoServico);
+            pedidoItensRaioX.setCodigoRaio(codigoRaio);
+            pedidoItensRaioX.setQuantidade(quantidade);
+            pedidoItensRaioX.setEstado("PAGO");
+            controllerPedidoRaioX.salvarItens(pedidoItensRaioX);
+        }
+    }
+
 }
