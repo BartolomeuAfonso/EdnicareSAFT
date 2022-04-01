@@ -232,6 +232,7 @@ public class EnfermariaEditar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("EDITAR TRIAGEM");
+        setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Utente ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 12))); // NOI18N
 
@@ -633,16 +634,31 @@ public class EnfermariaEditar extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2KeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (dadosTriagemValidos()) {
-            int codigo = Integer.parseInt(codigoTriagem);
-            SalvarEditar(codigo);
-            JOptionPane.showMessageDialog(null, "Triagem Alterado com sucesso");
-            limparPaciente();
-            dispose();
 
-        } else {
-            JOptionPane.showMessageDialog(null, "Verfica os campos obrigatórios - Vermelhos");
+        int resposta = JOptionPane.showConfirmDialog(null, "Deseja atualizar a triagem?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            if (dadosTriagemValidos()) {
+                int codigo = Integer.parseInt(codigoTriagem);
+                SalvarEditar(codigo);
+                JOptionPane.showMessageDialog(null, "Triagem Alterado com sucesso");
+                limparPaciente();
+                dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Verfica os campos obrigatórios - Vermelhos");
+            }
+        } else if (resposta == JOptionPane.NO_OPTION) {
+            resposta = JOptionPane.showConfirmDialog(null, "Deseja salvar nova triagem?", "Atenção", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                SalvarTriagem();
+                limparPaciente();
+                limparTriagem();
+                int codigo = controllerTriagem.getLastCodigo();
+                relatorioHistoricoClinico.getRelatorioTriagem(codigo);
+
+            }
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

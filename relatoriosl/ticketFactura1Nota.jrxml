@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticketFactura1" pageWidth="200" pageHeight="450" columnWidth="189" leftMargin="1" rightMargin="10" topMargin="20" bottomMargin="20" uuid="d668e868-23f7-482a-aabe-002ae31319a8">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="CODIGO" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     DATE(notacredito.`dataFactura`) AS notacredito_dataFactura,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     servicos.`codigoBarra` AS servicos_codigoBarra,
+     utilizadores.`idUtilizador` AS utilizadores_idUtilizador,
+     utilizadores.`nomeCompleto` AS utilizadores_nomeCompleto,
+     utilizadores.`codigoStatus` AS utilizadores_codigoStatus,
+     servicos.`preco` AS servicos_preco,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     pacientes.`apn` AS pacientes_apn,
+     pacientes.`cartaoPS` AS pacientes_cartaoPS,
+     pacientes.`telefone` AS pacientes_telefone,
+     empresaseguros.`idSeguros` AS empresaseguros_idSeguros,
+     empresaseguros.`designacao` AS empresaseguros_designacao,
+     empresa.`codEmpresa` AS empresa_codEmpresa,
+     empresa.`descricao` AS empresa_descricao,
+     empresa.`endereco` AS empresa_endereco,
+     empresa.`nif` AS empresa_nif,
+     empresa.`email` AS empresa_email,
+     empresa.`contacto` AS empresa_contacto,
+     empresaseguros.`nif` AS empresaseguros_nif,
+     empresaseguros.`endereco` AS empresaseguros_endereco,
+     pacientes.`codigoSeguro` AS pacientes_codigoSeguro,
+     tipotaxa.`taxa` AS tipotaxa_taxa,
+     tipotaxa.`codigoMotivo` AS tipotaxa_codigoMotivo,
+     motivo.`codigoMotivo` AS motivo_codigoMotivo,
+     motivo.`descricacao` AS motivo_descricacao,
+     empresa.`NConta1` AS empresa_NConta1,
+     empresa.`IBAN1` AS empresa_IBAN1,
+     empresa.`NConta2` AS empresa_NConta2,
+     empresa.`IBAN2` AS empresa_IBAN2,
+     notacredito.`idNota` AS notacredito_idNota,
+     notacredito.`nomeClientes` AS notacredito_nomeClientes,
+     notacredito.`quantidadeItens` AS notacredito_quantidadeItens,
+     notacredito.`valorApagar` AS notacredito_valorApagar,
+     notacredito.`estado` AS notacredito_estado,
+     notacredito.`facturaReference` AS notacredito_facturaReference,
+     notacredito.`nRef` AS notacredito_nRef,
+     notacredito.`subTotal` AS notacredito_subTotal,
+     notacredito.`hashValor` AS notacredito_hashValor,
+     notacredito_itens.`codigoProduto` AS notacredito_itens_codigoProduto,
+     notacredito_itens.`codigoNota` AS notacredito_itens_codigoNota,
+     notacredito_itens.`quantidade` AS notacredito_itens_quantidade,
+     notacredito_itens.`totalGeral` AS notacredito_itens_totalGeral,
+     notacredito_itens.`descontoIVA` AS notacredito_itens_descontoIVA,
+     notacredito_itens.`descontoProduto` AS notacredito_itens_descontoProduto,
+     notacredito_itens.`subTotal` AS notacredito_itens_subTotal,
+     notacredito.`descontoIVa` AS notacredito_descontoIVa,
+     notacredito.`descontoFactura` AS notacredito_descontoFactura,
+     notacredito.`motivo` AS notacredito_motivo,
+     pacientes.`morada` AS pacientes_morada,
+     pacientes.`bilheteIdentidade` AS pacientes_bilheteIdentidade,
+     notacredito.`refFactura` AS notacredito_refFactura,
+     notacredito.`dataFactura` AS notacredito_dataFactura,
+     utilizadores.`username` AS utilizadores_username,
+     empresa.`slogan` AS empresa_slogan
+FROM
+     `servicos` servicos INNER JOIN `tipotaxa` tipotaxa ON servicos.`codigoTipoTaxa` = tipotaxa.`codigo`
+     INNER JOIN `motivo` motivo ON tipotaxa.`codigoMotivo` = motivo.`codigo`
+     INNER JOIN `notacredito_itens` notacredito_itens ON servicos.`idServico` = notacredito_itens.`codigoProduto`
+     INNER JOIN `notacredito` notacredito ON notacredito_itens.`codigoNota` = notacredito.`idNota`
+     INNER JOIN `pacientes` pacientes ON notacredito.`codigoCliente` = pacientes.`idPaciente`
+     INNER JOIN `utilizadores` utilizadores ON notacredito.`codigoUtilizador` = utilizadores.`idUtilizador`
+     INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`,
+     `empresa` empresa
+WHERE
+     notacredito.`idNota` = $P{CODIGO}]]>
+	</queryString>
+	<field name="notacredito_dataFactura" class="java.sql.Date"/>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="servicos_codigoBarra" class="java.lang.String"/>
+	<field name="utilizadores_idUtilizador" class="java.lang.Long"/>
+	<field name="utilizadores_nomeCompleto" class="java.lang.String"/>
+	<field name="utilizadores_codigoStatus" class="java.lang.Long"/>
+	<field name="servicos_preco" class="java.lang.Double"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="pacientes_apn" class="java.lang.String"/>
+	<field name="pacientes_cartaoPS" class="java.lang.String"/>
+	<field name="pacientes_telefone" class="java.lang.String"/>
+	<field name="empresaseguros_idSeguros" class="java.lang.Long"/>
+	<field name="empresaseguros_designacao" class="java.lang.String"/>
+	<field name="empresa_codEmpresa" class="java.lang.Long"/>
+	<field name="empresa_descricao" class="java.lang.String"/>
+	<field name="empresa_endereco" class="java.lang.String"/>
+	<field name="empresa_nif" class="java.lang.String"/>
+	<field name="empresa_email" class="java.lang.String"/>
+	<field name="empresa_contacto" class="java.lang.String"/>
+	<field name="empresaseguros_nif" class="java.lang.String"/>
+	<field name="empresaseguros_endereco" class="java.lang.String"/>
+	<field name="pacientes_codigoSeguro" class="java.lang.Long"/>
+	<field name="tipotaxa_taxa" class="java.lang.Integer"/>
+	<field name="tipotaxa_codigoMotivo" class="java.lang.Long"/>
+	<field name="motivo_codigoMotivo" class="java.lang.String"/>
+	<field name="motivo_descricacao" class="java.lang.String"/>
+	<field name="empresa_NConta1" class="java.lang.String"/>
+	<field name="empresa_IBAN1" class="java.lang.String"/>
+	<field name="empresa_NConta2" class="java.lang.String"/>
+	<field name="empresa_IBAN2" class="java.lang.String"/>
+	<field name="notacredito_idNota" class="java.lang.Long"/>
+	<field name="notacredito_nomeClientes" class="java.lang.String"/>
+	<field name="notacredito_quantidadeItens" class="java.lang.Long"/>
+	<field name="notacredito_valorApagar" class="java.lang.Double"/>
+	<field name="notacredito_estado" class="java.lang.String"/>
+	<field name="notacredito_facturaReference" class="java.lang.String"/>
+	<field name="notacredito_nRef" class="java.lang.String"/>
+	<field name="notacredito_subTotal" class="java.lang.Double"/>
+	<field name="notacredito_hashValor" class="java.lang.String"/>
+	<field name="notacredito_itens_codigoProduto" class="java.lang.Long"/>
+	<field name="notacredito_itens_codigoNota" class="java.lang.Long"/>
+	<field name="notacredito_itens_quantidade" class="java.lang.Long"/>
+	<field name="notacredito_itens_totalGeral" class="java.lang.Double"/>
+	<field name="notacredito_itens_descontoIVA" class="java.lang.Double"/>
+	<field name="notacredito_itens_descontoProduto" class="java.lang.Double"/>
+	<field name="notacredito_itens_subTotal" class="java.lang.Double"/>
+	<field name="notacredito_descontoIVa" class="java.lang.Double"/>
+	<field name="notacredito_descontoFactura" class="java.lang.Double"/>
+	<field name="notacredito_motivo" class="java.lang.String"/>
+	<field name="pacientes_morada" class="java.lang.String"/>
+	<field name="pacientes_bilheteIdentidade" class="java.lang.String"/>
+	<field name="notacredito_refFactura" class="java.lang.String"/>
+	<field name="utilizadores_username" class="java.lang.String"/>
+	<field name="empresa_slogan" class="java.lang.String"/>
+	<variable name="ITEMS" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="213" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="86" width="187" height="12" uuid="97151786-a372-4692-a082-7a1297915a1f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TEL:"+$F{empresa_contacto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="2" y="54" width="187" height="20" isPrintWhenDetailOverflows="true" uuid="394f9152-0212-498c-b99c-419b940ff40a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_descricao}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="74" width="187" height="12" uuid="90385441-6bc9-4127-b3aa-c264a3e9582a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NIF:"+$F{empresa_nif}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="2" y="136" width="186" height="1" uuid="00d7893a-5115-4827-8bb5-4a216750e8f7"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField" x="2" y="109" width="187" height="12" isPrintWhenDetailOverflows="true" uuid="935bb11d-6600-4500-8f23-5cf517ea92fe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_endereco}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="4" y="211" width="186" height="1" uuid="db806929-b326-4187-b79f-48bc541313be"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement key="staticText" x="3" y="137" width="60" height="12" uuid="66593e1f-5db7-48de-9b1f-4a902bb22226"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Data de Emissão:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" x="62" y="137" width="127" height="11" uuid="7abdb77b-144a-4aed-a017-6c29d33b0cb2"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{notacredito_dataFactura}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="3" y="149" width="59" height="12" uuid="b9a5c7cc-e160-4407-8003-4847fe2e76da"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Nota de Crédito:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="62" y="149" width="127" height="12" uuid="44a5c605-7609-4fc9-80f0-de64d338983b"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notacredito_idNota}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="4" y="160" width="185" height="12" uuid="2aa1e79b-4326-4fdb-8bdc-aac42e34f4d5"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Utente :"+$F{pacientes_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-2" x="2" y="98" width="187" height="12" uuid="980b3d54-00db-4b48-969f-ecb2bc9c202f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_email}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="1" y="0" width="94" height="54" uuid="96e7a246-e65e-4313-a30f-74cfb90727e5"/>
+				<imageExpression><![CDATA["Relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement mode="Opaque" x="3" y="184" width="185" height="12" uuid="32556cc3-56a1-419a-9cb0-2ed3289d00bc"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineStyle="Dashed"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Motivo: "+$F{notacredito_motivo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="171" width="188" height="12" uuid="a71783e4-491d-471d-9e19-d4b26bec5c0a"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{notacredito_estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="4" y="198" width="184" height="12" uuid="fdc9f14f-b30c-4c28-bc00-58be8929c659"/>
+				<box>
+					<bottomPen lineWidth="0.75" lineStyle="Dashed"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ref: "+$F{notacredito_refFactura}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="2" y="1" width="41" height="12" uuid="f68b9c6d-41c5-4f38-97b2-e8b4020faa6a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="43" y="1" width="22" height="12" uuid="8e15ad4b-1f57-48ab-8fef-e538d0bdb669"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Quant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="66" y="1" width="27" height="12" uuid="ea70b479-4fef-4ef5-9589-649fe1e9d9f9"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[P.Unit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="126" y="1" width="40" height="12" uuid="18c47bc7-4a5a-492d-a3a7-12ea172a733e"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[P.Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="92" y="1" width="32" height="12" uuid="71317da4-c98a-4829-b8a6-4dfcd7815103"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Taxa(%)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="2" y="1" width="139" height="12" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="4ef6069a-caac-465d-9957-a715b9b98dff"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{servicos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="43" y="12" width="23" height="12" uuid="138e5e44-6c83-4cc3-8e4a-3dcd9123ceb5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notacredito_itens_quantidade}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="66" y="12" width="27" height="12" uuid="d71c4b8b-9fd7-496c-a808-a2b1a2b3349d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notacredito_itens_totalGeral}+$F{notacredito_itens_descontoProduto}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="125" y="12" width="42" height="12" uuid="26a2cd62-08f4-449a-82cf-7d037d83746c"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notacredito_itens_totalGeral}+$F{notacredito_itens_descontoProduto}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="95" y="12" width="27" height="12" uuid="cfe91f80-9803-4d56-a927-4f2ddda97d19"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["%" +$F{tipotaxa_taxa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="188" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="2" y="2" width="75" height="11" uuid="db0642f8-f017-492d-8c38-a1fdcef5121a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Iliquido]]></text>
+			</staticText>
+			<line>
+				<reportElement key="line" x="1" y="43" width="187" height="1" uuid="1283a25e-afd1-48ee-a67c-0b0b5f16d3d3"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement key="staticText" x="3" y="139" width="26" height="11" uuid="2b9b9c63-179d-4ccc-887c-aebad9b62d7f"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Items:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="46" y="139" width="144" height="11" uuid="e9b63e94-8cc2-4639-9b09-8deb5aea6a9a"/>
+				<textElement>
+					<font fontName="Arial" size="8" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Atendido por:"+$F{utilizadores_username}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="29" y="139" width="17" height="11" uuid="1c97d352-faa8-47ee-a7c7-d26a9aedcbe5"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$V{ITEMS}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="1" y="156" width="188" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="673bb4fc-b028-4bdb-88a5-3d491cd03706"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notacredito_facturaReference}+"- Processado por Programa Validado nº249/AGT/2019-EDNICARE 3.0"]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="84" y="1" width="70" height="11" uuid="128c523f-899e-474a-a582-94dc75b490b9"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{notacredito_valorApagar} - $F{notacredito_descontoIVa})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="168" width="189" height="11" uuid="3cbea2fa-9da0-4bb3-a0c4-27e04a9eb253"/>
+				<textElement>
+					<font fontName="Arial" size="8" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_slogan}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="2" y="12" width="75" height="11" uuid="84a4e2ac-b9ea-47a4-83b3-6ed69e7bd2f4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Desconto]]></text>
+			</staticText>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="84" y="11" width="70" height="11" uuid="638d8bda-f2f4-4492-98c0-b6d3d4a80c68"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notacredito_descontoFactura}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="84" y="21" width="70" height="11" uuid="02db50be-2b00-4380-abc0-491b934cdb6b"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notacredito_descontoIVa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="2" y="22" width="75" height="11" uuid="d8ab80e4-9ea8-414d-9f52-48f6d81404ae"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Imposto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="2" y="32" width="75" height="11" uuid="c2e95702-ad4c-47bc-9c9c-ec302a9fe660"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total a pagar]]></text>
+			</staticText>
+			<textField pattern=" #,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="84" y="31" width="70" height="11" uuid="d6300896-ee37-4b91-ae6a-8e2f2ea4723c"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{notacredito_valorApagar}-$F{notacredito_descontoFactura}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement key="line" x="2" y="0" width="187" height="1" uuid="1544e3ba-2511-4379-9cd9-30502f21c9e8"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line" x="2" y="65" width="187" height="1" uuid="b8d9e724-ad7b-4bd0-a5d7-28289b7a51cf"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line" x="1" y="123" width="187" height="1" uuid="ed21903c-0bc2-4eb7-9ae7-edf31cdab49a"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement key="line" x="2" y="154" width="187" height="1" uuid="7a6979f1-9f09-40c8-bb06-b36580685e40"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<subreport>
+				<reportElement x="1" y="66" width="188" height="37" uuid="28b9a512-d336-488f-88aa-22a72fe53842"/>
+				<subreportParameter name="CODIGO">
+					<subreportParameterExpression><![CDATA[]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "guiaMedicaNota_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

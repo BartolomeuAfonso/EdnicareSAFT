@@ -22,7 +22,7 @@ public class Factura {
     private String dataVencimento, NextFactura;
     private String emailCliente;
     private String contaCorrente;
-    private String nEcomenda;
+    private String nEcomenda, dataOcorrencia;
     private String moradaCliente;
     private String telefoneCliente;
     private String dataViagem, origemViagem, destinoViagem, numContetor, motorista, viatura, nIBAN;
@@ -458,5 +458,14 @@ public class Factura {
     public void setGrossTotal(double grossTotal) {
         this.grossTotal = grossTotal;
     }
+
+    public String getDataOcorrencia() {
+        return dataOcorrencia;
+    }
+
+    public void setDataOcorrencia(String dataOcorrencia) {
+        this.dataOcorrencia = dataOcorrencia;
+    }
+    
 
 }

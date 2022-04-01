@@ -30,7 +30,8 @@ public class ControllerServico {
 
     Connection con;
 
-    public ControllerServico(Connection con) {
+    public ControllerServico(Connection con)
+    {
         this.con = conexao.ConexaoBD();
     }
 
@@ -436,6 +437,38 @@ public class ControllerServico {
         return lista;
     }
 
+    public ArrayList<String> getNomeExamesResultado() {
+        //conexao.Connectando();
+        sql = "SELECT distinct s.designacao AS designacao FROM  servicos s INNER JOIN examesintegrado e \n"
+                + "ON s.idServico = e.codigoServico";
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
+    public ArrayList<String> getNomeExamesResultadoporLike(String designacao) {
+        //conexao.Connectando();
+        sql = "SELECT distinct s.designacao AS designacao FROM  servicos s INNER JOIN examesintegrado e \n"
+                + "ON s.idServico = e.codigoServico where s.designacao like '%" + designacao + "%' ";
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
     public ArrayList<String> getNomeExamesporExamesIntegrado() {
         //conexao.Connectando();
         sql = "SELECT DISTINCT s.designacao AS designacao FROM servicos s INNER JOIN examesintegrado e ON s.idServico=e.codigoServico\n"
@@ -452,7 +485,7 @@ public class ControllerServico {
         return lista;
     }
 
-     public ArrayList<String> getNomeExamesporExamesIntegradoSimples() {
+    public ArrayList<String> getNomeExamesporExamesIntegradoSimples() {
         //conexao.Connectando();
         sql = "SELECT DISTINCT s.designacao AS designacao FROM servicos s INNER JOIN examesintegrado e ON s.idServico=e.codigoServico\n"
                 + "WHERE e.codigoCategoria = 0";
@@ -471,6 +504,23 @@ public class ControllerServico {
     public ArrayList<String> getNomeExameCategoriaIntegrado() {
         //conexao.Connectando();
         sql = "SELECT * FROM categoria_exames";
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
+    public ArrayList<String> getNomeExameCategoriaIntegradoParaResultado(int codigo) {
+        //conexao.Connectando();
+        sql = "SELECT distinct  e.designacao as designacao  FROM  servicos s INNER JOIN examesintegrado e \n"
+                + "ON s.idServico = e.codigoServico WHERE s.idServico=" + codigo;
+        System.out.println("Consulta:" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
             ps = con.prepareStatement(sql);
@@ -818,6 +868,7 @@ public class ControllerServico {
         }
         return 0;
     }
+
     public int getCodigoServicoporCategoria_exames(String designacao) {
 
         sql = "SELECT * FROM categoria_exames WHERE designacao='" + designacao + "'";
@@ -1129,6 +1180,22 @@ public class ControllerServico {
         }
         return 0;
     }
+     public int getCodigoProdutoItemporNome(String designacao) {
+        // conexao.Connectando();
+        sql = "SELECT idExamesIntegrado FROM examesintegrado where designacao ='"+designacao+"' ";
+        System.out.println("Sql:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+        return 0;
+    }
 
     public Vector getExamesSolicitados(int triagem, int codigoPaciente) {
         //  conexao.Connectando();
@@ -1259,4 +1326,20 @@ public class ControllerServico {
         }
         //  conexao.DesconectaBanco();
     }
+
+    public void salvarResultadoPossivel(int codigo, String designacao) {
+
+        sql = "INSERT INTO resultados_exames_possivel(codigoExameIntegrado,designacao)VALUES(?,?)";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, codigo);
+            ps.setString(2, designacao);
+            ps.execute();
+            JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+//        conexao.DesconectaBanco();
+    }
+
 }

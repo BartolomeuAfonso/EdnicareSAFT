@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="honorarioMedico1" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c7c658b-c63b-4018-992b-a7d0abb1eabe">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DATA1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGOUTILIZADOR" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRECO" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IRT" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IMPOSTO" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TOTALIMPOSTO" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     date(facturacolaboradores.`data`) AS facturacolaboradores_data,
+     servicos.`designacao` AS servicos_designacao,
+     servicos.`preco` AS servicos_preco,
+     facturacolaboradores.`codigo` AS facturacolaboradores_codigo,
+     facturacolaboradores.`codigoUtilizador` AS facturacolaboradores_codigoUtilizador,
+     facturacolaboradores.`codigoColaboradores` AS facturacolaboradores_codigoColaboradores,
+     facturacolaboradores.`Total` AS facturacolaboradores_Total,
+     facturacolaboradores.`nFactura` AS facturacolaboradores_nFactura,
+     facturacolaboradoresitens.`codigoFactura` AS facturacolaboradoresitens_codigoFactura,
+     facturacolaboradoresitens.`codigoServico` AS facturacolaboradoresitens_codigoServico,
+     facturacolaboradoresitens.`preco` AS facturacolaboradoresitens_preco,
+     facturacolaboradoresitens.`percentagem` AS facturacolaboradoresitens_percentagem,
+     facturacolaboradoresitens.`totalGEral` AS facturacolaboradoresitens_totalGEral,
+     facturacolaboradoresitens.`codigoFactura1` AS facturacolaboradoresitens_codigoFactura1,
+     medicocolaboradores.`idMedicoColaboradores` AS medicocolaboradores_idMedicoColaboradores,
+     medicocolaboradores.`nomeCompleto` AS medicocolaboradores_nomeCompleto,
+     medicocolaboradores.`morada` AS medicocolaboradores_morada,
+     medicocolaboradores.`contacto` AS medicocolaboradores_contacto,
+     medicocolaboradores.`numeroOrdem` AS medicocolaboradores_numeroOrdem,
+     medicocolaboradores.`codigoEspecialidade` AS medicocolaboradores_codigoEspecialidade,
+     medicocolaboradores.`dataCadastro` AS medicocolaboradores_dataCadastro,
+     medicocolaboradores.`codigoStatus` AS medicocolaboradores_codigoStatus,
+     especialidade_medico.`idEspecialidade` AS especialidade_medico_idEspecialidade,
+     especialidade_medico.`designacao` AS especialidade_medico_designacao,
+     especialidade_medico.`codigoStatus` AS especialidade_medico_codigoStatus,
+     categoriaservico.`designacao` AS categoriaservico_designacao,
+     facturacolaboradoresitens.`percetagemRaio` AS facturacolaboradoresitens_percetagemRaio,
+     facturacolaboradoresitens.`percentagemEcografia5` AS facturacolaboradoresitens_percentagemEcografia5,
+     facturacolaboradoresitens.`percentagemEcografia7` AS facturacolaboradoresitens_percentagemEcografia7,
+     facturacolaboradoresitens.`percentagemMorfologia` AS facturacolaboradoresitens_percentagemMorfologia,
+     facturacolaboradoresitens.`percentagemEco` AS facturacolaboradoresitens_percentagemEco,
+     facturacolaboradoresitens.`percentagemEle` AS facturacolaboradoresitens_percentagemEle,
+     facturacolaboradoresitens.`percentagemConsulta` AS facturacolaboradoresitens_percentagemConsulta,
+     facturacolaboradoresitens.`percentagemEcografia10` AS facturacolaboradoresitens_percentagemEcografia10
+FROM
+     `facturacolaboradores` facturacolaboradores INNER JOIN `facturacolaboradoresitens` facturacolaboradoresitens ON facturacolaboradores.`codigo` = facturacolaboradoresitens.`codigoFactura1`
+     INNER JOIN `servicos` servicos ON facturacolaboradoresitens.`codigoServico` = servicos.`idServico`
+     INNER JOIN `categoriaservico` categoriaservico ON servicos.`codigoCategoria` = categoriaservico.`idcategoriaServico`
+     INNER JOIN `medicocolaboradores` medicocolaboradores ON facturacolaboradores.`codigoColaboradores` = medicocolaboradores.`idMedicoColaboradores`
+     INNER JOIN `especialidade_medico` especialidade_medico ON medicocolaboradores.`codigoEspecialidade` = especialidade_medico.`idEspecialidade`
+WHERE
+     date(facturacolaboradores.`data`) BETWEEN $P{DATA1} and $P{DATA2}
+     and facturacolaboradores.`codigoColaboradores` = $P{CODIGOUTILIZADOR}]]>
+	</queryString>
+	<field name="facturacolaboradores_data" class="java.sql.Date"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="servicos_preco" class="java.lang.Double"/>
+	<field name="facturacolaboradores_codigo" class="java.lang.Long"/>
+	<field name="facturacolaboradores_codigoUtilizador" class="java.lang.Long"/>
+	<field name="facturacolaboradores_codigoColaboradores" class="java.lang.Long"/>
+	<field name="facturacolaboradores_Total" class="java.lang.Double"/>
+	<field name="facturacolaboradores_nFactura" class="java.lang.String"/>
+	<field name="facturacolaboradoresitens_codigoFactura" class="java.lang.Integer"/>
+	<field name="facturacolaboradoresitens_codigoServico" class="java.lang.Long"/>
+	<field name="facturacolaboradoresitens_preco" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_percentagem" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_totalGEral" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_codigoFactura1" class="java.lang.Long"/>
+	<field name="medicocolaboradores_idMedicoColaboradores" class="java.lang.Long"/>
+	<field name="medicocolaboradores_nomeCompleto" class="java.lang.String"/>
+	<field name="medicocolaboradores_morada" class="java.lang.String"/>
+	<field name="medicocolaboradores_contacto" class="java.lang.String"/>
+	<field name="medicocolaboradores_numeroOrdem" class="java.lang.String"/>
+	<field name="medicocolaboradores_codigoEspecialidade" class="java.lang.Long"/>
+	<field name="medicocolaboradores_dataCadastro" class="java.sql.Date"/>
+	<field name="medicocolaboradores_codigoStatus" class="java.lang.Long"/>
+	<field name="especialidade_medico_idEspecialidade" class="java.lang.Long"/>
+	<field name="especialidade_medico_designacao" class="java.lang.String"/>
+	<field name="especialidade_medico_codigoStatus" class="java.lang.Long"/>
+	<field name="categoriaservico_designacao" class="java.lang.String"/>
+	<field name="facturacolaboradoresitens_percetagemRaio" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_percentagemEcografia5" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_percentagemEcografia7" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_percentagemMorfologia" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_percentagemEco" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_percentagemEle" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_percentagemConsulta" class="java.lang.Double"/>
+	<field name="facturacolaboradoresitens_percentagemEcografia10" class="java.lang.Double"/>
+	<variable name="TOTALBRUTO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{facturacolaboradoresitens_preco}]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{facturacolaboradoresitens_preco}]]></initialValueExpression>
+	</variable>
+	<variable name="TOTALMETADE" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="TOTALIRT" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="TOTALIMPOSTO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{facturacolaboradoresitens_preco}]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{facturacolaboradoresitens_preco}]]></initialValueExpression>
+	</variable>
+	<variable name="TOTALDESCONTO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="TOTALGERAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{facturacolaboradoresitens_percentagem}+$F{facturacolaboradoresitens_percetagemRaio}+$F{facturacolaboradoresitens_percentagemEcografia5}+$F{facturacolaboradoresitens_percentagemEcografia7}+$F{facturacolaboradoresitens_percentagemMorfologia}+$F{facturacolaboradoresitens_percentagemEco}+$F{facturacolaboradoresitens_percentagemEle}+$F{facturacolaboradoresitens_percentagemConsulta}+$F{facturacolaboradoresitens_percentagemEcografia10}]]></variableExpression>
+		<initialValueExpression><![CDATA[$F{facturacolaboradoresitens_percentagem}+$F{facturacolaboradoresitens_percetagemRaio}+$F{facturacolaboradoresitens_percentagemEcografia5}+$F{facturacolaboradoresitens_percentagemEcografia7}+$F{facturacolaboradoresitens_percentagemMorfologia}+$F{facturacolaboradoresitens_percentagemEco}+$F{facturacolaboradoresitens_percentagemEle}+$F{facturacolaboradoresitens_percentagemConsulta}+$F{facturacolaboradoresitens_percentagemEcografia10}]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="157" height="90" uuid="97779b3f-fbcd-4882-a07b-348f1e7c9489"/>
+				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="648" y="10" width="154" height="13" uuid="149a9e49-cd1b-4776-b2e5-54793b5d53a9"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Descrição dos Honorários]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="23" width="154" height="13" uuid="ece99981-2e8e-4dc4-a9f6-084a2498a522"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- Consulta de especialidade 50%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="36" width="154" height="13" uuid="131c054c-caf9-40ce-9623-112e6a01f952"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- Consulta de Clínica Geral 25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="49" width="154" height="13" uuid="c9b9fd8d-9f03-4652-aaf3-4bc244cf5997"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- Laboratório - 10.5%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="64" width="154" height="13" uuid="a76188d5-8e0f-41c7-8e8e-8fb0ee34a9f9"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- Ecografia - 1%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="77" width="154" height="13" uuid="d09344a2-5b88-4d64-be17-461ebfbc78e5"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- Raio x - 1%]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="17" uuid="e469a1dc-5e6d-4b36-bdba-24677af85606"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAPA DE PAGAMENTO DE COLABORADORES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="62" height="21" uuid="613fd446-8efd-4dd6-af08-cc089547b4c4"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ MÉDICO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="35" width="109" height="21" uuid="28c6fe79-c1d2-419b-92b4-3f0c94a32c02"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  ESPECIALIDADE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="108" y="35" width="177" height="21" uuid="2d845163-7752-493c-918a-03ef245147ec"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{especialidade_medico_designacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="56" width="73" height="21" uuid="01f5d277-146d-4963-9ceb-d099bd6a7dff"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº de Ordem:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="76" y="57" width="81" height="20" uuid="14b4234e-5a26-48e2-82eb-a31451066ecd"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medicocolaboradores_numeroOrdem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="16" width="224" height="20" uuid="940df6e7-9fce-429b-afc5-beb9ad576516"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medicocolaboradores_nomeCompleto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="0" width="33" height="18" uuid="ba691169-ccb4-4692-a415-d9c96f3370d4"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[    Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="677" y="0" width="125" height="18" uuid="ad9c01bd-862a-47d5-9bb1-a11268b70d16"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR LIQUIDO (PERCENTAGEM)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="0" width="136" height="18" uuid="ba09facc-bb53-4b17-a4f6-6244350eebba"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="0" width="256" height="18" uuid="cb511e6c-6b89-4900-a128-b37217e248e2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVIÇOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="0" width="73" height="18" uuid="fd260385-bb03-4bd8-9e2c-c41fc6e57ef1"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="589" y="0" width="88" height="18" uuid="ed8391a1-45e5-4565-a27f-ec2eb85ccb84"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PREÇO AKZ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="501" y="0" width="88" height="18" uuid="8445dd3c-bc16-41b2-8963-e3e56509ebcc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Factura]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="36" height="18" uuid="4eb875b2-1153-49b3-b65d-82f6d0460946"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="677" y="0" width="125" height="18" uuid="6a0b6825-60f6-42b5-86b5-ca0180f94d9d"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{facturacolaboradoresitens_percentagem}+$F{facturacolaboradoresitens_percetagemRaio}+$F{facturacolaboradoresitens_percentagemEcografia5}+$F{facturacolaboradoresitens_percentagemEcografia7}+$F{facturacolaboradoresitens_percentagemMorfologia}+$F{facturacolaboradoresitens_percentagemEco}+$F{facturacolaboradoresitens_percentagemEle}+$F{facturacolaboradoresitens_percentagemConsulta}+$F{facturacolaboradoresitens_percentagemEcografia10}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="0" width="257" height="18" uuid="ffe1ace4-fd4e-4ad1-8922-8c24147b095c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" "+$F{servicos_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="365" y="0" width="136" height="18" uuid="ee65d0d7-bb5f-4506-86f3-6370b857cd6f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{categoriaservico_designacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="36" y="0" width="73" height="18" uuid="3abd46ea-7b2a-413f-8af5-9f0bd40812db"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{facturacolaboradores_data}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="589" y="0" width="89" height="18" uuid="df8bcf59-0f50-4fde-ac36-2a194b51922f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{facturacolaboradoresitens_preco}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="501" y="0" width="88" height="18" uuid="89f8dad4-5ee0-4a94-9bf6-ca2ca3dab151"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{facturacolaboradores_nFactura}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="365" height="23" uuid="4493cea7-0833-4f30-af18-bc429d8a0ed8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[   Á TRANSPORTAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="0" width="224" height="23" uuid="6fdf6fb6-8053-4f9b-89b8-f8b3a6d00a1c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[   SUB - TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="589" y="0" width="88" height="23" uuid="e897d2ec-ccd5-4b6e-8938-7e4a6abd07f5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{TOTALIMPOSTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="677" y="0" width="125" height="23" uuid="c061184a-7a64-4c94-88df-556bffcf1f5e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{TOTALGERAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="23">
+			<staticText>
+				<reportElement x="0" y="0" width="589" height="23" forecolor="#FF0000" uuid="ef3049a1-124b-4923-b4a5-42ce28508860"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[   TOTAL GERAL]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="589" y="0" width="88" height="23" forecolor="#FF0000" uuid="1144c818-fd78-415c-9338-e05007cdd8cf"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{TOTALBRUTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="677" y="0" width="125" height="23" forecolor="#FF0000" uuid="a1694d03-ba74-4d8d-8c1b-85bd24054b13"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{TOTALGERAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

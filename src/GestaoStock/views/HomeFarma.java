@@ -923,10 +923,8 @@ public class HomeFarma extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem36ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-        this.setEnabled(false);
-        frmArmazem iforn = new frmArmazem(this);
-        iforn.setVisible(true);
-        iforn.toFront();
+        new frmArmazem().setVisible(true);
+     
 
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 

@@ -13,7 +13,7 @@ public class CategoriaServicos {
 
       private Long idGrupo;
       private String designacao;
-       private int codigoStatus;
+       private int codigoStatus, codigoArea;
 
     public CategoriaServicos() {
     }
@@ -47,6 +47,14 @@ public class CategoriaServicos {
 
     public void setCodigoStatus(int codigoStatus) {
         this.codigoStatus = codigoStatus;
+    }
+
+    public int getCodigoArea() {
+        return codigoArea;
+    }
+
+    public void setCodigoArea(int codigoArea) {
+        this.codigoArea = codigoArea;
     }
 
    

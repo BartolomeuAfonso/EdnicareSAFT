@@ -9,6 +9,7 @@ import CLINICA.controller.ControllerUtente;
 import CLINICA.controller.ControllerUsuario;
 import CLINICA.controller.ControllerExamesporFazer;
 import CLINICA.controller.ControllerExamesporFazerItens;
+import CLINICA.relatorios.RelatorioRaiox;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -44,6 +45,7 @@ public class RaioXMedico extends javax.swing.JFrame {
     Data d = new Data();
     ControllerUtente controllerUtente;
     ControllerUsuario controllerUsuario;
+    RelatorioRaiox relatorioRaiox = new RelatorioRaiox();
 
     public RaioXMedico(String nome) {
         initComponents();
@@ -51,6 +53,7 @@ public class RaioXMedico extends javax.swing.JFrame {
         controllerUsuario = new ControllerUsuario(con);
         controllerUtente = new ControllerUtente(con);
         int tipoUtilizador = controllerUsuario.getTipoUtilizador(nome);
+
         jDateChooser1.setDate(new Date());
         jDateChooser2.setDate(new Date());
         mostrarExame("SELECT r.id,r.descricao, r.nomePaciente,r.imagem,r.data FROM resultadoraixo r\n"
@@ -85,6 +88,7 @@ public class RaioXMedico extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setTitle("Raio X");
 
@@ -190,6 +194,14 @@ public class RaioXMedico extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-export-pdf-filled-32.png"))); // NOI18N
+        jButton2.setText("PDF");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -207,6 +219,8 @@ public class RaioXMedico extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25))))
         );
@@ -220,7 +234,9 @@ public class RaioXMedico extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
 
@@ -254,6 +270,11 @@ public class RaioXMedico extends javax.swing.JFrame {
 
         // new SlideRaioX(codigoPaciente, jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString(), codigoRaixo, imagem, descricao).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int codigoRaixo = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+        relatorioRaiox.getRaioX(codigoRaixo);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public Date getData() {
         return d.converteDataSql(jDateChooser1.getDate());
@@ -335,6 +356,7 @@ public class RaioXMedico extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;

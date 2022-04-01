@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="checkRelatorio" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="182c238d-519d-467b-921d-7d043ac6d00f">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="358"/>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     checkup.`id` AS checkup_id,
+     checkup.`nome` AS checkup_nome,
+     checkup.`datacheck` AS checkup_datacheck,
+     checkup.`dataFinal` AS checkup_dataFinal,
+     checkup.`informacao` AS checkup_informacao,
+     checkup.`medico` AS checkup_medico,
+     checkup.`codigoPaciente` AS checkup_codigoPaciente,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     empresaseguros.`designacao` AS empresaseguros_designacao,
+     empresaseguros.`nif` AS empresaseguros_nif,
+     checkup.`funcao` AS checkup_funcao,
+     empresa.`codEmpresa` AS empresa_codEmpresa,
+     empresa.`descricao` AS empresa_descricao,
+     empresa.`slogan` AS empresa_slogan,
+     checkup.`resultado` AS checkup_resultado,
+     empresa.`endereco` AS empresa_endereco,
+     empresa.`email` AS empresa_email,
+     empresa.`contacto` AS empresa_contacto,
+     checkup.`codigoMedico` AS checkup_codigoMedico,
+     medicos.`nomeCompleto` AS medicos_nomeCompleto,
+     medicos.`numeroOrdem` AS medicos_numeroOrdem,
+pacientes.`dataNascimento` as pacientes_dataNascimento,
+   YEAR(CURDATE())-YEAR(pacientes.`dataNascimento`) AS Idade
+FROM
+     `pacientes` pacientes INNER JOIN `checkup` checkup ON pacientes.`idPaciente` = checkup.`codigoPaciente`
+     INNER JOIN `empresaseguros` empresaseguros ON pacientes.`codigoSeguro` = empresaseguros.`idSeguros`
+     INNER JOIN `utilizadores` utilizadores ON checkup.`codigoMedico` = utilizadores.`idUtilizador`
+     INNER JOIN `medicos` medicos ON utilizadores.`idUtilizador` = medicos.`tipoUtilizador`,
+     `empresa` empresa
+WHERE
+     checkup.`id` = $P{CODIGO}]]>
+	</queryString>
+	<field name="checkup_id" class="java.lang.Long"/>
+	<field name="checkup_nome" class="java.lang.String"/>
+	<field name="checkup_datacheck" class="java.lang.String"/>
+	<field name="checkup_dataFinal" class="java.lang.String"/>
+	<field name="checkup_informacao" class="java.lang.String"/>
+	<field name="checkup_medico" class="java.lang.String"/>
+	<field name="checkup_codigoPaciente" class="java.lang.Long"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="empresaseguros_designacao" class="java.lang.String"/>
+	<field name="empresaseguros_nif" class="java.lang.String"/>
+	<field name="checkup_funcao" class="java.lang.String"/>
+	<field name="empresa_codEmpresa" class="java.lang.Long"/>
+	<field name="empresa_descricao" class="java.lang.String"/>
+	<field name="empresa_slogan" class="java.lang.String"/>
+	<field name="checkup_resultado" class="java.lang.String"/>
+	<field name="empresa_endereco" class="java.lang.String"/>
+	<field name="empresa_email" class="java.lang.String"/>
+	<field name="empresa_contacto" class="java.lang.String"/>
+	<field name="checkup_codigoMedico" class="java.lang.Long"/>
+	<field name="medicos_nomeCompleto" class="java.lang.String"/>
+	<field name="medicos_numeroOrdem" class="java.lang.String"/>
+	<field name="pacientes_dataNascimento" class="java.lang.String"/>
+	<field name="Idade" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="199" splitType="Stretch">
+			<image>
+				<reportElement key="image-1" x="4" y="8" width="137" height="79" uuid="0d9cee52-dddd-4900-8992-84db313a01fa"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="96" width="555" height="36" forecolor="#FFFFFF" backcolor="#999999" uuid="12a2b54e-91b9-4c28-a9d6-89ceba0cec8c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEDICAL CERTIFICATE/CERTIFICADO MÉDICO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="140" width="151" height="12" uuid="0571a71f-e64e-42bc-b395-e61eac241173"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Esse certificado é:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="151" width="151" height="12" uuid="6457ddc8-1dca-4f5c-9a4d-291dedc98e45"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[unipessoal e intransmissível]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="162" width="151" height="12" uuid="ff67275e-a594-4b83-ab61-4621f3aef87d"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[ao ser passado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="140" width="151" height="12" uuid="d514e8b8-3e01-474d-8032-7dac2bf01967"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Check Up]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="151" width="99" height="12" uuid="b17ede91-4b6a-47e3-9f3c-ae5f0dbb7b24"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[CK-1 059/]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="502" y="151" width="52" height="12" uuid="aaa856ec-3f1c-4a7e-9b27-b192f1583a8c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_id}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="3" y="3" width="550" height="1" uuid="280bb05f-da3f-4602-8b8b-49762ae1f422"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="17" uuid="df9023ed-b07a-4bfa-84c8-4d14fe2d04a7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[This is to certify that / Serve a presente declaração certificar que:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="86" y="17" width="391" height="18" uuid="648edc30-e839-4ed0-8c8e-7c8e89d562e5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="86" y="35" width="391" height="17" uuid="d5047206-3ae8-4bc8-abf3-08b7b07fa5a0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Date of Birth/ Data de nascimento]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="86" y="51" width="391" height="18" uuid="656cb404-4f88-4f88-922b-a2c8ae322165"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pacientes_dataNascimento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="14" uuid="ad8baaf4-4d47-47c8-962d-7866d239d8a8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Company Name/ Nome da empresa]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="122" y="14" width="380" height="18" uuid="42deb503-7f4b-480c-b0a6-e20f9aacdb7f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresaseguros_designacao} + "      NIF:" +$F{empresaseguros_nif}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="45" width="554" height="14" uuid="cafbaf35-8071-4dc2-b578-13effade8a5a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Ocupation/Função:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="86" y="59" width="416" height="18" uuid="042b73ff-6f2e-4536-9710-a15b06cf8ec5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_funcao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="102" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="552" height="20" uuid="0ecb97c4-470c-44ef-9d32-50fdb6759962"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Waw examined in acordance with current"+$F{empresa_descricao}+ "Medical Guideline and my opinion is"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="20" width="552" height="20" uuid="d058e3c7-8d07-4794-b5a2-931d37c7b0c9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Foi examinado conforme as directrizes da Clínica/Centro"+$F{empresa_descricao}+ " e na minha opinião está"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="40" width="551" height="18" forecolor="#FF0000" uuid="9f9bf0f5-8553-4385-871a-3afaa31de2eb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_resultado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="68" width="554" height="34" uuid="928ba1f1-7af1-4fc0-a7d3-1216e559117e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_informacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="166" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="1" width="241" height="16" uuid="60cb5743-db00-4c99-9683-f829b4a5630b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Examining Doctor/Médico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="34" width="241" height="16" uuid="966e3683-1a00-4b2b-9ea5-a8f3635641a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Sign]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="3" y="17" width="240" height="17" uuid="bc736fc0-558d-42d8-8192-084948bbe8dd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_medico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="312" y="1" width="241" height="16" uuid="d07139e4-b28a-4e14-82c0-a6b048be80db"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Ordem dos Médicos de Angola]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="358" y="17" width="178" height="17" uuid="0200675f-32f0-4491-b05a-232422908b1c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medicos_numeroOrdem}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="313" y="34" width="241" height="16" uuid="fd1ef33e-b3d3-4311-afba-b10084db9289"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Date/Data do Check Up]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="313" y="49" width="240" height="17" uuid="66b0e229-8aef-40ae-a75b-f37da2ffae6a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_datacheck}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1" y="71" width="551" height="94" uuid="9bf9aaf3-d8b0-4f54-b8cc-3d5dae10e223"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="71" width="550" height="94" uuid="c228cb6c-373c-4f01-85cc-50d184c5d3ea"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+					<paragraph tabStopWidth="2"/>
+				</textElement>
+				<text><![CDATA[Observação de medidas de protecção, higiene e segurançao laboral indviduais e colectivas.
+
+Consulta de check up períodica. Obs: ver recomendações no relatório de saúde ocupacional.
+
+Observation of individual and collective occupational protection, hygiene and safety measures.
+
+Periodic check-up consultation. Note: see recommendations in the occupational health report.]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="109" splitType="Stretch">
+			<textField>
+				<reportElement x="125" y="4" width="52" height="12" uuid="e7d57624-ac42-4b00-b991-c2eb921e464f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="4" width="123" height="12" uuid="d134dec0-d76a-404d-9c3d-e6388e2008e6"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Certificate nº/ Certificado nº:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="4" width="123" height="12" uuid="9611369a-1463-49fa-bcf6-d28e04c21dcd"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Expiry date/V´slido até:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="407" y="0" width="148" height="17" uuid="07978d82-2ed8-47d4-8444-91485d6629a3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkup_dataFinal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="35" width="550" height="20" uuid="b092f587-49c1-47fe-97f8-5e2192846561"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Ednicare - Sistema de Gestão Hospitalar certificado pela AGT nº/249]]></text>
+			</staticText>
+			<line>
+				<reportElement x="3" y="60" width="550" height="1" uuid="583421a1-59b8-4324-bcfa-21e881ada403"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="4" y="69" width="549" height="15" uuid="a1a639ce-2386-47ae-bd6f-94f6e433659f"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Bairro:"+$F{empresa_endereco}+ "Tel.nº:"+$F{empresa_contacto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="85" width="549" height="15" uuid="051bfc01-409d-4e37-b1c0-37e26214d8ef"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["E-mail:"+$F{empresa_contacto}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="3" y="64" width="550" height="1" uuid="571659e7-aa66-4b18-b63d-576b272c4fd5"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

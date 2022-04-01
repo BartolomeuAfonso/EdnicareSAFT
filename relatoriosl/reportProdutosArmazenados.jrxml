@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportProdutosArmazenados" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed25363e-add7-4fda-8d45-c3ef844305a1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     categoriaservico.`idcategoriaServico` AS categoriaservico_idcategoriaServico,
+     categoriaservico.`designacao` AS categoriaservico_designacao,
+     categoriaservico.`codigoStatus` AS categoriaservico_codigoStatus,
+     categoriaservico.`codigoArea` AS categoriaservico_codigoArea,
+     factura.`idfactura` AS factura_idfactura,
+     factura.`dataFactura` AS factura_dataFactura,
+     factura.`valorApagar` AS factura_valorApagar,
+     factura_itens.`codigoProduto` AS factura_itens_codigoProduto,
+     factura_itens.`codigoFactura` AS factura_itens_codigoFactura,
+     factura_itens.`quantidade` AS factura_itens_quantidade,
+     factura_itens.`totalGeral` AS factura_itens_totalGeral,
+     factura_itens.`codigoCategoria` AS factura_itens_codigoCategoria,
+     factura_itens.`totalTPA` AS factura_itens_totalTPA,
+     factura_itens.`descontoIVA` AS factura_itens_descontoIVA,
+     factura_itens.`elegibilidade` AS factura_itens_elegibilidade,
+     servicos.`idServico` AS servicos_idServico,
+     servicos.`designacao` AS servicos_designacao,
+     servicos.`preco` AS servicos_preco,
+     existencia.`idexistencia` AS existencia_idexistencia,
+     existencia.`codigoProduto` AS existencia_codigoProduto,
+     existencia.`codigoEntrada` AS existencia_codigoEntrada,
+     existencia.`existencia` AS existencia_existencia,
+     existencia.`codigoCusto` AS existencia_codigoCusto,
+     existencia.`codigoUnidade` AS existencia_codigoUnidade,
+     existencia.`dataExpiracao` AS existencia_dataExpiracao,
+     existencia.`dataFabricacao` AS existencia_dataFabricacao,
+     entrada.`identrada` AS entrada_identrada,
+     entrada.`factura` AS entrada_factura,
+     entrada.`codigoUser` AS entrada_codigoUser,
+     entrada.`dataEntrada` AS entrada_dataEntrada,
+     entrada.`codFornecedor` AS entrada_codFornecedor
+FROM
+     `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
+     INNER JOIN `categoriaservico` categoriaservico ON factura_itens.`codigoCategoria` = categoriaservico.`idcategoriaServico`
+     INNER JOIN `servicos` servicos ON factura_itens.`codigoProduto` = servicos.`idServico`
+     AND categoriaservico.`idcategoriaServico` = servicos.`codigoCategoria`
+     INNER JOIN `existencia` existencia ON servicos.`idServico` = existencia.`codigoProduto`
+     INNER JOIN `entrada` entrada ON existencia.`codigoEntrada` = entrada.`identrada`]]>
+	</queryString>
+	<field name="categoriaservico_idcategoriaServico" class="java.lang.Long"/>
+	<field name="categoriaservico_designacao" class="java.lang.String"/>
+	<field name="categoriaservico_codigoStatus" class="java.lang.Long"/>
+	<field name="categoriaservico_codigoArea" class="java.lang.Long"/>
+	<field name="factura_idfactura" class="java.lang.Long"/>
+	<field name="factura_dataFactura" class="java.sql.Timestamp"/>
+	<field name="factura_valorApagar" class="java.lang.Double"/>
+	<field name="factura_itens_codigoProduto" class="java.lang.Long"/>
+	<field name="factura_itens_codigoFactura" class="java.lang.Long"/>
+	<field name="factura_itens_quantidade" class="java.lang.Long"/>
+	<field name="factura_itens_totalGeral" class="java.lang.Double"/>
+	<field name="factura_itens_codigoCategoria" class="java.lang.Long"/>
+	<field name="factura_itens_totalTPA" class="java.lang.Double"/>
+	<field name="factura_itens_descontoIVA" class="java.lang.Double"/>
+	<field name="factura_itens_elegibilidade" class="java.lang.String"/>
+	<field name="servicos_idServico" class="java.lang.Long"/>
+	<field name="servicos_designacao" class="java.lang.String"/>
+	<field name="servicos_preco" class="java.lang.Double"/>
+	<field name="existencia_idexistencia" class="java.lang.Long"/>
+	<field name="existencia_codigoProduto" class="java.lang.Long"/>
+	<field name="existencia_codigoEntrada" class="java.lang.Long"/>
+	<field name="existencia_existencia" class="java.lang.String"/>
+	<field name="existencia_codigoCusto" class="java.lang.Long"/>
+	<field name="existencia_codigoUnidade" class="java.lang.Long"/>
+	<field name="existencia_dataExpiracao" class="java.sql.Date"/>
+	<field name="existencia_dataFabricacao" class="java.sql.Date"/>
+	<field name="entrada_identrada" class="java.lang.Long"/>
+	<field name="entrada_factura" class="java.lang.String"/>
+	<field name="entrada_codigoUser" class="java.lang.Long"/>
+	<field name="entrada_dataEntrada" class="java.sql.Timestamp"/>
+	<field name="entrada_codFornecedor" class="java.lang.Long"/>
+	<variable name="STOCK" class="java.lang.Integer" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$F{existencia_existencia}]]></variableExpression>
+	</variable>
+	<variable name="PVP" class="java.lang.Double" resetType="Group" resetGroup="Categoria" calculation="Sum">
+		<variableExpression><![CDATA[$F{PVP}]]></variableExpression>
+	</variable>
+	<variable name="STOCKTOTAL" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{existencia_existencia}]]></variableExpression>
+	</variable>
+	<group name="Categoria">
+		<groupExpression><![CDATA[$F{Categoria}]]></groupExpression>
+		<groupHeader>
+			<band height="43">
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="1" width="555" height="20" uuid="9d661421-f9cc-47ab-aa75-bb5012de7948"/>
+				</rectangle>
+				<frame>
+					<reportElement mode="Transparent" x="0" y="1" width="555" height="20" forecolor="#B89F7D" backcolor="#CCFFCC" uuid="a1fedabd-8e2e-46cf-91ba-541164561ae8"/>
+				</frame>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="SubTitle" isPrintRepeatedValues="false" x="0" y="1" width="555" height="20" forecolor="#000000" uuid="76bdb78d-f27b-471e-b7d9-0d8ef6295149"/>
+					<textElement textAlignment="Center">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoriaservico_designacao}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="22" width="25" height="20" uuid="a0e8f482-480f-4f2c-860a-53b563a0523d"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Nº]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="25" y="22" width="336" height="20" uuid="8ea3c8a5-bef7-42cd-ab4f-2b8dfe5a20cb"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ DESCRIÇÃO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="400" y="22" width="67" height="20" uuid="cf5eb816-0342-4f49-9dc6-7dd04660a8eb"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Stock]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="361" y="22" width="39" height="20" uuid="f9f55312-46ab-4075-ba08-222d67097348"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[UN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="467" y="22" width="88" height="20" uuid="89819465-9de6-4f2e-b4e3-266eda63e290"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PVP]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<rectangle>
+					<reportElement x="0" y="0" width="555" height="20" backcolor="#FFFFFF" uuid="86c11b19-93f6-4ccb-9855-c87042294dee"/>
+				</rectangle>
+				<textField>
+					<reportElement x="400" y="0" width="67" height="20" uuid="efb4307a-6800-4c8f-8de9-fc47d1136eb2"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{STOCK}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="467" y="0" width="88" height="20" uuid="d4d54dad-1540-42bc-b1c3-e4df550823ac"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{PVP}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="60" width="303" height="20" uuid="fd2aad6d-748f-43b6-a5c1-02ff3e29310f"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Produdos com existencia no Armazem]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="3986a8f5-b2d2-41d5-a17b-2ba414f83dc2"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="25" y="0" width="336" height="18" uuid="88849271-2a60-4df6-88db-e709401c0797"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement>
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" "+$F{servicos_designacao}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="361" y="0" width="39" height="18" uuid="24e21404-da96-43c6-bfae-931736b96e31"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Un}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="400" y="0" width="67" height="18" uuid="af5ff313-c087-461d-bf6d-e9426944a618"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{existencia_existencia}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00">
+					<reportElement style="Detail" positionType="Float" x="467" y="0" width="88" height="18" uuid="d822cdbe-9f01-4941-bd24-748d050e6040"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PVP}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="25" height="18" uuid="4c24b42c-94cf-465b-be48-51b8f179ba66"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{Categoria_COUNT}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="8b6b281a-8486-411e-9a2e-9992a986a103"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Transparent" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#CCFFCC" uuid="f9262c59-8e34-4dab-8e45-42acb63fe1ad"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#000000" uuid="768256b8-ffe9-4809-a513-7f50e3ef954e"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#000000" uuid="0f1917a5-37eb-4ed2-a421-714686a33b00"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#000000" uuid="0fe09670-26a3-4959-bad7-3f7e14f6b8cd"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="19" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="18" backcolor="#CCCCCC" uuid="775a1713-2d0a-4d95-b11d-c09a323fda21"/>
+			</rectangle>
+			<textField>
+				<reportElement x="400" y="0" width="67" height="18" uuid="8a14a356-5c28-4d17-ab16-d7d1ad0baeef"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{STOCKTOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="400" height="18" uuid="5e996952-7e29-47f3-b759-a9589b850ef5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ TOTAL DE PRODUTOS ARMAZENADOS       -----------------------------------------------------]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

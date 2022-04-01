@@ -71,6 +71,7 @@ public class Oficios extends javax.swing.JFrame {
         this.setIconImage(iconeTitulo);
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -357,7 +358,7 @@ public class Oficios extends javax.swing.JFrame {
             // WritableSheet s7 = planilha.createSheet("Images", 1);
 
             // Cabeçalhos
-            String cabecalho[] = new String[7];
+            String cabecalho[] = new String[8];
             cabecalho[0] = jComboBox1.getSelectedItem().toString().toUpperCase();
             //cabecalho[0] = "Entidade";
             cabecalho[1] = "Nº Documento";
@@ -366,6 +367,7 @@ public class Oficios extends javax.swing.JFrame {
             cabecalho[4] = "Data Ocorrência";
             cabecalho[5] = "Total(AKZ)";
             cabecalho[6] = "Total(USD)";
+            cabecalho[7] = "Observação";
 
             // Cor de fundo das celular
             Colour bckcolor = Colour.WHITE;

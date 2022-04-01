@@ -33,7 +33,8 @@ public class ControllerResultadoRaioX {
 
     public void insertTo(ResultadoRaioX resultadoRaioX) {
         //  conexao.Connectando();
-        sql = "INSERT INTO resultadoraixo(descricao,estado,imagem,som,video,raioX,nomepaciente,codigoServico,codigoPaciente,codigoUser,data)VALUES (?,?,?,?,?,?,?,?,?,?,now())";
+        sql = "INSERT INTO resultadoraixo(descricao,estado,imagem,som,video,raioX,nomepaciente,codigoServico,codigoPaciente,codigoUser,data,resultado)VALUES (?,?,?,?,?,?,?,?,?,?,now(),?)";
+        System.out.println("Inserção:" + sql);
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, resultadoRaioX.getDescricao());
@@ -46,6 +47,7 @@ public class ControllerResultadoRaioX {
             ps.setInt(8, resultadoRaioX.getCodigoServico());
             ps.setInt(9, resultadoRaioX.getCodigoPaciente());
             ps.setInt(10, resultadoRaioX.getCodigoUser());
+            ps.setString(11, resultadoRaioX.getConclusao());
             ps.execute();
         } catch (SQLException ex) {
             System.out.println("Erro: " + ex.getMessage());
@@ -53,9 +55,25 @@ public class ControllerResultadoRaioX {
 
     }
 
+    public int getlastRaio(){
+         sql = "SELECT max(id) as max  from resultadoraixo";
+        System.out.println("Teste:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("max");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return 0;
+    }
+    
     public void insertToEcografia(ResultadoRaioX resultadoRaioX) {
         //   conexao.Connectando();
         sql = "INSERT INTO resultadoecografia(descricao,estado,imagem,som,video,nomepaciente,codigoServico,codigoPaciente,codigoUser,data,ovarios,conclusao)VALUES (?,?,?,?,?,?,?,?,?,now(),?,?)";
+        System.out.println("sql:" + sql);
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, resultadoRaioX.getDescricao());
@@ -71,6 +89,33 @@ public class ControllerResultadoRaioX {
             ps.setString(10, resultadoRaioX.getOvarios());
             ps.setString(11, resultadoRaioX.getConclusao());
             ps.execute();
+
+        } catch (SQLException ex) {
+            System.out.println("Erro: " + ex.getMessage());
+        }
+
+    }
+
+    public void editarEcografia(ResultadoRaioX resultadoRaioX, int codigo) {
+        //   conexao.Connectando();
+        sql = "update resultadoecografia set descricao=?,estado=?,imagem=?,som=?,video=?,nomepaciente=?,codigoServico=?,codigoPaciente=?,codigoUser=?,ovarios=?,conclusao=? WHERE idresultadoEcografia=" + codigo;
+        System.out.println("sql:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, resultadoRaioX.getDescricao());
+            ps.setString(2, resultadoRaioX.getEstado());
+            ps.setString(3, resultadoRaioX.getImagem());
+            ps.setString(4, resultadoRaioX.getSom());
+            ps.setString(5, resultadoRaioX.getVideo());
+            ps.setString(6, resultadoRaioX.getNomePaciente());
+            ps.setInt(7, resultadoRaioX.getCodigoServico());
+            ps.setInt(8, resultadoRaioX.getCodigoPaciente());
+            ps.setInt(9, resultadoRaioX.getCodigoUser());
+            ps.setString(10, resultadoRaioX.getOvarios());
+            ps.setString(11, resultadoRaioX.getConclusao());
+            //  ps.setInt(12, resultadoRaioX.getId());
+            ps.execute();
+            //     JOptionPane.showMessageDialog(null, "relatório Alterado com Sucesso");
         } catch (SQLException ex) {
             System.out.println("Erro: " + ex.getMessage());
         }
@@ -156,4 +201,27 @@ public class ControllerResultadoRaioX {
         }
         return null;
     }
+
+    public ArrayList<ResultadoRaioX> getOficio(int codigoProduto) {
+        //     conexao.Connectando();
+        sql = "SELECT * FROM resultadoecografia r WHERE r.idresultadoEcografia=" + codigoProduto;
+        System.out.println("Consulta:" + sql);
+        ResultadoRaioX oficioModelo = new ResultadoRaioX();
+        ArrayList<ResultadoRaioX> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                oficioModelo.setDescricao(rs.getString("descricao"));
+                oficioModelo.setOvarios(rs.getString("ovarios"));
+                oficioModelo.setConclusao(rs.getString("conclusao"));
+                oficioModelo.setDpp("");
+                oficioModelo.setNomePaciente(rs.getString("nomePaciente"));
+                lista.add(oficioModelo);
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
 }

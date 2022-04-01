@@ -10,6 +10,8 @@ import CLINICA.controller.ControllerUtente;
 import CLINICA.controller.ControllerUsuario;
 import CLINICA.controller.ControllerExamesporFazer;
 import CLINICA.controller.ControllerExamesporFazerItens;
+import CLINICA.controller.ControllerResultadoRaioX;
+import CLINICA.controller.ControllerServico;
 import CLINICA.relatorios.RelatorioEcografia;
 import java.awt.Desktop;
 import java.awt.Image;
@@ -24,6 +26,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import sf.ce.conexao.ConexaoBancos;
@@ -46,12 +49,16 @@ public class EcografiaMedico extends javax.swing.JFrame {
     ControllerUtente controllerUtente;
     ControllerUsuario controllerUsuario;
     RelatorioEcografia ecografia = new RelatorioEcografia();
+    ControllerResultadoRaioX controllerEcografia;
+    ControllerServico controllerServico;
 
     public EcografiaMedico(String nome) {
         initComponents();
         //con = new ConexaoBancos().ConexaoBD();
         controllerUsuario = new ControllerUsuario(con);
         controllerUtente = new ControllerUtente(con);
+        controllerEcografia = new ControllerResultadoRaioX(con);
+        controllerServico = new ControllerServico(con);
         int tipoUtilizador = controllerUsuario.getTipoUtilizador(nome);
         jDateChooser1.setDate(new Date());
         jDateChooser2.setDate(new Date());
@@ -80,10 +87,14 @@ public class EcografiaMedico extends javax.swing.JFrame {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton4 = new javax.swing.JButton();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setTitle("Resultados Prontos");
 
@@ -98,31 +109,61 @@ public class EcografiaMedico extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Data Inicial");
+
+        jLabel3.setText("Data Fim");
+
+        jTextField1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextField1CaretUpdate(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 440, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1)
+                .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(26, 26, 26))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jButton4)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextField1)))
+                .addContainerGap())
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -167,6 +208,14 @@ public class EcografiaMedico extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-save-as-filled-32.png"))); // NOI18N
+        jButton2.setText("Actualizar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,26 +223,35 @@ public class EcografiaMedico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 909, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 10, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(16, 16, 16)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -209,29 +267,28 @@ public class EcografiaMedico extends javax.swing.JFrame {
         String designacao = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
         if (evt.getClickCount() == 2) {
             if (designacao.equals("Ecografia Pelvica")) {
-                
+
                 ecografia.getEcografiaPelvica(codigoRaixo);
-            } else if(designacao.equals("Ecografia Morfologica do segundo trimestre")) {
-                
+            } else if (designacao.equals("Ecografia Morfologica do segundo trimestre")) {
+
                 ecografia.getEcografiaMorfologica(codigoRaixo);
             } else if (designacao.equals("Ecografia Abdominal")) {
-                
+
                 ecografia.getEcografiaAbdominal(codigoRaixo);
-            } else if (designacao.equals("Ecografia Obstétrica") || designacao.equals("Ecografia Obstétrica do segundo e Terceiro Trimestre") || designacao.equals("Ecografia Obstétrica do Primeiro Trimestre") || designacao.equals("Ecografia Obstétrica Gemelar")) {        
-               ecografia.getEcografiaObstetrica(codigoRaixo);
+            } else if (designacao.equals("Ecografia Obstétrica") || designacao.equals("Ecografia Obstétrica do segundo e Terceiro Trimestre") || designacao.equals("Ecografia Obstétrica do Primeiro Trimestre") || designacao.equals("Ecografia Obstétrica Gemelar")) {
+                ecografia.getEcografiaObstetrica(codigoRaixo);
             } else if (designacao.equals("Ecografia da Mama")) {
-                
+
                 ecografia.getEcografiaMama(codigoRaixo);
             } else if (designacao.equals("Ecografia Testicular")) {
-                
+
                 ecografia.getEcografiaTesticular(codigoRaixo);
             } else if (designacao.equals("Ecografia da Tiroide")) {
-                
+
                 ecografia.getEcografiaTiroide(codigoRaixo);
-            }else if (designacao.equals("Ecografia Morfologica do primeiro trimestre")) {
-                 ecografia.getEcografiaAbdominal(codigoRaixo);
-            } 
-            else {
+            } else if (designacao.equals("Ecografia Morfologica do primeiro trimestre")) {
+                ecografia.getEcografiaAbdominal(codigoRaixo);
+            } else {
                 ecografia.getEcografiaAbdominal(codigoRaixo);
             }
         }
@@ -245,20 +302,53 @@ public class EcografiaMedico extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int codigoRaixo = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-        int codigoPaciente = controllerUtente.getCodigoUtente(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
-        try {
-            String imagem = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
-            String descricao = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
-            File out = new File(imagem);
-            Desktop.getDesktop().open(out);
+//        int codigoRaixo = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+//        int codigoPaciente = controllerUtente.getCodigoUtente(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
+//        try {
+//            String imagem = jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString();
+//            String descricao = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
+//            File out = new File(imagem);
+//            Desktop.getDesktop().open(out);
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(RaioXMedico.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
-        } catch (IOException ex) {
-            Logger.getLogger(RaioXMedico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        JOptionPane.showMessageDialog(rootPane, "Não existe comunicação com a máquina de ecografia");
         // new SlideEcografia(codigoPaciente, jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString(), codigoRaixo, imagem, descricao).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
+        if (!jTextField1.getText().isEmpty()) {
+            mostrarExame("SELECT DISTINCT r.idresultadoEcografia as id,r.descricao,r.nomePaciente,s.designacao as designacao, r.imagem,r.data  \n"
+                    + "FROM resultadoecografia r INNER JOIN servicos INNER JOIN servicos s ON r.codigoServico = s.idServico\n"
+                    + "WHERE r.nomePaciente LIKE '%" + jTextField1.getText() + "%'");
+        }
+
+    }//GEN-LAST:event_jTextField1CaretUpdate
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        int exame = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+        String descricao = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
+        String nomePaciente = jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString();
+        String codigo = "" + controllerUtente.getCodigoUtente(nomePaciente);
+        int idade = controllerUtente.getIdade(nomePaciente);
+        if (descricao.equalsIgnoreCase("Ecografia Pelvica")) {
+            int codigoProduto = controllerServico.getCodigoServico(descricao);
+            String resultado = controllerEcografia.getOficio(exame).get(0).getDescricao();
+            String ovario = controllerEcografia.getOficio(exame).get(0).getOvarios();
+            String conclusao = controllerEcografia.getOficio(exame).get(0).getConclusao();
+            new ProcessarEcografia(nomePaciente, idade, descricao, resultado, ovario, conclusao, 1, codigoProduto, codigo, 2, exame).setVisible(true);
+        } else {
+            int codigoProduto = controllerServico.getCodigoServico(descricao);
+            String resultado = controllerEcografia.getOficio(exame).get(0).getDescricao();
+            String ovario = controllerEcografia.getOficio(exame).get(0).getOvarios();
+            String conclusao = controllerEcografia.getOficio(exame).get(0).getConclusao();
+            new ProcessarAbdominal(nomePaciente, idade, descricao, resultado, conclusao, 1, codigoProduto, codigo, 2, exame).setVisible(true);
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public Date getData() {
         return d.converteDataSql(jDateChooser1.getDate());
@@ -344,12 +434,16 @@ public class EcografiaMedico extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

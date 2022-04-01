@@ -1,0 +1,5 @@
+1. Comparar os dados da base de dados( Para este caso devem actualizar a base de dados da muxima)
+Deve atualizar todas as tabelas na base de dados conforme a base de dados actualizados.
+2. Cópia relatório e cola na pasta relatórios do servidor da Muxima.
+3. Para aplicação copia o dist cola na pasta do servidor, neste caso não elimina o dist antigo por enquanto.
+Na pasta lib cópia essa biblioteca rsyntaxtextarea-3.1.2 e cola na pasta lib do servidor.

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportConsumivel" language="groovy" pageWidth="300" pageHeight="450" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7ad6c0f6-4777-417c-ae88-91d255a18268">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="475"/>
+	<property name="ireport.y" value="52"/>
 	<parameter name="CODIGO" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -38,17 +38,10 @@ WHERE
 				<reportElement key="image-1" x="0" y="0" width="153" height="98" uuid="ba42de9d-6f46-45a2-90cd-25cb955afcba"/>
 				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="0" y="82" width="260" height="16" uuid="0ccc738a-6432-4bd4-b178-624ab4e55e55"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ BANCO DE URGENCIA]]></text>
-			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="76" splitType="Stretch">
+		<band height="87" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="44" width="58" height="14" uuid="156f9ec1-8193-43cb-918b-7258e0b5fa09"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -64,16 +57,16 @@ WHERE
 				<textFieldExpression><![CDATA[""+$F{bancourgencia_nomePaciente}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="58" width="58" height="14" uuid="18ba861b-ea60-44a5-87ca-cd533203b5b6"/>
+				<reportElement x="0" y="16" width="260" height="16" uuid="0ccc738a-6432-4bd4-b178-624ab4e55e55"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nome:]]></text>
+				<text><![CDATA[ BANCO DE URGENCIA]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="28" splitType="Stretch">
+		<band height="32" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="13" width="260" height="15" uuid="744dc8f9-0a3f-425b-b3be-c513e6334112"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -108,8 +101,8 @@ WHERE
 			</staticText>
 			<textField>
 				<reportElement x="24" y="26" width="202" height="14" uuid="a20cd66d-07fe-40a6-b4b1-b82d11cfc703"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{utilizadores_nomeCompleto}]]></textFieldExpression>
 			</textField>

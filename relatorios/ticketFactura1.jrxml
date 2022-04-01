@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticketFactura1" pageWidth="200" pageHeight="450" columnWidth="189" leftMargin="1" rightMargin="10" topMargin="20" bottomMargin="20" uuid="d668e868-23f7-482a-aabe-002ae31319a8">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="508"/>
+	<property name="ireport.y" value="141"/>
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -59,7 +59,8 @@
      utilizadores.`username` AS utilizadores_username,
      factura.`nIBAN` AS factura_nIBAN,
      empresa.`slogan` AS empresa_slogan,
-     factura.`nRef` AS factura_nRef
+     factura.`nRef` AS factura_nRef,
+     factura.`dataOcorrencia` AS factura_dataOcorrencia
 FROM
      `factura` factura INNER JOIN `factura_itens` factura_itens ON factura.`idfactura` = factura_itens.`codigoFactura`
      INNER JOIN `pacientes` pacientes ON factura.`codigoCliente` = pacientes.`idPaciente`
@@ -117,6 +118,8 @@ WHERE
 	<field name="utilizadores_username" class="java.lang.String"/>
 	<field name="factura_nIBAN" class="java.lang.String"/>
 	<field name="empresa_slogan" class="java.lang.String"/>
+	<field name="factura_nRef" class="java.lang.String"/>
+	<field name="factura_dataOcorrencia" class="java.lang.String"/>
 	<variable name="ITEMS" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{factura_itens_quantidade}]]></variableExpression>
 	</variable>
@@ -124,7 +127,7 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="174" splitType="Stretch">
+		<band height="170" splitType="Stretch">
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="2" y="86" width="187" height="12" uuid="97151786-a372-4692-a082-7a1297915a1f"/>
 				<textElement verticalAlignment="Middle">
@@ -147,7 +150,7 @@ WHERE
 				<textFieldExpression><![CDATA["NIF:"+$F{empresa_nif}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line" x="2" y="136" width="186" height="1" uuid="00d7893a-5115-4827-8bb5-4a216750e8f7"/>
+				<reportElement key="line" x="2" y="121" width="186" height="1" uuid="00d7893a-5115-4827-8bb5-4a216750e8f7"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
@@ -160,48 +163,48 @@ WHERE
 				<textFieldExpression><![CDATA[$F{empresa_endereco}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line" x="2" y="172" width="186" height="1" uuid="db806929-b326-4187-b79f-48bc541313be"/>
+				<reportElement key="line" x="2" y="169" width="186" height="1" uuid="db806929-b326-4187-b79f-48bc541313be"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement key="staticText" x="3" y="137" width="60" height="12" uuid="66593e1f-5db7-48de-9b1f-4a902bb22226"/>
+				<reportElement key="staticText" x="3" y="122" width="79" height="12" uuid="66593e1f-5db7-48de-9b1f-4a902bb22226"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Data de Emissão:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
-				<reportElement key="textField" x="62" y="137" width="127" height="11" uuid="7abdb77b-144a-4aed-a017-6c29d33b0cb2"/>
+				<reportElement key="textField" x="82" y="122" width="107" height="11" uuid="7abdb77b-144a-4aed-a017-6c29d33b0cb2"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$F{factura_dataFactura}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText" x="3" y="149" width="59" height="12" uuid="b9a5c7cc-e160-4407-8003-4847fe2e76da"/>
+				<reportElement key="staticText" x="3" y="145" width="59" height="12" uuid="b9a5c7cc-e160-4407-8003-4847fe2e76da"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Factura/Recibo]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="62" y="149" width="127" height="12" uuid="44a5c605-7609-4fc9-80f0-de64d338983b"/>
+				<reportElement key="textField" x="62" y="145" width="127" height="12" uuid="44a5c605-7609-4fc9-80f0-de64d338983b"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[+$F{factura_idfactura}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-1" x="3" y="160" width="39" height="12" uuid="6930694c-a622-4adb-b0cd-7c721fc609b0"/>
+				<reportElement key="staticText-1" x="3" y="156" width="39" height="12" uuid="6930694c-a622-4adb-b0cd-7c721fc609b0"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Utente]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-1" x="43" y="160" width="146" height="12" uuid="2aa1e79b-4326-4fdb-8bdc-aac42e34f4d5"/>
+				<reportElement key="textField-1" x="43" y="156" width="146" height="12" uuid="2aa1e79b-4326-4fdb-8bdc-aac42e34f4d5"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
@@ -218,6 +221,20 @@ WHERE
 				<reportElement x="1" y="0" width="94" height="54" uuid="96e7a246-e65e-4313-a30f-74cfb90727e5"/>
 				<imageExpression><![CDATA["Relatorios/logo12.jpg"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement key="staticText" x="4" y="133" width="78" height="12" uuid="60d7f354-f521-4404-929e-39b0e09cb2d2"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Data de Ocorrencia:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField" x="82" y="133" width="107" height="11" uuid="fb5f804b-07cc-41f7-b775-29a04c7d77ea"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{factura_dataOcorrencia}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -226,37 +243,37 @@ WHERE
 	<columnHeader>
 		<band height="14" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText" x="2" y="1" width="41" height="12" uuid="f68b9c6d-41c5-4f38-97b2-e8b4020faa6a"/>
+				<reportElement key="staticText" x="2" y="0" width="41" height="12" uuid="f68b9c6d-41c5-4f38-97b2-e8b4020faa6a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Descrição]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="43" y="1" width="22" height="12" uuid="8e15ad4b-1f57-48ab-8fef-e538d0bdb669"/>
+				<reportElement key="staticText" x="43" y="0" width="22" height="12" uuid="8e15ad4b-1f57-48ab-8fef-e538d0bdb669"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Quant]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="66" y="1" width="27" height="12" uuid="ea70b479-4fef-4ef5-9589-649fe1e9d9f9"/>
+				<reportElement key="staticText" x="66" y="0" width="27" height="12" uuid="ea70b479-4fef-4ef5-9589-649fe1e9d9f9"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[P.Unit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="126" y="1" width="40" height="12" uuid="18c47bc7-4a5a-492d-a3a7-12ea172a733e"/>
+				<reportElement key="staticText" x="126" y="0" width="40" height="12" uuid="18c47bc7-4a5a-492d-a3a7-12ea172a733e"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[P.Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="92" y="1" width="32" height="12" uuid="71317da4-c98a-4829-b8a6-4dfcd7815103"/>
+				<reportElement key="staticText" x="92" y="0" width="32" height="12" uuid="71317da4-c98a-4829-b8a6-4dfcd7815103"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Taxa(%)]]></text>
 			</staticText>
@@ -308,106 +325,106 @@ WHERE
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="188" splitType="Stretch">
+		<band height="190" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText" x="2" y="2" width="75" height="11" uuid="db0642f8-f017-492d-8c38-a1fdcef5121a"/>
+				<reportElement key="staticText" x="0" y="12" width="75" height="11" uuid="db0642f8-f017-492d-8c38-a1fdcef5121a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Total Iliquido]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line" x="1" y="43" width="187" height="1" uuid="1283a25e-afd1-48ee-a67c-0b0b5f16d3d3"/>
+				<reportElement key="line" x="-1" y="53" width="187" height="1" uuid="1283a25e-afd1-48ee-a67c-0b0b5f16d3d3"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement key="staticText" x="3" y="139" width="26" height="11" uuid="2b9b9c63-179d-4ccc-887c-aebad9b62d7f"/>
+				<reportElement key="staticText" x="1" y="149" width="26" height="11" uuid="2b9b9c63-179d-4ccc-887c-aebad9b62d7f"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[Items:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="46" y="139" width="144" height="11" uuid="e9b63e94-8cc2-4639-9b09-8deb5aea6a9a"/>
+				<reportElement key="textField" x="44" y="149" width="144" height="11" uuid="e9b63e94-8cc2-4639-9b09-8deb5aea6a9a"/>
 				<textElement>
 					<font fontName="Arial" size="8" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Atendido por:"+$F{utilizadores_username}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="29" y="139" width="17" height="11" uuid="1c97d352-faa8-47ee-a7c7-d26a9aedcbe5"/>
+				<reportElement key="textField" x="27" y="149" width="17" height="11" uuid="1c97d352-faa8-47ee-a7c7-d26a9aedcbe5"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+$V{ITEMS}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" x="1" y="156" width="188" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="673bb4fc-b028-4bdb-88a5-3d491cd03706"/>
+				<reportElement key="textField" x="-1" y="166" width="188" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="673bb4fc-b028-4bdb-88a5-3d491cd03706"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{guia_hashValor}+"-Programa Validado nº249/AGT/2019 - EDNICARE 3.0"]]></textFieldExpression>
 			</textField>
 			<textField pattern=" #,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" x="84" y="1" width="70" height="11" uuid="128c523f-899e-474a-a582-94dc75b490b9"/>
+				<reportElement key="textField" x="82" y="11" width="70" height="11" uuid="128c523f-899e-474a-a582-94dc75b490b9"/>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[""+($F{factura_valorApagar} -($F{factura_desconto}+$F{factura_descontoIVA}))+ "AKZ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="124" width="189" height="11" uuid="15cf5047-c818-4bf8-a184-363933c9e489"/>
+				<reportElement x="-2" y="134" width="189" height="11" uuid="15cf5047-c818-4bf8-a184-363933c9e489"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Médico(a): "+$F{factura_nIBAN}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" x="0" y="168" width="189" height="11" uuid="3cbea2fa-9da0-4bb3-a0c4-27e04a9eb253"/>
+				<reportElement key="textField" x="-2" y="178" width="189" height="11" uuid="3cbea2fa-9da0-4bb3-a0c4-27e04a9eb253"/>
 				<textElement>
 					<font fontName="Arial" size="8" isUnderline="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{empresa_slogan}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText" x="2" y="12" width="75" height="11" uuid="84a4e2ac-b9ea-47a4-83b3-6ed69e7bd2f4"/>
+				<reportElement key="staticText" x="0" y="22" width="75" height="11" uuid="84a4e2ac-b9ea-47a4-83b3-6ed69e7bd2f4"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Total Desconto]]></text>
 			</staticText>
 			<textField pattern=" #,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" x="84" y="11" width="70" height="11" uuid="638d8bda-f2f4-4492-98c0-b6d3d4a80c68"/>
+				<reportElement key="textField" x="82" y="21" width="70" height="11" uuid="638d8bda-f2f4-4492-98c0-b6d3d4a80c68"/>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_desconto}+ "AKZ"]]></textFieldExpression>
 			</textField>
 			<textField pattern=" #,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" x="84" y="21" width="70" height="11" uuid="02db50be-2b00-4380-abc0-491b934cdb6b"/>
+				<reportElement key="textField" x="82" y="31" width="70" height="11" uuid="02db50be-2b00-4380-abc0-491b934cdb6b"/>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[+$F{factura_descontoIVA}+ "AKZ"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText" x="2" y="22" width="75" height="11" uuid="d8ab80e4-9ea8-414d-9f52-48f6d81404ae"/>
+				<reportElement key="staticText" x="0" y="32" width="75" height="11" uuid="d8ab80e4-9ea8-414d-9f52-48f6d81404ae"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Total Imposto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="2" y="32" width="75" height="11" uuid="c2e95702-ad4c-47bc-9c9c-ec302a9fe660"/>
+				<reportElement key="staticText" x="0" y="42" width="75" height="11" uuid="c2e95702-ad4c-47bc-9c9c-ec302a9fe660"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Total a pagar]]></text>
 			</staticText>
 			<textField pattern=" #,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" x="84" y="31" width="70" height="11" uuid="d6300896-ee37-4b91-ae6a-8e2f2ea4723c"/>
+				<reportElement key="textField" x="82" y="41" width="70" height="11" uuid="d6300896-ee37-4b91-ae6a-8e2f2ea4723c"/>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
@@ -420,59 +437,66 @@ WHERE
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement key="staticText" x="2" y="44" width="75" height="11" uuid="09f45b93-1cfc-4833-822a-f61071fd7cc4"/>
+				<reportElement key="staticText" x="0" y="54" width="75" height="11" uuid="09f45b93-1cfc-4833-822a-f61071fd7cc4"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[(A) Dinheiro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" x="2" y="54" width="75" height="11" uuid="ace742e5-59b9-46aa-9330-71c70f5f55d0"/>
+				<reportElement key="staticText" x="0" y="64" width="75" height="11" uuid="ace742e5-59b9-46aa-9330-71c70f5f55d0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[(B) Multicaixa]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line" x="2" y="65" width="187" height="1" uuid="b8d9e724-ad7b-4bd0-a5d7-28289b7a51cf"/>
+				<reportElement key="line" x="0" y="75" width="187" height="1" uuid="b8d9e724-ad7b-4bd0-a5d7-28289b7a51cf"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<textField pattern=" #,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" x="84" y="44" width="70" height="11" uuid="7fa0bf90-2777-4cbb-bfee-f5388ffd0831"/>
+				<reportElement key="textField" x="82" y="54" width="70" height="11" uuid="7fa0bf90-2777-4cbb-bfee-f5388ffd0831"/>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_valorNumerario}+"AKZ"]]></textFieldExpression>
 			</textField>
 			<textField pattern=" #,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" x="84" y="54" width="70" height="11" uuid="12c281c3-0552-4a05-8e58-9aa6158981ef"/>
+				<reportElement key="textField" x="82" y="64" width="70" height="11" uuid="12c281c3-0552-4a05-8e58-9aa6158981ef"/>
 				<textElement>
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factura_valorMulticaixa}+"AKZ"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line" x="1" y="123" width="187" height="1" uuid="ed21903c-0bc2-4eb7-9ae7-edf31cdab49a"/>
+				<reportElement key="line" x="-1" y="133" width="187" height="1" uuid="ed21903c-0bc2-4eb7-9ae7-edf31cdab49a"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement key="line" x="2" y="154" width="187" height="1" uuid="7a6979f1-9f09-40c8-bb06-b36580685e40"/>
+				<reportElement key="line" x="0" y="164" width="187" height="1" uuid="7a6979f1-9f09-40c8-bb06-b36580685e40"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement x="1" y="66" width="188" height="37" uuid="28b9a512-d336-488f-88aa-22a72fe53842"/>
+				<reportElement x="-1" y="76" width="188" height="37" uuid="28b9a512-d336-488f-88aa-22a72fe53842"/>
 				<subreportParameter name="CODIGO">
 					<subreportParameterExpression><![CDATA[$F{factura_idfactura}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Ireport_subreport1.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement key="staticText" x="1" y="1" width="188" height="11" uuid="f74ba1e1-3293-46d5-b2b0-aab8b9a067f0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Meio de Pagamento]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>

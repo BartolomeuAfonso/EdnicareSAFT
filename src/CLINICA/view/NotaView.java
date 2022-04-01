@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import org.apache.commons.lang.StringUtils;
 import sf.ce.conexao.ConexaoBancos;
 
 /**
@@ -485,8 +486,16 @@ public class NotaView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
-        jComboBox1.setModel(new DefaultComboBoxModel(controllerFactura.getNomeLike(jTextField1.getText()).toArray()));
-        jComboBox2.setModel(new DefaultComboBoxModel(controllerFactura.getFacturaporCodigo(jTextField1.getText()).toArray()));
+        boolean isNumeric = StringUtils.isNumeric(jTextField1.getText());
+        if (isNumeric) {
+
+            jComboBox1.setModel(new DefaultComboBoxModel(controllerFactura.getNomeLikeporFactura(jTextField1.getText()).toArray()));
+        } else {
+            jComboBox1.setModel(new DefaultComboBoxModel(controllerFactura.getNomeLike(jTextField1.getText()).toArray()));
+
+        }
+
+        //   jComboBox2.setModel(new DefaultComboBoxModel(controllerFactura.getFacturaporCodigo(jTextField1.getText()).toArray()));
     }//GEN-LAST:event_jTextField1CaretUpdate
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -42,14 +42,19 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
     RelatorioEcografia ecografia = new RelatorioEcografia();
     String codigoPedido;
     int codigoProduto;
+    int codigoExame;
 
-    public ProcessarAbdominal(String nome, int idade, String ecografia, String designacao, String conclusao, int codigoUser, int codigoEcografia, String codigo) {
+    public ProcessarAbdominal(String nome, int idade, String ecografia, String designacao, String conclusao, int codigoUser, int codigoEcografia, String codigo, int estado, int codigoExame) {
         initComponents();
+        this.codigoExame = codigoExame;
         jLabel2.setText(nome);
         this.codigoPedido = codigo;
         jLabel1.setText(String.valueOf(idade) + "Anos");
         jLabel3.setText(ecografia);
         this.codigoUser = codigoUser;
+        if (estado != 1) {
+            jButton6.setText("Editar");
+        }
         controllerEcografia = new ControllerEcografia(con);
         controllerResultadoRaioX = new ControllerResultadoRaioX(con);
         controllerUtente = new ControllerUtente(con);
@@ -93,6 +98,7 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Paciente"));
 
@@ -112,24 +118,23 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(253, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addContainerGap())
         );
 
         jEditorPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Designação"));
@@ -185,21 +190,28 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton7)
-                                .addGap(13, 13, 13)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton7)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,15 +221,7 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(16, 16, 16))
+                .addGap(62, 62, 62))
         );
 
         pack();
@@ -225,26 +229,70 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
-        int resposta = JOptionPane.showConfirmDialog(null, "Queira por favor reler com atenção antes de salvar", "Atenção", JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION) {
-            salvar();
-            controllerEcografia.alter(codigoProduto,codigoPedido);
-            int codigoRaixo = controllerEcografia.getLastFactura();
+        if (jButton6.getText() == "Salvar") {
+            int resposta = JOptionPane.showConfirmDialog(rootPane, "Queira por favor reler com atenção antes de salva", "", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                salvar();
+                controllerEcografia.alter(codigoProduto, codigoPedido);
+                int codigoRaixo = controllerEcografia.getLastFactura();
+                if (jLabel3.getText().equals("Ecografia Abdominal")) {
+                    ecografia.getEcografiaAbdominal(codigoRaixo);
+                } else if (jLabel3.getText().equals("Ecografia Obstétrica")) {
+                    ecografia.getEcografiaObstetrica(codigoRaixo);
+                } else if (jLabel3.getText().equals("Ecografia da Mama")) {
+                    ecografia.getEcografiaMama(codigoRaixo);
+                } else if (jLabel3.getText().equals("Ecografia Testicular")) {
+                    ecografia.getEcografiaTesticular(codigoRaixo);
+                } else if (jLabel3.getText().equals("Ecografia da Tiroide")) {
+                    ecografia.getEcografiaTiroide(codigoRaixo);
+                } else {
+                    ecografia.getEcografiaAbdominal(codigoRaixo);
+                }
+            }
+
+        } else {
+            editar();
+        
             if (jLabel3.getText().equals("Ecografia Abdominal")) {
-                ecografia.getEcografiaAbdominal(codigoRaixo);
+                ecografia.getEcografiaAbdominal(codigoExame);
             } else if (jLabel3.getText().equals("Ecografia Obstétrica")) {
-                ecografia.getEcografiaObstetrica(codigoRaixo);
+                ecografia.getEcografiaObstetrica(codigoExame);
             } else if (jLabel3.getText().equals("Ecografia da Mama")) {
-                ecografia.getEcografiaMama(codigoRaixo);
+                ecografia.getEcografiaMama(codigoExame);
             } else if (jLabel3.getText().equals("Ecografia Testicular")) {
-                ecografia.getEcografiaTesticular(codigoRaixo);
+                ecografia.getEcografiaTesticular(codigoExame);
             } else if (jLabel3.getText().equals("Ecografia da Tiroide")) {
-                ecografia.getEcografiaTiroide(codigoRaixo);
+                ecografia.getEcografiaTiroide(codigoExame);
             } else {
-                ecografia.getEcografiaAbdominal(codigoRaixo);
+                ecografia.getEcografiaAbdominal(codigoExame);
             }
         }
 
+////            
+//        }
+//             
+//            if (codigoExame != 0) {
+//                System.out.println("Editar..............");
+//            }
+//            if (jButton6.getText().equals("Salvar")) {
+//                salvar();
+//                controllerEcografia.alter(codigoProduto, codigoPedido);
+//                int codigoRaixo = controllerEcografia.getLastFactura();
+//                if (jLabel3.getText().equals("Ecografia Abdominal")) {
+//                    ecografia.getEcografiaAbdominal(codigoRaixo);
+//                } else if (jLabel3.getText().equals("Ecografia Obstétrica")) {
+//                    ecografia.getEcografiaObstetrica(codigoRaixo);
+//                } else if (jLabel3.getText().equals("Ecografia da Mama")) {
+//                    ecografia.getEcografiaMama(codigoRaixo);
+//                } else if (jLabel3.getText().equals("Ecografia Testicular")) {
+//                    ecografia.getEcografiaTesticular(codigoRaixo);
+//                } else if (jLabel3.getText().equals("Ecografia da Tiroide")) {
+//                    ecografia.getEcografiaTiroide(codigoRaixo);
+//                } else {
+//                    ecografia.getEcografiaAbdominal(codigoRaixo);
+//                }
+//            }
+//        }
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -306,9 +354,9 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
             if (jasperPrint.getPages().size() >= 1) {
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
                 jasperViewer.setTitle("Factura");
-                
+
                 jasperViewer.setVisible(true);
-                 jasperViewer.setAlwaysOnTop(true);
+                jasperViewer.setAlwaysOnTop(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Nao Existem Pedidos!...");
             }
@@ -346,7 +394,25 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
         resultadoRaioX.setEstado(jTextField1.getText());
         resultadoRaioX.setOvarios("");
         resultadoRaioX.setConclusao(jTextPane1.getText());
+        System.out.println("Entrouuuu");
         controllerResultadoRaioX.insertToEcografia(resultadoRaioX);
+    }
+
+    public void editar() {
+        resultadoRaioX.setCodigoPaciente(getCodigoPaciente());
+        resultadoRaioX.setCodigoServico(getCodigoServico());
+        resultadoRaioX.setCodigoUser(codigoUser);
+        resultadoRaioX.setRaioX(jLabel3.getText());
+        resultadoRaioX.setDescricao(jEditorPane1.getText());
+        resultadoRaioX.setImagem("");
+        resultadoRaioX.setSom("");
+        resultadoRaioX.setVideo("");
+        resultadoRaioX.setResultado(jTextPane1.getText());
+        resultadoRaioX.setNomePaciente(jLabel2.getText());
+        resultadoRaioX.setEstado(jTextField1.getText());
+        resultadoRaioX.setOvarios("");
+        resultadoRaioX.setConclusao(jTextPane1.getText());
+        controllerResultadoRaioX.editarEcografia(resultadoRaioX, codigoExame);
     }
 
     /**
@@ -363,16 +429,24 @@ public class ProcessarAbdominal extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProcessarAbdominal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProcessarAbdominal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProcessarAbdominal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProcessarAbdominal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProcessarAbdominal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProcessarAbdominal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProcessarAbdominal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProcessarAbdominal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

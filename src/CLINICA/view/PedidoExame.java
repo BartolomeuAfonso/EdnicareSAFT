@@ -17,6 +17,7 @@ import CLINICA.relatorios.RelatorioHistoricoClinico;
 import CLINICA.modelo.ExamesporFazer;
 import java.sql.Connection;
 import CLINICA.modelo.PedidoExames;
+import CLINICA.relatorios.RelatorioLaboratorio;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -60,6 +61,7 @@ public class PedidoExame extends javax.swing.JFrame {
     int codigoUsuario = 0, codigoUltimoExamePorFazer;
     ControllerExamesporFazerItens controllerExamesporFazerItens;
     ControllerExamesporFazer controllerExamesporFazer;
+    RelatorioLaboratorio laboratorio = new RelatorioLaboratorio();
 
     public PedidoExame(int codigoUtilizador) {
         initComponents();
@@ -132,6 +134,8 @@ public class PedidoExame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -159,13 +163,18 @@ public class PedidoExame extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jTextField5 = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton7 = new javax.swing.JButton();
+        jRadioButton7 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton5 = new javax.swing.JRadioButton();
+        jRadioButton6 = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
@@ -313,7 +322,7 @@ public class PedidoExame extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 107, Short.MAX_VALUE))
+                        .addGap(0, 191, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -408,13 +417,13 @@ public class PedidoExame extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(275, Short.MAX_VALUE)))
+                    .addContainerGap(359, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,6 +441,12 @@ public class PedidoExame extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Pedido Interno (Médico(a))", jPanel3);
+
+        jTextField5.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextField5CaretUpdate(evt);
+            }
+        });
 
         jTable3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 204)));
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -457,19 +472,6 @@ public class PedidoExame extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTable3);
 
-        jRadioButton4.setFont(new java.awt.Font("Century Gothic", 3, 11)); // NOI18N
-        jRadioButton4.setSelected(true);
-        jRadioButton4.setText("2. Por Data");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton1.setFont(new java.awt.Font("Century Gothic", 3, 11)); // NOI18N
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("1. Por Data");
-
         jButton7.setFont(new java.awt.Font("Century Gothic", 3, 11)); // NOI18N
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-google-web-search-26.png"))); // NOI18N
         jButton7.setText("Buscar");
@@ -479,44 +481,99 @@ public class PedidoExame extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(jRadioButton7);
+        jRadioButton7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jRadioButton7.setSelected(true);
+        jRadioButton7.setText("Todos Exames");
+        jRadioButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton7ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jRadioButton3.setText("Exames de Microbiologia");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup2.add(jRadioButton5);
+        jRadioButton5.setFont(new java.awt.Font("Century Gothic", 3, 14)); // NOI18N
+        jRadioButton5.setText("A5");
+
+        buttonGroup2.add(jRadioButton6);
+        jRadioButton6.setFont(new java.awt.Font("Century Gothic", 3, 14)); // NOI18N
+        jRadioButton6.setSelected(true);
+        jRadioButton6.setText("A4");
+        jRadioButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton6ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Data Inicial");
+
+        jLabel8.setText("Data Final");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton1))
-                .addGap(46, 46, 46)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRadioButton7))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jRadioButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jRadioButton5)
+                                .addGap(66, 66, 66)
+                                .addComponent(jRadioButton6)
+                                .addGap(21, 21, 21))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
+                        .addGap(6, 6, 6))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(4, 4, 4))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton7)))
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton7)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton6)
+                    .addComponent(jRadioButton5))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPane1.addTab("Resultado Prontos", jPanel4);
@@ -692,47 +749,52 @@ public class PedidoExame extends javax.swing.JFrame {
                 + "where DATE(p.dataPedido) = current_date and s.designacao ='Por Fazer' AND p.PacienteInterno='SIM' order by p.idexamesPorFazer");
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    public int getCodigoPaciente1() {
+        return controllerBeneficiario.getCodigoUtente(jTable3.getValueAt(jTable3.getSelectedRow(), 1).toString());
+    }
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+
         if (evt.getClickCount() == 2) {
-            JOptionPane.showMessageDialog(null, "Não lhe é permitido ver Resultado. Obrigado");
+            int codigoExame = Integer.parseInt(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
+            int codigoExameItengrado = controllerExamesporFazer.getCodigoExameIntegrado(codigoExame);
+            int codigoProduto = controllerServico.getCodigoServico(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
+            String data = controllerExamesporFazer.getDataPedido(codigoExame);
+            if (codigoExameItengrado != 0) {
+
+                if (jRadioButton5.isSelected()) {
+
+                    laboratorio.getResultadoExames(data, data, getCodigoPaciente1(), codigoExame);
+                }
+                if (jRadioButton6.isSelected()) {
+
+                    if (jRadioButton7.isSelected()) {
+                        //  laboratorio.getResultadoExamesporParametro(data, data, getCodigoPaciente(), codigoExame);
+                        laboratorio.getResultadoExamesA5(data, data, getCodigoPaciente1(), codigoExame);
+                    }
+                    if (jRadioButton3.isSelected()) {
+                        laboratorio.getResultadoExamesA6(data, data, getCodigoPaciente1(), codigoExame, codigoProduto);
+                    }
+
+                }
+            } else {
+                if (jRadioButton5.isSelected()) {
+                    laboratorio.getResultadoExames1(data, data, getCodigoPaciente1(), codigoExame);
+                }
+                if (jRadioButton6.isSelected()) {
+                    // Para retificar
+                    laboratorio.getResultadoExamesporParametro(data, data, getCodigoPaciente1(), codigoExame);
+                    //   laboratorio.getResultadoExames1A4(data, data, getCodigoPaciente(), codigoExame);
+                }
+                if (jRadioButton7.isSelected()) {
+                    // Para retificar
+                    laboratorio.getResultadoExamesporParametro(data, data, getCodigoPaciente1(), codigoExame);
+                    //laboratorio.getResultadoExames1A4(data, data, getCodigoPaciente(), codigoExame);
+                }
+
+            }
 
         }
-//        jLabel1.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
-//        if (evt.getClickCount() == 2) {
-//            int codigoExame = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-//            int codigoExameItengrado = controllerExamesporFazer.getCodigoExameIntegrado(codigoExame);
-//            String data = controllerExamesporFazer.getDataPedido(codigoExame);
-//            if (codigoExameItengrado != 0) {
-//                if (jRadioButton5.isSelected()) {
-//
-//                    laboratorio.getResultadoExames(data, data, getCodigoPaciente(), codigoExame);
-//                }
-//                if (jRadioButton6.isSelected()) {
-//                    if (jRadioButton2.isSelected()) {
-//                        laboratorio.getResultadoExamesporParametro(data, data, getCodigoPaciente(), codigoExame);
-//                        laboratorio.getResultadoExamesA5(data, data, getCodigoPaciente(), codigoExame);
-//                    }
-//                    if (jRadioButton3.isSelected()) {
-//                        laboratorio.getResultadoExamesA6(data, data, getCodigoPaciente(), codigoExame);
-//
-//                    }
-//
-//                }
-//            } else {
-//                if (jRadioButton5.isSelected()) {
-//                    laboratorio.getResultadoExames1(data, data, getCodigoPaciente(), codigoExame);
-//                }
-//                if (jRadioButton6.isSelected()) {
-//                    laboratorio.getResultadoExames1A4(data, data, getCodigoPaciente(), codigoExame);
-//                }
-//
-//            }
-//        }
     }//GEN-LAST:event_jTable3MouseClicked
-
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         mostrarExame1("SELECT DISTINCT e.idexamesporFazer,p.nomeCompleto, s.designacao,e1.dataResultado FROM examesporfazer e inner join examesporfazeritems e1 on e.idexamesPorFazer=e1.codigoExames\n"
@@ -740,6 +802,45 @@ public class PedidoExame extends javax.swing.JFrame {
                 + "inner join status_exames s on s.idstatus_exames = e1.codigoStatusExame\n"
                 + "where date(e.dataPedido) between '" + getData() + "' and '" + getData1() + "' and s.designacao ='Pronto'");
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jRadioButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton7ActionPerformed
+        mostrarExame("SELECT distinct e.idexamesporFazer,p.nomeCompleto, s.designacao,e1.dataResultado FROM examesporfazer e inner join examesporfazeritems e1 on e.idexamesPorFazer=e1.codigoExames\n"
+                + "inner join pacientes p on e.codigoPaciente = p.idPaciente\n"
+                + "inner join status_exames s on s.idstatus_exames = e1.codigoStatusExame\n"
+                + "where s.designacao ='Pronto' and e1.dataResultado =current_date\n"
+                + "group by e.idexamesporFazer");
+    }//GEN-LAST:event_jRadioButton7ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        mostrarExame("SELECT distinct e.idexamesporFazer,p.nomeCompleto, s.designacao,e1.dataResultado\n"
+                + "FROM examesporfazer e inner join examesporfazeritems e1 on e.idexamesPorFazer=e1.codigoExames\n"
+                + "inner join pacientes p on e.codigoPaciente = p.idPaciente\n"
+                + "inner join status_exames s on s.idstatus_exames = e1.codigoStatusExame\n"
+                + "inner join servicos s1 on s1.idServico = e1.codigoProduto\n"
+                + "inner join examesintegrado i on i.codigoServico = s1.idServico\n"
+                + "where s.designacao ='Pronto' and e1.dataResultado =current_date\n"
+                + "and i.codigoCategoria <>0 group by e.idexamesporFazer");
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton6ActionPerformed
+
+    private void jTextField5CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField5CaretUpdate
+        if (!jTextField5.getText().isEmpty()) {
+            mostrarExame1("SELECT distinct e.idexamesporFazer,p.nomeCompleto, s.designacao,e1.dataResultado FROM examesporfazer e inner join examesporfazeritems e1 on e.idexamesPorFazer=e1.codigoExames\n"
+                    + "inner join pacientes p on e.codigoPaciente = p.idPaciente\n"
+                    + "inner join status_exames s on s.idstatus_exames = e1.codigoStatusExame\n"
+                    + "where p.nomeCompleto LIKE '%" + jTextField5.getText() + "%' AND s.designacao ='Pronto'");
+        } else {
+            mostrarExame1("SELECT distinct e.idexamesporFazer,p.nomeCompleto, s.designacao,e1.dataResultado FROM examesporfazer e inner join examesporfazeritems e1 on e.idexamesPorFazer=e1.codigoExames\n"
+                    + "inner join pacientes p on e.codigoPaciente = p.idPaciente\n"
+                    + "inner join status_exames s on s.idstatus_exames = e1.codigoStatusExame\n"
+                    + "where s.designacao ='Pronto' and e1.dataResultado =current_date\n"
+                    + "group by e.idexamesporFazer");
+        }
+
+    }//GEN-LAST:event_jTextField5CaretUpdate
     public Date getData() {
         return d.converteDataSql(jDateChooser1.getDate());
     }
@@ -950,6 +1051,8 @@ public class PedidoExame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
@@ -967,12 +1070,16 @@ public class PedidoExame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JRadioButton jRadioButton6;
+    private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -984,5 +1091,6 @@ public class PedidoExame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

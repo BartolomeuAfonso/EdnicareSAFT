@@ -323,7 +323,7 @@ public class ControllerEmpresa {
     }
 
     public ArrayList<Empresa> getlistaEmpresa() {
-        sql = "SELECT designacao empresaseguros";
+        sql = "SELECT designacao from empresaseguros";
 //        System.out.println("Teste" + sql);
         ArrayList<Empresa> list = new ArrayList<>();
         try {
@@ -343,6 +343,21 @@ public class ControllerEmpresa {
         return list;
     }
 
+    
+    public ArrayList<String> getEmpresaSeguradora() {
+        //    conexao.Connectando();
+        sql = "SELECT designacao from empresaseguros";
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("designacao"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
     public ArrayList<Empresa> getlistaEmpresaSeguro(int codigo) {
         sql = "SELECT *from empresaseguros where idSeguros=" + codigo;
         ArrayList<Empresa> list = new ArrayList<>();

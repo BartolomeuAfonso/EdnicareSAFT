@@ -32,12 +32,13 @@ public class ControllerCategoria {
 
     public void salvar(CategoriaServicos categoriaServicos) {
         // conexao.Connectando();
-        sql = "INSERT INTO categoriaservico(designacao,codigoStatus)values(?,?)";
-       // System.out.println("Teste:" + sql);
+        sql = "INSERT INTO categoriaservico(designacao,codigoStatus,codigoArea)values(?,?,?)";
+        // System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, categoriaServicos.getDesignacao());
             ps.setInt(2, categoriaServicos.getCodigoStatus());
+            ps.setInt(3, categoriaServicos.getCodigoArea());
             ps.execute();
             JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
         } catch (SQLException ex) {
@@ -61,6 +62,21 @@ public class ControllerCategoria {
         return lista;
     }
 
+    public ArrayList<String> getNomeCategoriaArea() {
+        sql = "SELECT UPPER(descricaoArea) as descricaoArea FROM areafuncional";
+        System.out.println("Area:" + sql);
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("descricaoArea"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
     public int getCodigoCategoria(String designacao) {
 //        conexao.Connectando();
         sql = "SELECT idcategoriaServico from categoriaservico where designacao ='" + designacao + "'";
@@ -70,6 +86,22 @@ public class ControllerCategoria {
             rs = ps.executeQuery();
             while (rs.next()) {
                 return rs.getInt("idcategoriaServico");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO:" + e);
+        }
+        return 0;
+    }
+
+    public int getCodigoArea(String designacao) {
+//        conexao.Connectando();
+        sql = "SELECT codArea FROM areafuncional WHERE descricaoArea='" + designacao + "'";
+//        System.out.println("Teste:" + sql);
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("codArea");
             }
         } catch (SQLException e) {
             System.out.println("ERRO:" + e);

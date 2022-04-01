@@ -150,7 +150,7 @@ public class HomeEnfermagem extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jToolBar1.setBackground(new java.awt.Color(102, 204, 255));
+        jToolBar1.setBackground(new java.awt.Color(34, 177, 76));
         jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -158,6 +158,7 @@ public class HomeEnfermagem extends javax.swing.JFrame {
         jToolBar1.setMinimumSize(new java.awt.Dimension(1142, 80));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Triagem");
         jLabel1.setMaximumSize(new java.awt.Dimension(120, 60));
@@ -171,6 +172,7 @@ public class HomeEnfermagem extends javax.swing.JFrame {
         jToolBar1.add(jLabel1);
 
         jLabel11.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Internamento");
         jLabel11.setMaximumSize(new java.awt.Dimension(150, 60));
@@ -184,6 +186,7 @@ public class HomeEnfermagem extends javax.swing.JFrame {
         jToolBar1.add(jLabel11);
 
         jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Banco de Urgência");
         jLabel13.setMaximumSize(new java.awt.Dimension(150, 60));
@@ -197,28 +200,35 @@ public class HomeEnfermagem extends javax.swing.JFrame {
         jToolBar1.add(jLabel13);
 
         jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-nurse-filled-32.png"))); // NOI18N
         jToolBar1.add(jLabel7);
 
         getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1500, -1));
 
-        jPanel3.setBackground(new java.awt.Color(0, 153, 204));
+        jPanel3.setBackground(new java.awt.Color(34, 177, 76));
         jPanel3.setPreferredSize(new java.awt.Dimension(880, 50));
 
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Data actual : ");
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Hora:");
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("12:20:92");
 
         jLabel22.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
         jLabel22.setText("Site:");
         jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -264,10 +274,12 @@ public class HomeEnfermagem extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 620, 1500, -1));
 
-        jLabel5.setBackground(new java.awt.Color(0, 153, 255));
+        jLabel5.setBackground(new java.awt.Color(34, 177, 76));
         jLabel5.setForeground(new java.awt.Color(0, 153, 255));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/PEDIATRIA.png"))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1020, 620));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1300, 620));
+
+        jMenuBar1.setBackground(new java.awt.Color(0, 0, 0));
 
         jMenu5.setText("1. Relatório");
         jMenu5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N

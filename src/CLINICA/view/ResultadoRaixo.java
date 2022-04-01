@@ -11,6 +11,7 @@ import CLINICA.controller.ControllerResultadoRaioX;
 import CLINICA.controller.ControllerUsuario;
 import CLINICA.controller.ControllerUtente;
 import CLINICA.controller.ControllerServico;
+import CLINICA.relatorios.RelatorioRaiox;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
@@ -48,7 +49,9 @@ public class ResultadoRaixo extends javax.swing.JFrame {
     ControllerPedidoRaioX controllerPedidoRaioX;
     ControllerServico controllerServico;
     ControllerResultadoRaioX controllerResultadoRaioX;
+    RelatorioRaiox relatorioRaiox = new RelatorioRaiox();
     ResultadoRaioX resultadoRaioX = new ResultadoRaioX();
+
     int codigoUser;
     String bkpfile;
     String bkppath;
@@ -66,7 +69,7 @@ public class ResultadoRaixo extends javax.swing.JFrame {
         controllerResultadoRaioX = new ControllerResultadoRaioX(con);
         mostrarExame("SELECT pe.codigoServico, pa.nomeCompleto,s.designacao,p.dataEntrada, pe.estado FROM pedidoraixo p inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join pedidoitensraio pe on pe.codigoPedidoRaio =p.idRaio\n"
-                + "inner join servicos s on pe.codigoServico=s.idServico WHERE p.dataEntrada =CURRENT_DATE");
+                + "inner join servicos s on pe.codigoServico=s.idServico WHERE p.dataEntrada =CURRENT_DATE AND estado='PAGO'");
         setLocationRelativeTo(null);
         iconeSistema();
     }
@@ -107,7 +110,8 @@ public class ResultadoRaixo extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         fotoLB = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
 
         setTitle("Resultado de Raio X");
 
@@ -222,6 +226,11 @@ public class ResultadoRaixo extends javax.swing.JFrame {
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-save-as-filled-32.png"))); // NOI18N
         jButton5.setText("Revisão");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-binder-32.png"))); // NOI18N
         jButton6.setText("Arquivar");
@@ -282,21 +291,17 @@ public class ResultadoRaixo extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(fotoLB, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(fotoLB, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Reprodução"));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 39, Short.MAX_VALUE)
-        );
+        jTextArea2.setColumns(20);
+        jTextArea2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jTextArea2.setRows(5);
+        jTextArea2.setBorder(javax.swing.BorderFactory.createTitledBorder("Conclusão"));
+        jScrollPane3.setViewportView(jTextArea2);
+        jTextArea2.getAccessibleContext().setAccessibleName("Conclusão");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -306,11 +311,6 @@ public class ResultadoRaixo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +318,12 @@ public class ResultadoRaixo extends javax.swing.JFrame {
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,10 +333,12 @@ public class ResultadoRaixo extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 1, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -363,12 +370,19 @@ public class ResultadoRaixo extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         salvar();
         controllerPedidoRaioX.updateRaioXItens(Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()));
-        JOptionPane.showMessageDialog(null, "Imagem arquivado com Sucesso");
+        int codigoRaixo = controllerResultadoRaioX.getlastRaio();
+        JOptionPane.showMessageDialog(null, "Dados e imagem arquivado com Sucesso");
+        relatorioRaiox.getRaioX(codigoRaixo);
+
         mostrarExame("SELECT pe.codigoServico, pa.nomeCompleto,s.designacao,p.dataEntrada, pe.estado FROM pedidoraixo p inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join pedidoitensraio pe on pe.codigoPedidoRaio =p.idRaio\n"
-                + "inner join servicos s on pe.codigoServico=s.idServico and estado='PAGO'");
+                + "inner join servicos s on pe.codigoServico=s.idServico and dataEntrada = CURRENT_DATE() AND estado ='PAGO'");
         limpar();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     public void BuscarImagem() {
         JFileChooser chooser = new JFileChooser();
@@ -504,10 +518,11 @@ public class ResultadoRaixo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 
     public String getDescricao() {
@@ -527,6 +542,10 @@ public class ResultadoRaixo extends javax.swing.JFrame {
         return controllerUtente.getCodigoUtente(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
     }
 
+    public String getConclusao() {
+        return jTextArea2.getText();
+    }
+
     public int getCodigoServico() {
         return controllerServico.getCodigoServico(getNomeRaiox());
     }
@@ -542,6 +561,7 @@ public class ResultadoRaixo extends javax.swing.JFrame {
         resultadoRaioX.setVideo("");
         resultadoRaioX.setNomePaciente(getNomePaciente());
         resultadoRaioX.setEstado("Pronto");
+        resultadoRaioX.setConclusao(getConclusao());
         controllerResultadoRaioX.insertTo(resultadoRaioX);
     }
 }

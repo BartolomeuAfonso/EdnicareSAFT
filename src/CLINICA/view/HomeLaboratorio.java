@@ -110,7 +110,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel10 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
@@ -122,6 +122,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem20 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -141,9 +142,9 @@ public class HomeLaboratorio extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(34, 177, 76));
 
-        jToolBar1.setBackground(new java.awt.Color(102, 204, 255));
+        jToolBar1.setBackground(new java.awt.Color(34, 177, 76));
         jToolBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -182,7 +183,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         jToolBar1.add(jLabel2);
 
         jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/icons8-account-filled-32.png"))); // NOI18N
         jLabel7.setText("Utilizador: DevTec");
         jToolBar1.add(jLabel7);
@@ -191,10 +192,10 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         jSeparator1.setPreferredSize(new java.awt.Dimension(32667, 6));
         jToolBar1.add(jSeparator1);
 
-        jPanel2.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(34, 177, 76));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel4.setBackground(new java.awt.Color(34, 177, 76));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "Funcionalidades", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
@@ -262,7 +263,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 250, 240));
 
-        jPanel3.setBackground(new java.awt.Color(102, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(34, 177, 76));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "Sistema", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255)))); // NOI18N
         jPanel3.setAutoscrolls(true);
 
@@ -323,6 +324,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         jLabel3.setBackground(new java.awt.Color(0, 153, 204));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(1, 182, 229));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/Laboratorio.png"))); // NOI18N
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
@@ -330,15 +332,9 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1350, -190, 250, 700));
 
-        jCheckBox1.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        jCheckBox1.setSelected(true);
-        jCheckBox1.setText("Activar Serviços");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 10, -1, -1));
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sf/ce/imagens/Icons/Laboratorio.png"))); // NOI18N
+        jLabel10.setText("jLabel10");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -6, 1330, 590));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -432,6 +428,15 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         });
         jMenu8.add(jMenuItem21);
 
+        jMenuItem22.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jMenuItem22.setText("Adicionar resultados possivel");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem22);
+
         jMenu2.add(jMenu8);
 
         jMenu3.setText("Estatística");
@@ -505,7 +510,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -581,13 +586,9 @@ public class HomeLaboratorio extends javax.swing.JFrame {
         laboratorio.getExames();
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        new Login().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jLabel3MouseClicked
-
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         new ExamesSolicitadoParticular(user).setVisible(true);
+        
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
@@ -597,14 +598,6 @@ public class HomeLaboratorio extends javax.swing.JFrame {
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         new ResultadoPronto(user).setVisible(true);
     }//GEN-LAST:event_jLabel9MouseClicked
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        if (jCheckBox1.isSelected()) {
-            jPanel4.setVisible(true);
-        } else {
-            jPanel4.setVisible(false);
-        }
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         exit(0);
@@ -650,6 +643,16 @@ public class HomeLaboratorio extends javax.swing.JFrame {
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
        new viewParametro().setVisible(true);
     }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        // TODO add your handling code here:
+        new adicionarResultado().setVisible(true);
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        new Login().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line ar //</editor-fold>
@@ -710,9 +713,9 @@ public class HomeLaboratorio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -739,6 +742,7 @@ public class HomeLaboratorio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

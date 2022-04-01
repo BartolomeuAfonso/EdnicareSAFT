@@ -96,7 +96,7 @@ public class ControllerFactura {
             Logger.getLogger(ControllerFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        sql = "INSERT INTO factura(dataFactura,valorNumerario,valorMulticaixa,nomeClientes,quantidadeItens,codigoUtilizador,codigoFormaPagamento,codigoCliente,troco,desconto,valorApagar,valorApagarExtenso,hashValor,facturaReference,estado,codigoSeguro,descontoIVA,nEcomenda,nIBAN,descontoFactura,subTotal,nRef,numerador,nif)values(now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        sql = "INSERT INTO factura(dataFactura,valorNumerario,valorMulticaixa,nomeClientes,quantidadeItens,codigoUtilizador,codigoFormaPagamento,codigoCliente,troco,desconto,valorApagar,valorApagarExtenso,hashValor,facturaReference,estado,codigoSeguro,descontoIVA,nEcomenda,nIBAN,descontoFactura,subTotal,nRef,numerador,nif,dataOcorrencia)values(now(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         //  System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -124,6 +124,7 @@ public class ControllerFactura {
             ps.setString(21, nRef);
             ps.setString(22, "" + soma);
             ps.setString(23, factura.getNif());
+            ps.setString(24, factura.getDataOcorrencia());
             ps.execute();
             //       JOptionPane.showMessageDialog(null, "Venda realizada com Sucesso");
         } catch (SQLException ex) {
@@ -228,8 +229,8 @@ public class ControllerFactura {
         }
     }
 
-    public void updateRecibo(int codigoFactura, String Recibo,int numerador) {
-        sql = "UPDATE factura SET nRecibo='" + Recibo + "',numeradorRecibo="+numerador+",Guia=1 WHERE idFactura=" + codigoFactura;
+    public void updateRecibo(int codigoFactura, String Recibo, int numerador) {
+        sql = "UPDATE factura SET nRecibo='" + Recibo + "',numeradorRecibo=" + numerador + " WHERE idFactura=" + codigoFactura;
         System.out.println("Teste:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -568,7 +569,7 @@ public class ControllerFactura {
         } catch (SignatureException ex) {
             Logger.getLogger(ControllerFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
-        sql = "INSERT INTO factura(codigoUtilizador,codigoCliente,valorApagar,nomeClientes,numerador,desconto,codigoSeguro,codigoFormaPagamento,estado,hashValor,facturaReference,Guia,descontoFactura,dataFactura,nIBAN,descontoIVA,subTotal,nRef,nRecibo)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        sql = "INSERT INTO factura(codigoUtilizador,codigoCliente,valorApagar,nomeClientes,numerador,desconto,codigoSeguro,codigoFormaPagamento,estado,hashValor,facturaReference,Guia,descontoFactura,dataFactura,nIBAN,descontoIVA,subTotal,nRef,nRecibo,dataOcorrencia)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         System.out.println("Teste:" + sql);
         System.out.println("sql");
         try {
@@ -593,6 +594,7 @@ public class ControllerFactura {
             ps.setDouble(17, factura.getValorApagar() - (factura.getDescontoIVA() + factura.getDescontoFactura()));
             ps.setString(18, nRef);
             ps.setString(19, nRecibo);
+            ps.setString(20, factura.getDataOcorrencia());
             ps.execute();
             //     JOptionPane.showMessageDialog(null, "Guia realizada com Sucesso");
         } catch (SQLException ex) {
@@ -919,8 +921,23 @@ public class ControllerFactura {
         return lista;
     }
 
+     public ArrayList<String> getNomeLikeporFactura(String nome) {
+        sql = "SELECT nomeClientes FROM factura f where idFactura =" + nome + "";
+        System.out.println("" + sql);
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("nomeClientes"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+     
     public ArrayList<String> getNomeLike(String nome) {
-        sql = "SELECT nomeClientes FROM factura f where idFactura='"+nome + "'";
+        sql = "SELECT nomeClientes FROM factura f where nomeClientes like '%" + nome + "%'";
         System.out.println("" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
@@ -935,7 +952,7 @@ public class ControllerFactura {
     }
 
     public ArrayList<String> getFactura(int codigoCliente) {
-        sql = "SELECT idFactura FROM factura f where date(f.dataFactura)=CURRENT_DATE AND f.estado<>'FACTURA ANULADA' AND codigoCliente=" + codigoCliente;
+        sql = "SELECT idFactura FROM factura f where f.estado<>'FACTURA ANULADA' AND codigoCliente=" + codigoCliente;
         System.out.println("Codigo:" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
@@ -948,9 +965,9 @@ public class ControllerFactura {
         }
         return lista;
     }
-    
+
     public ArrayList<String> getFacturaporCodigo(String nome) {
-        sql = "SELECT idFactura FROM factura f where idFactura='"+nome+"'";
+        sql = "SELECT idFactura FROM factura f where idFactura='" + nome + "'";
         System.out.println("Codigo:" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
@@ -980,13 +997,13 @@ public class ControllerFactura {
     }
 
     public String getCodigoRecibo(int codigo) {
-        String sql = "SELECT Guia from factura where idFactura=" + codigo;
+        String sql = "SELECT numeradorRecibo from factura where idFactura=" + codigo;
         System.out.println("Para recibo:" + sql);
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getString("Guia");
+                return rs.getString("numeradorRecibo");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

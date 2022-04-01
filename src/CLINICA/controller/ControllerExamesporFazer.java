@@ -76,7 +76,7 @@ public class ControllerExamesporFazer {
 
     public void createMedico(ExamesporFazer e) {
         //  conexao.Connectando();
-        sql = "insert into examesporfazer(codigoHistorico,codigoPaciente,CodigoUtilizador, dataPedido,codigoMedico,pacienteInterno,hora,quantidade,prescricao) values(?,?,?,?,?,?,LOCALTIME(),?,?)";
+        sql = "insert into examesporfazer(codigoHistorico,codigoPaciente,CodigoUtilizador, dataPedido,codigoMedico,pacienteInterno,hora,quantidade,prescricao,cids) values(?,?,?,?,?,?,LOCALTIME(),?,?,?)";
         System.out.println("sql:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -88,6 +88,7 @@ public class ControllerExamesporFazer {
             ps.setString(6, e.getPacienteInterno());
             ps.setInt(7, e.getQuantidade());
             ps.setString(8, e.getPrescricao());
+            ps.setString(9, e.getCids());
             ps.execute();
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex.getMessage());
@@ -237,9 +238,9 @@ public class ControllerExamesporFazer {
 
     }
 
-    public  ArrayList<String> getCodigo(int codigoServico) {
-      //  conexao.Connectando();
-        sql = "SELECT examesintegrado.designacao FROM examesintegrado where codigoServico="+codigoServico;
+    public ArrayList<String> getCodigo(int codigoServico) {
+        //  conexao.Connectando();
+        sql = "SELECT examesintegrado.designacao FROM examesintegrado where codigoServico=" + codigoServico;
         System.out.println("Sql:" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
@@ -251,11 +252,12 @@ public class ControllerExamesporFazer {
         } catch (SQLException ex) {
         }
         return lista;
-        
+
     }
-     public  ArrayList<String> getCodigoporCategoria_exames(int codigoServico,int codigoProduto) {
-      //  conexao.Connectando();
-        sql = "SELECT examesintegrado.designacao FROM examesintegrado where codigocategoria="+codigoServico+" AND codigoServico="+codigoProduto;
+
+    public ArrayList<String> getCodigoporCategoria_exames(int codigoServico, int codigoProduto) {
+        //  conexao.Connectando();
+        sql = "SELECT examesintegrado.designacao FROM examesintegrado where codigocategoria=" + codigoServico + " AND codigoServico=" + codigoProduto;
         System.out.println("Sql:" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {
@@ -267,11 +269,12 @@ public class ControllerExamesporFazer {
         } catch (SQLException ex) {
         }
         return lista;
-        
+
     }
+
     public ArrayList<String> getCodigoporProduto(String designacao, int codigoServico) {
         //  conexao.Connectando();
-        sql = "SELECT examesintegrado.designacao FROM examesintegrado where examesintegrado.designacao LIKE '%"+designacao+"%' AND codigoServico=" + codigoServico;
+        sql = "SELECT examesintegrado.designacao FROM examesintegrado where examesintegrado.designacao LIKE '%" + designacao + "%' AND codigoServico=" + codigoServico;
         System.out.println("Sql:" + sql);
         ArrayList<String> lista = new ArrayList<>();
         try {

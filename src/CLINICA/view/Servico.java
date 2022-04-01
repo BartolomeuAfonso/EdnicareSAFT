@@ -27,6 +27,8 @@ import GestaoStock.modelo.EntradaItems;
 import GestaoStock.modelo.EntradaProduto;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -69,6 +71,7 @@ public class Servico extends javax.swing.JFrame {
         controllerUsuario = new ControllerUsuario(con);
         controllerCategoria = new ControllerCategoria(con);
         jComboBox4.setModel(new DefaultComboBoxModel(controllerCategoria.getNomeCategoria().toArray()));
+        jComboBox12.setModel(new DefaultComboBoxModel(controllerCategoria.getNomeCategoriaArea().toArray()));
         jComboBox2.setModel(new DefaultComboBoxModel(controllerServico.getNomeServicos().toArray()));
         jComboBox6.setModel(new DefaultComboBoxModel(controllerServico.getNomeProdutosStocavel().toArray()));
         jComboBox8.setModel(new DefaultComboBoxModel(controllerServico.getNomeProdutosExistenteStock().toArray()));
@@ -102,6 +105,7 @@ public class Servico extends javax.swing.JFrame {
         }
 
         iconeSistema();
+        Inserir();
         mostrarEstoque("SELECT s.designacao, s.codigoBarra, e.existencia,s.preco, s.preco1,c.descricao FROM servicos s inner join existencia e on s.idServico = e.codigoProduto\n"
                 + "inner join centro_estoque c on e.codigoCusto =c.codCentroCusto");
 
@@ -179,6 +183,7 @@ public class Servico extends javax.swing.JFrame {
         jTextField7 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
+        jComboBox12 = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jButton9 = new javax.swing.JButton();
@@ -762,6 +767,13 @@ public class Servico extends javax.swing.JFrame {
             }
         });
 
+        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox12ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -770,11 +782,15 @@ public class Servico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel15))
-                .addContainerGap(247, Short.MAX_VALUE))
+                        .addComponent(jLabel15)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jComboBox12, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -782,10 +798,12 @@ public class Servico extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -837,7 +855,7 @@ public class Servico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton9)
@@ -850,8 +868,8 @@ public class Servico extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton9)
@@ -1800,6 +1818,10 @@ public class Servico extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jComboBox12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox12ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox12ActionPerformed
+
     public void aplicarCampos() {
         jTextField5.setText("" + jTextField7.getText());
 
@@ -1949,6 +1971,8 @@ public class Servico extends javax.swing.JFrame {
     public void salvarCategoria() {
         categoriaServicos.setDesignacao(getDesignacaoCategoria());
         categoriaServicos.setCodigoStatus(1);
+        int codigoArea = controllerCategoria.getCodigoArea(jComboBox12.getSelectedItem().toString());
+        categoriaServicos.setCodigoArea(codigoArea);
         controllerCategoria.salvar(categoriaServicos);
     }
 
@@ -2015,6 +2039,7 @@ public class Servico extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox11;
+    private javax.swing.JComboBox<String> jComboBox12;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -2221,5 +2246,23 @@ public class Servico extends javax.swing.JFrame {
             System.out.println("Erro!!!" + ex);
         }
 
+    }
+    
+    public final void Inserir() {
+        jTextField19.addKeyListener(
+                new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent evt) {
+                if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+                    if (!jTextField4.getText().isEmpty()) {
+                        inserirTabela();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro a inserir produto na carrinha.");
+                    }
+
+                }
+            }
+
+        });
     }
 }

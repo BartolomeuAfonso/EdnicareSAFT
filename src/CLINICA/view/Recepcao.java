@@ -87,10 +87,10 @@ public class Recepcao extends javax.swing.JFrame {
         controllerEmpresa = new ControllerEmpresa(con);
         nomeempresa = controllerEmpresa.getNomeEmpresa();
         this.tipoUtilizador = controllerUsuario.getTipoUtilizadorporID(codigoUser);
-        
+
         jDateChooser2.setDate(new Date());
         this.tipoArea = tipoArea;
-        
+
         if (tipoArea == 1) {
             controllerMarcarcaoConsulta = new ControllerMarcarcaoConsulta(con);
             // defaultTableModel = (DefaultTableModel) jTable2.getModel();
@@ -107,7 +107,7 @@ public class Recepcao extends javax.swing.JFrame {
             jComboBox3.setModel(new DefaultComboBoxModel(controllerUsuario.getNomeMedico().toArray()));
             if (jRadioButton2.isSelected()) {
                 jPanel2.setVisible(false);
-                
+
             }
             if (!jCheckBox1.isSelected()) {
                 jPanel5.setVisible(false);
@@ -143,7 +143,7 @@ public class Recepcao extends javax.swing.JFrame {
             jButton6.setVisible(false);
             jTabbedPane1.setTitleAt(0, "Dado do Cliente");
             jTabbedPane1.setTitleAt(1, "Lista do Clientes");
-            
+
         }
         // Comentar esse opção para clínicas excepto ao centro médico Octávio.
 //        if (tipoUtilizador == 4) {
@@ -151,9 +151,9 @@ public class Recepcao extends javax.swing.JFrame {
 //        }
         iconeSistema();
         teclaInser();
-        
+
     }
-    
+
     public final void iconeSistema() {
         // URL caminho = this.getClass().getResource("/meus icons/GRest.png");
         URL caminho = this.getClass().getResource("/sf/ce/imagens/Icons/logoteste2.jpg");
@@ -1043,7 +1043,7 @@ public class Recepcao extends javax.swing.JFrame {
         dispose();
 //        salvarSAFT();
     }//GEN-LAST:event_jButton11ActionPerformed
-    
+
     public Object getPaciente() {
         beneficiario.setNomeCompleto(getNome());
         beneficiario.setNomeMae(getnomeMae());
@@ -1078,9 +1078,9 @@ public class Recepcao extends javax.swing.JFrame {
                 if (tipoArea == 1) {
                     new TesourariaColaborador(getCodigoUsuario(), 1).setVisible(true);
                 }
-                
+
             }
-            
+
         } else {
             if (camposValidos()) {
                 codigo = getEmpresa();
@@ -1092,7 +1092,7 @@ public class Recepcao extends javax.swing.JFrame {
                 if (tipoArea == 1) {
                     new GuiaReguradora(getCodigoUsuario()).setVisible(true);
                 }
-                
+
             }
 
     }//GEN-LAST:event_btSalvarActionPerformed
@@ -1106,7 +1106,7 @@ public class Recepcao extends javax.swing.JFrame {
             mostrarPaciente("SELECT p.idPaciente,p.nomeCompleto,p.telefone,p.morada,e.designacao FROM pacientes p inner join empresaseguros e\n"
                     + "on p.codigoSeguro = e.idSeguros where p.codigoStatus=1");
         } else if (resposta == JOptionPane.NO_OPTION) {
-            
+
             mostrarPaciente("SELECT p.idPaciente,p.nomeCompleto,p.telefone,p.morada,e.designacao FROM pacientes p inner join empresaseguros e\n"
                     + "on p.codigoSeguro = e.idSeguros where p.codigoStatus=1");
         }
@@ -1125,7 +1125,7 @@ public class Recepcao extends javax.swing.JFrame {
                             + "on p.codigoSeguro = e.idSeguros AND p.codigoStatus=1 group by 1 desc limit 50");
                     new TesourariaColaborador(getCodigoUsuario(), 1).setVisible(true);
                 }
-                
+
             } else {
                 if (camposValidos()) {
                     codigo = getEmpresa();
@@ -1136,7 +1136,7 @@ public class Recepcao extends javax.swing.JFrame {
                             + "on p.codigoSeguro = e.idSeguros AND p.codigoStatus=1 group by 1 desc limit 50");
                     new GuiaReguradora(getCodigoUsuario()).setVisible(true);
                 }
-                
+
             }
         }
         if (tipoArea == 2) {
@@ -1165,16 +1165,16 @@ public class Recepcao extends javax.swing.JFrame {
         //        jTextField14.setEnabled(false);
         jPanel2.setVisible(true);
     }//GEN-LAST:event_jRadioButton3MouseClicked
-    
+
     public boolean camposValidos() {
         if (getNome().trim().equals("") || getTelefone().trim().equals("")) {
             // JOptionPane.showMessageDialog(null, "Campo nome e Contacto são Obrigatório");
             JOptionPane.showMessageDialog(null, "Campo nome e Contacto são Obrigatório!", "Aviso", JOptionPane.WARNING_MESSAGE);
             jFormattedTextField1.setBackground(Color.red);
             return false;
-            
+
         }
-        
+
         return true;
     }
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
@@ -1271,7 +1271,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField15.setEditable(false);
                     jTextField2.setEditable(false);
                 }
-                
+
                 jTextField15.setText(beneficiario.getBI());
                 jTextField9.setText(beneficiario.getMorada());
                 jDateChooser2.setDate(controllerBeneficiario.getData(nomePaciente));
@@ -1317,9 +1317,9 @@ public class Recepcao extends javax.swing.JFrame {
                 jButton14.setEnabled(true);
                 jPanel2.setVisible(false);
             }
-            
+
         }
-        
+
 
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -1330,7 +1330,7 @@ public class Recepcao extends javax.swing.JFrame {
         } else {
             jPanel5.setVisible(false);
             jComboBox1.setModel(new DefaultComboBoxModel(controllerBeneficiario.getNomeBenefiarioUltimo().toArray()));
-            
+
         }
     }//GEN-LAST:event_jCheckBox1MouseClicked
 
@@ -1343,12 +1343,12 @@ public class Recepcao extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Já não vaga na Agenda do Medico!", nomePaciente, JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Verifique a data e hora da consulta!", nomePaciente, JOptionPane.ERROR_MESSAGE);
-            
+
         }
-        
+
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -1441,50 +1441,61 @@ public class Recepcao extends javax.swing.JFrame {
     private void jTextField16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField16ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField16ActionPerformed
-    
+
     public Date getDateSistema() {
         return jDateChooser2.getDate();
     }
-    
+
     public int getNaturalidade() {
         return controllerNaturalidade.getCodigoNaturalidade(jComboBox8.getSelectedItem().toString());
     }
-    
+
     public String getNome() {
         return jTextField2.getText();
     }
-    
+
     public String getMorada() {
         return jTextField9.getText();
     }
-    
+
     public String getTelefone() {
         return jFormattedTextField1.getText();
     }
-    
+
     public String getContacto() {
         return jTextField10.getText();
     }
-    
+
     public String getnomePai() {
         return jTextField4.getText();
     }
-    
+
     public String getnomeMae() {
         return jTextField12.getText();
     }
-    
+
     public String getBI() {
-        if (!jTextField15.getText().isEmpty() || jTextField15.getText().equalsIgnoreCase("999999999") ) {
-            jTextField15.setText("Consumidor Final");
+
+        if (jTextField15.getText() == "999999999") {
+            return "Consumidor Final";
+        } else if (!jTextField15.getText().isEmpty()) {
             return jTextField15.getText();
-        } else {
-            jTextField15.setText("Consumidor Final");
-            return jTextField15.getText();
+        } else{
+            return  "Consumidor Final";
         }
-        
+
+//        if (!jTextField15.getText().isEmpty() && jTextField15.getText().trim().equals("999999999")) {
+//            //   jTextField15.setText("Consumidor Final");
+//            return jTextField15.getText();
+//        } else if (jTextField15.getText().trim().equals("999999999")) {
+//            jTextField15.setText("Consumidor Final");
+//            return jTextField15.getText();
+//        } else {
+//            jTextField15.setText("Consumidor Final");
+//            return jTextField15.getText();
+//        }
     }
-    
+
     public void limpar() {
         jTextField1.setText("");
         jTextField6.setText("");
@@ -1497,9 +1508,9 @@ public class Recepcao extends javax.swing.JFrame {
         jTextField16.setText("");
         jFormattedTextField1.setText("");
     }
-    
+
     public void salvar(int codigo) {
-        
+
         java.sql.Date data = d.converteDataSql(jDateChooser2.getDate());
         if (camposValidos()) {
             if (!controllerBeneficiario.existe(getNome(), data, codigo)) {
@@ -1521,11 +1532,11 @@ public class Recepcao extends javax.swing.JFrame {
                 beneficiario.setTomadorSegurado(jTextField6.getText());
                 controllerBeneficiario.Inserir(beneficiario);
             } else {
-                JOptionPane.showMessageDialog(null, "Já Existe um Paciente com este Nome e com a mesma data de Nascimento!\n Por favor verificar o nome do Paciente na lista Existente.", "Clínica Santo António", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Já Existe um Paciente com este Nome e com a mesma data de Nascimento!\n Por favor verificar o nome do Paciente na lista Existente.", "Mind Vision Tecnology", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-    
+
     public void editar(int codigo) {
         java.sql.Date data = d.converteDataSql(jDateChooser2.getDate());
         if (camposValidos()) {
@@ -1548,10 +1559,10 @@ public class Recepcao extends javax.swing.JFrame {
             controllerBeneficiario.editar(beneficiario, codigoPaciente);
         }
     }
-    
+
     public String getDataConsulta() {
         String dataSelecionada = "2015-03-07";
-        
+
         if (jDateChooser1.getDate() != null) {
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(jDateChooser1.getDate());
@@ -1561,47 +1572,47 @@ public class Recepcao extends javax.swing.JFrame {
         }
         return dataSelecionada;
     }
-    
+
     public int getEmpresa() {
         return controllerSeguradora.getCodigoSeguradora(jComboBox2.getSelectedItem().toString());
     }
-    
+
     public int getCodigoMedico() {
         return controllerUsuario.getCodigoMedico(jComboBox3.getSelectedItem().toString());
     }
-    
+
     public int getCodigoUsuario() {
         return codigoUser;
     }
-    
+
     public int getCodigoUtente() {
         return controllerBeneficiario.getCodigoUtente(jComboBox1.getSelectedItem().toString());
     }
-    
+
     public int getCodigoServico() {
         return controllerServico.getCodigoServico(jComboBox5.getSelectedItem().toString());
     }
-    
+
     public int getHora() {
         return (int) hora.getValue();
     }
-    
+
     public int getMinuto() {
         return (int) minuto.getValue();
     }
-    
+
     public int getSegundo() {
         return (int) segundos.getValue();
     }
-    
+
     public Date getData() {
         return d.converteDataSql(jDateChooser1.getDate());
     }
-    
+
     public Date getData1() {
         return d.converteDataSql(jDateChooser2.getDate());
     }
-    
+
     public String getDataActual() {
         Calendar calendario = Calendar.getInstance();
 
@@ -1609,41 +1620,41 @@ public class Recepcao extends javax.swing.JFrame {
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
         int mes = calendario.get(Calendar.MONTH);
         int ano = calendario.get(Calendar.YEAR);
-        
+
         int h = calendario.get(Calendar.HOUR_OF_DAY);
         int m = calendario.get(Calendar.MINUTE);
         int s = calendario.get(Calendar.SECOND);
-        
+
         String data = ano + "-" + (mes + 1) + "-" + dia + " " + h + ":" + m + ":" + s;
         //String data = ano + "-" + (mes + 1) + "-" + dia;
 
         return data;
     }
-    
+
     public String getHoraConsulta() {
         Time t = new Time(getHora(), getMinuto(), getSegundo());
         return t.toString();
     }
-    
+
     public boolean horaConsultaValida() {
         Date datConsulta = jDateChooser1.getDate();
         Date dataActual = new Date();
         datConsulta.setHours(getHora());
         datConsulta.setMinutes(getMinuto());
-        
+
         if (datConsulta.compareTo(dataActual) >= 0) {
             return true;
         }
         return false;
     }
-    
+
     public boolean limiteAtingido() {
         if (controllerMarcarcaoConsulta.getLimiteDiario(getCodigoMedico()) <= controllerMarcarcaoConsulta.getTotalConsultasAgendadasPorMedico(getCodigoMedico(), getDataConsulta())) {
             return true;
         }
         return false;
     }
-    
+
     public void salvarMarcar() {
         marcacaoConsulta.setCodigoUtlizador(codigoUser);
         marcacaoConsulta.setCodigoMedico(getCodigoMedico());
@@ -1699,9 +1710,9 @@ public class Recepcao extends javax.swing.JFrame {
             marcacaoConsulta.setPreco(anst);
             controllerMarcarcaoConsulta.salvar(marcacaoConsulta);
         }
-        
+
     }
-    
+
     public final void mostrarPaciente(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -1733,7 +1744,7 @@ public class Recepcao extends javax.swing.JFrame {
         } catch (Exception ex) {
             System.out.println("Erro!!!" + ex);
         }
-        
+
     }
 
     /**
@@ -1750,21 +1761,21 @@ public class Recepcao extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
+
                 }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Recepcao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(Recepcao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(Recepcao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Recepcao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -1893,7 +1904,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jComboBox8.requestFocus();
                 }
             }
-            
+
         });
         jComboBox8.addKeyListener(
                 new KeyAdapter() {
@@ -1902,7 +1913,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jComboBox6.requestFocus();
                 }
             }
-            
+
         });
         jComboBox6.addKeyListener(
                 new KeyAdapter() {
@@ -1911,7 +1922,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jComboBox4.requestFocus();
                 }
             }
-            
+
         });
         jComboBox4.addKeyListener(
                 new KeyAdapter() {
@@ -1920,7 +1931,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField9.requestFocus();
                 }
             }
-            
+
         });
         jTextField9.addKeyListener(
                 new KeyAdapter() {
@@ -1929,7 +1940,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField4.requestFocus();
                 }
             }
-            
+
         });
         jTextField4.addKeyListener(
                 new KeyAdapter() {
@@ -1938,7 +1949,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField10.requestFocus();
                 }
             }
-            
+
         });
         jTextField10.addKeyListener(
                 new KeyAdapter() {
@@ -1947,7 +1958,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField12.requestFocus();
                 }
             }
-            
+
         });
         jTextField12.addKeyListener(
                 new KeyAdapter() {
@@ -1956,7 +1967,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jFormattedTextField1.requestFocus();
                 }
             }
-            
+
         });
         jFormattedTextField1.addKeyListener(
                 new KeyAdapter() {
@@ -1965,7 +1976,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField15.requestFocus();
                 }
             }
-            
+
         });
         jTextField15.addKeyListener(
                 new KeyAdapter() {
@@ -1974,7 +1985,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField6.requestFocus();
                 }
             }
-            
+
         });
         jTextField6.addKeyListener(
                 new KeyAdapter() {
@@ -1983,7 +1994,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jTextField1.requestFocus();
                 }
             }
-            
+
         });
         jTextField1.addKeyListener(
                 new KeyAdapter() {
@@ -1992,7 +2003,7 @@ public class Recepcao extends javax.swing.JFrame {
                     jComboBox2.requestFocus();
                 }
             }
-            
+
         });
     }
 }

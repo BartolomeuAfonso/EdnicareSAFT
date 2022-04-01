@@ -19,9 +19,11 @@ import CLINICA.controller.ControllerFactura;
 import CLINICA.controller.ControllerFormaPagamento;
 import CLINICA.controller.ControllerUsuario;
 import CLINICA.relatorios.RelatorioNota;
+import static CLINICA.view.TesourariaColaborador.getHorAndMinute;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import sf.ce.utilizacoes.Data;
 
@@ -830,7 +832,7 @@ public class Reemprimir extends javax.swing.JFrame {
                         relatorioVenda.getFacturaticket(codigoFactura);
                     } else {
                         // Segunda Via
-                        relatorioVenda.getFacturaticketSegundaVia(codigoFactura);
+                        relatorioVenda.getFacturaticket(codigoFactura);
                     }
 
                 }
@@ -867,8 +869,13 @@ public class Reemprimir extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         if (jRadioButton1.isSelected()) {
-            mostraFactura("SELECT f.idfactura, date(f.dataFactura) as dataFactura, f.nomeclientes , u.nomecompleto,f.estado from factura f inner join utilizadores u\n"
-                    + "on u.idUtilizador = f.codigoUtilizador where date(f.dataFactura) ='" + getData() + "' and f.estado ='FACTURA PRONTO' ");
+           // if (getHoraMenor(getData())) {
+                mostraFactura("SELECT f.idfactura, date(f.dataFactura) as dataFactura, f.nomeclientes , u.nomecompleto,f.estado from factura f inner join utilizadores u\n"
+                        + "on u.idUtilizador = f.codigoUtilizador where date(f.dataFactura) ='" + getData() + "' and f.estado ='FACTURA PRONTO' ");
+//            }else{
+//                JOptionPane.showMessageDialog(null,"Não é permitido buscar factura com data maior que a data atual");
+//            }
+
         }
         if (jRadioButton2.isSelected()) {
             mostraFactura("SELECT f.idfactura, date(f.dataFactura) as dataFactura, f.nomeclientes , u.nomecompleto,f.estado from factura f inner join utilizadores u\n"
@@ -1281,4 +1288,24 @@ public class Reemprimir extends javax.swing.JFrame {
         }
 
     }
+
+//    public static boolean getHoraMenor(String horaFecha) {
+//        System.out.println("Passada para comparar:" + horaFecha);
+//        String horaAtual = new SimpleDateFormat("HH:mm").format(new Date().getTime());// Pega hora atual do Sistema
+//        System.out.println("Hora do Sistema:" + horaAtual);
+//        Integer horarioFecha[] = getHorAndMinute(horaFecha);
+//        System.out.println("Hora Passada:" + horarioFecha[0]);
+//        Integer horarioAtual[] = getHorAndMinute(horaAtual);
+//        System.out.println("Hora Passada do sistema:" + horarioAtual[0]);
+//
+//        if (horarioAtual[0] <= horarioFecha[0]) {
+//
+//            System.out.println("Em dia");
+//            return true;
+//
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Não é permitido emitir factura com hora inferior que a hora da Ultima Factura, verifica a Hora do seu Computador!", "Mind Vision Tecnology - Erro", JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
+//    }
 }

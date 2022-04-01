@@ -76,7 +76,7 @@ public class RelatorioEcografia {
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
                 jasperViewer.setTitle("Factura");
                 jasperViewer.setVisible(true);
-                //  jasperViewer.setAlwaysOnTop(true);
+                jasperViewer.setAlwaysOnTop(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Nao Existem Pedidos!...");
             }
@@ -107,7 +107,7 @@ public class RelatorioEcografia {
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
                 jasperViewer.setTitle("Factura");
                 jasperViewer.setVisible(true);
-                //  jasperViewer.setAlwaysOnTop(true);
+                jasperViewer.setAlwaysOnTop(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Nao Existem Pedidos!...");
             }
@@ -138,7 +138,7 @@ public class RelatorioEcografia {
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
                 jasperViewer.setTitle("Factura");
                 jasperViewer.setVisible(true);
-                //  jasperViewer.setAlwaysOnTop(true);
+                jasperViewer.setAlwaysOnTop(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Nao Existem Pedidos!...");
             }
@@ -147,7 +147,8 @@ public class RelatorioEcografia {
             JOptionPane.showMessageDialog(null, "ERRO AO TENTAR MOSTRAR AS ENTRADAS !..." + ex);
         }
     }
-     public void getEcografiaMorfologica(int codigoFactura) {
+
+    public void getEcografiaMorfologica(int codigoFactura) {
 
         con = new ConexaoBancos().ConexaoBD();
         HashMap hashMap = new HashMap();
@@ -177,6 +178,7 @@ public class RelatorioEcografia {
             JOptionPane.showMessageDialog(null, "ERRO AO TENTAR MOSTRAR AS ENTRADAS !..." + ex);
         }
     }
+
     public void getEcografiaTesticular(int codigoFactura) {
 
         con = new ConexaoBancos().ConexaoBD();
@@ -198,7 +200,7 @@ public class RelatorioEcografia {
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
                 jasperViewer.setTitle("Factura");
                 jasperViewer.setVisible(true);
-                //  jasperViewer.setAlwaysOnTop(true);
+                jasperViewer.setAlwaysOnTop(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Nao Existem Pedidos!...");
             }
@@ -207,6 +209,7 @@ public class RelatorioEcografia {
             JOptionPane.showMessageDialog(null, "ERRO AO TENTAR MOSTRAR AS ENTRADAS !..." + ex);
         }
     }
+
     public void getEcografiaTiroide(int codigoFactura) {
 
         con = new ConexaoBancos().ConexaoBD();
@@ -228,7 +231,7 @@ public class RelatorioEcografia {
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
                 jasperViewer.setTitle("Factura");
                 jasperViewer.setVisible(true);
-                //  jasperViewer.setAlwaysOnTop(true);
+                jasperViewer.setAlwaysOnTop(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Nao Existem Pedidos!...");
             }

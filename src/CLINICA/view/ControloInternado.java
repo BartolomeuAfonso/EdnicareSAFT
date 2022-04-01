@@ -140,6 +140,7 @@ public class ControloInternado extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        jRadioButton5 = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -603,6 +604,10 @@ public class ControloInternado extends javax.swing.JFrame {
 
         jTextField3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Resumo Clínico"));
 
+        buttonGroup1.add(jRadioButton5);
+        jRadioButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jRadioButton5.setText("Alta de abandono(Fuga)");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -615,7 +620,9 @@ public class ControloInternado extends javax.swing.JFrame {
                         .addComponent(jRadioButton4)
                         .addGap(10, 10, 10)
                         .addComponent(jRadioButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jRadioButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -631,12 +638,14 @@ public class ControloInternado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioButton2)
+                        .addComponent(jRadioButton4)
+                        .addComponent(jRadioButton3)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jRadioButton5)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -835,6 +844,13 @@ public class ControloInternado extends javax.swing.JFrame {
             mostraPacienteInternado("SELECT i.codigo as codigo, p.nomeCompleto as nome,m.nomeCompleto as medico,i.medicoAssistente as medico1, i.quarto as quarto, i.cama as cama FROM internamento i inner join pacientes p on\n"
                     + "i.codigoPaciente = p.idPaciente inner join medicos m on i.codigoMedico= m.idMedico where i.codigoAlta=1");
         }
+         if (jRadioButton5.isSelected()) {
+            controllerSinaisVitais.salvarAlta(5, getCodigoInternamento(), jTextField2.getText(), jTextField3.getText());
+            JOptionPane.showMessageDialog(null, "Alta dada com Sucesso");
+            relatorioInternamento.getAltaMedico(getCodigoInternamento());
+            mostraPacienteInternado("SELECT i.codigo as codigo, p.nomeCompleto as nome,m.nomeCompleto as medico,i.medicoAssistente as medico1, i.quarto as quarto, i.cama as cama FROM internamento i inner join pacientes p on\n"
+                    + "i.codigoPaciente = p.idPaciente inner join medicos m on i.codigoMedico= m.idMedico where i.codigoAlta=1");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -992,6 +1008,7 @@ public class ControloInternado extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

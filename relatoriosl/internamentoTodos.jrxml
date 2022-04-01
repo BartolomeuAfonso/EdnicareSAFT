@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="internamentoTodos" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c1ec0b3c-4489-4884-9182-3d99ee6289a0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     internamento.`codigo` AS internamento_codigo,
+     internamento.`codigoPaciente` AS internamento_codigoPaciente,
+     sinaisvitais.`idsinaisVitais` AS sinaisvitais_idsinaisVitais,
+     sinaisvitais.`temperatura` AS sinaisvitais_temperatura,
+     sinaisvitais.`pulso` AS sinaisvitais_pulso,
+     sinaisvitais.`tensao` AS sinaisvitais_tensao,
+     sinaisvitais.`FrequenciaCardiaca` AS sinaisvitais_FrequenciaCardiaca,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     pacientes.`contacto` AS pacientes_contacto,
+     pacientes.`morada` AS pacientes_morada,
+     internamento.`diagnostico` AS internamento_diagnostico,
+     sinaisvitais.`codigoInternamento` AS sinaisvitais_codigoInternamento,
+     folhateraupetica.`idTeraupetica` AS folhateraupetica_idTeraupetica,
+     folhateraupetica.`descricao` AS folhateraupetica_descricao
+FROM
+     `internamento` internamento INNER JOIN `sinaisvitais` sinaisvitais ON internamento.`codigo` = sinaisvitais.`codigoInternamento`
+     INNER JOIN `folhateraupetica` folhateraupetica ON internamento.`codigo` = folhateraupetica.`codigoInternamento`
+     INNER JOIN `pacientes` pacientes ON internamento.`codigoPaciente` = pacientes.`idPaciente`]]>
+	</queryString>
+	<field name="internamento_codigo" class="java.lang.Integer"/>
+	<field name="internamento_codigoPaciente" class="java.lang.Long"/>
+	<field name="sinaisvitais_idsinaisVitais" class="java.lang.Long"/>
+	<field name="sinaisvitais_temperatura" class="java.lang.String"/>
+	<field name="sinaisvitais_pulso" class="java.lang.String"/>
+	<field name="sinaisvitais_tensao" class="java.lang.String"/>
+	<field name="sinaisvitais_FrequenciaCardiaca" class="java.lang.String"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="pacientes_contacto" class="java.lang.String"/>
+	<field name="pacientes_morada" class="java.lang.String"/>
+	<field name="internamento_diagnostico" class="java.lang.String"/>
+	<field name="sinaisvitais_codigoInternamento" class="java.lang.Integer"/>
+	<field name="folhateraupetica_idTeraupetica" class="java.lang.Long"/>
+	<field name="folhateraupetica_descricao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -305,11 +305,11 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                 .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(258, 258, 258)
                 .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(73, 73, 73)
                 .addComponent(jRadioButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jRadioButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131))
+                .addGap(37, 37, 37))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(189, 189, 189)
@@ -420,7 +420,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                     String resultado = controllerEcografia.getDesignacao(codigoProduto);
                     String ovario = controllerEcografia.getOvario(codigoProduto);
                     String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                    new ProcessarEcografia(jLabel2.getText(), idade, jRadioButton2.getText(), resultado, ovario, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                    new ProcessarEcografia(jLabel2.getText(), idade, jRadioButton2.getText(), resultado, ovario, conclusao, codigoUser, codigoProduto, codigo, 1, 0).setVisible(true);
                 } else if (resposta == JOptionPane.NO_OPTION) {
                     resposta = JOptionPane.showConfirmDialog(null, "Ecografia Obstétrica segundo e terceiro trimestre?", "Atenção", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
@@ -429,7 +429,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                         String resultado = controllerEcografia.getDesignacao(codigoProduto);
                         //  String ovario = controllerEcografia.getOvario(codigoProduto);
                         String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
                     }
                 }
                 if (resposta == JOptionPane.NO_OPTION) {
@@ -440,7 +440,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                         String resultado = controllerEcografia.getDesignacao(codigoProduto);
                         //  String ovario = controllerEcografia.getOvario(codigoProduto);
                         String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
                     }
                 }
                 if (resposta == JOptionPane.NO_OPTION) {
@@ -452,7 +452,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                         String resultado = controllerEcografia.getDesignacao(codigoProduto);
                         //  String ovario = controllerEcografia.getOvario(codigoProduto);
                         String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
                     }
                 }
 
@@ -467,7 +467,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                     String resultado = controllerEcografia.getDesignacao(codigoProduto);
                     //  String ovario = controllerEcografia.getOvario(codigoProduto);
                     String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                    new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                    new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
                 } else if (resposta == JOptionPane.NO_OPTION) {
                     resposta = JOptionPane.showConfirmDialog(null, "Ecografia Obstétrica primeiro trimestro", "Atenção", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
@@ -477,7 +477,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                         String resultado = controllerEcografia.getDesignacao(codigoProduto);
                         //  String ovario = controllerEcografia.getOvario(codigoProduto);
                         String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
                     }
                 }
                 if (resposta == JOptionPane.NO_OPTION) {
@@ -489,7 +489,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                         String resultado = controllerEcografia.getDesignacao(codigoProduto);
                         //  String ovario = controllerEcografia.getOvario(codigoProduto);
                         String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
                     }
                 }
                 if (resposta == JOptionPane.NO_OPTION) {
@@ -501,7 +501,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                         String resultado = controllerEcografia.getDesignacao(codigoProduto);
                         //  String ovario = controllerEcografia.getOvario(codigoProduto);
                         String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                        new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
                     }
                 }
 
@@ -510,18 +510,18 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                 int resposta = JOptionPane.showConfirmDialog(null, "Ecografia Morfologica do primeiro trimestre?", "Atenção", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
                     String dados = "Ecografia Morfologica do primeiro trimestre";
-                   // dados = jLabel1.getText();
+                    // dados = jLabel1.getText();
                     int codigoProduto = controllerServico.getCodigoServico(dados);
                     String resultado = controllerEcografia.getDesignacao(codigoProduto);
                     String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                    new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                    new ProcessarAbdominal(jLabel2.getText(), idade, dados, resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
                     //  new ProcessarMorfologica(jLabel2.getText(), idade, dados, codigoProduto, codigo).setVisible(true);
 
                 } else if (resposta == JOptionPane.NO_OPTION) {
                     resposta = JOptionPane.showConfirmDialog(null, "Ecografia Morfologica do segundo trimestre", "Atenção", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
                         String dados = "Ecografia Morfologica do segundo trimestre";
-                       // dados = jLabel1.getText();
+                        // dados = jLabel1.getText();
                         int codigoProduto = controllerServico.getCodigoServico(dados);
                         String resultado = controllerEcografia.getDesignacao(codigoProduto);
                         String conclusao = controllerEcografia.getConclusao(codigoProduto);
@@ -546,7 +546,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                 String resultado = controllerEcografia.getDesignacao(codigoProduto);
                 String ovario = controllerEcografia.getOvario(codigoProduto);
                 String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                new ProcessarAbdominal(jLabel2.getText(), idade, jLabel1.getText(), resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                new ProcessarAbdominal(jLabel2.getText(), idade, jLabel1.getText(), resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
             }
         } else {
             jLabel1.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString());
@@ -557,17 +557,17 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                 String resultado = controllerEcografia.getDesignacao(codigoProduto);
                 String ovario = controllerEcografia.getOvario(codigoProduto);
                 String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                new ProcessarEcografia(jLabel2.getText(), idade, jLabel1.getText(), resultado, ovario, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                new ProcessarEcografia(jLabel2.getText(), idade, jLabel1.getText(), resultado, ovario, conclusao, codigoUser, codigoProduto, codigo, 1, 0).setVisible(true);
             } else if ((jLabel1.getText().equals("Ecografia Abdominal")) || (jLabel1.getText().equals("Ecografia Obstétrica"))) {
                 String resultado = controllerEcografia.getDesignacao(codigoProduto);
                 String conclusao = controllerEcografia.getConclusao(codigoProduto);
 
-                new ProcessarAbdominal(jLabel2.getText(), idade, jLabel1.getText(), resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                new ProcessarAbdominal(jLabel2.getText(), idade, jLabel1.getText(), resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
             } else if ((jLabel1.getText().equals("Ecografia da Mama")) || (jLabel1.getText().equals("Ecografia da Tiroide")) || (jLabel1.getText().equals("Ecografia da Testicular"))) {
                 String resultado = controllerEcografia.getDesignacao(codigoProduto);
                 String ovario = controllerEcografia.getOvario(codigoProduto);
                 String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                new ProcessarAbdominal(jLabel2.getText(), idade, jLabel1.getText(), resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                new ProcessarAbdominal(jLabel2.getText(), idade, jLabel1.getText(), resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
             } else if ((jLabel1.getText().equals("Ecografia Morfologica"))) {
                 String resultado = controllerEcografia.getDesignacao(codigoProduto);
                 String conclusao = controllerEcografia.getConclusao(codigoProduto);
@@ -576,7 +576,7 @@ public class ResultadoEcografia extends javax.swing.JFrame {
                 String resultado = controllerEcografia.getDesignacao(codigoProduto);
                 String ovario = controllerEcografia.getOvario(codigoProduto);
                 String conclusao = controllerEcografia.getConclusao(codigoProduto);
-                new ProcessarAbdominal(jLabel2.getText(), idade, jLabel1.getText(), resultado, conclusao, codigoUser, codigoProduto, codigo).setVisible(true);
+                new ProcessarAbdominal(jLabel2.getText(), idade, jLabel1.getText(), resultado, conclusao, codigoUser, codigoProduto, codigo,1,0).setVisible(true);
             }
         }
 

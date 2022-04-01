@@ -280,7 +280,7 @@ public class ResultadoPronto1 extends javax.swing.JFrame {
                 + "inner join status_exames s on s.idstatus_exames = e1.codigoStatusExame\n"
                 + "inner join servicos s1 on s1.idServico = e1.codigoProduto\n"
                 + "inner join examesintegrado i on i.codigoServico = s1.idServico\n"
-                + "where s.designacao ='Pronto' and  date(e1.dataResultado) between '" + getData() + "' and '" + getData1() + "'\n"
+                + "where s.designacao ='Pronto' and (e1.dataResultado) between '" + getData() + "' and '" + getData1() + "'\n"
                 + "and i.codigoCategoria <>0");
 
 

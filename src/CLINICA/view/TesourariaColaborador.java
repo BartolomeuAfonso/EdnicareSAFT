@@ -54,11 +54,13 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import json_xml_iva.Calculo;
 import sf.ce.conexao.ConexaoBancos;
@@ -119,6 +121,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     int total = 0;
     Calculo calculo = new Calculo();
     ControllerPedidoRaioX controllerPedidoRaioX;
+    Object fila[] = new Object[7];
 
     public TesourariaColaborador(int codigo, int codigoArea) {
         initComponents();
@@ -131,6 +134,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         controllerExamesporFazer = new ControllerExamesporFazer(con);
         controllerMarcarcaoConsulta = new ControllerMarcarcaoConsulta(con);
         controllerParametros = new ControllerParametros(con);
+        jDateChooser4.setDate(new Date());
         impostoMedico = controllerParametros.getValorIrtMedico();
         defaultTableModel = (DefaultTableModel) jTable1.getModel();
         iconeSistema();
@@ -258,6 +262,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
+        jDateChooser4 = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -282,6 +287,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField9 = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jRadioButton5 = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
@@ -470,12 +476,15 @@ public class TesourariaColaborador extends javax.swing.JFrame {
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -497,9 +506,11 @@ public class TesourariaColaborador extends javax.swing.JFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jDateChooser4, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(1, 1, 1)))
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)), "Produtos selecionados na venda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 12), new java.awt.Color(0, 102, 153))); // NOI18N
@@ -536,7 +547,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1040, 210));
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1080, 210));
 
         jPanel13.setBackground(new java.awt.Color(153, 153, 153));
         jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -549,9 +560,9 @@ public class TesourariaColaborador extends javax.swing.JFrame {
                 jLabel8MousePressed(evt);
             }
         });
-        jPanel13.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 0, 151, -1));
+        jPanel13.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 0, 151, -1));
 
-        jPanel4.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 275, 1040, 30));
+        jPanel4.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 275, 1100, 30));
 
         jLabel15.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         jLabel15.setText("Encomenda nº:");
@@ -560,12 +571,12 @@ public class TesourariaColaborador extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         jLabel16.setText("Total Desconto");
-        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 240, 80, 30));
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 240, 80, 30));
 
         jTextField8.setEditable(false);
         jTextField8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextField8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))));
-        jPanel4.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 240, 160, 30));
+        jPanel4.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 240, 160, 30));
 
         jRadioButton1.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         jRadioButton1.setText("Factura Pro-forma");
@@ -624,7 +635,9 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextFieldMulticaixa, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                .addGap(0, 10, Short.MAX_VALUE)
+                .addComponent(jTextFieldMulticaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -648,7 +661,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextFieldValorEntregue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+            .addComponent(jTextFieldValorEntregue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -667,7 +680,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextFieldTotaPagar, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+            .addComponent(jTextFieldTotaPagar, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -690,11 +703,11 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(2, 2, 2)
+                .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,18 +722,29 @@ public class TesourariaColaborador extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jTextField9.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextField9CaretUpdate(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jComboBox1, 0, 206, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -778,8 +802,8 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -811,15 +835,15 @@ public class TesourariaColaborador extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
@@ -889,6 +913,8 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Gestão Hospital
         int quant = 0;
+        int inc = 2;
+
         int codigoProduto = controllerServico.getCodigoServico(jComboBox3.getSelectedItem().toString());
 
         int quantidadeEntrada = Integer.parseInt(jTextField6.getText());
@@ -917,8 +943,84 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             } else {
 
                 inserirTabela();
-                // gestão de Stock
+
+//                if (jTable1.getRowCount() == 0) {
+//                    inserirTabela();
+//                } else {
+////                    inserirTabela();
+//                    int i, qt = 1, quantidade = 1;
+//                    for (i = 0; i <= jTable1.getRowCount(); i++) {
+//
+//                        if (jTable1.getRowCount() > i) {
+//                            System.out.println("começou");
+//                            if (jTable1.getValueAt(i, 1).equals(jComboBox3.getSelectedItem().toString())) {
+//                                System.out.println("Produto da carrinha:" + jTable1.getValueAt(i, i + 1));
+//                                System.out.println("Produto da Inserido:" + jComboBox3.getSelectedItem().toString());
+//
+//                                jTable1.setRowSelectionInterval(i, i);
+//                                Object g = jTable1.getValueAt(i, 2);
+//                                Object nomeProduto = jTable1.getValueAt(i, 0);
+//                                qt = Integer.parseInt(g.toString());
+//                                //  qt = Integer.parseInt(jTextField6.getText().toString());
+//                                System.out.println("Valor do Quantidade:" + qt);
+//                                quantidade = qt;
+//                                quantidade++;
+//
+//                                System.out.println("Quantidade Actual:" + quantidade);
+//                                double preco = 0, IVA = 0, totalPreco = 0;
+//                                int codigoServico = controllerServico.getCodigoServico(jComboBox3.getSelectedItem().toString());
+//                                int codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
+//                                if (codigoTaxa == 14) {
+//
+//                                    preco = controllerServico.getPreco(jComboBox3.getSelectedItem().toString());
+//                                    IVA = (preco * quantidade) * 0.14;
+//                                    totalPreco = preco * quantidade + controllerServico.getPreco(jComboBox3.getSelectedItem().toString()) * quantidade * 0.14;
+//
+//                                } else {
+//                                    IVA = 0;
+//                                    preco = controllerServico.getPreco(jComboBox3.getSelectedItem().toString());
+//                                    totalPreco = preco * quantidade;
+//
+//                                }
+//                                jTable1.setValueAt(quantidade, i, 2);
+//                                jTable1.setValueAt(preco, i, 3);
+//                                jTable1.setValueAt(getValorMonetario(IVA), i, 4);
+//                                jTable1.setValueAt(0, i, 5);
+//                                jTable1.setValueAt(totalPreco, i, 6);
+//
+////                                inc = jTable1.getRowCount();
+////                                i = inc + 1;
+//                            } else {
+//                                System.out.println("Estamos aqui a tentar resolver uma bug");
+//                             //   quantidade = 1;
+//                              // inserirTabela();
+//                              
+//                            }
+////                            else {
+////                                // for (i = 0; i <= jTable1.getRowCount(); i++) {
+//////                                System.out.println("Estamos aqui");
+////                                if (!jTable1.getValueAt(i, 1).equals(jComboBox3.getSelectedItem().toString())) {
+////                                    inserirTabela();
+////                                } else {
+////                                    System.out.println("Não se faz nada.");
+////                                }
+//////                                //  }
+////
+////                            }
+//
+//                        }
+//
+////                        else {
+////                            if (i == jTable1.getRowCount()) {
+////                                inserirTabela();
+////                            }
+////                        }
+//                    }
+//
+//                }
             }
+
+            // gestão de Stock
         }
         if (tipoCodigoArea == 2) {
             if (codigoCategoria.equals("SIM")) {
@@ -1497,6 +1599,8 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             jTextFieldMulticaixa.setText("0.0");
             jTextFieldValorEntregue.setEnabled(true);
             jTextFieldMulticaixa.setEnabled(false);
+            jLabel15.setVisible(false);
+            jTextField7.setVisible(false);
             //   calculoTroco();
         }
         if (jComboBox2.getSelectedItem().equals("MULTICAIXA")) {
@@ -1504,14 +1608,19 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             jTextFieldValorEntregue.setEnabled(false);
             jTextFieldMulticaixa.setText(jTextFieldTotaPagar.getText());
             jTextFieldMulticaixa.setEnabled(true);
+            jLabel15.setVisible(false);
+            jTextField7.setVisible(false);
             //        calculoTroco();
 
         }
-        if (jComboBox2.getSelectedItem().equals("TRANSFERENCIA BANCARIA")) {
+        if (jComboBox2.getSelectedItem().equals("TRANSFERENCIA BANCÁRIA")) {
             jTextFieldValorEntregue.setText("0.0");
             jTextFieldValorEntregue.setEnabled(false);
             jTextFieldMulticaixa.setText(jTextFieldTotaPagar.getText());
             jTextFieldMulticaixa.setEnabled(true);
+            jLabel15.setText("Nº Borderau");
+            jLabel15.setVisible(true);
+            jTextField7.setVisible(true);
             //       calculoTroco();
 
         }
@@ -1520,6 +1629,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             jTextFieldValorEntregue.setText("0.0");
             jTextFieldValorEntregue.setEnabled(true);
             jTextFieldMulticaixa.setEnabled(true);
+
             //  calculoTroco();
         }
         if (jComboBox2.getSelectedItem().equals("PRO-FORMA")) {
@@ -1574,6 +1684,11 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField9CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField9CaretUpdate
+        jComboBox1.setModel(new DefaultComboBoxModel(controllerMedico.getNomeMedicoporLike(jTextField9.getText()).toArray()));        // TODO add your handling code here:
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9CaretUpdate
 
 //    public void getDesconto() {
 //
@@ -1814,13 +1929,14 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     }
 
     public void inserirTabela() {
-        Object fila[] = new Object[7];
+
         int codigoServico = 0;
         double preco = 0.0, desconto = 0.0;
         double IVA = 0;
         double totalPreco = 0.0;
         // Gestão Hospitalar
         int quantidade = Integer.parseInt(jTextField6.getText());
+        System.out.println("Quantidade de Teste:" + quantidade);
         if (tipoCodigoArea == 1) {
             codigoServico = controllerServico.getCodigoServico(jComboBox3.getSelectedItem().toString());
             int codigoTaxa = controllerServico.getCodigoTaxa(codigoServico);
@@ -1887,6 +2003,9 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(6).setResizable(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.setAutoResizeMode(jTable1.AUTO_RESIZE_OFF);
+        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTable1.setModel(model);
+
         actualizarValorIva();
         actualizarValorApagar();
         actualizar();
@@ -2039,6 +2158,16 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         return Calculo.getValueNormal(jTextField8.getText());
     }
 
+    public String getDataFacturaOcorroencia() {
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(jDateChooser4.getDate());
+        String dataSelecionada = gc.get(GregorianCalendar.YEAR) + "-"
+                + ((gc.get(GregorianCalendar.MONTH) + 1) < 10 ? "0" + (gc.get(GregorianCalendar.MONTH) + 1) : (gc.get(GregorianCalendar.MONTH) + 1)) + "-"
+                + (gc.get(GregorianCalendar.DATE) < 10 ? "0" + gc.get(GregorianCalendar.DATE) : gc.get(GregorianCalendar.DATE));
+
+        return dataSelecionada;
+    }
+
     public void salvarFactura() {
         factura.setCodigoCliente(getCodigoCliente());
         factura.setCodigoUtilizador(getCodigoUtilizador());
@@ -2058,6 +2187,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
         factura.setnIBAN(jComboBox1.getSelectedItem().toString());
         factura.setCodigoFormaPagamento(getCodigoFormaPagamento());
         factura.setDataVencimento(getDataActual());
+        factura.setDataOcorrencia(getDataFacturaOcorroencia());
         int codigoEmpresa = utentes.getCodigoSeguro(getCodigoCliente());
         if (jRadioButton1.isSelected()) {
 
@@ -2112,7 +2242,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             facturaItens.setCodigoCategoriaServico(codigoCategoria);
             facturaItens.setQuantidade(quantidadde);
             facturaItens.setPreco(valorUnitario - descontoUnitario);
-          //  facturaItens.setTotalGeral(totalApagar);
+            //  facturaItens.setTotalGeral(totalApagar);
             facturaItens.setDescontoProduto(descontoUnitario);
             if (jComboBox2.getSelectedItem().equals("NUMERARIO")) {
                 facturaItens.setTotalGeral(valorUnitario);
@@ -2128,15 +2258,17 @@ public class TesourariaColaborador extends javax.swing.JFrame {
                 jTextFieldValorEntregue.setEnabled(false);
 
             }
-            if (jComboBox2.getSelectedItem().equals("TRANSFERENCIA BANCARIA")) {
+            if (jComboBox2.getSelectedItem().equals("TRANSFERENCIA BANCÁRIA")) {
                 facturaItens.setTotalGeral(0.0);
                 facturaItens.setTotalTPA(valorUnitario);
                 jTextFieldMulticaixa.setEnabled(true);
                 jTextFieldValorEntregue.setEnabled(false);
             }
             if (jComboBox2.getSelectedItem().equals("PARCIAL")) {
-                facturaItens.setTotalGeral(Double.valueOf(jTextFieldValorEntregue.getText()) / tamanho);
-                facturaItens.setTotalTPA(Double.valueOf(jTextFieldMulticaixa.getText()) / tamanho);
+                facturaItens.setTotalGeral(0.0);
+                facturaItens.setTotalTPA(valorUnitario);
+//                facturaItens.setTotalGeral(Double.valueOf(jTextFieldValorEntregue.getText()) / tamanho);
+//                facturaItens.setTotalTPA(Double.valueOf(jTextFieldMulticaixa.getText()) / tamanho);
                 jTextFieldValorEntregue.setEnabled(true);
                 jTextFieldMulticaixa.setEnabled(true);
             }
@@ -2560,6 +2692,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private com.toedter.calendar.JDateChooser jDateChooser4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -2600,6 +2733,7 @@ public class TesourariaColaborador extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField jTextFieldDesconto;
     private javax.swing.JTextField jTextFieldMulticaixa;
     private javax.swing.JTextField jTextFieldTotaPagar;
@@ -2849,6 +2983,19 @@ public class TesourariaColaborador extends javax.swing.JFrame {
             pedidoItensRaioX.setEstado("PAGO");
             controllerPedidoRaioX.salvarItens(pedidoItensRaioX);
         }
+    }
+
+    public boolean VerificarDados(String dados) {
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            if (jTable1.getValueAt(i, 0).equals(dados)) {
+                int x = i;
+                int selectedRow = jTable1.getSelectedRow();
+
+                String mindvision = null;
+                return true;
+            }
+        }
+        return false;
     }
 
 }

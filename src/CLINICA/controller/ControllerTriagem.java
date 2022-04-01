@@ -34,7 +34,7 @@ public class ControllerTriagem {
 
     public void salvar(Triagem triagem) {
        // conexao.Connectando();
-        sql = "INSERT INTO triagem(codigoPaciente,codigoUtilizador,dataCadastro,peso,tensao,temperatura,frequenciaCardiaca,altura,IMC,pulso,codigoMedico,fuma,bebe)values(?,?,now(),?,?,?,?,?,?,?,?,?,?)";
+        sql = "INSERT INTO triagem(codigoPaciente,codigoUtilizador,dataCadastro,peso,tensao,temperatura,frequenciaCardiaca,altura,IMC,pulso,codigoMedico,fuma,bebe,spo)values(?,?,now(),?,?,?,?,?,?,?,?,?,?,?)";
         System.out.println("TESTE:" + sql);
         try {
             ps = con.prepareStatement(sql);
@@ -52,6 +52,7 @@ public class ControllerTriagem {
             //   ps.setString(12, triagem.getGuiaFactura());
             ps.setString(11, triagem.getFumo());
             ps.setString(12, triagem.getBebe());
+            ps.setString(13, triagem.getSaturacaoOxigenio());
             ps.execute();
             //   JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
         } catch (SQLException ex) {
@@ -310,7 +311,7 @@ public class ControllerTriagem {
             rs = ps.executeQuery();
             Triagem pacienteTriagem;
             if (rs.next()) {
-                pacienteTriagem = new Triagem(rs.getInt("idtriagem"), rs.getString("peso"), rs.getString("altura"), rs.getString("tensao"), rs.getString("fuma"), rs.getString("bebe"), rs.getString("temperatura"), rs.getString("pulso"), rs.getDouble("IMC"));
+                pacienteTriagem = new Triagem(rs.getInt("idtriagem"), rs.getString("peso"), rs.getString("altura"), rs.getString("tensao"), rs.getString("fuma"), rs.getString("bebe"), rs.getString("temperatura"), rs.getString("pulso"), rs.getDouble("IMC"),rs.getString("spo"));
                 return pacienteTriagem;
 
             }

@@ -141,6 +141,7 @@ public class Home extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem37 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem31 = new javax.swing.JMenuItem();
@@ -618,6 +619,15 @@ public class Home extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem27);
 
+        jMenuItem37.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jMenuItem37.setText("Reemprimir Triagem");
+        jMenuItem37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem37ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem37);
+
         jMenuBar1.add(jMenu2);
 
         jMenu10.setText("Seguradoras");
@@ -1027,6 +1037,10 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem36KeyPressed
 
+    private void jMenuItem37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem37ActionPerformed
+        new BuscarTriagem(user).setVisible(true);
+    }//GEN-LAST:event_jMenuItem37ActionPerformed
+
     public class hora implements ActionListener {
 
         @Override
@@ -1141,6 +1155,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem36;
+    private javax.swing.JMenuItem jMenuItem37;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

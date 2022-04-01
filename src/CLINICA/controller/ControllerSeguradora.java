@@ -97,7 +97,7 @@ public class ControllerSeguradora {
     public ArrayList<String> getNomeEmpresa(String nome) {
 //        conexao.Connectando();
         sql = "SELECT UPPER(designacao) AS designacao FROM empresaseguros p\n"
-                + "WHERE designacao LIKE '" + nome + "%'";
+                + "WHERE designacao LIKE '%" + nome + "%'";
         ArrayList<String> lista = new ArrayList<>();
         try {
             ps = con.prepareStatement(sql);

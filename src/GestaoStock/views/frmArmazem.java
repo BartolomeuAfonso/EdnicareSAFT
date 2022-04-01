@@ -29,19 +29,18 @@ public class frmArmazem extends javax.swing.JFrame {
 
     Armazem model = new Armazem();
     ArmazemController control = new ArmazemController();
-    HomeFarma homeFarma;
+  
 
     /**
      * Creates new form frmArmazem
      */
+//    public frmArmazem() {
+//
+//    }
+
     public frmArmazem() {
-
-    }
-
-    public frmArmazem(HomeFarma homeFarma) {
-        this();
+     //   this();
         initComponents();
-        this.homeFarma = homeFarma;
         setLocationRelativeTo(null);
         MostrarUnidades();
         iconeSistema();
@@ -72,11 +71,6 @@ public class frmArmazem extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Armazém");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
-        });
 
         jTable1.setBackground(new java.awt.Color(0, 153, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -84,11 +78,11 @@ public class frmArmazem extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Armazém"
+                "Designacao", "Endereco"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false
+                false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -166,11 +160,6 @@ public class frmArmazem extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        homeFarma.setEnabled(true);
-        this.homeFarma.toFront();
-    }//GEN-LAST:event_formWindowClosed
-
     /**
      * @param args the command line arguments
      */
@@ -232,7 +221,7 @@ public class frmArmazem extends javax.swing.JFrame {
             jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             model.setNumRows(0);
             while (rs.next()) {
-                model.addRow(new String[]{rs.getString("designacao")});
+                model.addRow(new String[]{rs.getString("designacao"),rs.getString("endereco")});
             }
 
         } catch (Exception ex) {

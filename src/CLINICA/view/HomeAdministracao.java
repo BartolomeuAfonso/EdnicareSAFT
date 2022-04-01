@@ -264,6 +264,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jMenuItem32 = new javax.swing.JMenuItem();
         jMenuItem46 = new javax.swing.JMenuItem();
         jMenuItem42 = new javax.swing.JMenuItem();
+        jMenuItem55 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -291,6 +292,7 @@ public class HomeAdministracao extends javax.swing.JFrame {
         jMenuItem41 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem53 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem54 = new javax.swing.JMenuItem();
@@ -1338,6 +1340,15 @@ public class HomeAdministracao extends javax.swing.JFrame {
         });
         jMenu13.add(jMenuItem42);
 
+        jMenuItem55.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jMenuItem55.setText("Extra de Clientes");
+        jMenuItem55.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem55ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem55);
+
         jMenuBar1.add(jMenu13);
 
         jMenu2.setText("Relatórios");
@@ -1537,6 +1548,15 @@ public class HomeAdministracao extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem10);
+
+        jMenuItem53.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jMenuItem53.setText("Colaboradores & Serviços");
+        jMenuItem53.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem53ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem53);
 
         jMenuBar1.add(jMenu2);
 
@@ -2254,6 +2274,14 @@ public class HomeAdministracao extends javax.swing.JFrame {
     private void jMenuItem54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem54ActionPerformed
         new viewSanitario().setVisible(true);
     }//GEN-LAST:event_jMenuItem54ActionPerformed
+
+    private void jMenuItem53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem53ActionPerformed
+        new viewMovimentoColaborador().setVisible(true);
+    }//GEN-LAST:event_jMenuItem53ActionPerformed
+
+    private void jMenuItem55ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem55ActionPerformed
+        new extractoCliente().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem55ActionPerformed
     
     public int getCodigoUser() {
         return controllerUsuario.getCodigoUtilizadorUsername(user);
@@ -2503,7 +2531,9 @@ public class HomeAdministracao extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem50;
     private javax.swing.JMenuItem jMenuItem51;
     private javax.swing.JMenuItem jMenuItem52;
+    private javax.swing.JMenuItem jMenuItem53;
     private javax.swing.JMenuItem jMenuItem54;
+    private javax.swing.JMenuItem jMenuItem55;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;

@@ -62,8 +62,12 @@ public final class ExamesSolicitadoParticular extends javax.swing.JFrame {
         mostrarExame("SELECT distinct p.idexamesPorFazer, p.dataPedido, hora as horas,pa.nomeCompleto,s.designacao,p.colaborador as colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
-                + "where s.designacao ='Pago' AND p.PacienteInterno='NAO' AND e2.Espera='NÃO' AND p.dataPedido =CURRENT_DATE");
+                + "where s.designacao ='Pago' AND e2.Espera='NÃO' AND p.dataPedido =CURRENT_DATE");
 
+//           mostrarExame("SELECT distinct p.idexamesPorFazer, p.dataPedido, hora as horas,pa.nomeCompleto,s.designacao,p.colaborador as colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+//                + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
+//                + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
+//                + "where s.designacao ='Pago' AND p.PacienteInterno='NAO' AND e2.Espera='NÃO' AND p.dataPedido =CURRENT_DATE");
         setLocationRelativeTo(null);
         iconeSistema();
     }
@@ -533,10 +537,14 @@ public final class ExamesSolicitadoParticular extends javax.swing.JFrame {
         System.out.println("Codigo Exames:" + codigoExames);
         controllerExamesporFazer.getNomedoTecnico(user, codigoExames);
         actualizarResultados();
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao,p.colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+//        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s.designacao,p.colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
+//                + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
+//                + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
+//                + "where s.designacao ='Pago' AND p.PacienteInterno='NAO' AND e2.Espera='NÃO' AND p.dataPedido =CURRENT_DATE");
+        mostrarExame("SELECT distinct p.idexamesPorFazer, p.dataPedido, hora as horas,pa.nomeCompleto,s.designacao,p.colaborador as colaborador FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"
                 + "inner join status_exames s on s.idstatus_exames = p.codigoStatus\n"
-                + "where s.designacao ='Pago' AND p.PacienteInterno='NAO' AND e2.Espera='NÃO' AND p.dataPedido =CURRENT_DATE");
+                + "where s.designacao ='Pago' AND e2.Espera='NÃO' AND p.dataPedido =CURRENT_DATE");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -607,7 +615,7 @@ public final class ExamesSolicitadoParticular extends javax.swing.JFrame {
             model.setNumRows(0);
             while (rs.next()) {
                 model.addRow(new String[]{rs.getString("p.idexamesPorFazer"), rs.getString("p.dataPedido"), rs.getString("horas"),
-                    rs.getString("pa.nomeCompleto"), rs.getString("s.designacao"),rs.getString("p.colaborador")
+                    rs.getString("pa.nomeCompleto"), rs.getString("s.designacao"), rs.getString("p.colaborador")
 
                 });
             }

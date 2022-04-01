@@ -167,6 +167,21 @@ public class ControllerMedico {
         return lista;
     }
 
+    public ArrayList<String> getNomeMedicoporLike(String nome) {
+//        conexao.Connectando();
+        sql = "SELECT * FROM medicos s where s.nomeCompleto like '%" + nome + "%' and codigoStatus=1";
+        ArrayList<String> lista = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.add(rs.getString("nomeCompleto"));
+            }
+        } catch (SQLException ex) {
+        }
+        return lista;
+    }
+
     public ArrayList<String> getNomeMedicoColaboradores() {
 //        conexao.Connectando();
         sql = "SELECT * FROM medicocolaboradores s where codigoStatus=1";
@@ -447,7 +462,7 @@ public class ControllerMedico {
             ps.setInt(2, facturaItens.getCodigoServico());
             ps.setDouble(3, facturaItens.getPreco());
             ps.setDouble(4, facturaItens.getPercentagem());
-            System.out.println("Laboratorio:"+facturaItens.getPercentagem());
+            System.out.println("Laboratorio:" + facturaItens.getPercentagem());
             ps.setDouble(5, facturaItens.getRaioX());
             ps.setDouble(6, facturaItens.getEcografia());
             ps.setDouble(7, facturaItens.getEcografia7());
@@ -457,9 +472,9 @@ public class ControllerMedico {
             ps.setDouble(11, facturaItens.getElectrocardiograma());
             ps.setDouble(12, facturaItens.getConsulta());
             ps.execute();
-         //   JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
+            //   JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
         } catch (SQLException ex) {
-          ex.printStackTrace();
+            ex.printStackTrace();
         }
         //   conexao.DesconectaBanco();
     }
@@ -514,7 +529,7 @@ public class ControllerMedico {
             ps.setInt(3, factura.getCodigoCliente());
             ps.setString(4, factura.getEstado());
             ps.execute();
-         //   JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
+            //   JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex);
         }
@@ -596,7 +611,7 @@ public class ControllerMedico {
             ps.setDouble(6, medico.getPrecopercentual());
             ps.setInt(7, medico.getCodigoMedicoServico());
             ps.execute();
-    //        JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
+            //        JOptionPane.showMessageDialog(null, "Dados salvo com Sucesso");
         } catch (SQLException ex) {
             System.out.println("Erro:" + ex);
         }
@@ -665,6 +680,19 @@ public class ControllerMedico {
             System.out.println("Erro:" + ex);
         }
         return null;
+    }
+
+    public void getDeleteServicoColaborador(int codigoFactura, int codigoServico) {
+        try {
+            sql = "DELETE  FROM facturacolaboradoresitens  WHERE codigoFactura1='" + codigoFactura + "' and codigoServico='" + codigoServico + "'";
+            System.out.println("" + sql);
+            ps = con.prepareStatement(sql);
+            ps.execute();
+
+        } catch (SQLException ex) {
+            System.out.println("Erro:" + ex);
+        }
+
     }
 
 }

@@ -60,7 +60,7 @@ public class ExamesSolicitado extends javax.swing.JFrame {
         jLabel2.setText("");
         jDateChooser1.setDate(new Date());
         jDateChooser2.setDate(new Date());
-        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao\n"
+        mostrarExame("SELECT distinct p.idexamesPorFazer,p.dataPedido,hora as horas,pa.nomeCompleto,s1.designacao,s.designacao,p.colaborador\n"
                 + "FROM examesporfazer p inner join examesporfazeritems e2 on p.idexamesPorFazer = e2.codigoExames\n"
                 + "inner join servicos s1 on s1.idServico = e2.codigoProduto\n"
                 + "inner join pacientes pa on p.codigoPaciente =pa.idPaciente\n"

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="saidaProduto" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ac6f88c1-e3ad-45b9-8d0f-6afb5a4ae6c9">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     saidas.`codSaida` AS saidas_codSaida,
+     saidas.`dataSaida` AS saidas_dataSaida,
+     saidas.`descricao` AS saidas_descricao,
+     saidas.`origem` AS saidas_origem,
+     saidas.`destino` AS saidas_destino,
+     saidas.`despachante` AS saidas_despachante,
+     saidas.`viatura` AS saidas_viatura,
+     saidas.`matricula` AS saidas_matricula,
+     saidaitens.`id` AS saidaitens_id,
+     saidaitens.`codigoSaida` AS saidaitens_codigoSaida,
+     saidaitens.`codigoProduto` AS saidaitens_codigoProduto,
+     saidaitens.`quantidade` AS saidaitens_quantidade,
+     saidaitens.`quantidadesAntes` AS saidaitens_quantidadesAntes,
+     saidaitens.`designacao` AS saidaitens_designacao,
+     saidaitens.`preco` AS saidaitens_preco
+FROM
+     `saidas` saidas INNER JOIN
+     `saidaitens` saidaitens ON saidas.codSaida = saidaitens.codigoSaida
+
+WHERE saidas.codSaida =$P{CODIGO}]]>
+	</queryString>
+	<field name="saidas_codSaida" class="java.lang.Long"/>
+	<field name="saidas_dataSaida" class="java.sql.Timestamp"/>
+	<field name="saidas_descricao" class="java.lang.String"/>
+	<field name="saidas_origem" class="java.lang.String"/>
+	<field name="saidas_destino" class="java.lang.String"/>
+	<field name="saidas_despachante" class="java.lang.String"/>
+	<field name="saidas_viatura" class="java.lang.String"/>
+	<field name="saidas_matricula" class="java.lang.String"/>
+	<field name="saidaitens_id" class="java.lang.Integer"/>
+	<field name="saidaitens_codigoSaida" class="java.lang.Integer"/>
+	<field name="saidaitens_codigoProduto" class="java.lang.Integer"/>
+	<field name="saidaitens_quantidade" class="java.lang.Integer"/>
+	<field name="saidaitens_quantidadesAntes" class="java.lang.Integer"/>
+	<field name="saidaitens_designacao" class="java.lang.String"/>
+	<field name="saidaitens_preco" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<rectangle>
+				<reportElement x="2" y="51" width="550" height="65" uuid="dda1c2a8-c7f3-4773-b96c-43984d8e983f"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<image>
+				<reportElement x="0" y="0" width="78" height="49" uuid="67c1e3c3-87f5-4289-afd2-4ce79d2e6135"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="12" y="67" width="41" height="14" uuid="9d4a5295-8160-495e-83ec-c9904c875add"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Origem:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="97" width="41" height="12" uuid="13c1751e-897c-411c-b25a-c3dfb1dc5bae"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Destino:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="97" width="56" height="12" uuid="98a12d28-68d8-435e-b09b-3703a24bfe4f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Motorista:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="67" width="69" height="12" uuid="74913e5f-b5f3-4cf6-81e8-70d983c3050b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Data de Saida:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="67" width="232" height="14" uuid="490856ca-869a-4443-8036-894974d3d899"/>
+				<textFieldExpression><![CDATA[$F{saidas_origem}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="95" width="232" height="14" uuid="11535a8b-80a7-481c-93ae-a4e1fdff248f"/>
+				<textFieldExpression><![CDATA[$F{saidas_destino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="95" width="198" height="14" uuid="b08dc54d-8df8-448f-aa4f-7bd0c114cee9"/>
+				<textFieldExpression><![CDATA[$F{saidas_despachante}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="392" y="66" width="144" height="14" uuid="ace58ace-0afa-423d-9795-e0b201077ab0"/>
+				<textFieldExpression><![CDATA[$F{saidas_dataSaida}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="1" width="25" height="17" backcolor="#CCCCCC" uuid="a468bec2-b069-49d6-ac04-f1583bd7cefc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="26" y="1" width="366" height="17" backcolor="#CCCCCC" uuid="dc7656f1-26f1-4a27-b32c-7d97717dff48"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Designação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="392" y="1" width="76" height="17" backcolor="#CCCCCC" uuid="9d2b9be7-c33c-4aed-9111-51e313fb3cfa"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="467" y="1" width="87" height="17" backcolor="#CCCCCC" uuid="1b2554dd-8498-4e25-9f98-382f6f23f7af"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Expiração]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="27" height="14" uuid="c53aa7f2-1f67-4d27-968c-55940ac99523"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="0" width="365" height="14" uuid="095cad4e-c15e-4d98-aa2e-f4a6e7b39288"/>
+				<textFieldExpression><![CDATA[$F{saidaitens_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="0" width="75" height="14" uuid="81cee6eb-6916-45b3-8bb0-b70206f3da61"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{saidaitens_quantidade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="77" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="18" width="553" height="59" uuid="a50db67a-4171-43e7-8aa5-ed8aac296f1a"/>
+				<textFieldExpression><![CDATA[$F{saidas_descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="18" uuid="e5a15a28-6239-4c6d-bd01-231e34820333"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observação]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

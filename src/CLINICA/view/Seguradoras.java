@@ -24,7 +24,7 @@ import java.net.URL;
  * @author CASA
  */
 public class Seguradoras extends javax.swing.JFrame {
-    
+
     PreparedStatement ps;
     ResultSet rs;
     Connection con;
@@ -34,14 +34,14 @@ public class Seguradoras extends javax.swing.JFrame {
     ControllerEmpresa empresasController;
     int flag = 1;
     int codigo;
-    
+
     public Seguradoras() {
         initComponents();
         empresasController = new ControllerEmpresa(con);
         mostrarSeguradoras("SELECT * FROM empresaseguros e");
         iconeSistema();
     }
-    
+
     public final void iconeSistema() {
         // URL caminho = this.getClass().getResource("/meus icons/GRest.png");
         URL caminho = this.getClass().getResource("/sf/ce/imagens/Icons/logoteste2.jpg");
@@ -377,7 +377,7 @@ public class Seguradoras extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        
+
         if (evt.getClickCount() == 2) {
             codigo = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
             jTextField5.setText("" + empresasController.getlistaEmpresaSeguro(codigo).get(0).getNomeEmpresa());
@@ -395,18 +395,23 @@ public class Seguradoras extends javax.swing.JFrame {
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
-    
+
     public String getBI() {
-        if (!jTextField8.getText().isEmpty() || jTextField8.getText().equalsIgnoreCase("999999999") ) {
-            jTextField8.setText("Consumidor Final");
+       
+        if (jTextField8.getText().equals("999999999")) {
+       ;
+            return "Consumidor Final";
+        } else if (!jTextField8.getText().isEmpty()) {
+            
             return jTextField8.getText();
         } else {
-            jTextField8.setText("Consumidor Final");
-            return jTextField8.getText();
+            
+            return "Consumidor Final";
+            
         }
-        
+
     }
-    
+
     public Empresa getEmpresa() {
         empresa.setNomeEmpresa(jTextField5.getText());
         empresa.setLogotipo(foto);
@@ -417,7 +422,7 @@ public class Seguradoras extends javax.swing.JFrame {
         empresa.setDesconto(Double.valueOf(jTextField6.getText()));
         return empresa;
     }
-    
+
     public void editar(int codigo) {
         empresa.setNomeEmpresa(jTextField5.getText());
         empresa.setNif(jTextField8.getText());
@@ -427,20 +432,20 @@ public class Seguradoras extends javax.swing.JFrame {
         empresa.setDesconto(Double.valueOf(jTextField6.getText()));
         empresasController.editarSeguro(empresa, codigo);
     }
-    
+
     public void salvar() {
         empresasController.salvarSeguro(getEmpresa());
     }
-    
+
     public void limpar() {
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
         jTextField5.setText("");
         jTextField8.setText("");
-        
+
     }
-    
+
     public final void mostrarSeguradoras(String sql) {
         System.out.println("Teste:" + sql);
         try {
@@ -466,7 +471,7 @@ public class Seguradoras extends javax.swing.JFrame {
         } catch (Exception ex) {
             System.out.println("Erro!!!" + ex);
         }
-        
+
     }
 
     /**

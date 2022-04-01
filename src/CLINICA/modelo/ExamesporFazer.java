@@ -17,7 +17,7 @@ public class ExamesporFazer {
     private int codigoMedico;
     private int codigoPaciente;
     private int quantidade;
-    private String pacienteInterno,colaborador;
+    private String pacienteInterno,colaborador,cids;
 
     public ExamesporFazer() {
     }
@@ -124,6 +124,13 @@ public class ExamesporFazer {
     public void setColaborador(String colaborador) {
         this.colaborador = colaborador;
     }
-    
 
+    public String getCids() {
+        return cids;
+    }
+
+    public void setCids(String cids) {
+        this.cids = cids;
+    }
+    
 }

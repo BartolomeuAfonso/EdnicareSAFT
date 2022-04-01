@@ -15,7 +15,7 @@ public class Triagem {
 
     private int idTriagem;
     private String temperatura;
-    private String tensao,peso, frequenciaCardiaca, pulso, guiaFactura, fumo, altura,bebe;
+    private String tensao,peso, frequenciaCardiaca, pulso, guiaFactura, fumo, altura,bebe,saturacaoOxigenio;
     private double IMC;
     private int codigoPaciente, codigoUtilizador, codigoMedico;
     private Date dataCadastro;
@@ -37,7 +37,7 @@ public class Triagem {
         this.dataCadastro = dataCadastro;
     }
 
-    public Triagem(int codigo, String peso, String altura, String tensao, String fumo, String bebe, String temperatura, String pulso, double IMC) {
+    public Triagem(int codigo, String peso, String altura, String tensao, String fumo, String bebe, String temperatura, String pulso, double IMC,String spo) {
         this.idTriagem = codigo;
         this.peso = peso;
         this.altura = altura;
@@ -47,6 +47,7 @@ public class Triagem {
         this.temperatura = temperatura;
         this.pulso = pulso;
         this.IMC = IMC;
+        this.saturacaoOxigenio=spo;
 
     }
 
@@ -170,4 +171,13 @@ public class Triagem {
         this.bebe = bebe;
     }
 
+    public String getSaturacaoOxigenio() {
+        return saturacaoOxigenio;
+    }
+
+    public void setSaturacaoOxigenio(String saturacaoOxigenio) {
+        this.saturacaoOxigenio = saturacaoOxigenio;
+    }
+
+    
 }

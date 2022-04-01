@@ -100,14 +100,20 @@ public class EnfermariaHome extends javax.swing.JFrame {
         teclaInser();
         ls = new DefaultListModel();
         getPacienteEmEspera();
-        mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
-                + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
-                + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
-                + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
+//        mostraMedico("SELECT DISTINCT p.nomecompleto,me.nomecompleto, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
+//                + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
+//                + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
+//                + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
+//                + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
+//                + "inner join medicos me on m.codigoMedico=me.idMedico\n"
+//                + "where date(f.dataFactura) =current_date and f.Triagem='Nao'\n"
+//                + "AND s.codigoCategoria=1");
+
+        mostraMedico("SELECT p.nomecompleto,me.nomecompleto, s.designacao,e.designacao, m.estado, m.dataAgenda from marcacaoconsulta m INNER JOIN pacientes p ON  m.codigoPaciente = p.idPaciente\n"
+                + "INNER JOIN servicos s ON s.idServico = m.codigoServico\n"
                 + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
                 + "inner join medicos me on m.codigoMedico=me.idMedico\n"
-                + "where date(f.dataFactura) =current_date and f.Triagem='Nao'\n"
-                + "AND s.codigoCategoria=1");
+                + "WHERE date(m.dataAgenda)=CURRENT_DATE  AND s.codigoCategoria=1 AND m.Atendido='Não'");
         setLocationRelativeTo(null);
 //       
 //        thread(TEMPO);
@@ -225,6 +231,9 @@ public class EnfermariaHome extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
+        jLabel26 = new javax.swing.JLabel();
+        jTextField9 = new javax.swing.JTextField();
+        jComboBox5 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -240,6 +249,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("TRIAGEM");
+        setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados do Utente ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 12))); // NOI18N
 
@@ -302,7 +312,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 87, Short.MAX_VALUE))
+                                .addGap(0, 120, Short.MAX_VALUE))
                             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -423,6 +433,11 @@ public class EnfermariaHome extends javax.swing.JFrame {
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "kg", "Gr" }));
 
+        jLabel26.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jLabel26.setText("Oximetria de Pulso:");
+
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "%Sp02" }));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -437,7 +452,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
                         .addComponent(jRadioButton1)
                         .addGap(80, 80, 80)
                         .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
                         .addComponent(jRadioButton3)
@@ -456,9 +471,10 @@ public class EnfermariaHome extends javax.swing.JFrame {
                             .addComponent(jTextField6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel21)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -470,23 +486,25 @@ public class EnfermariaHome extends javax.swing.JFrame {
                                         .addComponent(jLabel11)
                                         .addGap(39, 39, 39)
                                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel16)
-                                    .addComponent(jLabel8))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField7)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel22))
-                                .addContainerGap())
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
                                 .addComponent(jLabel23)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGap(191, 191, 191)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField9)
+                            .addComponent(jTextField7)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22)
+                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -525,7 +543,11 @@ public class EnfermariaHome extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel15))
-                    .addComponent(jLabel23))
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel23)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -716,14 +738,22 @@ public class EnfermariaHome extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Triagem feita com Sucesso");
                 limparPaciente();
                 limparTriagem();
-                mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
-                        + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
-                        + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
-                        + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
+                int codigo = controllerTriagem.getLastCodigo();
+                relatorioHistoricoClinico.getRelatorioTriagem(codigo);
+//                mostraMedico("SELECT DISTINCT p.nomecompleto,f.nIBAN, s.designacao,e.designacao, m.estado FROM factura f INNER JOIN factura_itens fa ON f.idfactura = fa.codigoFactura\n"
+//                        + "INNER JOIN pacientes p ON p.idPaciente=f.codigoCliente\n"
+//                        + "INNER JOIN marcacaoconsulta m ON m.codigoPaciente=f.codigoCliente\n"
+//                        + "INNER JOIN servicos s ON s.idServico = fa.codigoProduto\n"
+//                        + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
+//                        + "inner join medicos me on m.codigoMedico=me.idMedico\n"
+//                        + "where date(f.dataFactura)=current_date and f.Triagem='Nao'\n"
+//                        + "AND s.codigoCategoria=1");
+
+                mostraMedico("SELECT p.nomecompleto,me.nomecompleto, s.designacao,e.designacao, m.estado, m.dataAgenda from marcacaoconsulta m INNER JOIN pacientes p ON  m.codigoPaciente = p.idPaciente\n"
+                        + "INNER JOIN servicos s ON s.idServico = m.codigoServico\n"
                         + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
                         + "inner join medicos me on m.codigoMedico=me.idMedico\n"
-                        + "where date(f.dataFactura)=current_date and f.Triagem='Nao'\n"
-                        + "AND s.codigoCategoria=1");
+                        + "WHERE date(m.dataAgenda)=CURRENT_DATE  AND s.codigoCategoria=1 AND m.Atendido='Não'");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Verfica os campos obrigatórios - Vermelhos");
@@ -789,8 +819,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
                     + "inner join especialidade_medico ep on ep.idEspecialidade =me.codigoEspecialidade\n"
                     + "inner join servicos s on m.codigoServico = s.idServico\n"
                     + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                    + "where m.dataAtendimento='" + getData() + "' and Atendido='Nao'\n"
-                    + "AND ep.idEspecialidade < 14 OR ep.idEspecialidade > 15");
+                    + "where m.dataAtendimento='" + getData() + "' and Atendido='Nao'");
         }
         if (!jTextField8.getText().isEmpty()) {
             mostraMedico("SELECT distinct p.nomecompleto,me.nomecompleto,s.designacao, e.designacao,m.estado FROM marcacaoconsulta m\n"
@@ -799,8 +828,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
                     + "inner join especialidade_medico ep on ep.idEspecialidade =me.codigoEspecialidade\n"
                     + "inner join servicos s on m.codigoServico = s.idServico\n"
                     + "inner join empresaseguros e on e.idSeguros = p.codigoSeguro\n"
-                    + "where p.idPaciente=" + getCodigoPaciente() + " and Atendido='Nao'\n"
-                    + "AND ep.idEspecialidade < 14 OR ep.idEspecialidade > 15");
+                    + "where p.idPaciente=" + getCodigoPaciente() + " and Atendido='Nao'");
         }
 
 
@@ -911,6 +939,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
             //     triagem.setGuiaFactura(getGuia());
             triagem.setFumo("SIM");
             triagem.setBebe("SIM");
+            triagem.setSaturacaoOxigenio(jTextField9.getText() + "" + jComboBox5.getSelectedItem().toString());
             controllerTriagem.salvar(triagem);
 
         } else if (!jRadioButton1.isSelected() && jRadioButton3.isSelected()) {
@@ -928,6 +957,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
             //   triagem.setGuiaFactura(getGuia());
             triagem.setFumo("NAO");
             triagem.setBebe("SIM");
+            triagem.setSaturacaoOxigenio(jTextField9.getText() + "" + jComboBox5.getSelectedItem().toString());
             controllerTriagem.salvar(triagem);
         } else if (jRadioButton1.isSelected() && !jRadioButton3.isSelected()) {
             triagem.setAltura(String.valueOf(getAltura()) + "" + jComboBox3.getSelectedItem().toString());
@@ -944,6 +974,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
             //  triagem.setGuiaFactura(getGuia());
             triagem.setFumo("SIM");
             triagem.setBebe("NAO");
+            triagem.setSaturacaoOxigenio(jTextField9.getText() + "" + jComboBox5.getSelectedItem().toString());
             controllerTriagem.salvar(triagem);
         } else if (!jRadioButton1.isSelected() && !jRadioButton3.isSelected()) {
             triagem.setAltura(String.valueOf(getAltura()) + "" + jComboBox3.getSelectedItem().toString());
@@ -960,6 +991,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
             //   triagem.setGuiaFactura(getGuia());
             triagem.setFumo("NAO");
             triagem.setBebe("NAO");
+            triagem.setSaturacaoOxigenio(jTextField9.getText() + "" + jComboBox5.getSelectedItem().toString());
             controllerTriagem.salvar(triagem);
         }
 
@@ -1076,7 +1108,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
             jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             model.setNumRows(0);
             while (rs.next()) {
-                model.addRow(new String[]{rs.getString("p.nomecompleto"), rs.getString("f.nIBAN"), rs.getString("s.designacao"),
+                model.addRow(new String[]{rs.getString("p.nomecompleto"), rs.getString("me.nomecompleto"), rs.getString("s.designacao"),
                     rs.getString("e.designacao"), rs.getString("m.estado")
 
                 });
@@ -1132,6 +1164,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1151,6 +1184,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
@@ -1176,6 +1210,7 @@ public class EnfermariaHome extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 
 //    public void tocar() {

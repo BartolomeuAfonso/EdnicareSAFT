@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="folhaTeraupetica" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3dc7a14b-b1b9-4d7e-972b-52c30c1efce5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DATA1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     internamento.`codigo` AS internamento_codigo,
+     internamento.`codigoPaciente` AS internamento_codigoPaciente,
+     internamento.`cama` AS internamento_cama,
+     internamento.`quarto` AS internamento_quarto,
+     internamento.`medicoAssistente` AS internamento_medicoAssistente,
+     pacientes.`idPaciente` AS pacientes_idPaciente,
+     pacientes.`nomeCompleto` AS pacientes_nomeCompleto,
+     pacientes.`morada` AS pacientes_morada,
+      year(curdate())-year(pacientes.`dataNascimento`) AS idade,
+     pacientes.`genero` AS pacientes_genero,
+     folhateraupetica.`idTeraupetica` AS folhateraupetica_idTeraupetica,
+     folhateraupetica.`descricao` AS folhateraupetica_descricao,
+     folhateraupetica.`codigoInternamento` AS folhateraupetica_codigoInternamento,
+     folhateraupetica.`data` AS folhateraupetica_data
+FROM
+     `internamento` internamento INNER JOIN `pacientes` pacientes ON internamento.`codigoPaciente` = pacientes.`idPaciente`
+     INNER JOIN `folhateraupetica` folhateraupetica ON internamento.`codigo` = folhateraupetica.`codigoInternamento`
+WHERE DATE(folhateraupetica.`data`) BETWEEN $P{DATA1} AND $P{DATA2}]]>
+	</queryString>
+	<field name="internamento_codigo" class="java.lang.Integer"/>
+	<field name="internamento_codigoPaciente" class="java.lang.Long"/>
+	<field name="internamento_cama" class="java.lang.String"/>
+	<field name="internamento_quarto" class="java.lang.String"/>
+	<field name="internamento_medicoAssistente" class="java.lang.String"/>
+	<field name="pacientes_idPaciente" class="java.lang.Long"/>
+	<field name="pacientes_nomeCompleto" class="java.lang.String"/>
+	<field name="pacientes_morada" class="java.lang.String"/>
+	<field name="idade" class="java.lang.Long"/>
+	<field name="pacientes_genero" class="java.lang.String"/>
+	<field name="folhateraupetica_idTeraupetica" class="java.lang.Long"/>
+	<field name="folhateraupetica_descricao" class="java.lang.String"/>
+	<field name="folhateraupetica_codigoInternamento" class="java.lang.Integer"/>
+	<field name="folhateraupetica_data" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="121" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="171" height="105" uuid="29e006b9-88df-4355-ab10-26275e77247f"/>
+				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="91" width="555" height="30" uuid="23eb187a-ffbe-452c-9a95-46875ce3a0d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FOLHA TERAUPÉTICA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="80" width="249" height="18" uuid="ba905c77-287e-4489-aad2-824203edbb78"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Morada: "+$F{pacientes_morada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="20" backcolor="#00CCFF" uuid="60fa4a77-344f-41ec-8454-6b2a776a726f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Dados do(a) Paciente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="60" width="249" height="18" uuid="b5a5bf28-628d-49c0-9ed4-53f4289452ef"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Sexo: "+$F{pacientes_genero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="249" height="18" uuid="031efab2-7e22-4c38-ae93-4cc613c8d05e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Idade: "+$F{idade}+ "anos"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="555" height="18" uuid="6057999a-9c53-432b-8ac8-130d62bd2af0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nome: "+$F{pacientes_nomeCompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="60" width="184" height="18" uuid="d3b6bd90-70aa-4752-ac16-3d098fca9f8d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cama: "+$F{internamento_cama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="80" width="184" height="18" uuid="2e34e462-5e72-4622-9745-91a04b1bccc7"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Enfermaria: "+$F{internamento_quarto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="371" y="40" width="184" height="18" uuid="f0378e9a-c76f-4b9d-935e-277fe8fc0491"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROC. Nº: "+$F{pacientes_idPaciente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="67" height="20" backcolor="#00CCFF" uuid="0e924a7e-52a2-4f93-9f88-c24b24495721"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="67" y="0" width="291" height="20" backcolor="#00CCFF" uuid="c3cd9ffb-6436-4058-a88c-ded64a691f36"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observação Médica]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="358" y="0" width="197" height="20" backcolor="#00CCFF" uuid="77e9277a-6bc0-440c-a111-f042eb7d83ab"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O Médico]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="67" y="0" width="291" height="20" uuid="4404ecd1-ac56-41d9-a262-936d9c99bfd1"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{folhateraupetica_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="358" y="0" width="197" height="20" uuid="9988029c-344a-4478-a5bd-d4297da16e7b"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{internamento_medicoAssistente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="0" y="0" width="67" height="20" uuid="f2b451a5-a11c-4dff-8ef9-2576dfa646d7"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{folhateraupetica_data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

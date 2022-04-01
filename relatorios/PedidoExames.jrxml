@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PedidoExames" pageWidth="350" pageHeight="480" columnWidth="290" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="e3998df1-01dc-4c1f-820d-ad9f1bd0a611">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -29,7 +29,8 @@
      empresaseguros.`idSeguros` AS empresaseguros_idSeguros,
      empresaseguros.`designacao` AS empresaseguros_designacao,
      e.`prescricao` AS e_prescricao,
-     p.`idPaciente` AS p_idPaciente
+     p.`idPaciente` AS p_idPaciente,
+     e.`CIDS` AS e_CIDS
 FROM
      `examesporfazer` e INNER JOIN `pacientes` p ON e.`codigoPaciente` = p.`idPaciente`
      INNER JOIN `examesporfazeritems` exame ON e.`idexamesPorfazer` = exame.`codigoExames`
@@ -58,17 +59,18 @@ WHERE
 	<field name="empresaseguros_designacao" class="java.lang.String"/>
 	<field name="e_prescricao" class="java.lang.String"/>
 	<field name="p_idPaciente" class="java.lang.Long"/>
+	<field name="e_CIDS" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="207" splitType="Stretch">
+		<band height="219" splitType="Stretch">
 			<image>
 				<reportElement key="image-1" x="0" y="0" width="146" height="84" uuid="9b89fdab-ba62-41b5-a7b9-107c775c6eaf"/>
 				<imageExpression><![CDATA["relatorios\\logo12.jpg"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement key="element-90" mode="Transparent" x="2" y="191" width="24" height="16" forecolor="#000000" backcolor="#00CCFF" uuid="1575913b-daa7-480b-b0ec-9a42f7a4853a"/>
+				<reportElement key="element-90" mode="Transparent" x="2" y="203" width="24" height="16" forecolor="#000000" backcolor="#00CCFF" uuid="1575913b-daa7-480b-b0ec-9a42f7a4853a"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="11" isBold="true"/>
@@ -76,7 +78,7 @@ WHERE
 				<text><![CDATA[N.º]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="element-90" mode="Transparent" x="27" y="191" width="263" height="16" forecolor="#000000" backcolor="#00CCFF" uuid="f4dadb8e-cb8b-4904-afe0-d4a0280ef550"/>
+				<reportElement key="element-90" mode="Transparent" x="27" y="203" width="263" height="16" forecolor="#000000" backcolor="#00CCFF" uuid="f4dadb8e-cb8b-4904-afe0-d4a0280ef550"/>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement>
 					<font fontName="Times New Roman" size="11" isBold="true"/>
@@ -238,6 +240,32 @@ WHERE
 					<font fontName="Times New Roman" size="11" isBold="true" pdfFontName="Helvetica"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Proc. Nº:"+$F{p_idPaciente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="2" y="173" width="57" height="18" uuid="b89d93b3-2027-4b11-8d13-241dcdd78506"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CIDS:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-3" x="59" y="173" width="231" height="18" uuid="6f4e3752-4dba-4a80-852d-3e570d16f882"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{e_CIDS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>

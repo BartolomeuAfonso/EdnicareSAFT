@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estatisticaLaboratorioPP" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1de925c4-bf60-4bbf-a95d-32034a09e415">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="New Dataset 1" uuid="e8bc6a6e-ec47-4121-b8c0-ddf0451b51aa">
+		<parameter name="DATA1" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="DATA2" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="CODIGOPRODUTO" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT
+     examesporfazeritems.`dataResultado`,
+     COUNT(quantidade)  AS Negativo,
+     empresa.`codEmpresa` AS empresa_codEmpresa,
+     empresa.`descricao` AS empresa_descricao,
+     empresa.`endereco` AS empresa_endereco,
+     empresa.`email` AS empresa_email,
+     empresa.`contacto` AS empresa_contacto,
+     empresa.`nif` AS empresa_nif,
+     empresa.`website` AS empresa_website,
+     empresa.`NConta1` AS empresa_NConta1,
+     empresa.`IBAN1` AS empresa_IBAN1,
+     empresa.`NConta2` AS empresa_NConta2,
+     empresa.`IBAN2` AS empresa_IBAN2,
+     empresa.`slogan` AS empresa_slogan
+FROM
+     `examesporfazeritems` examesporfazeritems,
+     `empresa` empresa
+WHERE
+     dataResultado BETWEEN $P{DATA1} AND $P{DATA2}
+ AND codigoProduto = $P{CODIGOPRODUTO}
+ AND resultado = 'Negativo' GROUP BY 1,3]]>
+		</queryString>
+		<field name="dataResultado" class="java.sql.Date">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="empresa_codEmpresa" class="java.lang.Long"/>
+		<field name="empresa_descricao" class="java.lang.String"/>
+		<field name="empresa_endereco" class="java.lang.String"/>
+		<field name="empresa_email" class="java.lang.String"/>
+		<field name="empresa_contacto" class="java.lang.String"/>
+		<field name="empresa_nif" class="java.lang.String"/>
+		<field name="empresa_website" class="java.lang.String"/>
+		<field name="empresa_NConta1" class="java.lang.String"/>
+		<field name="empresa_IBAN1" class="java.lang.String"/>
+		<field name="empresa_NConta2" class="java.lang.String"/>
+		<field name="empresa_IBAN2" class="java.lang.String"/>
+		<field name="empresa_slogan" class="java.lang.String"/>
+		<filterExpression><![CDATA[]]></filterExpression>
+	</subDataset>
+	<parameter name="DATA1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGOPRODUTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     examesporfazeritems.`dataResultado`,
+     COUNT(quantidade)  AS positivo,
+     empresa.`codEmpresa` AS empresa_codEmpresa,
+     empresa.`descricao` AS empresa_descricao,
+     empresa.`endereco` AS empresa_endereco,
+     empresa.`email` AS empresa_email,
+     empresa.`contacto` AS empresa_contacto,
+     empresa.`nif` AS empresa_nif,
+     empresa.`website` AS empresa_website,
+     empresa.`NConta1` AS empresa_NConta1,
+     empresa.`IBAN1` AS empresa_IBAN1,
+     empresa.`NConta2` AS empresa_NConta2,
+     empresa.`IBAN2` AS empresa_IBAN2,
+     empresa.`slogan` AS empresa_slogan
+FROM
+     `examesporfazeritems` examesporfazeritems,
+     `empresa` empresa
+WHERE
+     dataResultado BETWEEN $P{DATA1} AND $P{DATA2}
+ AND codigoProduto = $P{CODIGOPRODUTO}
+ AND resultado <> 'Negativo' GROUP BY 1,3]]>
+	</queryString>
+	<field name="dataResultado" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="positivo" class="java.lang.Long"/>
+	<field name="empresa_codEmpresa" class="java.lang.Long"/>
+	<field name="empresa_descricao" class="java.lang.String"/>
+	<field name="empresa_endereco" class="java.lang.String"/>
+	<field name="empresa_email" class="java.lang.String"/>
+	<field name="empresa_contacto" class="java.lang.String"/>
+	<field name="empresa_nif" class="java.lang.String"/>
+	<field name="empresa_website" class="java.lang.String"/>
+	<field name="empresa_NConta1" class="java.lang.String"/>
+	<field name="empresa_IBAN1" class="java.lang.String"/>
+	<field name="empresa_NConta2" class="java.lang.String"/>
+	<field name="empresa_IBAN2" class="java.lang.String"/>
+	<field name="empresa_slogan" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="130" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="149" height="55" uuid="6da8c9a5-3574-498a-8b3e-70d87eb67861"/>
+				<imageExpression><![CDATA["relatorios/logo12.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="109" width="217" height="13" uuid="81be4b59-0b92-4657-a13e-b4b9452b1ed5"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Endereço: "+$F{empresa_endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="96" width="218" height="13" uuid="eb9e5cd5-188a-453e-9b18-5689e3c05a31"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["E-mail:"+$F{empresa_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="57" width="217" height="13" uuid="6592a0f5-984b-4bc5-af46-fd506d2b6909"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="83" width="217" height="13" uuid="c1a0a13e-2cc2-42df-99d6-a94e39940ede"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Tel.: "+$F{empresa_contacto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="70" width="217" height="13" uuid="aa777557-d069-43ca-bee3-1295761e87dc"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NIF: "+$F{empresa_nif}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="12" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="304" height="12" uuid="d993eae0-8a0a-413f-b2c8-a159ced6cb85"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<text><![CDATA[GOTA ESPESSA]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="38" height="20" uuid="a692194b-8ddf-4243-868d-9966aa5ad1bd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="0" width="97" height="20" uuid="903caf1f-1d8b-43d2-9f70-d11235e4904b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="0" width="72" height="20" uuid="2febf876-7636-4729-a193-d78844c4a8de"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Positivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="207" y="0" width="97" height="20" uuid="d56c8dbf-5c93-4d1f-a41a-7b050be5df0b"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Negativo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="38" height="12" uuid="dc0aa6ff-8924-4d8c-a8f9-467487c1cd3f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="38" y="0" width="97" height="12" uuid="63449052-00d7-4b54-a59f-22bfe0cbc8a7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataResultado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="0" width="72" height="12" uuid="9d46da27-ed39-4081-a9d4-884a69d6be63"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{positivo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportProdutos" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="976ec8aa-7e89-4d4f-adf1-f5cd551edfad">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ESTOQUE_ATUAL" class="java.lang.Integer"/>
+	<parameter name="ESTOQUE_MINIMO" class="java.lang.Integer"/>
+	<parameter name="VMD" class="java.lang.Double"/>
+	<parameter name="VNSP" class="java.lang.Double"/>
+	<parameter name="CENTRO" class="java.lang.String"/>
+	<parameter name="UNIDADE" class="java.lang.String"/>
+	<parameter name="LOTE" class="java.lang.String"/>
+	<parameter name="PRASO" class="java.lang.Integer"/>
+	<parameter name="ITEMS" class="java.lang.Integer"/>
+	<parameter name="ESTOQUE_CRITICO" class="java.lang.Integer"/>
+	<parameter name="PRODUTO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     produto.`codProduto` AS produto_codProduto
+FROM
+     `produto` produto]]>
+	</queryString>
+	<field name="produto_codProduto" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="139" splitType="Stretch">
+			<staticText>
+				<reportElement x="330" y="13" width="237" height="20" uuid="9e421c8c-9a41-4040-8410-6afc20609c92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE DETALHES DOS PRODUTOS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="66" splitType="Stretch">
+			<textField>
+				<reportElement x="67" y="21" width="242" height="20" uuid="6ad7848b-cb7b-4f04-bf58-d534826df2e9"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$P{PRODUTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="309" y="21" width="113" height="20" uuid="ec15734f-4152-4341-bc63-14cebc6d483e"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VMD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="21" width="117" height="20" uuid="d00bcf82-6611-4c4b-bede-ce17465b3dd2"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VNSP}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="1" y="0" width="801" height="20" backcolor="#00CCFF" uuid="61950dbd-2311-49c2-b81b-717976c50c76"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="67" y="0" width="242" height="20" uuid="b57ac539-8fee-48d4-88e9-7bd4c834e135"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[ ITEM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="0" width="113" height="20" uuid="c21320f9-e0ed-46fd-8771-33f0016d4d69"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[VENDA MÉDIA DIÁRIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="0" width="117" height="20" uuid="f99288a9-2170-4085-ba5f-cf6ba3065006"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[TERMINO DE ESTOQUE]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="21" width="67" height="20" backcolor="#00CCFF" uuid="7f11d933-f495-40d2-a524-adc3d7a5fe28"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="67" height="20" uuid="16c960a7-89c1-4ca5-a3a3-c607bd18a529"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="21" width="66" height="20" uuid="b8256c62-387c-4a55-a502-0cf183c22634"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{produto_codProduto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
